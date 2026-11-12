@@ -17,11 +17,12 @@ Thank you for helping. This game is about real people's lives, so accuracy and r
 npm ci
 npm run dev                                   # http://127.0.0.1:5188
 npx tsc --noEmit -p .                         # type check
-npx playwright test tests/smoke.spec.ts       # smoke tests, desktop and phone
+npm test                                      # browser smoke tests, desktop and phone
+npm run sim                                   # whole-journey simulation of every route
 ```
 
-For rules changes, run the whole-journey simulation described in the README and include its summary in your
-pull request (errors, unbalanced statements, status mismatches).
+For rules changes, include the `npm run sim` summary in your pull request (errors, unbalanced statements,
+status mismatches). GitHub runs the type check, the simulation and the build on every pull request.
 
 ## House rules for game text
 

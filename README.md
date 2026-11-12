@@ -31,17 +31,10 @@ Then open http://127.0.0.1:5188. Press Esc or P to pause.
 | `npm run dev` | Dev server with hot reload on port 5188 |
 | `npm run build` | Type check and production build into `dist/` |
 | `npm run preview` | Serve the production build on port 4188 |
-| `npx playwright test tests/smoke.spec.ts` | Smoke tests on desktop and phone viewports |
+| `npm test` | Browser smoke tests on desktop and phone viewports (needs a real graphics card, so run locally) |
+| `npm run sim` | Whole-journey simulation of every route, no browser needed |
 
-Whole-journey simulation (in the browser console on `/?debug`):
-
-```js
-const { ROUTES } = await import('/src/engine/content/index.ts');
-const { runSim } = await import('/src/dev/sim.ts');
-await runSim(ROUTES.map((r) => r.id), 420);
-```
-
-It plays hundreds of journeys and reports errors, money statements that do not balance, status changes, and any card shown under a status it is not written for.
+The simulation plays hundreds of journeys through the real rules and fails on errors, money statements that do not balance, or any card shown under a status it is not written for. GitHub runs the type check, the simulation and the production build on every push.
 
 ### Layout
 
