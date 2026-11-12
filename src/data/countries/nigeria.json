@@ -1,0 +1,244 @@
+{
+ "asOf": "2026-11-09",
+ "culture": {
+  "id": "nigeria",
+  "name": "Nigeria",
+  "demonym": "Nigerian",
+  "language": "English, Yoruba, Igbo, Hausa or your home language",
+  "departureCity": "Lagos",
+  "airportBoardLine": "DL 55   LAGOS      LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 1600,
+  "flightEstimate": true,
+  "homeTravelNote": "a long overnight flight, often with a connection",
+  "names": {
+   "female": [
+    "Folake",
+    "Funmilayo",
+    "Temitope",
+    "Yetunde",
+    "Bukola",
+    "Chiamaka",
+    "Ngozi",
+    "Adaeze",
+    "Nkechi",
+    "Amaka",
+    "Aisha",
+    "Fatima",
+    "Zainab",
+    "Hauwa",
+    "Halima"
+   ],
+   "male": [
+    "Babatunde",
+    "Oluwaseun",
+    "Ayodele",
+    "Olumide",
+    "Tunde",
+    "Chinedu",
+    "Emeka",
+    "Obinna",
+    "Ikenna",
+    "Chukwuemeka",
+    "Abubakar",
+    "Musa",
+    "Ibrahim",
+    "Sani",
+    "Yusuf"
+   ]
+  },
+  "skinTones": [
+   "#7a4b2e",
+   "#6b4329",
+   "#5c3a24",
+   "#553420",
+   "#4a2e1c",
+   "#3d2516"
+  ],
+  "foods": {
+   "dish": "jollof rice",
+   "cookLines": [
+    "Tomatoes, peppers and onions blend into a red paste, and the whole apartment smells like home.",
+    "You taste the jollof and add a little more pepper, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and fight over the smoky bits at the bottom of the pot."
+   ],
+   "groceryStore": "the African grocery store"
+  },
+  "studentAssociation": "Nigerian Students' Association",
+  "festivals": [
+   {
+    "id": "independence-ng",
+    "title": "Independence Day, 1 October",
+    "body": "At home there are parades, green and white flags and a public holiday. Here it falls on a weekday with a lab report due.",
+    "month": 2,
+    "join": "Go to the student association's Independence party.",
+    "joinText": "Green and white everywhere, Afrobeats loud enough to shake the floor and a buffet line of jollof and puff-puff. You dance until your feet hurt.",
+    "host": "Cook for friends and put a small flag on the table.",
+    "hostText": "Your friends try egusi for the first time and ask for seconds. Someone makes a playlist that is mostly your requests.",
+    "skip": "Send greetings to the family group chat and finish the report.",
+    "skipText": "Your phone fills with flag emojis and photos from home. You smile at every one, then hand in the report on time."
+   },
+   {
+    "id": "christmas-newyear-ng",
+    "title": "Christmas and New Year",
+    "body": "At home December means relatives arriving from every city, church services, big pots of rice and a crowded house. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Nigerian family from church or the association.",
+    "joinText": "An auntie you met once insists you stay the night. You leave with a container of stew and a new set of cousins.",
+    "host": "Host a New Year's Eve dinner for students who could not travel.",
+    "hostText": "Six people, one small kitchen and a countdown on someone's phone. At midnight everyone calls home at once.",
+    "skip": "Call home at midnight Lagos time and go to bed.",
+    "skipText": "It is only evening for you, but you hear the cheering and the fireworks through the phone. You feel close to it all."
+   },
+   {
+    "id": "eid-ng",
+    "title": "Eid",
+    "body": "Eid falls on a weekday this year. At home there would be prayers in the morning, new clothes, visits and a long, happy meal.",
+    "month": 7,
+    "join": "Join the Eid prayer and lunch at the local mosque.",
+    "joinText": "You stand shoulder to shoulder with people from a dozen countries. Afterward an uncle from Kano piles your plate high.",
+    "host": "Cook for friends and share the day with them.",
+    "hostText": "Your friends arrive curious and leave full. Someone asks to come back next year.",
+    "skip": "Call home, then get on with your day.",
+    "skipText": "Your family holds up the food so you can see it. You promise to celebrate properly next year."
+   }
+  ],
+  "familyCall": [
+   "It is late evening in Lagos when the call finally connects, five to nine hours ahead of you.",
+   "Your mother asks if you are eating well and whether it has turned cold yet.",
+   "Your father leans in to ask about your classes, then insists everyone in the room says hello in turn.",
+   "By the time you hang up it is nearly midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from naira, and since the naira's sharp fall after 2023 the same family savings buy far fewer dollars.",
+  "familySupportFactor": 0.85,
+  "familySupportNote": "Designed at 0.85 of the India baseline. The research records the naira's large devaluation after the 2023 reforms, which made US costs paid from naira savings much harder to cover. Kept modest because many families still support students and remittance flows to Nigeria stayed large (about $21.8 billion in 2024 and 2025).",
+  "entryNotes": {
+   "F1": "About 21,847 Nigerians studied in the US in 2024/25; since 1 January 2026 new F-1 visas for Nigerians applying from outside the US are suspended.",
+   "H1B": "Nigerian nationals received 880 H-1B visas in FY2024, and Nigerians wait in the shorter Rest of World green card queue, not India's.",
+   "B2": "Since July 2025 most visitor visas for Nigerians are single-entry and valid for three months, and new B visas are suspended under the 2026 proclamation.",
+   "O1": "O-1 visas to Nigerian nationals rose from 35 in FY2018 to 154 in FY2024.",
+   "FAM": "Spouses of US citizens are the largest green card group for Nigerians (8,670 in FY2024); Nigeria is not eligible for the Diversity Visa lottery.",
+   "EWI": "CBP does not report Nigerian border encounters separately; overstaying a visa is the more common way Nigerians fall out of status.",
+   "ASY": "In FY2024 immigration courts granted 383 and denied 265 asylum cases from Nigerian nationals, about 59 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Lagos",
+   "text": "Lagos is on West Africa Time, UTC+1, with no daylight saving. It is 6 hours ahead of US Eastern in winter and 5 in summer, and 9 hours ahead of Pacific in winter and 8 in summer.",
+   "value": 6,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Nigeria to US",
+   "text": "Design estimate of $1,600. The research gives only an unsourced background range of roughly $1,200 to $2,500 depending on season.",
+   "value": 1600,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Nigerians",
+   "text": "Nigerian nationals received 6,177 F-1 visas in FY2024, down from a peak of 7,556 in FY2022, and 3,939 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 6177,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/nigeria-nga",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Nigerian students in the US",
+   "text": "Open Doors counted 21,847 Nigerian students in US higher education in 2024/25, up 9.1 percent, the 8th largest group.",
+   "value": 21847,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Nigeria_Fact-Sheet-2025.pdf",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Nigeria",
+   "text": "Central Bank of Nigeria data put personal remittances at about $21.8 billion in 2025, level with 2024 and up from $19.27 billion in 2023.",
+   "value": 21.8,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://brandspurng.com/2026/05/19/nigerias-diaspora-remittances-hold-steady-at-21-8bn-in-2025-despite-global-economic-pressures/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Nigerians",
+   "text": "Nigerian nationals received 880 H-1B visas in FY2024 and 884 in FY2025, up from 391 in FY2018. Nigeria's share of all H-1B approvals was not found; many switch status inside the US without a visa stamp.",
+   "value": 880,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/nigeria-nga",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Nigerian applicants",
+   "text": "In FY2024 immigration courts granted 383 and denied 265 asylum cases from Nigerian nationals, about 59 percent of decisions. Another 637 were not adjudicated. Individual claims matter more than averages.",
+   "value": 59,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Nigeria",
+   "text": "Nigeria is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Since January 2026, immigrant visas for Nigerians abroad also face a proclamation suspension and an issuance pause.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Africa",
+  "castGroup": "nigeria",
+  "ebQueue": "row",
+  "asylumGrantPct": 56,
+  "asylumNote": "383 grants and 265 denials in FY2024, about 59 percent; the game has used 56 (research/unauthorized-entry.md 2.5).",
+  "visaWaiver": false,
+  "arrivalLimits": [
+   {
+    "from": 2026,
+    "routes": [
+     "F1",
+     "B2",
+     "FAM"
+    ],
+    "reason": "From 1 January 2026, Proclamation 10998 suspends new student, visitor and immigrant visas for Nigerian nationals applying from abroad, with narrow exceptions. Choose an earlier arrival year or another route.",
+    "source": "research/rules-verification.md section 16 (whitehouse.gov)"
+   }
+  ]
+ }
+}

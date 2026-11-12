@@ -1,0 +1,233 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "fiji",
+  "name": "Fiji",
+  "demonym": "Fijian",
+  "language": "English, Fijian (iTaukei), Fiji Hindi or your home language",
+  "departureCity": "Nadi",
+  "airportBoardLine": "FJ 810  NADI       LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1300,
+  "flightEstimate": true,
+  "homeTravelNote": "a long overnight flight across the Pacific",
+  "names": {
+   "female": [
+    "Mere",
+    "Litia",
+    "Salote",
+    "Losana",
+    "Vasiti",
+    "Asenaca",
+    "Makereta",
+    "Ana",
+    "Priya",
+    "Shobna",
+    "Anjali",
+    "Sangeeta",
+    "Roshni",
+    "Ashika",
+    "Nazia"
+   ],
+   "male": [
+    "Jone",
+    "Sitiveni",
+    "Waisale",
+    "Semi",
+    "Josefa",
+    "Viliame",
+    "Epeli",
+    "Tevita",
+    "Rajesh",
+    "Vikash",
+    "Sanjay",
+    "Ashwin",
+    "Avinesh",
+    "Ravindra",
+    "Imran"
+   ]
+  },
+  "skinTones": [
+   "#c99a6e",
+   "#b07f54",
+   "#96683f",
+   "#7c5333",
+   "#644228",
+   "#4a2f1c"
+  ],
+  "foods": {
+   "dish": "chicken curry and roti",
+   "cookLines": [
+    "Onion, garlic, ginger and curry powder hit the hot oil, and the whole apartment smells like home.",
+    "You taste the curry and add a little more chilli, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You tear warm roti at the counter, with boiled cassava on the side, and nobody leaves hungry."
+   ],
+   "groceryStore": "the Pacific and Indian grocery store"
+  },
+  "studentAssociation": "Fiji Students' Association",
+  "festivals": [
+   {
+    "id": "fiji-day-fj",
+    "title": "Fiji Day, 10 October",
+    "body": "At home there are parades, sky blue flags and a public holiday, with families eating together afterward. Here it falls in the middle of midterms.",
+    "month": 2,
+    "join": "Go to the Fiji Day lunch the local Fijian community is holding.",
+    "joinText": "Bula shirts and sulus, a table of curry, palusami and cassava, and someone leading the singing with a guitar. People you have just met call you family by the end of it.",
+    "host": "Cook for friends and hang a small flag in the window.",
+    "hostText": "Your friends learn to say bula properly and try kokoda for the first time. Someone asks when the next Fiji Day is.",
+    "skip": "Send greetings to the family group chat and keep studying.",
+    "skipText": "Photos of the parade and the lunch table arrive all afternoon. You save every one, then finish your notes."
+   },
+   {
+    "id": "diwali-fj",
+    "title": "Diwali",
+    "body": "At home Diwali is a public holiday this year as always, and neighbours of every background share sweets, light diyas and watch the fireworks. Here it is an ordinary school night.",
+    "month": 3,
+    "join": "Join the Diwali evening at the temple or the campus celebration.",
+    "joinText": "Rows of small lamps, plates of barfi and gulab jamun, and a few voices with a Fiji accent that makes you turn around. You go home smelling of incense and sugar.",
+    "host": "Light diyas at home and share sweets with your friends.",
+    "hostText": "You line the windowsill with tea lights and hand out sweets from the Indian grocery store. Your friends ask what each one is called.",
+    "skip": "Call home and watch the fireworks on video.",
+    "skipText": "Your cousin holds the phone up so you can see the whole street lit. You hear the crackers and everyone laughing."
+   },
+   {
+    "id": "christmas-fj",
+    "title": "Christmas and New Year",
+    "body": "At home Christmas means church in the morning, a lovo in the ground, relatives arriving from every island and a house full of singing. Here campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Fijian family from church.",
+    "joinText": "They wave you in as if you have always come. There is singing in harmony after lunch, and you leave with a container of food and an invitation for New Year.",
+    "host": "Host a dinner for students who could not travel.",
+    "hostText": "There is no lovo pit, so the oven does its best. You wrap the chicken in foil, and your friends say it is the best thing they have eaten all year.",
+    "skip": "Call home after church their time and keep the day quiet.",
+    "skipText": "Everyone crowds into the frame to wish you well, one after another. You can almost smell the lovo."
+   }
+  ],
+  "familyCall": [
+   "It is already tomorrow in Fiji, around lunchtime, when your evening call connects, 16 to 20 hours ahead of you.",
+   "Your mother asks if you are eating well and whether it is really as cold as you say.",
+   "Your father asks about your classes, then passes the phone around so every cousin in the room can say bula.",
+   "By the time you hang up they are well into a day you have not reached yet, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from Fijian dollars, so the exchange rate on the day decides how far it goes.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at 1.0, the India baseline. No sourced reason was found to move it for Fiji, so it is left unchanged.",
+  "entryNotes": {
+   "F1": "Open Doors counted 165 students from Fiji in US higher education in 2024/25, most often in Hawaii, Utah and California, and Fiji nationals received 23 F-1 visas in FY2024.",
+   "H1B": "Fiji nationals received 3 H-1B visas in FY2024, and Fiji is charged to the Rest of World green card queue.",
+   "B2": "Fiji is not in the Visa Waiver Program, and since 21 January 2026 a consular officer can require a refundable bond before issuing a visitor visa to a Fiji national.",
+   "O1": "The O-1 is open to Fijians on the same terms as everyone else, and no country limit applies to it.",
+   "FAM": "Fiji is the largest Diversity Visa country in Oceania (869 diversity visas in FY2024); immigrant visa issuance for Fiji nationals was paused from 21 January 2026 until a court set the policy aside in August 2026.",
+   "EWI": "CBP's public encounters file does not list Fiji nationals separately; overstaying a visa is the more common way of falling out of status.",
+   "ASY": "EOIR's FY2024 asylum table shows fewer than four grants and fewer than four denials for Fiji nationals, with 12 cases not adjudicated, so no grant rate can be given."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Fiji",
+   "text": "Fiji is on Fiji Time, UTC+12, with no daylight saving at present. It is 17 hours ahead of US Eastern in winter and 16 in summer, and 20 hours ahead of Pacific in winter and 19 in summer.",
+   "value": 17,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Fiji to US",
+   "text": "Design estimate of $1,300. No sourced fare was found; real prices move widely with season and route.",
+   "value": 1300,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Fiji nationals",
+   "text": "Fiji nationals received 23 F-1 visas in FY2024 and 19 in FY2025; the highest recent year was FY2023 with 42. Figures are State Department data republished by VisaGrader.",
+   "value": 23,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/fiji-fji",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Students from Fiji in the US",
+   "text": "Open Doors counted 165 students from Fiji in US higher education in 2024/25, up from 156 the year before. Most were undergraduates, and the top receiving states were Hawaii, Utah and California.",
+   "value": 165,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Fiji_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Fiji",
+   "text": "World Bank data put personal remittances received by Fiji at about $424 million in 2024, about 7.1 percent of GDP, down from about $479 million in 2023.",
+   "value": 424,
+   "unit": "usd-million",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/TON;WSM;FJI/indicator/BX.TRF.PWKR.CD.DT?format=json&mrv=4",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Fiji nationals",
+   "text": "Fiji nationals received 3 H-1B visas in FY2024 and 2 in FY2025. The numbers are very small, and Fiji's share of all H-1B approvals was not found.",
+   "value": 3,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/fiji-fji",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Fiji applicants",
+   "text": "EOIR's FY2024 table lists Fiji with grants and denials both suppressed, which means fewer than four of each, and 12 cases not adjudicated. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Fiji",
+   "text": "Fiji is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Immigrant visa issuance for Fiji nationals abroad was paused from 21 January 2026 under a 75-country State Department policy; a federal court set it aside in August 2026 and the department said it is no longer in effect.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Oceania",
+  "castGroup": "fiji",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR's FY2024 Asylum Decisions by Nationality table lists Fiji with grants and denials both suppressed (fewer than four each) and 12 not adjudicated, so no rate can be calculated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

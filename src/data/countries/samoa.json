@@ -1,0 +1,209 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "samoa",
+  "name": "Samoa",
+  "demonym": "Samoan",
+  "language": "Samoan and English",
+  "departureCity": "Apia",
+  "airportBoardLine": "FJ 254  APIA       LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1700,
+  "flightEstimate": true,
+  "homeTravelNote": "two long flights with a connection through Fiji or New Zealand",
+  "names": {
+   "female": [
+    "Sina",
+    "Mele",
+    "Lagi",
+    "Teuila",
+    "Losa",
+    "Ana",
+    "Sefina",
+    "Malia",
+    "Tausala",
+    "Pele",
+    "Salamasina",
+    "Lupe",
+    "Ema",
+    "Tina",
+    "Luisa"
+   ],
+   "male": [
+    "Ioane",
+    "Tavita",
+    "Sione",
+    "Pita",
+    "Mikaele",
+    "Siaosi",
+    "Malakai",
+    "Iosefa",
+    "Sefo",
+    "Tanielu",
+    "Peni",
+    "Paulo",
+    "Viliamu",
+    "Aleki",
+    "Manu"
+   ]
+  },
+  "skinTones": [
+   "#d4a579",
+   "#c29165",
+   "#ad7c52",
+   "#976a45",
+   "#805838",
+   "#6a472c"
+  ],
+  "foods": {
+   "dish": "sapasui",
+   "cookLines": [
+    "Garlic, ginger and soy sauce hit the pan, and the whole apartment smells like a family to'ona'i back home.",
+    "You stir the glass noodles through the sapasui and add a little more soy, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share bowls at the counter, with rice and a pot of koko Samoa to finish, and nobody leaves hungry."
+   ],
+   "groceryStore": "the Pacific Islander market"
+  },
+  "studentAssociation": "Samoan Students' Association",
+  "festivals": [
+   {
+    "id": "white-sunday-ws",
+    "title": "White Sunday, Lotu Tamaiti",
+    "body": "At home on the second Sunday of October, children dress in white, lead the church service with songs and recitations, and are served first at the feast afterward. Here it is an ordinary weekend before midterms.",
+    "month": 2,
+    "join": "Go to the White Sunday service at the local Samoan church.",
+    "joinText": "The children file in wearing white, serious and shining. You remember your own verses, word for word, and the feast afterward tastes like every October of your childhood.",
+    "host": "Cook a to'ona'i for friends and tell them about the day.",
+    "hostText": "You explain that today the youngest person eats first. Your friends take the rule seriously and serve the first year student before anyone else.",
+    "skip": "Call home and watch your little cousins recite.",
+    "skipText": "Your aunt holds the phone up through the whole item. You wave at the screen until they wave back."
+   },
+   {
+    "id": "christmas-ws",
+    "title": "Christmas and New Year",
+    "body": "At home Christmas means church, the choir, family flying in from New Zealand and Australia, and a long to'ona'i with everyone at the table. Here campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Samoan family from church.",
+    "joinText": "They seat you between two uncles and keep your plate full. After the meal the singing starts, and you know every harmony.",
+    "host": "Host a dinner for students who could not travel.",
+    "hostText": "Sapasui, baked taro and a tin of corned beef you found at the Pacific market. Your friends ask for the recipe and you admit there is not really one.",
+    "skip": "Call home after church their time and keep the day quiet.",
+    "skipText": "Everyone is still in white, fanning themselves in the heat. You show them your winter coat and they laugh for a full minute."
+   },
+   {
+    "id": "independence-ws",
+    "title": "Independence Day, 1 June",
+    "body": "At home the first days of June mean flag raising in Apia, marching, siva and fautasi longboat races in the harbour. Here it is the start of summer break, and the day would pass unnoticed.",
+    "month": 10,
+    "join": "Join the Samoan community's Independence celebration.",
+    "joinText": "Red and blue everywhere, a siva that brings the elders to their feet, and a long table of food. You leave with your voice gone and three new aunties.",
+    "host": "Cook for friends and hang the flag in the window.",
+    "hostText": "Your friends learn to say manuia and try palusami for the first time. Someone puts on a playlist that is mostly your requests.",
+    "skip": "Watch the fautasi race online and message the family chat.",
+    "skipText": "Your village's crew is in the final and the family chat is in uproar. You cheer at your laptop like you are on the seawall."
+   }
+  ],
+  "familyCall": [
+   "It is already tomorrow afternoon in Apia when your evening call connects, 17 to 21 hours ahead of you.",
+   "Your mother asks if you are eating well and whether you have found a church yet.",
+   "Your father asks about your classes, then calls your grandmother over so she can see your face.",
+   "The call ends with a prayer, as it always does, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from tala, and in most Samoan families money more often travels toward home than away from it.",
+  "familySupportFactor": 0.85,
+  "familySupportNote": "Designed at 0.85 of the India baseline. World Bank data show remittances received equal to about 22 percent of Samoa's GDP in 2025, so in many families money flows toward home from relatives overseas more than it flows out to a student abroad.",
+  "entryNotes": {
+   "F1": "Open Doors counted 75 students from Samoa in US higher education in 2024/25, most often in Hawaii, and Samoan nationals received 4 F-1 visas in FY2024.",
+   "H1B": "Samoa is charged to the Rest of World green card queue, and Samoans compete in the same H-1B lottery as everyone else.",
+   "B2": "Samoa is not in the Visa Waiver Program, so a Samoan passport holder needs a visitor visa for any trip to the US.",
+   "O1": "The O-1 is open to Samoans on the same terms as everyone else, and no country limit applies to it.",
+   "FAM": "Samoa is charged to the Rest of World family queue and is eligible for the Diversity Visa lottery, though very few diversity visas go to Samoa (none in FY2024, 4 in FY2023).",
+   "EWI": "CBP's public encounters file does not list Samoans separately; overstaying a visa is the more common way of falling out of status.",
+   "ASY": "EOIR's FY2024 asylum table by nationality has no row for Samoa, so no grant rate can be given."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Samoa",
+   "text": "Samoa is on Apia time, UTC+13, with no daylight saving at present. It is 18 hours ahead of US Eastern in winter and 17 in summer, and 21 hours ahead of Pacific in winter and 20 in summer. Neighbouring American Samoa is on the other side of the date line, a full day behind.",
+   "value": 18,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Samoa to US",
+   "text": "Design estimate of $1,700, assuming a connection through Fiji or New Zealand. No sourced fare was found; real prices move widely with season and route.",
+   "value": 1700,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Samoans",
+   "text": "Nationals of the independent State of Samoa received 4 F-1 visas in FY2024 and 6 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 4,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/samoa-wsm",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Students from Samoa in the US",
+   "text": "Open Doors counted 75 students from Samoa in US higher education in 2024/25, about the same as the 76 the year before. Nearly nine in ten were undergraduates, and Hawaii was the top receiving state.",
+   "value": 75,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Samoa_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Samoa",
+   "text": "World Bank data put personal remittances received by Samoa at about $288 million in 2025, about 22 percent of GDP, up from about $282 million in 2024.",
+   "value": 288,
+   "unit": "usd-million",
+   "year": 2025,
+   "source": "https://api.worldbank.org/v2/country/TON;WSM;FJI/indicator/BX.TRF.PWKR.CD.DT?format=json&mrv=4",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Samoa",
+   "text": "Samoa is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Oceania",
+  "castGroup": "samoa",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR's FY2024 Asylum Decisions by Nationality table has no row for Samoa or Western Samoa. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

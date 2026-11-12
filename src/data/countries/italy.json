@@ -1,0 +1,243 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "italy",
+  "name": "Italy",
+  "demonym": "Italian",
+  "language": "Italian, and for many families a regional language or dialect at home",
+  "departureCity": "Rome",
+  "airportBoardLine": "AZ 608  ROME       LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 900,
+  "flightEstimate": true,
+  "homeTravelNote": "a nine or ten hour flight, long but direct from several big US airports",
+  "names": {
+   "female": [
+    "Giulia",
+    "Sofia",
+    "Francesca",
+    "Chiara",
+    "Martina",
+    "Alessia",
+    "Elena",
+    "Federica",
+    "Valentina",
+    "Sara",
+    "Aurora",
+    "Beatrice",
+    "Anna",
+    "Ilaria"
+   ],
+   "male": [
+    "Marco",
+    "Luca",
+    "Matteo",
+    "Alessandro",
+    "Francesco",
+    "Lorenzo",
+    "Andrea",
+    "Davide",
+    "Giovanni",
+    "Antonio",
+    "Simone",
+    "Giuseppe",
+    "Riccardo",
+    "Stefano"
+   ]
+  },
+  "skinTones": [
+   "#f3d6bf",
+   "#e8c09f",
+   "#d8a67f",
+   "#c08a62",
+   "#9a6a48",
+   "#6e4a33"
+  ],
+  "foods": {
+   "dish": "pasta al ragù",
+   "cookLines": [
+    "Onion, carrot and celery soften in the pot before the meat and tomatoes go in, and the whole apartment smells like Sunday at home.",
+    "You taste the ragù and let it simmer a little longer, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and wipe up the last of the sauce with bread."
+   ],
+   "groceryStore": "the Italian deli"
+  },
+  "studentAssociation": "Italian Students' Association",
+  "festivals": [
+   {
+    "id": "ferragosto-it",
+    "title": "Ferragosto, 15 August",
+    "body": "At home the whole country is on holiday, the cities are empty and your family is at the sea or in the mountains for a long lunch. Here it is an ordinary day in a city you are still learning.",
+    "month": 0,
+    "join": "Meet other Italians in town for a picnic.",
+    "joinText": "Someone brings watermelon, someone brings a rice salad, and everyone complains fondly about being so far from the beach. You go home with three new phone numbers.",
+    "host": "Cook a long lunch for your new neighbours.",
+    "hostText": "Lunch runs for three hours, which surprises everyone but you. By the coffee you are no longer strangers.",
+    "skip": "Call home during their lunch and carry on with your day.",
+    "skipText": "The phone goes around a table of fifteen people and everyone talks at once. You hang up smiling."
+   },
+   {
+    "id": "natale-it",
+    "title": "Christmas",
+    "body": "At home there is the big dinner on the 24th, lunch on the 25th, panettone on the table and a round of tombola with the cousins. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with an Italian family you met through the association.",
+    "joinText": "They set a place for you as if you had always been coming. You lose at tombola to a nine-year-old and leave with half a panettone.",
+    "host": "Cook Christmas lunch for friends who could not travel.",
+    "hostText": "Six people, one small kitchen and more courses than plates. Your friends understand at last why lunch takes all afternoon.",
+    "skip": "Call home on Christmas Day and keep it simple.",
+    "skipText": "Your grandmother asks whether you have eaten, twice. You show her your plate and she approves."
+   },
+   {
+    "id": "pasqua-it",
+    "title": "Easter and Pasquetta",
+    "body": "Easter falls in April this year. At home there would be a dove-shaped colomba cake, chocolate eggs with a surprise inside and a picnic with friends on Easter Monday.",
+    "month": 8,
+    "join": "Join the association's Pasquetta picnic in the park.",
+    "joinText": "Blankets, a guitar and far too much food. Someone cracks open a chocolate egg and passes the pieces around.",
+    "host": "Make Easter lunch for your friends.",
+    "hostText": "You find a colomba at the Italian deli and carry it home like treasure. Your friends ask for a second slice.",
+    "skip": "Call home on Sunday, then take a quiet walk.",
+    "skipText": "Your family holds the cake up to the camera. You promise to come home next spring."
+   }
+  ],
+  "familyCall": [
+   "It is evening in Italy when the call connects, six hours ahead of the East Coast and nine ahead of the West.",
+   "Your mother asks what you ate today and listens to the whole answer.",
+   "Your father leans in to ask how the work is going, then turns the phone so your grandmother can see you.",
+   "By the time you hang up it is nearly midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from euros, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at the India baseline of 1.0. No sourced figure was found that would justify more or less family support for Italian students, so the factor is left unchanged. Flight costs are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "Italian nationals received 6,535 F-1 visas in FY2024, up from 3,702 in FY2018, and Open Doors counted 6,744 Italian students in 2024/25.",
+   "H1B": "Italian nationals received 799 H-1B visas in FY2024 and wait in the Rest of World green card queue, not India's.",
+   "B2": "Italy has been in the Visa Waiver Program since 29 July 1989, so a visit of up to 90 days needs an approved ESTA instead of a B-2 visa.",
+   "O1": "Italian nationals received 694 O-1 visas in FY2024 and 745 in FY2025.",
+   "FAM": "Italy is charged to the Rest of World queue, where the November 2026 bulletin is reaching sibling petitions filed before 22 October 2012, and people born in Italy can enter the Diversity Visa lottery.",
+   "EWI": "CBP does not report Italian citizens separately in its border encounter data, and a visitor who stays past the 90 days allowed under the Visa Waiver Program has few ways to fix status from inside the US.",
+   "ASY": "EOIR's FY2024 table shows fewer than four asylum grants and fewer than four denials for Italian nationals, too few to publish or to turn into a rate."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Italy",
+   "text": "Italy is on Central European Time, UTC+1, and UTC+2 in summer. It is 6 hours ahead of US Eastern and 9 hours ahead of Pacific for most of the year, and 5 and 8 for a few weeks in March and around the end of October when the clocks change on different dates.",
+   "value": 6,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Italy to US",
+   "text": "Design estimate of $900. No sourced fare was retrieved for this route; the figure is a planning number, not a quote.",
+   "value": 900,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Italians",
+   "text": "Italian nationals received 6,535 F-1 visas in FY2024, up from 3,702 in FY2018, and 6,009 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 6535,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/italy-ita",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Italian students in the US",
+   "text": "Open Doors counted 6,744 Italian students in US higher education in 2024/25, up from 6,545, the 24th largest group. Graduate students (2,404) and undergraduates (2,453) are almost equal in number.",
+   "value": 6744,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Italy_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Italy",
+   "text": "World Bank data put personal remittances received by Italy at about $12.1 billion in 2024 and $12.8 billion in 2025.",
+   "value": 12.1,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/ITA/indicator/BX.TRF.PWKR.CD.DT?format=json&date=2022:2025",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Italians",
+   "text": "Italian nationals received 799 H-1B visas in FY2024 and 920 in FY2025. Italy's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 799,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/italy-ita",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Italian applicants",
+   "text": "EOIR's FY2024 table by nationality lists 9 Italian cases as not adjudicated and suppresses grants and denials because each is below four. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Italy",
+   "text": "Italy is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Italy is not named in the 2025 entry proclamations or on the reported list of 75 countries whose immigrant visas were paused in January 2026.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "visa-waiver",
+   "topic": "rules",
+   "title": "Visa Waiver Program",
+   "text": "DHS lists Italy in the Visa Waiver Program with travel beginning 29 July 1989. Stays are limited to 90 days.",
+   "value": 1989,
+   "unit": "year",
+   "year": 1989,
+   "source": "https://www.dhs.gov/visa-waiver-program",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Europe",
+  "castGroup": "italy",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "null: EOIR FY2024 suppresses Italian grants and denials (each fewer than four); 9 not adjudicated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

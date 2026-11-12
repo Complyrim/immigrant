@@ -1,0 +1,113 @@
+{
+ "asOf": "2026-11-09",
+ "culture": {
+  "id": "india",
+  "name": "India",
+  "demonym": "Indian",
+  "language": "Hindi or your home language",
+  "departureCity": "Delhi",
+  "airportBoardLine": "AI 101  DELHI      LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1400,
+  "flightEstimate": true,
+  "homeTravelNote": "a long flight of a day or more door to door",
+  "names": {
+   "female": [
+    "Priya",
+    "Ananya",
+    "Meera",
+    "Kavya",
+    "Divya",
+    "Sneha",
+    "Neha",
+    "Ishita",
+    "Riya",
+    "Pooja",
+    "Sanjana",
+    "Aditi"
+   ],
+   "male": [
+    "Arjun",
+    "Rohan",
+    "Vikram",
+    "Karan",
+    "Aditya",
+    "Siddharth",
+    "Nikhil",
+    "Rahul",
+    "Aarav",
+    "Ishaan",
+    "Varun",
+    "Manish"
+   ]
+  },
+  "skinTones": [
+   "#a9714a",
+   "#9a6340",
+   "#b57d52",
+   "#8d5a3b",
+   "#c08a5e",
+   "#a06a45"
+  ],
+  "foods": {
+   "dish": "dal",
+   "cookLines": [
+    "Mustard seeds crackle in the pan and the whole apartment smells like home.",
+    "You taste the dal and add a pinch more salt, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share a plate at the counter, and for an hour the world is small and warm."
+   ],
+   "groceryStore": "the Indian grocery store"
+  },
+  "studentAssociation": "Indian Students' Association",
+  "festivals": [
+   {
+    "id": "diwali",
+    "title": "Diwali far from home",
+    "body": "Diwali falls on a weekday. At home there would be lamps, sweets and family. Here it is just another Tuesday, with a quiz in the morning.",
+    "month": 2,
+    "join": "Go to the student association's Diwali night.",
+    "joinText": "Rows of little lamps, too many sweets and a dance floor. For a few hours it feels like home.",
+    "host": "Light lamps and cook for your friends.",
+    "hostText": "Your apartment fills with friends and smoke from the kitchen. Someone video-calls their grandmother to show her.",
+    "skip": "Call home and study for the quiz.",
+    "skipText": "Your family holds the phone up to the lamps. You smile, and then you study."
+   },
+   {
+    "id": "holi",
+    "title": "Holi on a campus lawn",
+    "body": "The student association organizes a Holi event. Colors fly, music plays, and people who have never seen it before are laughing and joining in.",
+    "month": 7,
+    "join": "Throw yourself in.",
+    "joinText": "You come home pink and green to the ears, with a voice gone hoarse from laughing.",
+    "host": "Volunteer to run the color stall.",
+    "hostText": "You explain the festival thirty times and enjoy it every time.",
+    "skip": "Watch for a while, then head to the library.",
+    "skipText": "You catch the music on the way out, and a little color on your sleeve."
+   }
+  ],
+  "familyCall": [
+   "The call connects after three tries. Your mother's face fills the screen.",
+   "She asks if you are eating. You say yes and she looks unconvinced.",
+   "Your father waves from the background, pretending not to listen.",
+   "You hang up with a lump in your throat and a lighter chest."
+  ],
+  "homeMoneyNote": "Money from home is converted from rupees, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Baseline.",
+  "entryNotes": {
+   "F1": "The most common first step for Indian students.",
+   "H1B": "Indian workers receive most H-1B approvals; green card waits for India-born applicants are among the longest."
+  }
+ },
+ "facts": [],
+ "mechanics": {
+  "continent": "Asia",
+  "castGroup": "india",
+  "ebQueue": "india",
+  "asylumGrantPct": 62,
+  "asylumNote": "Designed base already used by the game, anchored on EOIR FY2024 decisions by nationality (research/unauthorized-entry.md 2.5).",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

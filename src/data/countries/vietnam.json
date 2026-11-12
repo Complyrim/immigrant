@@ -1,0 +1,231 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "vietnam",
+  "name": "Vietnam",
+  "demonym": "Vietnamese",
+  "language": "Vietnamese",
+  "departureCity": "Ho Chi Minh City",
+  "airportBoardLine": "VN 98   HO CHI MINH LANDED",
+  "timeDifference": "It is already tomorrow morning there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a very long journey across the Pacific, usually with a connection",
+  "names": {
+   "female": [
+    "Linh",
+    "Huong",
+    "Lan",
+    "Mai",
+    "Trang",
+    "Thao",
+    "Ngoc",
+    "Anh",
+    "Hanh",
+    "Phuong",
+    "Thu",
+    "Yen",
+    "My",
+    "Quynh"
+   ],
+   "male": [
+    "Minh",
+    "Huy",
+    "Tuan",
+    "Duc",
+    "Nam",
+    "Long",
+    "Khoa",
+    "Quan",
+    "Hung",
+    "Dung",
+    "Phuc",
+    "Thanh",
+    "Bao",
+    "Hieu"
+   ]
+  },
+  "skinTones": [
+   "#f0d2b4",
+   "#e6c19c",
+   "#d9ae86",
+   "#c99a70",
+   "#b6865c",
+   "#9f724b"
+  ],
+  "foods": {
+   "dish": "pho",
+   "cookLines": [
+    "Beef bones, charred onion and ginger simmer with star anise and cinnamon, and the whole apartment smells like home.",
+    "You taste the broth and add a little more fish sauce, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share big bowls at the counter, piled with herbs and lime, and drink the broth to the last drop."
+   ],
+   "groceryStore": "the Vietnamese market"
+  },
+  "studentAssociation": "Vietnamese Students' Association",
+  "festivals": [
+   {
+    "id": "trung-thu-vn",
+    "title": "Mid-Autumn Festival",
+    "body": "Tet Trung Thu, the Mid-Autumn Festival, falls on a weekday this year. At home children would carry lanterns through the streets and families would share mooncakes under the full moon.",
+    "month": 1,
+    "join": "Go to the student association's Mid-Autumn night.",
+    "joinText": "Paper lanterns hang across the room and someone has brought mooncakes from the Vietnamese bakery two towns over. You sing along to songs you have known since you were small.",
+    "host": "Buy mooncakes and share them with your floor.",
+    "hostText": "You pour tea and cut the cakes into small wedges. A friend asks about the lanterns, and you show them photos from home.",
+    "skip": "Call your family and look at the moon from your window.",
+    "skipText": "Your little cousin holds a star lantern up to the camera. You tell her it is the best one you have ever seen."
+   },
+   {
+    "id": "teachers-day-vn",
+    "title": "Teachers' Day, 20 November",
+    "body": "At home, 20 November is the day students bring flowers to their teachers and visit the ones who taught them years ago. Here it is an ordinary day of lectures.",
+    "month": 3,
+    "join": "Join other Vietnamese students to thank a professor who has helped you.",
+    "joinText": "You bring a small bouquet and a card to office hours. Your professor is surprised and delighted, and asks you to tell her about the holiday.",
+    "host": "Write to your old teacher at home.",
+    "hostText": "You send a long message to the teacher who first told you to apply abroad. She answers within the hour, proud of you.",
+    "skip": "Send a greeting to your class group chat and go to your lecture.",
+    "skipText": "Old classmates post photos of your school gate covered in flowers. You smile at every one."
+   },
+   {
+    "id": "tet-vn",
+    "title": "Tet, far from home",
+    "body": "Tet, the Lunar New Year, falls in the middle of the term this year. At home the house would be cleaned, the family altar set, and everyone would come back for the first days of the year.",
+    "month": 6,
+    "join": "Go to the Tet celebration with the Vietnamese community in town.",
+    "joinText": "There are lion dancers, trays of banh chung and red envelopes for the children. An auntie you have never met presses lucky money into your hand and wishes you good health.",
+    "host": "Cook a Tet meal for your friends.",
+    "hostText": "You find banh chung at the Vietnamese market and make braised pork with eggs. Your friends learn to say happy new year, and nobody leaves hungry.",
+    "skip": "Call home on the first morning of the year and go to class.",
+    "skipText": "Everyone is in new clothes and the phone goes from hand to hand. Your grandmother wishes you success in your studies, and you carry it with you all day."
+   }
+  ],
+  "familyCall": [
+   "It is morning in Ho Chi Minh City when you call at night, eleven to fifteen hours ahead of you.",
+   "Your mother asks if you have eaten yet, before she asks anything else.",
+   "Your father asks about your studies, and your grandmother leans in to say you look thin.",
+   "They are starting their day as you end yours, and you fall asleep a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from dong, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Vietnamese students, so the factor is left unchanged.",
+  "entryNotes": {
+   "F1": "Vietnam is the fifth largest source of international students in the US, with 25,584 in 2024/25, up about 16 percent in a year.",
+   "H1B": "US consulates in Vietnam issued 857 H-1B visas in FY2024, and Vietnamese applicants wait in the Rest of World green card queue.",
+   "B2": "Vietnam is not in the Visa Waiver Program, so every visitor needs a B visa before travelling.",
+   "O1": "The O-1 has no lottery or country limit, and the EB-1 green card that often follows is current for Vietnamese applicants in the November 2026 bulletin.",
+   "FAM": "Vietnam is charged to the Rest of World queue, where sibling petitions filed before 22 October 2012 are being processed in November 2026; it is not eligible for the Diversity Visa lottery.",
+   "EWI": "CBP does not report Vietnamese border encounters separately, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 85 and denied 76 asylum cases from Vietnamese nationals, about 53 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Ho Chi Minh City",
+   "text": "Vietnam is on Indochina Time, UTC+7, with no daylight saving. It is 12 hours ahead of US Eastern in winter and 11 in summer, and 15 hours ahead of Pacific in winter and 14 in summer.",
+   "value": 12,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Vietnam to US",
+   "text": "Design estimate of $1,500. No sourced fare was found; real prices change a great deal with season and route.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued in Vietnam",
+   "text": "US consulates in Vietnam issued 20,478 F-1 visas in FY2024, up from 16,256 in FY2023, and 16,641 in FY2025. This counts everyone interviewed in Vietnam, not only Vietnamese nationals. Figures are State Department data republished by VisaGrader.",
+   "value": 20478,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/vietnam-vnm",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Vietnamese students in the US",
+   "text": "Open Doors counted 25,584 students from Vietnam in US higher education in 2024/25, up about 16 percent from 22,066, the 5th largest group. About 63 percent were undergraduates.",
+   "value": 25584,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Vietnam_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Vietnam",
+   "text": "Vietnam received about $16 billion in remittances in 2024, roughly level with 2023, according to the government as reported by VnExpress.",
+   "value": 16,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://e.vnexpress.net/news/business/companies/vietnam-receives-16b-in-remittances-in-2024-4832768.html",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas issued in Vietnam",
+   "text": "US consulates in Vietnam issued 857 H-1B visas in FY2024 and 879 in FY2025. This counts everyone interviewed in Vietnam; Vietnam's share of all H-1B approvals was not found.",
+   "value": 857,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/vietnam-vnm",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Vietnamese applicants",
+   "text": "In FY2024 immigration courts granted 85 and denied 76 asylum cases from Vietnamese nationals, about 53 percent of decisions. Another 114 were not adjudicated. The numbers are small, and individual claims matter more than averages.",
+   "value": 53,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Vietnam",
+   "text": "Vietnam is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Asia",
+  "castGroup": "vietnam",
+  "ebQueue": "row",
+  "asylumGrantPct": 53,
+  "asylumNote": "85 grants and 76 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024); 85 / 161 = 52.8 percent. Small numbers. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

@@ -1,0 +1,233 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "egypt",
+  "name": "Egypt",
+  "demonym": "Egyptian",
+  "language": "Arabic",
+  "departureCity": "Cairo",
+  "airportBoardLine": "MS 985  CAIRO      LANDED",
+  "timeDifference": "It is already late evening there.",
+  "roundTripFlightUsd": 1200,
+  "flightEstimate": true,
+  "homeTravelNote": "a long flight of eleven hours or more, sometimes with a connection",
+  "names": {
+   "female": [
+    "Fatma",
+    "Mariam",
+    "Nour",
+    "Salma",
+    "Yasmin",
+    "Aya",
+    "Heba",
+    "Dina",
+    "Mona",
+    "Rania",
+    "Hana",
+    "Sara",
+    "Nada",
+    "Marina",
+    "Mirna"
+   ],
+   "male": [
+    "Mohamed",
+    "Ahmed",
+    "Mahmoud",
+    "Mostafa",
+    "Omar",
+    "Youssef",
+    "Karim",
+    "Hassan",
+    "Tarek",
+    "Amr",
+    "Khaled",
+    "Ibrahim",
+    "Mina",
+    "Kirollos",
+    "George"
+   ]
+  },
+  "skinTones": [
+   "#e3b990",
+   "#d4a57a",
+   "#c49468",
+   "#b07f55",
+   "#946a45",
+   "#7a5236"
+  ],
+  "foods": {
+   "dish": "koshari",
+   "cookLines": [
+    "Rice, lentils and macaroni each get their own pot, and the onions fry until they are dark and crisp.",
+    "You stir garlic and vinegar into the tomato sauce and taste it, the way your mother would.",
+    "{roommate} wanders in and asks why you need every pot in the kitchen for one dish.",
+    "You layer two bowls, pour on the sauce and the crispy onions, and the apartment smells like a street corner in Cairo."
+   ],
+   "groceryStore": "the Middle Eastern grocery store"
+  },
+  "studentAssociation": "Egyptian Students' Association",
+  "festivals": [
+   {
+    "id": "coptic-christmas-eg",
+    "title": "Coptic Christmas, 7 January",
+    "body": "At home Coptic Christmas comes on 7 January, after a long fast for those who keep it, with a late church service on the eve and a family feast. It is a public holiday in Egypt. Here the spring semester is starting.",
+    "month": 5,
+    "join": "Go to the Christmas Eve liturgy at the Coptic church.",
+    "joinText": "The church is full past midnight. Afterward there are tables of food in the hall, and a family you have never met makes sure you do not eat alone.",
+    "host": "Cook a Christmas dinner for friends.",
+    "hostText": "You make fatta the way your family does and explain why your Christmas is in January. Your friends decide two Christmases is a fine idea.",
+    "skip": "Call home with good wishes and keep the day simple.",
+    "skipText": "Whether or not it is your own feast, the family group chat is full of greetings going both ways between neighbors. You send yours too."
+   },
+   {
+    "id": "eid-eg",
+    "title": "Ramadan and Eid al-Fitr",
+    "body": "Eid falls on a weekday this year. At home the streets would be hung with lanterns all through Ramadan, and Eid morning would mean prayers, new clothes and trays of kahk.",
+    "month": 7,
+    "join": "Join the Eid prayer and breakfast at the local mosque.",
+    "joinText": "You stand shoulder to shoulder with people from a dozen countries. An auntie from Alexandria has brought kahk dusted with sugar, and it tastes exactly right.",
+    "host": "Cook for friends and share the day with them.",
+    "hostText": "Your friends arrive curious and leave full. Someone asks to come back next year.",
+    "skip": "Call home, then get on with your day.",
+    "skipText": "Your family holds up the plate of kahk so you can see it. You promise to celebrate properly next year."
+   },
+   {
+    "id": "sham-el-nessim-eg",
+    "title": "Sham el-Nessim",
+    "body": "The spring holiday falls on a Monday in April this year. At home Egyptians of every faith would be out in the parks and along the Nile with coloured eggs, green onions and salted fish.",
+    "month": 8,
+    "join": "Join the Egyptian students' picnic in the park.",
+    "joinText": "Someone has dyed eggs, someone else found salted fish at the Middle Eastern grocery store, and the first warm day of the year does the rest.",
+    "host": "Dye eggs with your roommates and eat outside.",
+    "hostText": "You explain that people have greeted the spring this way in Egypt for thousands of years. Your roommates take the egg dyeing very seriously.",
+    "skip": "Call home and go to class.",
+    "skipText": "Your cousins send photos from the park, squinting in the sun. You open the window and let some spring air in."
+   }
+  ],
+  "familyCall": [
+   "It is late evening in Cairo when the call connects, seven to ten hours ahead of you for most of the year.",
+   "Your mother asks if you are eating well and whether it has turned cold yet.",
+   "Your father asks about your classes, and your grandmother takes the phone to pray for you before she sleeps.",
+   "By the time you hang up it is past midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from Egyptian pounds, and since the pound was floated in March 2024 the same family savings buy fewer dollars.",
+  "familySupportFactor": 0.9,
+  "familySupportNote": "Designed at 0.9 of the India baseline. On 6 March 2024 Egypt floated the pound and it moved from about 31 to more than 50 per dollar in a day, which makes US costs paid from pound savings harder to cover. Kept modest because remittances to Egypt reached a record of about $41.5 billion in 2025.",
+  "entryNotes": {
+   "F1": "Open Doors counted 4,518 Egyptian students in the US in 2024/25, nearly half of them graduate students, and Egypt is not named in the 2025 or 2026 entry proclamations.",
+   "H1B": "Egyptian nationals received 364 H-1B visas in FY2024, and Egyptians wait in the shorter Rest of World green card queue, not India's.",
+   "B2": "The June 2025 proclamation ordered a review of Egypt's screening practices but did not restrict visas for Egyptians, and the January 2026 proclamation did not add Egypt.",
+   "O1": "Egyptian nationals received 70 O-1 visas in FY2024, up from 42 in FY2018.",
+   "FAM": "People born in Egypt have been eligible for the Diversity Visa lottery through DV-2026; immigrant visas for Egyptians were paused from 21 January 2026 until a court set the pause aside on 21 August 2026.",
+   "EWI": "Entering without inspection usually blocks a green card from inside the US later, even through a US citizen spouse.",
+   "ASY": "In FY2024 immigration courts granted 203 and denied 78 asylum cases from Egyptian nationals, about 72 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Cairo",
+   "text": "Cairo is on Eastern European Time, UTC+2, and since 2023 moves to UTC+3 from late April to the end of October. It is 7 hours ahead of US Eastern and 10 ahead of Pacific for most of the year, and 6 and 9 for a few weeks in spring and autumn when the two countries change clocks on different dates.",
+   "value": 7,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Egypt to US",
+   "text": "Design estimate of $1,200. No sourced fare was found.",
+   "value": 1200,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Egyptians",
+   "text": "Egyptian nationals received 1,237 F-1 visas in FY2024, compared with 1,348 in FY2022, and 856 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 1237,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/egypt-egy",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Egyptian students in the US",
+   "text": "Open Doors counted 4,518 Egyptian students in US higher education in 2024/25, up from 4,280 the year before, the 33rd largest group. Nearly half were graduate students.",
+   "value": 4518,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Egypt_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Egypt",
+   "text": "Remittances to Egypt reached a record of about $41.5 billion in 2025, the largest total in Africa, according to IFAD's Sending Money Home 2026 report as covered by Capital Ethiopia.",
+   "value": 41.5,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://capitalethiopia.com/2026/09/20/remittances-to-africa-reach-124-billion-as-digital-channels-lower-transfer-costs/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Egyptians",
+   "text": "Egyptian nationals received 364 H-1B visas in FY2024 and 390 in FY2025, up from 184 in FY2018. Egypt's share of all H-1B approvals was not found.",
+   "value": 364,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/egypt-egy",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Egyptian applicants",
+   "text": "In FY2024 immigration courts granted 203 and denied 78 asylum cases from Egyptian nationals, about 72 percent of decisions. Another 144 were not adjudicated. Individual claims matter more than averages.",
+   "value": 72,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Egypt",
+   "text": "Egypt is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Immigrant visa issuance for nationals of 75 countries, this one included, was paused from 21 January 2026 until a federal court set the pause aside on 21 August 2026; the government has appealed.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Africa",
+  "castGroup": "egypt",
+  "ebQueue": "row",
+  "asylumGrantPct": 72,
+  "asylumNote": "203 grants and 78 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024), https://www.justice.gov/eoir/media/1344846/dl. Rate is grants divided by grants plus denials.",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

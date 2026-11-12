@@ -1,0 +1,243 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "poland",
+  "name": "Poland",
+  "demonym": "Polish",
+  "language": "Polish",
+  "departureCity": "Warsaw",
+  "airportBoardLine": "LO 26   WARSAW     LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 950,
+  "flightEstimate": true,
+  "homeTravelNote": "a nine or ten hour flight, direct from a few US cities and one connection from the rest",
+  "names": {
+   "female": [
+    "Anna",
+    "Katarzyna",
+    "Agnieszka",
+    "Magdalena",
+    "Zofia",
+    "Julia",
+    "Aleksandra",
+    "Natalia",
+    "Karolina",
+    "Marta",
+    "Ewa",
+    "Zuzanna",
+    "Joanna",
+    "Monika"
+   ],
+   "male": [
+    "Jakub",
+    "Piotr",
+    "Krzysztof",
+    "Tomasz",
+    "Michał",
+    "Paweł",
+    "Mateusz",
+    "Kacper",
+    "Adam",
+    "Marcin",
+    "Wojciech",
+    "Jan",
+    "Łukasz",
+    "Bartosz"
+   ]
+  },
+  "skinTones": [
+   "#f8e2d4",
+   "#f2d2bd",
+   "#e8bea3",
+   "#d9a585",
+   "#bf8a68",
+   "#9a6b4d"
+  ],
+  "foods": {
+   "dish": "pierogi",
+   "cookLines": [
+    "You roll the dough thin, cut circles with a glass and fill them with potato and cheese, and the kitchen starts to feel like home.",
+    "You pinch each one shut the way your grandmother showed you and fry onions in butter while the water boils.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and argue happily over who gets the last one."
+   ],
+   "groceryStore": "the Polish deli"
+  },
+  "studentAssociation": "Polish Students' Association",
+  "festivals": [
+   {
+    "id": "all-saints-pl",
+    "title": "All Saints' Day, 1 November",
+    "body": "At home the cemeteries glow with thousands of candles and families travel to visit the graves of the people they love. Here it is an ordinary day.",
+    "month": 3,
+    "join": "Go to the Polish parish for the evening service and candles.",
+    "joinText": "The candles flicker in glass lanterns just as they do at home. An older couple invites you for tea afterward and asks which town you are from.",
+    "host": "Light a candle at home and tell your friends who you are remembering.",
+    "hostText": "You show them photos of your grandparents and of the cemetery lit up at night. They are quiet for a moment, then ask to hear more.",
+    "skip": "Call home and ask someone to light a candle for you.",
+    "skipText": "Your mother sends a photo of the family grave covered in lights and chrysanthemums. You look at it for a long time."
+   },
+   {
+    "id": "wigilia-pl",
+    "title": "Wigilia, Christmas Eve",
+    "body": "At home the family waits for the first star, shares the opłatek wafer and sits down to twelve dishes, with an extra place set for an unexpected guest. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Wigilia with a Polish family from the parish or the association.",
+    "joinText": "They break the wafer with you and wish you health and good news from home. This year the extra place at the table is yours.",
+    "host": "Host Wigilia for friends who could not travel.",
+    "hostText": "You manage beet soup, pierogi and a poppy seed cake, not quite twelve dishes. Your friends share the wafer and take the wishes seriously.",
+    "skip": "Call home when the first star comes out there.",
+    "skipText": "It is still afternoon for you, but the whole family crowds into the screen to share the wafer from afar. You feel close to it all."
+   },
+   {
+    "id": "wielkanoc-pl",
+    "title": "Easter",
+    "body": "Easter falls in April this year. At home there would be a basket of food blessed on Saturday, a long Sunday breakfast and water fights on Monday.",
+    "month": 8,
+    "join": "Take a basket to the blessing at the Polish parish.",
+    "joinText": "Your basket holds eggs, bread, a little sausage and a sugar lamb you found at the Polish deli. People admire each other's baskets and trade recipes.",
+    "host": "Make Easter breakfast for your friends.",
+    "hostText": "Eggs, sour rye soup and a tall yeast cake that very nearly rose. On Monday you explain why you are holding a water pistol.",
+    "skip": "Call home on Sunday morning and have a calm day.",
+    "skipText": "Your family passes the phone around the breakfast table. Your little cousin warns you about Monday."
+   }
+  ],
+  "familyCall": [
+   "It is evening in Poland when the call connects, six hours ahead of the East Coast and nine ahead of the West.",
+   "Your mother asks whether you are eating well and whether you are dressing warmly enough.",
+   "Your father leans in to ask how the work is going, and your grandmother wants to know when you are coming home.",
+   "By the time you hang up it is nearly midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from złoty, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at the India baseline of 1.0. No sourced figure was found that would justify more or less family support for Polish students, so the factor is left unchanged. Flight costs are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "Polish nationals received 759 F-1 visas in FY2024, and Open Doors counted 1,809 Polish students in 2024/25, up from 1,661.",
+   "H1B": "Polish nationals received 195 H-1B visas in FY2024 and wait in the Rest of World green card queue, not India's.",
+   "B2": "Poland joined the Visa Waiver Program on 11 November 2019, so Poles who once needed a B-2 visa can now visit for up to 90 days with an approved ESTA.",
+   "O1": "Polish nationals received 126 O-1 visas in FY2024 and 153 in FY2025.",
+   "FAM": "Poland is charged to the Rest of World queue, where the November 2026 bulletin is reaching sibling petitions filed before 22 October 2012; people born in Poland can enter the Diversity Visa lottery, though Poland was on the ineligible list for some earlier years.",
+   "EWI": "CBP does not report Polish citizens separately in its border encounter data, and a visitor who stays past the 90 days allowed under the Visa Waiver Program has few ways to fix status from inside the US.",
+   "ASY": "EOIR's FY2024 table shows fewer than four asylum grants and fewer than four denials for Polish nationals, too few to publish or to turn into a rate."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Warsaw",
+   "text": "Warsaw is on Central European Time, UTC+1, and UTC+2 in summer. It is 6 hours ahead of US Eastern and 9 hours ahead of Pacific for most of the year, and 5 and 8 for a few weeks in March and around the end of October when the clocks change on different dates.",
+   "value": 6,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Poland to US",
+   "text": "Design estimate of $950. No sourced fare was retrieved for this route; the figure is a planning number, not a quote.",
+   "value": 950,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Poles",
+   "text": "Polish nationals received 759 F-1 visas in FY2024, against 770 in FY2023 and 761 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 759,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/poland-pol",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Polish students in the US",
+   "text": "Open Doors counted 1,809 Polish students in US higher education in 2024/25, up from 1,661, the 59th largest group. 936 were undergraduates.",
+   "value": 1809,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Poland_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Poland",
+   "text": "World Bank data put personal remittances received by Poland at about $8.7 billion in 2024, a little under 1 percent of GDP, and $9.5 billion in 2025.",
+   "value": 8.7,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/POL/indicator/BX.TRF.PWKR.CD.DT?format=json&date=2022:2025",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Poles",
+   "text": "Polish nationals received 195 H-1B visas in FY2024 and 201 in FY2025. Poland's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 195,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/poland-pol",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Polish applicants",
+   "text": "EOIR's FY2024 table by nationality lists 26 Polish cases as not adjudicated and 22 withdrawn, and suppresses grants and denials because each is below four. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Poland",
+   "text": "Poland is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Poland is not named in the 2025 entry proclamations or on the reported list of 75 countries whose immigrant visas were paused in January 2026.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "visa-waiver",
+   "topic": "rules",
+   "title": "Visa Waiver Program",
+   "text": "DHS lists Poland in the Visa Waiver Program with travel beginning 11 November 2019. Before that date Polish visitors needed a B visa. Stays under the program are limited to 90 days.",
+   "value": 2019,
+   "unit": "year",
+   "year": 2019,
+   "source": "https://www.dhs.gov/visa-waiver-program",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Europe",
+  "castGroup": "poland",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "null: EOIR FY2024 suppresses Polish grants and denials (each fewer than four); 26 not adjudicated, 22 withdrawn. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

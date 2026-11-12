@@ -1,0 +1,207 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "canada",
+  "name": "Canada",
+  "demonym": "Canadian",
+  "language": "English, French or your home language",
+  "departureCity": "Toronto",
+  "airportBoardLine": "AC 700  TORONTO    LANDED",
+  "timeDifference": "It is the same time there, or up to three hours later if you live out west.",
+  "roundTripFlightUsd": 350,
+  "flightEstimate": true,
+  "homeTravelNote": "a short flight or a long drive, close enough that a weekend at home is possible",
+  "names": {
+   "female": [
+    "Emma",
+    "Olivia",
+    "Charlotte",
+    "Sophie",
+    "Chloé",
+    "Léa",
+    "Camille",
+    "Hannah",
+    "Priya",
+    "Simran",
+    "Mei",
+    "Fatima",
+    "Amara",
+    "Maya"
+   ],
+   "male": [
+    "Liam",
+    "Noah",
+    "William",
+    "Ethan",
+    "Lucas",
+    "Thomas",
+    "Mathieu",
+    "Étienne",
+    "Arjun",
+    "Harpreet",
+    "Wei",
+    "Omar",
+    "Kwame",
+    "Daniel"
+   ]
+  },
+  "skinTones": [
+   "#f3d7c2",
+   "#e8c4a8",
+   "#d9a983",
+   "#c08a62",
+   "#946544",
+   "#5c3a24"
+  ],
+  "foods": {
+   "dish": "poutine",
+   "cookLines": [
+    "Fries crisp in the oven while the gravy simmers, and the apartment smells like a rink-side snack bar at home.",
+    "You hunt through three stores for proper cheese curds and settle for the closest thing you can find.",
+    "{roommate} wanders in and asks why you are pouring gravy on fries.",
+    "You share one big plate at the counter, and by the last fry nobody is asking questions."
+   ],
+   "groceryStore": "the supermarket with a small shelf of Canadian imports"
+  },
+  "studentAssociation": "Canadian Students' Association",
+  "festivals": [
+   {
+    "id": "thanksgiving-ca",
+    "title": "Thanksgiving, in October",
+    "body": "At home, Thanksgiving is the second Monday of October, with a long weekend, turkey and the leaves at their brightest. Here it is an ordinary Monday with classes.",
+    "month": 2,
+    "join": "Go to the Canadian students' Thanksgiving potluck.",
+    "joinText": "Someone brings butter tarts, someone else brings Nanaimo bars, and the room argues happily about which province does it best. You go home full.",
+    "host": "Cook a small turkey dinner for your friends.",
+    "hostText": "Your friends are puzzled by Thanksgiving in October and delighted by the pumpkin pie. They promise to invite you to theirs in November.",
+    "skip": "Call home during the family dinner and get back to work.",
+    "skipText": "Your family passes the phone around the table so everyone can say hello. You can almost smell the stuffing."
+   },
+   {
+    "id": "holidays-ca",
+    "title": "Christmas and Boxing Day",
+    "body": "At home, late December means snow, family in from other provinces and a lazy Boxing Day of leftovers and hockey on television. Campus is emptying out for the break.",
+    "month": 4,
+    "join": "Spend the holiday with a friend's family nearby.",
+    "joinText": "They set a place for you without any fuss. On the 26th you explain Boxing Day, and they decide it is a fine idea.",
+    "host": "Host a holiday dinner for the students still in town.",
+    "hostText": "Six people, a borrowed roasting pan and a tourtière made from your aunt's recipe. Everyone stays late to watch the game.",
+    "skip": "Video-call home and have a quiet day.",
+    "skipText": "Your parents carry the laptop to the window so you can see the snow in the yard. It feels close."
+   },
+   {
+    "id": "canada-day-ca",
+    "title": "Canada Day, 1 July",
+    "body": "At home, 1 July means a day off, red and white everywhere, barbecues and fireworks over the water. Here it is a regular workday, three days before the American fireworks.",
+    "month": 11,
+    "join": "Meet other Canadians in the city for a picnic.",
+    "joinText": "Maple leaf flags on a park table, ketchup chips somebody carried back across the border, and accents from every province. You stay until dark.",
+    "host": "Have friends over for a barbecue in red and white.",
+    "hostText": "Your friends learn the words to the anthem in two languages, more or less. Someone finds fireworks from Ottawa streaming online.",
+    "skip": "Send greetings to the family chat and carry on.",
+    "skipText": "Photos of the lake, the dock and the fireworks arrive all evening. You save every one."
+   }
+  ],
+  "familyCall": [
+   "Toronto keeps the same clock as New York, so wherever you are in the US it is at most three hours later at home.",
+   "Your mother calls after dinner and asks whether you have found a decent winter coat yet.",
+   "Your father takes the phone to report on the weather and the hockey score, and your sister waves from the couch.",
+   "You hang up thinking home is not far at all, and missing it anyway."
+  ],
+  "homeMoneyNote": "Money from home is converted from Canadian dollars, so tuition and rent priced in US dollars cost your family more than the number suggests.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Canadian students. Cheaper travel home is handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "Canadian citizens generally do not need a visa to enter the US as students, and 29,903 Canadians studied there in 2024/25, the fourth largest group.",
+   "H1B": "Many Canadian professionals use TN status instead, which a Canadian citizen can request from CBP at a port of entry without a consular visa, for up to three years at a time.",
+   "B2": "Canadian citizens generally do not need a visa to visit the US; a passport is normally what the border officer asks for.",
+   "O1": "A Canadian citizen does not need a visa stamp for O-1 status, but an employer or agent must still have a petition approved by USCIS first.",
+   "FAM": "Fiancé(e)s of US citizens are among the few Canadians who do need a visa (the K category); Canada is charged to the Rest of World queue and is not eligible for the Diversity Visa lottery.",
+   "EWI": "Border Patrol recorded 245 apprehensions of Canadian citizens at the northern border in FY2024, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "Asylum cases from Canadian nationals are so rare that the immigration courts' FY2024 table shows fewer than four grants and fewer than four denials."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Toronto",
+   "text": "Toronto is on Eastern Time (UTC-5 in winter, UTC-4 in summer) and changes its clocks on the same dates as the US. It is level with US Eastern all year and 3 hours ahead of Pacific.",
+   "value": 0,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Canada to US",
+   "text": "Design estimate of $350. No sourced fare range for Canada to US round trips was found; real fares vary widely by route and season.",
+   "value": 350,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Canadian students in the US",
+   "text": "29,903 students from Canada studied in the US in 2024/25, up from 28,998 the year before. Canada ranked 4th among places of origin; about half were undergraduates (Open Doors 2025).",
+   "value": 29903,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Canada_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "Canada and TN status",
+   "text": "Canada's share of H-1B approvals was not found. The main professional route is TN status, which Canadian citizens request from CBP at a port of entry with no consular visa, for up to 3 years at a time. That is why only 42 of 15,672 TN visas in FY2024 went to Canadians: most never need the visa itself.",
+   "value": 42,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://usafacts.org/explainers/what-is-a-visa/visa-category/tn/",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Canadian applicants",
+   "text": "EOIR's FY2024 table shows fewer than four grants and fewer than four denials for Canadian nationals (both suppressed for privacy), with 13 cases not adjudicated. There is no meaningful grant rate to report.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Canada",
+   "text": "Canada is charged to the Rest of World queue. November 2026 Visa Bulletin final action dates, as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "North America",
+  "castGroup": "canada",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR FY2024 Asylum Decisions by Nationality suppresses both grants and denials for Canada (fewer than four each); 13 not adjudicated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

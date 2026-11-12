@@ -1,0 +1,940 @@
+{
+  "asOf": "2026-11-08",
+  "events": [
+    {
+      "id": "h4-ead-rule-effective",
+      "year": 2015,
+      "title": "H-4 work permits begin",
+      "summary": "A rule effective May 26, 2015 let some H-1B spouses with an approved green card step apply for work permits.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 2,
+        "career": 1,
+        "wellbeing": 2,
+        "money": 2,
+        "community": 1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/temporary-workers/h-4-employment-authorization",
+      "confidence": "UNVERIFIED",
+      "pending": false
+    },
+    {
+      "id": "h1b-lottery-fy2016",
+      "year": 2015,
+      "title": "H-1B lottery: roughly 1 in 3",
+      "summary": "About 233,000 petitions were filed for the FY2016 cap and the chance of selection was reported near 36 percent.",
+      "affects": [
+        "H-1B",
+        "F-1",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -2,
+        "wellbeing": -2,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://cilawgroup.com/?p=2753",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "farmington-sting-begins",
+      "year": 2015,
+      "title": "Fake university sting starts",
+      "summary": "ICE began running a fake school, the University of Farmington; over 600 students, almost all Indian, later enrolled.",
+      "affects": [
+        "F-1",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -2,
+        "career": -1,
+        "wellbeing": -1,
+        "money": -1,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.axios.com/2019/11/27/ice-fake-university-arrested-immigrant-students",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "stem-opt-24-month-rule",
+      "year": 2016,
+      "title": "STEM OPT extension rule",
+      "summary": "The 24-month STEM OPT extension rule took effect May 10, 2016, giving STEM graduates up to 3 years of OPT in total.",
+      "affects": [
+        "F-1",
+        "OPT"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 3,
+        "career": 3,
+        "wellbeing": 1,
+        "money": 2,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/students-and-exchange-visitors/optional-practical-training-extension-for-stem-students-stem-opt",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "h1b-lottery-fy2017",
+      "year": 2016,
+      "title": "H-1B lottery: under 2 in 5",
+      "summary": "More than 236,000 H-1B cap petitions were filed for FY2017 and fewer than 2 in 5 were selected.",
+      "affects": [
+        "H-1B",
+        "F-1",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -2,
+        "wellbeing": -2,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://webiis08.mondaq.com/unitedstates/work-visas/484002/uscis-receives-more-than-236000-h-1b-cap-petitions-and-completes-lottery-process",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "indian-f1-visas-fall-2016",
+      "year": 2016,
+      "title": "Fewer F-1 visas for Indians",
+      "summary": "State Department data show F-1 visas issued to Indian nationals fell from 74,831 in FY2015 to 62,537 in FY2016.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -1,
+        "wellbeing": 0,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "travel-bans-2017",
+      "year": 2017,
+      "title": "Travel bans announced",
+      "summary": "Executive orders and a September proclamation restricted entry from several countries; India was not on the lists, but the climate felt uncertain to many students.",
+      "affects": [
+        "all"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": 0,
+        "wellbeing": -3,
+        "money": 0,
+        "community": -2
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2017/09/27/2017-20899/enhancing-vetting-capabilities-and-processes-for-detecting-attempted-entry-into-the-united-states-by",
+      "confidence": "UNVERIFIED",
+      "pending": false
+    },
+    {
+      "id": "buy-american-hire-american",
+      "year": 2017,
+      "title": "Buy American, Hire American order",
+      "summary": "An April 2017 executive order was followed by tougher H-1B scrutiny and more requests for evidence.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -2,
+        "career": -3,
+        "wellbeing": -2,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/temporary-workers",
+      "confidence": "UNVERIFIED",
+      "pending": false
+    },
+    {
+      "id": "indian-f1-visas-low-2017",
+      "year": 2017,
+      "title": "F-1 visas to Indians drop again",
+      "summary": "F-1 visas issued to Indian nationals fell to 44,741 in FY2017 from 62,537 the year before.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -1,
+        "wellbeing": 0,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "unlawful-presence-memo-fjm",
+      "year": 2018,
+      "title": "Students face automatic unlawful presence",
+      "summary": "An August 2018 policy memo meant F, J and M students could start accruing unlawful presence the day after a status violation. A court blocked it in 2019.",
+      "affects": [
+        "F-1",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -4,
+        "career": 0,
+        "wellbeing": -3,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/laws-and-policy/other-resources/unlawful-presence-and-inadmissibility",
+      "confidence": "UNVERIFIED",
+      "pending": false
+    },
+    {
+      "id": "f1-refusals-high-2018",
+      "year": 2018,
+      "title": "Student visa refusals run high",
+      "summary": "Projected F-1 refusal rate at posts in India was about 35 percent in FY2018.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -2,
+        "career": -2,
+        "wellbeing": -2,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://visagrader.com/visa-approvals-and-refusals/F1/india-ind",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "indian-it-firms-h1b-decline",
+      "year": 2018,
+      "title": "Indian IT firms win fewer H-1Bs",
+      "summary": "Initial H-1B approvals for Indian-based IT firms fell about 70 percent from FY2015 to FY2025, a decline already visible by the late 2010s.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -1,
+        "career": -3,
+        "wellbeing": -1,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.business-standard.com/immigration/h-1b-visa-approvals-amazon-meta-microsoft-lead-indian-it-faces-70-fall-125120200461_1.html",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "farmington-arrests",
+      "year": 2019,
+      "title": "Fake university arrests",
+      "summary": "ICE said about 250 people were arrested in the Farmington sting and nearly 80 percent of them took voluntary departure.",
+      "affects": [
+        "F-1",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -5,
+        "career": -3,
+        "wellbeing": -5,
+        "money": -2,
+        "community": -3
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.chronicle.com/article/some-250-people-arrested-in-ices-u-of-farmington-sting-operation/",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "h1b-lottery-fy2020",
+      "year": 2019,
+      "title": "H-1B cap season FY2020",
+      "summary": "USCIS received 201,011 petitions for FY2020 and about 42 percent were selected overall.",
+      "affects": [
+        "H-1B",
+        "F-1",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": 0,
+        "career": -1,
+        "wellbeing": -1,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.rnlawgroup.com/685-uscis-receives-201-011-h-1b-petitions-and-completes-lottery-for-fy-2020",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "public-charge-2019-rule",
+      "year": 2019,
+      "title": "Public charge rule announced",
+      "summary": "A rule published August 2019 widened public charge tests; it took effect in 2020 and stopped being in effect March 9, 2021.",
+      "affects": [
+        "all"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -2,
+        "career": 0,
+        "wellbeing": -2,
+        "money": 0,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/green-card/green-card-processes-and-procedures/public-charge",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "covid-closures-2020",
+      "year": 2020,
+      "title": "Pandemic closes consulates",
+      "summary": "Consulates closed in March 2020. F-1 visas issued to Indians fell from 43,714 in FY2019 to 15,323 in FY2020.",
+      "affects": [
+        "F-1",
+        "H-1B",
+        "B-1/B-2",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -3,
+        "career": -4,
+        "wellbeing": -5,
+        "money": -3,
+        "community": -3
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "h1b-entry-ban-2020",
+      "year": 2020,
+      "title": "H-1B entry ban",
+      "summary": "A June 22, 2020 proclamation suspended entry for many H-1B, L, J and H-2B workers outside the US.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -5,
+        "career": -4,
+        "wellbeing": -4,
+        "money": -2,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2020/06/25/2020-13888/suspension-of-entry-of-aliens-who-present-a-risk-to-the-united-states-labor-market-during-the-economic",
+      "confidence": "UNVERIFIED",
+      "pending": false
+    },
+    {
+      "id": "h1b-electronic-registration",
+      "year": 2020,
+      "title": "H-1B registration begins",
+      "summary": "March 2020 was the first electronic H-1B registration, ahead of the FY2021 cap season.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 1,
+        "career": 1,
+        "wellbeing": 1,
+        "money": 1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "uscis-processing-peak-2021",
+      "year": 2021,
+      "title": "USCIS processing at long highs",
+      "summary": "Median processing in FY2021 reached 11.5 months for naturalization and 12.9 months for family green cards.",
+      "affects": [
+        "H-1B",
+        "OPT",
+        "all"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -3,
+        "career": -1,
+        "wellbeing": -3,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/sites/default/files/document/fact-sheets/historical_pt_factsheet_fy16_to_fy24.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "f1-catchup-2021",
+      "year": 2021,
+      "title": "Student visa catch-up",
+      "summary": "F-1 visas issued to Indians rebounded to 80,451 in FY2021 as consulates reopened.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 2,
+        "career": 2,
+        "wellbeing": 2,
+        "money": 1,
+        "community": 1
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "remote-work-boom-2021",
+      "year": 2021,
+      "title": "Tech hiring boom",
+      "summary": "Pandemic-era tech hiring grew and H-1B visas issued to Indians later reached 166,271 in FY2022.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 1,
+        "career": 4,
+        "wellbeing": 1,
+        "money": 3,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "india-eb2-retrogression-2022",
+      "year": 2022,
+      "title": "India EB-2 green card dates slide back",
+      "summary": "The October 2022 Visa Bulletin pushed the India EB-2 cutoff date back to April 2012.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -5,
+        "career": -2,
+        "wellbeing": -4,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://globaltaxnews.ey.com/news/2022-5881-us-october-2022-visa-bulletin-reflects-substantial-retrogression-in-the-employment-based-second-preference-category-for-indian-born-green-card-applicants",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "record-h1b-registrations-2022",
+      "year": 2022,
+      "title": "Record H-1B registrations",
+      "summary": "FY2023 registrations hit 483,927 and F-1 visas issued to Indians reached 115,115 in FY2022.",
+      "affects": [
+        "H-1B",
+        "F-1",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -2,
+        "wellbeing": -2,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.mondaq.com:443/unitedstates/general-immigration/1185058/uscis-announces-results-of-the-fy2023-h1b-quota-registration-selection-process",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "big-tech-layoffs-2023",
+      "year": 2023,
+      "title": "Tech layoffs start the 60-day clock",
+      "summary": "Large layoffs in 2023 put H-1B workers on the 60-day grace period to find a new sponsor, change status or leave.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -5,
+        "career": -6,
+        "wellbeing": -6,
+        "money": -5,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.immihelp.com/h-1b-visa-layoff-and-60-days-grace-period/",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "indian-f1-peak-2023",
+      "year": 2023,
+      "title": "Peak student visa year",
+      "summary": "F-1 visas issued to Indians reached 130,730 in FY2023, and N-400 processing fell to 6.1 months.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 2,
+        "career": 2,
+        "wellbeing": 2,
+        "money": 1,
+        "community": 1
+      },
+      "effectIsEstimate": true,
+      "source": "https://web.archive.org/web/2025/https://travel.state.gov/content/dam/visas/Statistics/Non-Immigrant-Statistics/NIVDetailTables/FY24NIVDetailTable.pdf",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "h1b-fy2024-selection-25pct",
+      "year": 2023,
+      "title": "H-1B odds near 1 in 4",
+      "summary": "For FY2024 about 120,603 of 470,342 eligible registrations were selected, roughly 25.6 percent.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -2,
+        "career": -3,
+        "wellbeing": -3,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://natlawreview.com/article/united-states-uscis-data-shows-drop-h-1b-registrations-year",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "beneficiary-centric-registration",
+      "year": 2024,
+      "title": "One entry per person",
+      "summary": "A February 2024 change counted H-1B registrations by unique beneficiary, ending duplicate entries through several employers.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -2,
+        "wellbeing": -1,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://jdsupra.com/legalnews/h-1b-registration-numbers-for-fy-2026-h-9625179",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "uscis-fee-rule-2024",
+      "year": 2024,
+      "title": "USCIS fees rise",
+      "summary": "The April 1, 2024 fee rule raised the H-1B I-129 base fee from $460 to $780 and added an Asylum Program Fee.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": 0,
+        "career": 0,
+        "wellbeing": -1,
+        "money": -3,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://natlawreview.com/article/uscis-issues-final-rule-fee-increases",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "f1-refusals-41pct-2024",
+      "year": 2024,
+      "title": "Student visa refusals hit a ten-year high",
+      "summary": "About 41 percent of F-1 applications worldwide were denied in FY2024 and F-1 issuance to Indians fell 38 percent in January to September.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -4,
+        "career": -3,
+        "wellbeing": -4,
+        "money": -2,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.wionews.com/world/getting-a-us-student-visa-just-got-harder-f-1-rejections-hit-10-year-high-with-40-of-applicants-denied-8885707",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "j1-skills-list-india-removed",
+      "year": 2024,
+      "title": "India leaves J-1 skills list",
+      "summary": "Effective December 9, 2024, India was removed from the Exchange Visitor Skills List, easing the two-year home rule for some J-1 holders.",
+      "affects": [
+        "all"
+      ],
+      "tone": "opportunity",
+      "effect": {
+        "legal": 3,
+        "career": 1,
+        "wellbeing": 1,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.fragomen.com/insights/united-states-dos-issues-revised-j-1-exchange-visitor-skills-list-with-retroactive-effect-china-and-india-among-other-countries-have-been-removed-from-the-list.html",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "student-visa-pause-2025",
+      "year": 2025,
+      "title": "Student visa interviews paused",
+      "summary": "A late-May 2025 pause on student visa interviews contributed to a 62 percent drop in Indian F-1 issuance from May to August 2025.",
+      "affects": [
+        "F-1"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -4,
+        "career": -4,
+        "wellbeing": -5,
+        "money": -3,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.business-standard.com/immigration/us-student-visas-for-indians-plunge-62-during-peak-admission-season-126080501124_1.html",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "opt-unemployment-warnings",
+      "year": 2025,
+      "title": "ICE warns OPT students",
+      "summary": "In 2025 ICE began sending warning notices about unreported employment and unemployment limits to OPT students.",
+      "affects": [
+        "OPT",
+        "F-1"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -3,
+        "career": -2,
+        "wellbeing": -4,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.klaskolaw.com/ice-issues-unemployment-warnings-to-f-1-students-on-opt/",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "h1b-100k-proclamation",
+      "year": 2025,
+      "title": "$100,000 H-1B payment announced",
+      "summary": "A September 2025 proclamation required $100,000 for certain new H-1B petitions for workers outside the US, effective September 21.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -4,
+        "career": -5,
+        "wellbeing": -5,
+        "money": -5,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations",
+      "confidence": "CONFIRMED",
+      "pending": true
+    },
+    {
+      "id": "weighted-selection-final-rule",
+      "year": 2025,
+      "title": "Wage-weighted H-1B lottery finalized",
+      "summary": "A rule published December 29, 2025 gives higher-wage registrations more lottery entries.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -3,
+        "wellbeing": -3,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2025/12/29/2025-23853/weighted-selection-process-for-registrants-and-petitioners-seeking-to-file-cap-subject-h-1b",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "cspa-age-out-change",
+      "year": 2025,
+      "title": "Children age out more easily",
+      "summary": "An August 2025 USCIS change reportedly narrowed child age protection for green card applicants.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -3,
+        "career": 0,
+        "wellbeing": -3,
+        "money": 0,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.immihelp.com/a-guide-to-the-latest-cspa-changes/",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "opt-reevaluation-2026",
+      "year": 2026,
+      "title": "OPT under review",
+      "summary": "In January 2026 DHS said it is re-evaluating the scope and duration of OPT; no rule text existed as of November 2026.",
+      "affects": [
+        "OPT",
+        "F-1"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -3,
+        "career": -4,
+        "wellbeing": -5,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.f1jobs.io/resources/blog/is-opt-ending-what-dhs-proposed-october-2026",
+      "confidence": "LIKELY",
+      "pending": true
+    },
+    {
+      "id": "opt-fee-proposal-2026",
+      "year": 2026,
+      "title": "Proposed OPT fees",
+      "summary": "An October 8, 2026 proposed rule would add very large fees for OPT; it is not in effect and who would pay is disputed.",
+      "affects": [
+        "OPT",
+        "F-1"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -2,
+        "career": -3,
+        "wellbeing": -4,
+        "money": -6,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2026/10/08/2026-20660/optional-practical-training-fees",
+      "confidence": "LIKELY",
+      "pending": true
+    },
+    {
+      "id": "duration-of-status-ends-2026",
+      "year": 2026,
+      "title": "F-1 fixed admission period",
+      "summary": "A July 17, 2026 final rule replaces duration of status with a fixed period of up to 4 years; a court postponed it before its September 15 effective date.",
+      "affects": [
+        "F-1",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -4,
+        "career": -1,
+        "wellbeing": -4,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2026/07/17/2026-14439/establishing-a-fixed-time-period-of-admission-and-an-extension-of-stay-procedure-for-nonimmigrant",
+      "confidence": "LIKELY",
+      "pending": true
+    },
+    {
+      "id": "h1b-weighted-lottery-fy2027",
+      "year": 2026,
+      "title": "Weighted lottery runs; entries fall 38 percent",
+      "summary": "FY2027 registration ran March 4 to 19, 2026 with a $215 fee; registrations fell 38.5 percent to 211,600.",
+      "affects": [
+        "H-1B",
+        "OPT"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -2,
+        "career": -3,
+        "wellbeing": -3,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.mintz.com/insights-center/viewpoints/2806/2026-07-20-uscis-announces-fy2027-h-1b-cap-reached-no-second",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "h1b-100k-vacated",
+      "year": 2026,
+      "title": "$100,000 payment vacated by court",
+      "summary": "On June 8, 2026 a federal court vacated the guidance implementing the payment; the First Circuit denied a stay July 24 and DHS says it may collect if the order is lifted.",
+      "affects": [
+        "H-1B"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -1,
+        "career": -2,
+        "wellbeing": -2,
+        "money": -2,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.uscis.gov/working-in-the-united-states/h-1b-specialty-occupations",
+      "confidence": "CONFIRMED",
+      "pending": true
+    },
+    {
+      "id": "travel-ban-2026-india-not-listed",
+      "year": 2026,
+      "title": "Travel limits widen; India not listed",
+      "summary": "The proclamation effective January 1, 2026 widened restrictions to dozens of countries but does not list India.",
+      "affects": [
+        "all"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": 0,
+        "career": 0,
+        "wellbeing": -1,
+        "money": 0,
+        "community": -1
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/",
+      "confidence": "CONFIRMED",
+      "pending": false
+    },
+    {
+      "id": "visitor-appointment-waits-2026",
+      "year": 2026,
+      "title": "Long waits for visitor visas in India",
+      "summary": "In September 2026 reported B-1/B-2 appointment waits ranged from about 4 months in Kolkata to 12 months in Hyderabad.",
+      "affects": [
+        "B-1/B-2"
+      ],
+      "tone": "setback",
+      "effect": {
+        "legal": -1,
+        "career": 0,
+        "wellbeing": -4,
+        "money": -1,
+        "community": -3
+      },
+      "effectIsEstimate": true,
+      "source": "https://aviationa2z.com/index.php/2026/09/25/us-visa-delays-hit-indian-travelers-as-visitor-appointments-reach-12-months/",
+      "confidence": "LIKELY",
+      "pending": false
+    },
+    {
+      "id": "eac-removal-2026",
+      "year": 2026,
+      "title": "Automatic work-permit extensions removed",
+      "summary": "A rule published October 14, 2026 titled \"Removal of Automatic Extensions for Certain Employment Authorization Documents\" could affect the 180-day OPT extension; details were not read.",
+      "affects": [
+        "OPT",
+        "H-1B"
+      ],
+      "tone": "uncertainty",
+      "effect": {
+        "legal": -3,
+        "career": -3,
+        "wellbeing": -3,
+        "money": -1,
+        "community": 0
+      },
+      "effectIsEstimate": true,
+      "source": "https://www.federalregister.gov/documents/2026/10/14/2026-20955/removal-of-automatic-extensions-for-certain-employment-authorization-documents",
+      "confidence": "UNVERIFIED",
+      "pending": true
+    }
+  ]
+}

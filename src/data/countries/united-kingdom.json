@@ -1,0 +1,231 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "united-kingdom",
+  "name": "United Kingdom",
+  "demonym": "British",
+  "language": "English, with Welsh, Punjabi, Urdu or another home language for many families",
+  "departureCity": "London",
+  "airportBoardLine": "BA 117  LONDON     LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 750,
+  "flightEstimate": true,
+  "homeTravelNote": "a flight of seven or eight hours, close enough that a visit home feels possible",
+  "names": {
+   "female": [
+    "Olivia",
+    "Amelia",
+    "Charlotte",
+    "Emily",
+    "Sophie",
+    "Grace",
+    "Chloe",
+    "Isla",
+    "Ffion",
+    "Niamh",
+    "Aisha",
+    "Zara",
+    "Priya",
+    "Abena"
+   ],
+   "male": [
+    "Oliver",
+    "George",
+    "Harry",
+    "James",
+    "Thomas",
+    "Jack",
+    "Daniel",
+    "Callum",
+    "Rhys",
+    "Connor",
+    "Mohammed",
+    "Imran",
+    "Arjun",
+    "Kwame"
+   ]
+  },
+  "skinTones": [
+   "#f6dccb",
+   "#ecc4a8",
+   "#d9a47f",
+   "#b97f58",
+   "#8d5a3c",
+   "#5f3d2a"
+  ],
+  "foods": {
+   "dish": "a Sunday roast",
+   "cookLines": [
+    "The chicken goes into the oven with potatoes and carrots, and the whole apartment smells like a Sunday at home.",
+    "You whisk the gravy and watch the Yorkshire puddings rise through the oven door, the way your dad would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and argue happily over the last roast potato."
+   ],
+   "groceryStore": "the British import shop"
+  },
+  "studentAssociation": "British Students' Society",
+  "festivals": [
+   {
+    "id": "bonfire-night-gb",
+    "title": "Bonfire Night, 5 November",
+    "body": "At home there are fireworks over the park, a bonfire, sparklers and something hot to eat in the cold. Here it is an ordinary weeknight with a deadline.",
+    "month": 3,
+    "join": "Find the other British students and light sparklers together.",
+    "joinText": "Someone has found sparklers and someone else has baked a tray of sticky ginger cake. You stand in the cold writing your names in the air.",
+    "host": "Cook jacket potatoes and soup for friends and tell them the story.",
+    "hostText": "Your friends listen to the tale of 1605 with real interest and ask for seconds. You promise them fireworks next year.",
+    "skip": "Watch your family's fireworks video and get back to work.",
+    "skipText": "Your sister sends a shaky video of the display over the park. You watch it twice, then finish what is due."
+   },
+   {
+    "id": "christmas-gb",
+    "title": "Christmas and Boxing Day",
+    "body": "At home December means a tree in the front room, crackers on the table, a big roast and a long walk on Boxing Day. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a friend's family nearby.",
+    "joinText": "They hand you a plate before you have taken your coat off. You bring crackers, and everyone wears the paper hats through dinner.",
+    "host": "Cook Christmas dinner for people who could not travel.",
+    "hostText": "Six people, one small oven and roast potatoes that take two rounds. Someone reads the cracker jokes aloud and everyone groans together.",
+    "skip": "Call home on Christmas afternoon and have a quiet day.",
+    "skipText": "It is already evening there and the family is half asleep in front of the television. They pass the phone around the room and you feel close to it all."
+   },
+   {
+    "id": "pancake-day-gb",
+    "title": "Pancake Day",
+    "body": "Shrove Tuesday falls on an ordinary weeknight this year. At home there would be thin pancakes with lemon and sugar, and someone trying to flip one too high.",
+    "month": 6,
+    "join": "Go to the pancake night at the student society.",
+    "joinText": "There is a queue for the one good pan and a friendly debate about toppings. You flip yours cleanly and get a round of applause.",
+    "host": "Make pancakes for your friends at home.",
+    "hostText": "Your friends expect thick ones and are surprised by thin ones with lemon and sugar. The batter runs out before the requests do.",
+    "skip": "Send a message home and carry on with your evening.",
+    "skipText": "Your mum sends a photo of the stack on the table. You smile and promise yourself pancakes at the weekend."
+   }
+  ],
+  "familyCall": [
+   "It is evening in London when the call connects, five hours ahead of the East Coast and eight ahead of the West.",
+   "Your mum carries the phone into the kitchen and puts the kettle on while she talks.",
+   "Your dad leans into the frame to ask how the work is going, and your nan wants to know if you are warm enough.",
+   "By the time you hang up it is nearly their bedtime, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from pounds, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at the India baseline of 1.0. No sourced figure was found that would justify more or less family support for British students, so the factor is left unchanged. Cheaper flights home are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "Open Doors counted 11,136 students from the United Kingdom in the US in 2024/25, the 17th largest group, and about half were undergraduates.",
+   "H1B": "British professionals wait in the Rest of World green card queue, where the November 2026 bulletin shows EB-1 current and EB-2 and EB-3 dates in 2025 and 2024.",
+   "B2": "British citizens with the right of abode in the UK have used the Visa Waiver Program since 1 July 1988, so a visit of up to 90 days needs an approved ESTA instead of a B-2 visa.",
+   "O1": "The O-1 has no lottery, and the visa data used for other countries does not report a separate count for UK nationals.",
+   "FAM": "People born in Great Britain were left out of the Diversity Visa lottery for decades while Northern Ireland stayed eligible, and the State Department began selecting UK-born entrants with DV-2025.",
+   "EWI": "CBP does not report UK citizens separately in its border encounter data, and a visitor who stays past the 90 days allowed under the Visa Waiver Program has few ways to fix status from inside the US.",
+   "ASY": "EOIR's FY2024 table shows fewer than four asylum grants and fewer than four denials for UK nationals, too few to publish or to turn into a rate."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to London",
+   "text": "London is on Greenwich Mean Time in winter and British Summer Time, UTC+1, in summer. It is 5 hours ahead of US Eastern and 8 hours ahead of Pacific for most of the year, and 4 and 7 for a few weeks in March and around the end of October when the clocks change on different dates.",
+   "value": 5,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, United Kingdom to US",
+   "text": "Design estimate of $750. No sourced fare was retrieved for this route; the figure is a planning number, not a quote.",
+   "value": 750,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "UK students in the US",
+   "text": "Open Doors counted 11,136 students from the United Kingdom in US higher education in 2024/25, up from 10,473 the year before, the 17th largest group. 5,596 were undergraduates and 2,694 were graduate students.",
+   "value": 11136,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_United-Kingdom_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to the United Kingdom",
+   "text": "World Bank data put personal remittances received by the United Kingdom at about $4.8 billion in 2024 and $5.4 billion in 2025. For a country this size the flow is small, and most money moves outward.",
+   "value": 4.8,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/GBR/indicator/BX.TRF.PWKR.CD.DT?format=json&date=2022:2025",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for UK applicants",
+   "text": "EOIR's FY2024 table by nationality lists 9 UK cases as not adjudicated and suppresses grants and denials because each is below four. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for the United Kingdom",
+   "text": "The United Kingdom is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. The United Kingdom is not named in the 2025 entry proclamations or on the reported list of 75 countries whose immigrant visas were paused in January 2026.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "visa-waiver",
+   "topic": "rules",
+   "title": "Visa Waiver Program",
+   "text": "DHS lists the United Kingdom in the Visa Waiver Program with travel beginning 1 July 1988. It applies only to British citizens with the unrestricted right of permanent abode in the UK. Stays are limited to 90 days.",
+   "value": 1988,
+   "unit": "year",
+   "year": 1988,
+   "source": "https://www.dhs.gov/visa-waiver-program",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "diversity-visa",
+   "topic": "rules",
+   "title": "Diversity Visa eligibility",
+   "text": "The UK, except Northern Ireland, was on the ineligible list from the first lottery. For DV-2025 and DV-2026 it was left out in error, and after a lawsuit the State Department selected UK-born entrants for both years; an August 2025 State notice asked UK entrants to recheck their DV-2025 results. DV-2027 status was not confirmed.",
+   "value": 2025,
+   "unit": "year",
+   "year": 2025,
+   "source": "https://en.wikipedia.org/wiki/Diversity_Immigrant_Visa",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Europe",
+  "castGroup": "united-kingdom",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "null: EOIR FY2024 suppresses UK grants and denials (each fewer than four); 9 not adjudicated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

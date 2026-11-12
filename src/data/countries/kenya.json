@@ -1,0 +1,233 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "kenya",
+  "name": "Kenya",
+  "demonym": "Kenyan",
+  "language": "Kiswahili, English and a home language such as Gikuyu, Dholuo or Luhya",
+  "departureCity": "Nairobi",
+  "airportBoardLine": "KQ 2    NAIROBI    LANDED",
+  "timeDifference": "It is already night there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a very long flight, more than half a day in the air",
+  "names": {
+   "female": [
+    "Wanjiru",
+    "Njeri",
+    "Wambui",
+    "Nyambura",
+    "Akinyi",
+    "Atieno",
+    "Achieng",
+    "Chebet",
+    "Jepkoech",
+    "Nekesa",
+    "Mwende",
+    "Mutheu",
+    "Amina",
+    "Halima",
+    "Faith"
+   ],
+   "male": [
+    "Kamau",
+    "Mwangi",
+    "Njoroge",
+    "Otieno",
+    "Ochieng",
+    "Omondi",
+    "Kiprop",
+    "Kipchumba",
+    "Wafula",
+    "Mutua",
+    "Musyoka",
+    "Baraka",
+    "Hassan",
+    "Abdi",
+    "Brian"
+   ]
+  },
+  "skinTones": [
+   "#8a5a3a",
+   "#7a4b2e",
+   "#6b4329",
+   "#5c3a24",
+   "#4a2e1c",
+   "#3a2315"
+  ],
+  "foods": {
+   "dish": "ugali and sukuma wiki",
+   "cookLines": [
+    "Onions and tomatoes soften in the pan before the chopped greens go in, and the kitchen starts to smell like supper at home.",
+    "You stir maize flour into boiling water until the ugali is firm and pulls away from the pot, the way your mother taught you.",
+    "{roommate} wanders in and asks what you are stirring so hard.",
+    "You turn the ugali out onto a plate, and the two of you eat it with the greens and a little beef stew, by hand."
+   ],
+   "groceryStore": "the African grocery store"
+  },
+  "studentAssociation": "Kenyan Students' Association",
+  "festivals": [
+   {
+    "id": "christmas-ke",
+    "title": "Christmas",
+    "body": "At home December means packed buses out of the city, the whole family gathering upcountry, church in the morning and chapati and nyama choma all afternoon. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Kenyan family from church or the association.",
+    "joinText": "There is a mountain of chapati, a goat on the grill in the snow and gospel songs you know every word of. You leave with leftovers and three new aunties.",
+    "host": "Cook chapati and pilau for students who could not travel.",
+    "hostText": "Rolling chapati for eight takes all afternoon. Nobody minds, and nothing is left by evening.",
+    "skip": "Call home on Christmas morning and rest.",
+    "skipText": "Your cousins crowd into the frame from your grandmother's compound. You can almost smell the wood smoke."
+   },
+   {
+    "id": "eid-ke",
+    "title": "Eid",
+    "body": "Eid falls on a weekday this year. At home there would be prayers in the morning, new clothes, biryani and visits to neighbors until evening.",
+    "month": 7,
+    "join": "Join the Eid prayer and lunch at the local mosque.",
+    "joinText": "You stand shoulder to shoulder with people from a dozen countries. Afterward a family from Mombasa waves you over to share their table.",
+    "host": "Cook for friends and share the day with them.",
+    "hostText": "Your friends arrive curious and leave full. Someone asks to come back next year.",
+    "skip": "Call home, then get on with your day.",
+    "skipText": "Your family holds up the food so you can see it. You promise to celebrate properly next year."
+   },
+   {
+    "id": "madaraka-ke",
+    "title": "Madaraka Day, 1 June",
+    "body": "At home it is a public holiday marking self-rule in 1963, with flags, speeches and a day off with family. Here it is the first week of your summer job.",
+    "month": 10,
+    "join": "Go to the Kenyan community cookout.",
+    "joinText": "Nyama choma, kachumbari and a speaker playing benga and gengetone. Someone starts a football match and you play until dark.",
+    "host": "Invite friends over and cook.",
+    "hostText": "You make pilau and tell your friends what madaraka means. One of them tries to say it and everyone laughs kindly, you most of all.",
+    "skip": "Send greetings to the family group chat and go to work.",
+    "skipText": "Your phone fills with flags and photos from home. You answer every message on your lunch break."
+   }
+  ],
+  "familyCall": [
+   "It is already night in Nairobi when the call connects, seven to eleven hours ahead of you.",
+   "Your mother asks if you are eating well and whether you have found maize flour for ugali.",
+   "Your father asks about your classes, and your younger brother takes the phone to tell you about his exams.",
+   "When you hang up your own afternoon is only half over, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from Kenyan shillings, and the exchange rate on the day decides how far it stretches.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at 1.0, the India baseline. No sourced reason was found to move it; remittances to Kenya held steady at about $5 billion in 2024 and 2025.",
+  "entryNotes": {
+   "F1": "Open Doors counted 5,337 Kenyan students in the US in 2024/25, up 18.4 percent, and Kenya is not named in the 2025 or 2026 entry proclamations.",
+   "H1B": "Kenyan nationals received 320 H-1B visas in FY2024, and Kenyans wait in the shorter Rest of World green card queue, not India's.",
+   "B2": "Kenya is not in the Visa Waiver Program, so a visit needs a B visa and a consular interview first.",
+   "O1": "Kenyan nationals received 19 O-1 visas in FY2024, up from 6 in FY2018.",
+   "FAM": "People born in Kenya have been eligible for the Diversity Visa lottery through DV-2026, and Kenya was not on the 2026 list of 75 countries whose immigrant visas were paused.",
+   "EWI": "Entering without inspection usually blocks a green card from inside the US later, even through a US citizen spouse.",
+   "ASY": "In FY2024 immigration courts granted 28 and denied 26 asylum cases from Kenyan nationals, about 52 percent of a small number of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Nairobi",
+   "text": "Nairobi is on East Africa Time, UTC+3, with no daylight saving. It is 8 hours ahead of US Eastern in winter and 7 in summer, and 11 hours ahead of Pacific in winter and 10 in summer.",
+   "value": 8,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Kenya to US",
+   "text": "Design estimate of $1,500. No sourced fare was found.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Kenyans",
+   "text": "Kenyan nationals received 1,905 F-1 visas in FY2024, up from 1,105 in FY2022, and 1,571 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 1905,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/kenya-ken",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Kenyan students in the US",
+   "text": "Open Doors counted 5,337 Kenyan students in US higher education in 2024/25, up from 4,507 the year before, the 27th largest group.",
+   "value": 5337,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Kenya_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Kenya",
+   "text": "Central Bank of Kenya data, as reported by ITWeb Africa, put diaspora remittances at $5.04 billion in 2025, up 1.9 percent from $4.95 billion in 2024. About half came from the United States.",
+   "value": 5.04,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://itweb.africa/article/kenya-remittances-hit-5bn-in-2025-as-growth-slows/dgp45qaBm2GvX9l8",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Kenyans",
+   "text": "Kenyan nationals received 320 H-1B visas in FY2024 and 375 in FY2025, up from 103 in FY2018. Kenya's share of all H-1B approvals was not found.",
+   "value": 320,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/kenya-ken",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Kenyan applicants",
+   "text": "In FY2024 immigration courts granted 28 and denied 26 asylum cases from Kenyan nationals, about 52 percent of decisions. Another 95 were not adjudicated. The numbers are small, and individual claims matter more than averages.",
+   "value": 52,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Kenya",
+   "text": "Kenya is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Kenya was not on the 2026 list of 75 countries whose immigrant visas were paused.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Africa",
+  "castGroup": "kenya",
+  "ebQueue": "row",
+  "asylumGrantPct": 52,
+  "asylumNote": "28 grants and 26 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024), https://www.justice.gov/eoir/media/1344846/dl. Rate is grants divided by grants plus denials; very small numbers.",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

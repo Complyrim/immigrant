@@ -1,0 +1,233 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "ethiopia",
+  "name": "Ethiopia",
+  "demonym": "Ethiopian",
+  "language": "Amharic, Afaan Oromo, Tigrinya, Somali or your home language",
+  "departureCity": "Addis Ababa",
+  "airportBoardLine": "ET 500  ADDIS ABABA LANDED",
+  "timeDifference": "It is already night there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a very long flight, more than half a day in the air",
+  "names": {
+   "female": [
+    "Selam",
+    "Tigist",
+    "Meron",
+    "Hiwot",
+    "Bethlehem",
+    "Rahel",
+    "Saba",
+    "Marta",
+    "Hanna",
+    "Liya",
+    "Chaltu",
+    "Lensa",
+    "Bontu",
+    "Fatuma",
+    "Zeynab"
+   ],
+   "male": [
+    "Abebe",
+    "Dawit",
+    "Yonas",
+    "Tesfaye",
+    "Solomon",
+    "Henok",
+    "Bereket",
+    "Girma",
+    "Kebede",
+    "Hagos",
+    "Gemechu",
+    "Tolosa",
+    "Lemma",
+    "Mohammed",
+    "Ahmed"
+   ]
+  },
+  "skinTones": [
+   "#b07a52",
+   "#9c6a44",
+   "#8a5a3a",
+   "#7a4b2e",
+   "#65402a",
+   "#4f311f"
+  ],
+  "foods": {
+   "dish": "doro wat with injera",
+   "cookLines": [
+    "Onions cook down slowly for almost an hour before the berbere goes in, and the whole apartment smells like a holiday at home.",
+    "You lower the chicken and the boiled eggs into the red sauce and taste it, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You unroll injera from the Ethiopian grocery store, and the two of you eat from one plate with your hands."
+   ],
+   "groceryStore": "the Ethiopian grocery store"
+  },
+  "studentAssociation": "Ethiopian Students' Association",
+  "festivals": [
+   {
+    "id": "enkutatash-et",
+    "title": "Enkutatash, Ethiopian New Year",
+    "body": "At home the new year arrives in September, when the rains end and yellow adey abeba flowers cover the hills. Here it is the second week of class and nobody else knows the year has changed.",
+    "month": 1,
+    "join": "Go to the New Year gathering at the Ethiopian community center.",
+    "joinText": "Children hand out drawings of flowers, the coffee is roasted right there in the room and someone's grandmother wishes you a good year as if she has known you all your life.",
+    "host": "Cook for friends and roast coffee the slow way.",
+    "hostText": "Your friends watch the beans turn dark in the pan and say they have never smelled coffee like this. You pour three rounds, as you should.",
+    "skip": "Call home, then go to class.",
+    "skipText": "Your family holds the phone up to the table so you can see the injera and the flowers. You say melkam addis amet to each person in turn."
+   },
+   {
+    "id": "genna-et",
+    "title": "Genna, Ethiopian Christmas, 7 January",
+    "body": "At home Genna comes on 7 January, after weeks of fasting for many families, with white clothes, an early church service and a long shared meal. Here the decorations came down days ago.",
+    "month": 5,
+    "join": "Join the Genna service and meal at the local Ethiopian church.",
+    "joinText": "The church is full of white shawls and incense. Afterward there is doro wat for everyone, and an uncle insists you take food home.",
+    "host": "Host a Genna dinner for friends.",
+    "hostText": "You explain why your Christmas is in January while the stew simmers. Your friends decide two Christmases is a fine idea.",
+    "skip": "Call home and keep the day simple.",
+    "skipText": "It is already evening in Addis and the house is full. They pass the phone around until everyone has greeted you."
+   },
+   {
+    "id": "eid-et",
+    "title": "Eid",
+    "body": "Eid falls on a weekday this year. At home there would be prayers in the morning, new clothes, visits to neighbors and a long, happy meal.",
+    "month": 7,
+    "join": "Join the Eid prayer and lunch at the local mosque.",
+    "joinText": "You stand shoulder to shoulder with people from a dozen countries. Afterward a family from Harar waves you over to their table.",
+    "host": "Cook for friends and share the day with them.",
+    "hostText": "Your friends arrive curious and leave full. Someone asks to come back next year.",
+    "skip": "Call home, then get on with your day.",
+    "skipText": "Your family holds up the food so you can see it. You promise to celebrate properly next year."
+   }
+  ],
+  "familyCall": [
+   "It is already night in Addis Ababa when the call connects, seven to eleven hours ahead of you.",
+   "Your mother asks if you are eating well and whether you have found good injera yet.",
+   "Your father asks about your classes, and your grandmother leans in to give you her blessing before she goes to bed.",
+   "When you hang up your own afternoon is only half over, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from birr, and since the birr was floated in July 2024 the same family savings buy fewer dollars.",
+  "familySupportFactor": 0.85,
+  "familySupportNote": "Designed at 0.85 of the India baseline. Ethiopia floated the birr at the end of July 2024 and it fell about 30 percent against the dollar at once, which makes US costs paid from birr savings harder to cover. Kept modest because many families still support students.",
+  "entryNotes": {
+   "F1": "Open Doors counted 3,395 Ethiopian students in the US in 2024/25; since 8 July 2025 most nonimmigrant visas for Ethiopians are issued for three months and a single entry.",
+   "H1B": "Ethiopian nationals received 120 H-1B visas in FY2024, and Ethiopians wait in the shorter Rest of World green card queue, not India's.",
+   "B2": "Since 2 April 2026 Ethiopians approved for a visitor visa can be asked to post a refundable bond of $5,000 to $15,000 first.",
+   "O1": "Ethiopian nationals received 3 O-1 visas in FY2024 and 11 in FY2025.",
+   "FAM": "People born in Ethiopia have been eligible for the Diversity Visa lottery through DV-2026; immigrant visas for Ethiopians were paused from 21 January 2026 until a court set the pause aside on 21 August 2026.",
+   "EWI": "Temporary Protected Status covered some Ethiopians without other status, but DHS announced its end in December 2025 and a court let the termination proceed on 18 August 2026.",
+   "ASY": "In FY2024 immigration courts granted 291 and denied 58 asylum cases from Ethiopian nationals, about 83 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Addis Ababa",
+   "text": "Addis Ababa is on East Africa Time, UTC+3, with no daylight saving. It is 8 hours ahead of US Eastern in winter and 7 in summer, and 11 hours ahead of Pacific in winter and 10 in summer.",
+   "value": 8,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Ethiopia to US",
+   "text": "Design estimate of $1,500. No sourced fare was found.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Ethiopians",
+   "text": "Ethiopian nationals received 1,804 F-1 visas in FY2024, compared with 1,958 in FY2022, and 1,239 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 1804,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/ethiopia-eth",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Ethiopian students in the US",
+   "text": "Open Doors counted 3,395 Ethiopian students in US higher education in 2024/25, up from 3,078 the year before, the 40th largest group. About six in ten were undergraduates.",
+   "value": 3395,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Ethiopia_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Ethiopia",
+   "text": "IFAD's Sending Money Home 2026 report, as covered by Capital Ethiopia, put remittances to Ethiopia at about $7.1 billion in 2025. Earlier World Bank figures were far lower, so the series may reflect a revision.",
+   "value": 7.1,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://capitalethiopia.com/2026/09/20/remittances-to-africa-reach-124-billion-as-digital-channels-lower-transfer-costs/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Ethiopians",
+   "text": "Ethiopian nationals received 120 H-1B visas in FY2024 and 98 in FY2025, up from 34 in FY2018. Ethiopia's share of all H-1B approvals was not found.",
+   "value": 120,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/ethiopia-eth",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Ethiopian applicants",
+   "text": "In FY2024 immigration courts granted 291 and denied 58 asylum cases from Ethiopian nationals, about 83 percent of decisions. Another 120 were not adjudicated. Individual claims matter more than averages.",
+   "value": 83,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Ethiopia",
+   "text": "Ethiopia is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Immigrant visa issuance for nationals of 75 countries, this one included, was paused from 21 January 2026 until a federal court set the pause aside on 21 August 2026; the government has appealed.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Africa",
+  "castGroup": "ethiopia",
+  "ebQueue": "row",
+  "asylumGrantPct": 83,
+  "asylumNote": "291 grants and 58 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024), https://www.justice.gov/eoir/media/1344846/dl. Rate is grants divided by grants plus denials.",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

@@ -1,0 +1,241 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "colombia",
+  "name": "Colombia",
+  "demonym": "Colombian",
+  "language": "Spanish or your home language",
+  "departureCity": "Bogotá",
+  "airportBoardLine": "AV 244  BOGOTA     LANDED",
+  "timeDifference": "It is about the same time there, give or take an hour.",
+  "roundTripFlightUsd": 550,
+  "flightEstimate": true,
+  "homeTravelNote": "a flight of a few hours, close enough that home feels within reach",
+  "names": {
+   "female": [
+    "María",
+    "Valentina",
+    "Daniela",
+    "Paula",
+    "Laura",
+    "Natalia",
+    "Carolina",
+    "Juliana",
+    "Andrea",
+    "Camila",
+    "Luisa",
+    "Sara",
+    "Catalina"
+   ],
+   "male": [
+    "Juan",
+    "Andrés",
+    "Santiago",
+    "Sebastián",
+    "Camilo",
+    "Felipe",
+    "Daniel",
+    "Carlos",
+    "Julián",
+    "David",
+    "Mateo",
+    "Jorge",
+    "Óscar"
+   ]
+  },
+  "skinTones": [
+   "#efcdaf",
+   "#e0b592",
+   "#cc9c75",
+   "#b07e58",
+   "#8b5f41",
+   "#5e4030"
+  ],
+  "foods": {
+   "dish": "ajiaco",
+   "cookLines": [
+    "Chicken, corn and three kinds of potato simmer together, and the whole apartment smells like home.",
+    "You taste the ajiaco and crumble in a little more guascas, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share bowls at the counter with capers, cream and avocado, and for an hour the world is small and warm."
+   ],
+   "groceryStore": "the Latin American grocery store"
+  },
+  "studentAssociation": "Colombian Students' Association",
+  "festivals": [
+   {
+    "id": "amor-amistad-co",
+    "title": "Amor y Amistad",
+    "body": "At home September brings Amor y Amistad, with secret friend gift swaps at school, at work and in every family. Here it is an ordinary weekend in the third week of classes.",
+    "month": 1,
+    "join": "Join the student association's amigo secreto.",
+    "joinText": "You draw a name from a paper cup and spend a week leaving sweets on a stranger's desk. By the reveal you have a new friend.",
+    "host": "Organize an amigo secreto for your floor.",
+    "hostText": "Your neighbours take the game very seriously. Someone gives you chocolate and a note in careful, borrowed Spanish.",
+    "skip": "Send messages home and get on with your weekend.",
+    "skipText": "Your phone fills with hearts from old classmates. You answer every one before you open your books."
+   },
+   {
+    "id": "velitas-co",
+    "title": "Día de las Velitas",
+    "body": "On the night of 7 December, people at home line the sidewalks, windows and balconies with candles and paper lanterns to begin the Christmas season. Here it is the week before finals.",
+    "month": 4,
+    "join": "Light candles with the Colombian community in town.",
+    "joinText": "Dozens of small flames line the church steps. Someone passes around buñuelos and natilla, and a child counts the candles out loud.",
+    "host": "Line your windowsill with candles and invite friends.",
+    "hostText": "Your friends each light one and make a wish. The room glows, and someone asks you to explain it all again from the beginning.",
+    "skip": "Light one candle and call home.",
+    "skipText": "Your mother walks the phone down the street so you can see every doorstep lit. It is enough for tonight."
+   },
+   {
+    "id": "independence-co",
+    "title": "Independence Day, 20 July",
+    "body": "At home there are parades, yellow, blue and red flags and a public holiday. Here it is a quiet summer weekday.",
+    "month": 11,
+    "join": "Go to the Colombian festival in the city.",
+    "joinText": "There is cumbia from a stage, vallenato from a speaker and a long line for arepas and empanadas. You dance until the light goes.",
+    "host": "Cook for friends and hang a flag in the window.",
+    "hostText": "Your friends try ajiaco for the first time and ask for seconds. Someone learns to say \"¡Qué viva Colombia!\" and will not stop.",
+    "skip": "Send greetings to the family group chat and carry on.",
+    "skipText": "Your cousins send videos of the parade. You watch them on your lunch break and feel close to it all."
+   }
+  ],
+  "familyCall": [
+   "Bogotá is on almost the same clock as the East Coast, so your mother calls while the coffee is still warm.",
+   "She asks if you are eating well and reminds you to wear a jacket.",
+   "Your little cousin grabs the phone to show you a drawing, and your grandmother asks when you are coming home.",
+   "You hang up homesick and a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from Colombian pesos, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. The research has no sourced figure that would justify more or less family support for Colombian students. Cheaper flights home are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "About 10,213 Colombians studied in the US in 2024/25, a record and the 18th largest group; Colombian nationals received 3,958 F-1 visas in FY2024.",
+   "H1B": "Colombian nationals received 960 H-1B visas in FY2024, and Colombians wait in the shorter Rest of World green card queue, not India's or China's.",
+   "B2": "Colombia is not in the Visa Waiver Program, so Colombians cannot use ESTA and need a visitor visa before any trip.",
+   "O1": "Colombian nationals received 374 O-1 visas in FY2024, about double the 188 issued in FY2018.",
+   "FAM": "Colombia is charged to the Rest of World queue and is not eligible for the Diversity Visa lottery; a State Department pause on immigrant visas for Colombians ran from January 2026 until a court set it aside in August 2026.",
+   "EWI": "Border Patrol encounters of Colombians at the southwest border fell from 111,992 in FY2024 to 1,514 in FY2026, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 1,017 and denied 4,369 asylum cases from Colombian nationals, about 19 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Bogotá",
+   "text": "Bogotá is on UTC-5 all year with no daylight saving time. It is level with US Eastern in winter and 1 hour behind in summer, and 3 hours ahead of Pacific in winter and 2 in summer.",
+   "value": 0,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Colombia to US",
+   "text": "Design estimate of $550. No sourced fare range for Colombia to US round trips was found in the research; real fares vary widely by route and season.",
+   "value": 550,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Colombians",
+   "text": "Colombian nationals received 3,958 F-1 visas in FY2024, down from a peak of 7,047 in FY2022, and 3,483 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 3958,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/colombia-col",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Colombian students in the US",
+   "text": "Open Doors counted 10,213 Colombian students in US higher education in 2024/25, up from 10,120 the year before, the 18th largest group.",
+   "value": 10213,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Colombia_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Colombia",
+   "text": "Colombia received about $13.1 billion in remittances in 2025, a record and 10.6 percent more than the $11.85 billion of 2024 (Banco de la República, as reported).",
+   "value": 13.1,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://www.valoraanalitik.com/remesas-a-colombia-lograron-nuevo-record-historico-en-2025-superaron-los-us13-000-millones/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Colombians",
+   "text": "Colombian nationals received 960 H-1B visas in FY2024 and 1,010 in FY2025, up from 547 in FY2018. Colombia's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 960,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/colombia-col",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Colombian applicants",
+   "text": "In FY2024 immigration courts granted 1,017 and denied 4,369 asylum cases from Colombian nationals, about 19 percent of decisions. Another 2,627 were not adjudicated. Individual claims matter more than averages.",
+   "value": 19,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Colombia",
+   "text": "Colombia is charged to the Rest of World queue, with no separate column in the Visa Bulletin. November 2026 final action dates as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "border-encounters",
+   "topic": "numbers",
+   "title": "Border Patrol encounters of Colombian nationals",
+   "text": "Border Patrol recorded 154,077 encounters of Colombian nationals at the southwest border in FY2023, 111,992 in FY2024, 12,476 in FY2025 and 1,514 in FY2026. Totals are summed from CBP's public encounters file.",
+   "value": 1514,
+   "unit": "count",
+   "year": 2026,
+   "source": "https://www.cbp.gov/sites/default/files/2026-10/nationwide-encounters-fy23-fy26-sep-aor.csv",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "South America",
+  "castGroup": "colombia",
+  "ebQueue": "row",
+  "asylumGrantPct": 19,
+  "asylumNote": "1,017 grants and 4,369 denials in immigration court, FY2024 (1,017 of 5,386 decisions, 18.9 percent); 2,627 more not adjudicated. EOIR Asylum Decisions by Nationality, https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

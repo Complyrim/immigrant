@@ -1,0 +1,15 @@
+node_modules/
+dist/
+test-results/
+artifacts/
+*.log
+.DS_Store
+playwright-report/
+blob-report/
+.claude/
+.vite/
+*.local
+
+# ElevenLabs voice clips: kept local until the grant terms are confirmed for a game and open source.
+# The game shows each line for reading time when its clip is missing.
+public/assets/voice/

@@ -1,0 +1,824 @@
+{
+  "asOf": "2026-11-08",
+  "cities": [
+    {
+      "id": "nyc",
+      "name": "New York",
+      "metro": "New York-Newark-Jersey City",
+      "state": "NY",
+      "immigrantShare": {
+        "value": 0.301,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US35620",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1708,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US35620",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 854,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 150,
+          "year": 2026,
+          "source": "https://abc7ny.com/post/mta-fare-increases-3-commuters-buses-subway-trains-nyc/18350815/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "30-day pass eliminated Jan 2026; 7-day OMNY cap reported $35 (some outlets $36) x ~4.3 weeks"
+        },
+        "avgMinutesOneWay": {
+          "value": 36.5,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US35620",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.445,
+          "carpool": 0.066,
+          "transit": 0.272,
+          "walk": 0.054,
+          "bike": 0.009,
+          "workFromHome": 0.129,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US35620",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 239,
+          "year": 2025,
+          "source": "https://insurify.com/car-insurance/news/average-car-insurance-rates-september-2026/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2840-$2898, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $4.26/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents concentrate in Middlesex County NJ (Edison/Iselin area), Queens, Hudson County NJ (Jersey City), Nassau, Somerset and Bergen counties. Middlesex is the largest county concentration (100,396).",
+      "universitiesForContext": [
+        "Columbia University",
+        "New York University",
+        "Cornell Tech",
+        "Stevens Institute of Technology",
+        "Rutgers University-Newark"
+      ],
+      "visual": {
+        "skylineDescription": "Dense Manhattan grid of boxes; Empire State Building as stepped setbacks with a thin spire, One World Trade as a tapering square tower with spire, Chrysler crown; water on three sides; Jersey City towers across the Hudson.",
+        "palette": [
+          "#1f2a44",
+          "#f2b705",
+          "#8c4a32",
+          "#9fb4c7"
+        ],
+        "landmarks": [
+          "Empire State Building",
+          "One World Trade Center",
+          "Chrysler Building",
+          "Brooklyn Bridge",
+          "Statue of Liberty"
+        ],
+        "transitVehicles": [
+          "subway",
+          "bus",
+          "commuter rail",
+          "ferry",
+          "taxi"
+        ],
+        "weather": "Four seasons; humid hot summers, snowy winters."
+      },
+      "stateRules": "New York issues driver's licences regardless of status (Green Light Law; federal government has sued, outcome not checked). In-state tuition and health coverage rules not verified.",
+      "gaps": [
+        "Tuition and health coverage rules unverified",
+        "No monthly pass; shared-room rent and monthly pass are estimates",
+        "Car cost is insurance only",
+        "Ride-share costs not sourced",
+        "1BR is metro ACS median (rent-stabilised units pull it below asking rents; Zillow ZORI all-size Sep 2026 was $3,546)"
+      ]
+    },
+    {
+      "id": "la",
+      "name": "Los Angeles",
+      "metro": "Los Angeles-Long Beach-Anaheim",
+      "state": "CA",
+      "immigrantShare": {
+        "value": 0.327,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US31080",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1822,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US31080",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 911,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 77,
+          "year": 2026,
+          "source": "https://www.metro.net/riding/fares/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "No 30-day price on page; weekly fare cap $18 (TAP) x ~4.3 weeks"
+        },
+        "avgMinutesOneWay": {
+          "value": 30.7,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US31080",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.67,
+          "carpool": 0.097,
+          "transit": 0.035,
+          "walk": 0.023,
+          "bike": 0.006,
+          "workFromHome": 0.149,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US31080",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 239,
+          "year": 2025,
+          "source": "https://www.motorbiscuit.com/heres-how-much-car-insurance-costs-in-every-us-state-for-2026-and-why-yours-is-so-high/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2848-$2886, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $5.75/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents are a small share of the metro (93,805), concentrated in LA County and Orange County (research suggests Artesia/Cerritos/Irvine, unverified by the pull).",
+      "universitiesForContext": [
+        "UCLA",
+        "University of Southern California",
+        "Caltech",
+        "UC Irvine",
+        "Cal State Long Beach"
+      ],
+      "visual": {
+        "skylineDescription": "Small clustered downtown (Wilshire Grand with spire, US Bank Tower circular crown) over low-rise sprawl; San Gabriel Mountains hazy backdrop; Hollywood sign on a hill; tall thin palm trunks.",
+        "palette": [
+          "#e8a35c",
+          "#d9604c",
+          "#7aa6b8",
+          "#f4e3c1"
+        ],
+        "landmarks": [
+          "Hollywood Sign",
+          "Wilshire Grand Center",
+          "US Bank Tower",
+          "Santa Monica Pier",
+          "Griffith Observatory"
+        ],
+        "transitVehicles": [
+          "light rail",
+          "subway",
+          "bus",
+          "commuter rail"
+        ],
+        "weather": "Mostly sunny and mild; dry summers, brief winter rain; smog haze."
+      },
+      "stateRules": "California AB 60 licences for undocumented residents. Medi-Cal full-scope enrolment frozen to new undocumented adults 19+ from 1 Jan 2026 (emergency Medi-Cal only). In-state tuition (AB 540) not verified.",
+      "gaps": [
+        "30-day pass not found; transit pass and shared room are estimates",
+        "Car cost is insurance only",
+        "Tuition rule unverified",
+        "Ride-share not sourced"
+      ]
+    },
+    {
+      "id": "houston",
+      "name": "Houston",
+      "metro": "Houston-Pasadena-The Woodlands",
+      "state": "TX",
+      "immigrantShare": {
+        "value": 0.243,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US26420",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1273,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US26420",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 637,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": null,
+          "year": 2026,
+          "source": "https://www.ridemetro.org/fares",
+          "confidence": "UNVERIFIED",
+          "note": "Monthly pass not on fetched page; day pass $3, bus $1.25 confirmed"
+        },
+        "avgMinutesOneWay": {
+          "value": 31.1,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US26420",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.718,
+          "carpool": 0.11,
+          "transit": 0.017,
+          "walk": 0.013,
+          "bike": 0.003,
+          "workFromHome": 0.121,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US26420",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 226,
+          "year": 2025,
+          "source": "https://www.autoinsurance.com/pricing.html",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2611-$2821, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $3.49/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents concentrate in Harris County and Fort Bend County (Sugar Land area). Houston has the largest Nigeria-born population of the eight metros, mainly Harris and Fort Bend counties.",
+      "universitiesForContext": [
+        "Rice University",
+        "University of Houston",
+        "Texas Southern University",
+        "Texas A&M University"
+      ],
+      "visual": {
+        "skylineDescription": "Downtown cluster of glass towers (JPMorgan Chase Tower, Wells Fargo Plaza, Bank of America Center with stepped gables) on a flat coastal plain; stacked freeway loops; refinery tanks and flare stacks.",
+        "palette": [
+          "#2f6f8f",
+          "#d98b2b",
+          "#b8c4cc",
+          "#4c5b3a"
+        ],
+        "landmarks": [
+          "JPMorgan Chase Tower",
+          "Texas Medical Center",
+          "Astrodome",
+          "Ship Channel refineries"
+        ],
+        "transitVehicles": [
+          "light rail",
+          "bus"
+        ],
+        "weather": "Hot and very humid; storms, flooding, hurricane season."
+      },
+      "stateRules": "Texas does not issue licences to undocumented residents (inferred from absence on the list of states that do). In-state tuition for undocumented students ended 4 June 2025 via consent judgment; status-based exceptions (TPS, parole) may still qualify.",
+      "gaps": [
+        "Monthly METRO pass price missing",
+        "Health coverage rule unverified",
+        "Harris County 287(g) status unclear",
+        "Ride-share not sourced",
+        "Shared room and car cost are estimates"
+      ]
+    },
+    {
+      "id": "bayarea",
+      "name": "San Francisco Bay Area",
+      "metro": "San Jose-Sunnyvale-Santa Clara (SF-Oakland alongside)",
+      "state": "CA",
+      "immigrantShare": {
+        "value": 0.408,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US41940",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 2465,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US41940",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 1233,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 90,
+          "year": 2026,
+          "source": "https://www.vta.org/fares",
+          "confidence": "CONFIRMED",
+          "note": "VTA monthly pass on page; effective date not shown. BART/Caltrain not pulled"
+        },
+        "avgMinutesOneWay": {
+          "value": 27.5,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US41940",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.655,
+          "carpool": 0.109,
+          "transit": 0.028,
+          "walk": 0.024,
+          "bike": 0.018,
+          "workFromHome": 0.146,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US41940",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 239,
+          "year": 2025,
+          "source": "https://www.motorbiscuit.com/heres-how-much-car-insurance-costs-in-every-us-state-for-2026-and-why-yours-is-so-high/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2850-$2890, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $5.75/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents concentrate in Santa Clara County (Sunnyvale, Santa Clara, Cupertino, San Jose) and Alameda County (Fremont, 47,391).",
+      "universitiesForContext": [
+        "Stanford University",
+        "UC Berkeley",
+        "San Jose State University",
+        "Santa Clara University"
+      ],
+      "visual": {
+        "skylineDescription": "Small San Jose mid-rise cluster; Bay icons are the orange twin-tower Golden Gate Bridge, Transamerica Pyramid, Salesforce Tower; ring-shaped and glass-box tech campuses with parking lots; brown ridge hills.",
+        "palette": [
+          "#c0392b",
+          "#e8e2d0",
+          "#6b8e8a",
+          "#a68a64"
+        ],
+        "landmarks": [
+          "Golden Gate Bridge",
+          "Transamerica Pyramid",
+          "Salesforce Tower",
+          "Apple Park"
+        ],
+        "transitVehicles": [
+          "light rail",
+          "commuter rail",
+          "subway",
+          "bus",
+          "cable car"
+        ],
+        "weather": "Mediterranean; dry summers, mild wet winters; SF fog, San Jose sunnier."
+      },
+      "stateRules": "California AB 60 licences for undocumented residents. Medi-Cal full-scope freeze for new undocumented adults 19+ from 1 Jan 2026. Tuition (AB 540) not verified.",
+      "gaps": [
+        "Figures are San Jose metro; SF-Oakland differs (1BR $2,180, drive alone 53.4%, transit 10.9%)",
+        "BART/Caltrain costs missing",
+        "Tuition and county health programmes unverified",
+        "Pass date unverified",
+        "Shared room and car cost are estimates"
+      ]
+    },
+    {
+      "id": "dallas",
+      "name": "Dallas-Fort Worth",
+      "metro": "Dallas-Fort Worth-Arlington",
+      "state": "TX",
+      "immigrantShare": {
+        "value": 0.194,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US19100",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1473,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US19100",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 737,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 126,
+          "year": 2025,
+          "source": "https://dart.org/fareupdates",
+          "confidence": "LIKELY",
+          "note": "Reported after March 2025 restructure (was $96); DART page 404ed; also https://communityimpact.com/dallas-fort-worth/plano-north/transportation/2025/02/11/dart-to-implement-fare-changes-in-march"
+        },
+        "avgMinutesOneWay": {
+          "value": 28.8,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US19100",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.705,
+          "carpool": 0.101,
+          "transit": 0.006,
+          "walk": 0.013,
+          "bike": 0.001,
+          "workFromHome": 0.156,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US19100",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 226,
+          "year": 2025,
+          "source": "https://www.autoinsurance.com/pricing.html",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2611-$2821, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $3.49/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents cluster in Collin County (79,154; Plano, Frisco), Dallas County (Irving), and Denton County.",
+      "universitiesForContext": [
+        "Southern Methodist University",
+        "University of Texas at Dallas",
+        "University of North Texas",
+        "Texas Christian University",
+        "UT Arlington"
+      ],
+      "visual": {
+        "skylineDescription": "Reunion Tower (geodesic ball on a tall shaft), Bank of America Plaza with outline lights, Fountain Place glass prism; broad flat prairie horizon; giant freeway interchange.",
+        "palette": [
+          "#c2562e",
+          "#2d4a6b",
+          "#e6d3a3",
+          "#78909c"
+        ],
+        "landmarks": [
+          "Reunion Tower",
+          "Bank of America Plaza",
+          "Fountain Place",
+          "AT&T Stadium",
+          "Fort Worth Stockyards"
+        ],
+        "transitVehicles": [
+          "light rail",
+          "bus",
+          "commuter rail"
+        ],
+        "weather": "Hot summers, mild winters, occasional ice storms and tornado-season storms."
+      },
+      "stateRules": "Texas does not issue licences to undocumented residents (inferred). In-state tuition for undocumented students ended 4 June 2025. Texas SB 8 requires sheriffs who run jails to sign 287(g) agreements, deadline 1 Dec 2026.",
+      "gaps": [
+        "DART pass from secondary source",
+        "Health rule unverified",
+        "Dallas County 287(g) outcome pending",
+        "Ride-share not sourced",
+        "Shared room and car cost are estimates"
+      ]
+    },
+    {
+      "id": "chicago",
+      "name": "Chicago",
+      "metro": "Chicago-Naperville-Elgin",
+      "state": "IL",
+      "immigrantShare": {
+        "value": 0.186,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US16980",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1310,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US16980",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 655,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 75,
+          "year": 2023,
+          "source": "https://www.transitchicago.com/fares/",
+          "confidence": "LIKELY",
+          "note": "30-day pass; fare chart dated Feb 2023, may have changed. Metra not pulled"
+        },
+        "avgMinutesOneWay": {
+          "value": 30.9,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US16980",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.625,
+          "carpool": 0.08,
+          "transit": 0.09,
+          "walk": 0.033,
+          "bike": 0.007,
+          "workFromHome": 0.149,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US16980",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 185,
+          "year": 2025,
+          "source": "https://wealthvieu.com/average-car-insurance-by-state",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2215-$2215, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $4.49/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents concentrate in Cook County (28,235 in the city) and suburban DuPage County (Naperville, Schaumburg). Devon Avenue is commonly cited but not in the data pull.",
+      "universitiesForContext": [
+        "University of Chicago",
+        "Northwestern University",
+        "University of Illinois Chicago",
+        "Illinois Institute of Technology",
+        "DePaul University"
+      ],
+      "visual": {
+        "skylineDescription": "Willis Tower as a stack of black tubes with twin antennas, tapered X-braced John Hancock Center, Marina City corn-cob towers; elevated L tracks with right-angle corners over narrow Loop streets; lake to the east.",
+        "palette": [
+          "#1b2a3a",
+          "#3b82a0",
+          "#b23a48",
+          "#d8d2c4"
+        ],
+        "landmarks": [
+          "Willis Tower",
+          "John Hancock Center",
+          "Marina City",
+          "Cloud Gate (the Bean)",
+          "Navy Pier"
+        ],
+        "transitVehicles": [
+          "elevated train",
+          "bus",
+          "commuter rail"
+        ],
+        "weather": "Cold windy snowy winters, hot humid summers, lake-effect wind."
+      },
+      "stateRules": "Illinois issues Temporary Visitor Driver's Licences to undocumented residents. In-state tuition (2003 law) and adult immigrant health programme status not verified.",
+      "gaps": [
+        "CTA fares dated 2023",
+        "Metra pass missing",
+        "Tuition and health rules unverified",
+        "Insurance from a single aggregator",
+        "Ride-share not sourced",
+        "Shared room and car cost are estimates"
+      ]
+    },
+    {
+      "id": "atlanta",
+      "name": "Atlanta",
+      "metro": "Atlanta-Sandy Springs-Roswell",
+      "state": "GA",
+      "immigrantShare": {
+        "value": 0.152,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US12060",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year, metro foreign-born share"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1605,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US12060",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; runs below asking rents"
+        },
+        "sharedRoomMonthly": {
+          "value": 803,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": 95,
+          "year": 2026,
+          "source": "https://www.itsmarta.com/fare-programs.aspx",
+          "confidence": "CONFIRMED",
+          "note": "MARTA 30-day pass on page"
+        },
+        "avgMinutesOneWay": {
+          "value": 32.4,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US12060",
+          "confidence": "CONFIRMED",
+          "note": "Derived: B08013 aggregate travel time / non-WFH workers (approximation)"
+        },
+        "modeShare": {
+          "driveAlone": 0.678,
+          "carpool": 0.085,
+          "transit": 0.016,
+          "walk": 0.011,
+          "bike": 0.001,
+          "workFromHome": 0.188,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US12060",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": 237,
+          "year": 2025,
+          "source": "https://insurify.com/car-insurance/news/average-car-insurance-rates-september-2026/",
+          "confidence": "LIKELY",
+          "estimate": true,
+          "basis": "Insurance only: midpoint annual full-coverage estimate ($2587-$3109, aggregators) / 12. Excludes fuel (AAA 2026-11-08 state avg $3.48/gal: https://gasprices.aaa.com/todays-state-averages/), payment, parking, maintenance."
+        }
+      },
+      "indianCommunityNotes": "India-born residents concentrate in north Fulton (Alpharetta), Forsyth County (25,792), Gwinnett and Cobb counties. The city of Atlanta itself is only 9.0% foreign-born; immigrant life is mostly suburban.",
+      "universitiesForContext": [
+        "Georgia Tech",
+        "Emory University",
+        "Georgia State University",
+        "Kennesaw State University"
+      ],
+      "visual": {
+        "skylineDescription": "Towers rising out of a dense green tree canopy: Bank of America Plaza with a gold-tipped spire, cylindrical Westin Peachtree Plaza, Mercedes-Benz Stadium petal roof; wide multi-lane connector highway.",
+        "palette": [
+          "#2e6b4f",
+          "#e07a5f",
+          "#c9d6df",
+          "#3d405b"
+        ],
+        "landmarks": [
+          "Bank of America Plaza",
+          "Westin Peachtree Plaza",
+          "Mercedes-Benz Stadium",
+          "Hartsfield-Jackson Airport"
+        ],
+        "transitVehicles": [
+          "subway",
+          "bus",
+          "streetcar"
+        ],
+        "weather": "Hot humid summers with thunderstorms, mild winters, spring pollen."
+      },
+      "stateRules": "Georgia does not issue licences to undocumented residents (inferred). University system policy reportedly bars undocumented students from in-state tuition (unverified). HB 1105 (2024) requires jail status checks and ICE notification.",
+      "gaps": [
+        "Tuition and health rules unverified",
+        "Gwinnett/Cobb 287(g) status not re-verified",
+        "Insurance spread wide ($2,587-$3,109)",
+        "Ride-share not sourced",
+        "Shared room and car cost are estimates"
+      ]
+    },
+    {
+      "id": "dc",
+      "name": "Washington DC",
+      "metro": "Washington-Arlington-Alexandria",
+      "state": "DC",
+      "immigrantShare": {
+        "value": 0.243,
+        "year": 2024,
+        "source": "https://api.censusreporter.org/1.0/data/show/acs2024_5yr?table_ids=B05006,B05002&geo_ids=31000US47900",
+        "confidence": "CONFIRMED",
+        "note": "ACS 2020-2024 5-year (replacement-check pull)"
+      },
+      "rent": {
+        "oneBedroomMonthly": {
+          "value": 1830,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US47900",
+          "confidence": "CONFIRMED",
+          "note": "ACS 2024 1-year median gross rent, 1 bedroom, metro; URL follows the pull pattern used for other metros"
+        },
+        "sharedRoomMonthly": {
+          "value": 915,
+          "year": 2025,
+          "source": "basis: 50% of ACS 2024 1-year median 1BR gross rent (modelling assumption, no source)",
+          "confidence": "UNVERIFIED",
+          "estimate": true,
+          "basis": "Assumed half of 1BR median; not sourced in research"
+        }
+      },
+      "commute": {
+        "transitMonthlyPass": {
+          "value": null,
+          "year": null,
+          "source": null,
+          "confidence": "UNVERIFIED"
+        },
+        "avgMinutesOneWay": {
+          "value": null,
+          "year": null,
+          "source": null,
+          "confidence": "UNVERIFIED"
+        },
+        "modeShare": {
+          "driveAlone": 0.571,
+          "carpool": null,
+          "transit": 0.09,
+          "walk": null,
+          "bike": null,
+          "workFromHome": 0.199,
+          "year": 2024,
+          "source": "https://api.censusreporter.org/1.0/data/show/acs2024_1yr?table_ids=B08301,B08013,B25031,B05002&geo_ids=31000US47900",
+          "confidence": "CONFIRMED"
+        },
+        "carMonthlyCost": {
+          "value": null,
+          "year": null,
+          "source": null,
+          "confidence": "UNVERIFIED"
+        }
+      },
+      "indianCommunityNotes": "The metro has 110,777 India-born residents, larger than Houston or Atlanta, and 31,495 Nigeria-born residents. Specific neighbourhoods are not in the research.",
+      "universitiesForContext": [
+        "Georgetown University",
+        "George Washington University",
+        "American University",
+        "University of Maryland",
+        "George Mason University"
+      ],
+      "visual": {
+        "skylineDescription": "Low horizon (height-limited city): Washington Monument obelisk, Capitol dome, Lincoln and Jefferson memorials as columned boxes around the Mall; Rosslyn towers across the Potomac.",
+        "palette": [
+          "#e9e4d8",
+          "#3f5c7a",
+          "#8a2b3a",
+          "#6f8f5e"
+        ],
+        "landmarks": [
+          "Washington Monument",
+          "US Capitol",
+          "Lincoln Memorial",
+          "Rosslyn skyline"
+        ],
+        "transitVehicles": [
+          "subway",
+          "bus",
+          "commuter rail"
+        ],
+        "weather": "Four seasons; hot humid summers, cold winters with occasional snow, spring cherry blossoms."
+      },
+      "stateRules": null,
+      "gaps": [
+        "Research has only a short replacement-check pull for DC: no pay, transit fares, gas, insurance, rules or design notes",
+        "Visual fields are general knowledge, not from research",
+        "Mean commute, carpool, walk and bike shares null",
+        "Shared room is an estimate",
+        "Seattle (also researched) is not included per the requested city list"
+      ]
+    }
+  ]
+}

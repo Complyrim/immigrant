@@ -1,0 +1,217 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "south-korea",
+  "name": "South Korea",
+  "demonym": "Korean",
+  "language": "Korean",
+  "departureCity": "Seoul",
+  "airportBoardLine": "KE 81   SEOUL      LANDED",
+  "timeDifference": "It is already tomorrow morning there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a long flight across the Pacific, half a day in the air",
+  "names": {
+   "female": [
+    "Ji-woo",
+    "Seo-yeon",
+    "Min-ji",
+    "Ha-eun",
+    "Soo-ah",
+    "Ji-min",
+    "Yu-na",
+    "Eun-ji",
+    "Hye-jin",
+    "Su-bin",
+    "Da-eun",
+    "Ye-jin",
+    "Chae-won"
+   ],
+   "male": [
+    "Min-jun",
+    "Seo-jun",
+    "Do-yun",
+    "Ji-ho",
+    "Hyun-woo",
+    "Jun-seo",
+    "Tae-hyun",
+    "Sung-min",
+    "Jae-won",
+    "Dong-hyun",
+    "Woo-jin",
+    "Seung-hyun",
+    "Ye-jun"
+   ]
+  },
+  "skinTones": [
+   "#f4dcc6",
+   "#eecdb0",
+   "#e4bc98",
+   "#d6a982",
+   "#c5956c",
+   "#b08158"
+  ],
+  "foods": {
+   "dish": "kimchi jjigae",
+   "cookLines": [
+    "Kimchi, pork and tofu go into the pot, and the sharp, warm smell fills the whole apartment.",
+    "You taste the stew and add a spoonful of gochugaru, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share it straight from the pot with bowls of rice, and nobody talks until the bowls are empty."
+   ],
+   "groceryStore": "the Korean supermarket"
+  },
+  "studentAssociation": "Korean Students' Association",
+  "festivals": [
+   {
+    "id": "chuseok-kr",
+    "title": "Chuseok, far from home",
+    "body": "Chuseok falls on a weekday this year. At home the roads would be full of families travelling to their hometowns, and the table would be covered with songpyeon and jeon. Here you have a midterm coming.",
+    "month": 1,
+    "join": "Go to the student association's Chuseok dinner.",
+    "joinText": "There are trays of jeon, japchae and half-moon rice cakes, and someone has set up yutnori in the corner. You lose the game badly and laugh the whole time.",
+    "host": "Make jeon with friends in your kitchen.",
+    "hostText": "The apartment smells of frying oil and green onion for two days. Your friends eat the pancakes as fast as you can flip them.",
+    "skip": "Call your grandparents and study for the midterm.",
+    "skipText": "Your grandmother asks if you have eaten songpyeon, and you promise to find some. You hang up and open your notes with a full heart."
+   },
+   {
+    "id": "seollal-kr",
+    "title": "Seollal",
+    "body": "Lunar New Year falls in the middle of the term this year. At home you would bow to your elders, receive their good wishes and eat a bowl of tteokguk to mark the new year.",
+    "month": 6,
+    "join": "Join the Seollal lunch hosted by a local Korean church or community centre.",
+    "joinText": "A woman who reminds you of your aunt ladles tteokguk into your bowl and tells you that you are now a year older. You go back for seconds.",
+    "host": "Cook tteokguk for your friends.",
+    "hostText": "The broth takes all morning. Your friends ask why rice cake soup makes you older, and you enjoy explaining it.",
+    "skip": "Bow to your family over video and go to class.",
+    "skipText": "Your parents laugh as you bow to a phone propped against a mug. Your grandfather gives his blessing anyway, and it counts."
+   },
+   {
+    "id": "parents-day-kr",
+    "title": "Parents' Day, 8 May",
+    "body": "At home, 8 May is the day children pin carnations on their parents and thank them. Here it is the week of final exams.",
+    "month": 9,
+    "join": "Write letters home with other Korean students at the association.",
+    "joinText": "Someone has brought paper carnations to fold. You write more than you planned to, and photograph the letter before posting it.",
+    "host": "Order flowers to be delivered to your parents and call them.",
+    "hostText": "Your mother holds the carnations up to the camera, and your father pretends he is not moved. You talk for an hour.",
+    "skip": "Send a message and get back to your exams.",
+    "skipText": "Your father replies with a thumbs up and your mother with a long voice note. You listen to it twice between study sessions."
+   }
+  ],
+  "familyCall": [
+   "It is morning in Seoul when you call at night, thirteen to seventeen hours ahead of you.",
+   "Your mother asks if you are eating proper meals and not just instant noodles.",
+   "Your father asks about your grades, then turns the phone so your grandmother can see your face.",
+   "They are starting their day as you end yours, and you fall asleep a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from won, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Korean students, so the factor is left unchanged.",
+  "entryNotes": {
+   "F1": "South Korea is the third largest source of international students in the US, with 42,293 in 2024/25.",
+   "H1B": "South Korea has no country-specific work visa; a bill to create 15,000 E-4 visas for Korean professionals was reintroduced in 2025 and has not passed, and Koreans wait in the Rest of World green card queue.",
+   "B2": "South Korea has been in the Visa Waiver Program since 17 November 2008, so most visitors travel with an ESTA approval for up to 90 days instead of a visa.",
+   "O1": "The O-1 has no lottery or country limit, and the EB-1 green card that often follows is current for Koreans in the November 2026 bulletin.",
+   "FAM": "South Korea is charged to the Rest of World queue, where sibling petitions filed before 22 October 2012 are being processed in November 2026; it is not eligible for the Diversity Visa lottery.",
+   "EWI": "CBP does not report South Korean border encounters separately, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "EOIR reported fewer than four asylum grants and fewer than four denials for South Korean nationals in FY2024, too few to give a rate."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Seoul",
+   "text": "Seoul is on Korea Standard Time, UTC+9, with no daylight saving. It is 14 hours ahead of US Eastern in winter and 13 in summer, and 17 hours ahead of Pacific in winter and 16 in summer.",
+   "value": 14,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, South Korea to US",
+   "text": "Design estimate of $1,500. No sourced fare was found; real prices change a great deal with season and route.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued in South Korea",
+   "text": "The US embassy in Seoul issued 14,489 F-1 visas in FY2024, down from 20,455 in FY2018, and 11,654 in FY2025. This counts everyone interviewed in South Korea, not only Korean nationals. Figures are State Department data republished by VisaGrader.",
+   "value": 14489,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/south-korea-kor",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Korean students in the US",
+   "text": "Open Doors counted 42,293 students from South Korea in US higher education in 2024/25, down about 2 percent from 43,149, the 3rd largest group.",
+   "value": 42293,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_South-Korea_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas issued in South Korea",
+   "text": "The US embassy in Seoul issued 2,314 H-1B visas in FY2024 and 2,360 in FY2025. This counts everyone interviewed in South Korea; South Korea's share of all H-1B approvals was not found in an official table.",
+   "value": 2314,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/south-korea-kor",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for South Korean applicants",
+   "text": "EOIR reported fewer than four asylum grants and fewer than four denials for South Korean nationals in FY2024, with 11 cases not adjudicated. The numbers are too small to give a rate.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for South Korea",
+   "text": "South Korea is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Asia",
+  "castGroup": "south-korea",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null because EOIR suppressed both grants and denials (fewer than four each) for South Korea in FY2024; 11 not adjudicated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

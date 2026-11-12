@@ -1,0 +1,232 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "philippines",
+  "name": "Philippines",
+  "demonym": "Filipino",
+  "language": "Filipino, English, Cebuano, Ilocano or your home language",
+  "departureCity": "Manila",
+  "airportBoardLine": "PR 102  MANILA     LANDED",
+  "timeDifference": "It is already tomorrow morning there.",
+  "roundTripFlightUsd": 1400,
+  "flightEstimate": true,
+  "homeTravelNote": "a long flight across the Pacific, half a day in the air",
+  "names": {
+   "female": [
+    "Maria",
+    "Angelica",
+    "Kristine",
+    "Jasmine",
+    "Bea",
+    "Katrina",
+    "Patricia",
+    "Liza",
+    "Rosalinda",
+    "Althea",
+    "Divina",
+    "Carmela",
+    "Aisha",
+    "Fatima"
+   ],
+   "male": [
+    "Jose",
+    "Juan",
+    "Miguel",
+    "Paolo",
+    "Mark",
+    "Christian",
+    "Angelo",
+    "Rafael",
+    "Gabriel",
+    "Jericho",
+    "Ramon",
+    "Emmanuel",
+    "Abdul",
+    "Jamal"
+   ]
+  },
+  "skinTones": [
+   "#eccaa6",
+   "#deb68e",
+   "#cfa177",
+   "#bd8c62",
+   "#a67750",
+   "#8d6240"
+  ],
+  "foods": {
+   "dish": "chicken adobo",
+   "cookLines": [
+    "Chicken simmers in soy sauce, vinegar, garlic and bay leaves, and the whole apartment smells like home.",
+    "You taste the sauce and let it cook down a little longer, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share it at the counter over hot rice, spooning the sauce on until the pot is clean."
+   ],
+   "groceryStore": "the Filipino grocery store"
+  },
+  "studentAssociation": "Filipino Students' Association",
+  "festivals": [
+   {
+    "id": "pasko-ph",
+    "title": "Christmas, far from home",
+    "body": "At home Christmas begins long before December, with star lanterns in every window, dawn Masses and the whole family at the table for Noche Buena. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas Eve with a Filipino family from church or the association.",
+    "joinText": "There is a parol in the window, a table that keeps filling up and karaoke after midnight. A tita you met once sends you home with enough food for a week.",
+    "host": "Host a Noche Buena for students who could not travel.",
+    "hostText": "You make pancit and someone brings leche flan. At midnight everyone calls home at once, and the room fills with a dozen families' voices.",
+    "skip": "Call home during Noche Buena and go to bed.",
+    "skipText": "It is still morning for you and already midnight for them. Your cousins crowd the screen to greet you, and you feel close to it all."
+   },
+   {
+    "id": "holy-week-ph",
+    "title": "Holy Week",
+    "body": "Holy Week falls in the middle of the term this year. At home the country slows down, offices close and many families go back to their home province.",
+    "month": 7,
+    "join": "Go to Easter service with Filipino friends and eat together afterward.",
+    "joinText": "The potluck after the service covers three tables. Someone's lola asks which province your family is from, and it turns out she knows your town.",
+    "host": "Cook a quiet meal for friends on Easter Sunday.",
+    "hostText": "You keep it simple and take your time. Your friends ask what the week is like at home, and you find you have a lot to say.",
+    "skip": "Call your family and spend the weekend resting.",
+    "skipText": "Your mother tells you who came home this year and who could not. You promise to be there for the next one."
+   },
+   {
+    "id": "independence-ph",
+    "title": "Independence Day, 12 June",
+    "body": "At home there are flag ceremonies and a public holiday for Araw ng Kalayaan. Here it is an ordinary summer weekday.",
+    "month": 10,
+    "join": "Go to the Filipino community's Independence Day picnic.",
+    "joinText": "There are flags on every table, a line for lumpia and barbecue, and children running everywhere. You stay until the last song.",
+    "host": "Cook for friends and put a small flag on the table.",
+    "hostText": "Your friends try sinigang for the first time and ask for seconds. Someone asks what the sun and stars on the flag mean, and you tell them.",
+    "skip": "Send greetings to the family group chat and get on with your day.",
+    "skipText": "Your phone fills with flags and photos from home. You smile at every one."
+   }
+  ],
+  "familyCall": [
+   "It is morning in Manila when you call at night, twelve to sixteen hours ahead of you.",
+   "Your mother asks if you have eaten, and whether it is very cold where you are.",
+   "Your father asks about your classes, then your lola takes the phone to give you her blessing.",
+   "They are starting their day as you end yours, and you fall asleep a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from pesos, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Filipino students, so the factor is left unchanged.",
+  "entryNotes": {
+   "F1": "About 4,573 students from the Philippines studied in the US in 2024/25, and Filipino nationals received 1,020 F-1 visas in FY2024.",
+   "H1B": "Filipino nationals received 3,565 H-1B visas in FY2024, and the Philippines has its own EB-3 green card date, 15 August 2023 in the November 2026 bulletin.",
+   "B2": "The Philippines is not in the Visa Waiver Program, so every visitor needs a B visa before travelling.",
+   "O1": "The O-1 has no lottery or country limit, and the EB-1 green card that often follows is current for Filipino applicants in the November 2026 bulletin.",
+   "FAM": "The Philippines has its own family queue, among the longest: in November 2026 sibling petitions filed before 15 May 2008 are being processed, and the Philippines is not eligible for the Diversity Visa lottery.",
+   "EWI": "CBP counts Filipino nationals as a separate group in its border encounter data, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 EOIR reported fewer than four asylum grants and 11 denials for Filipino nationals, too few to give a rate."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Manila",
+   "text": "The Philippines is on Philippine Standard Time, UTC+8, with no daylight saving. It is 13 hours ahead of US Eastern in winter and 12 in summer, and 16 hours ahead of Pacific in winter and 15 in summer.",
+   "value": 13,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Philippines to US",
+   "text": "Design estimate of $1,400. No sourced fare was found; real prices change a great deal with season and route.",
+   "value": 1400,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Filipinos",
+   "text": "Filipino nationals received 1,020 F-1 visas in FY2024, down from a peak of 1,237 in FY2022, and 777 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 1020,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/philippines-phl",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Filipino students in the US",
+   "text": "Open Doors counted 4,573 students from the Philippines in US higher education in 2024/25, up about 12 percent from 4,100, the 32nd largest group.",
+   "value": 4573,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Philippines_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to the Philippines",
+   "text": "Central bank data put cash remittances from overseas Filipinos at a record $35.63 billion in 2025, up 3.3 percent from $34.49 billion in 2024. The United States was the largest source, at 39.7 percent.",
+   "value": 35.63,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://www.philstar.com/business/2026/02/17/2508451/remittances-reach-record-high-356-billion",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Filipinos",
+   "text": "Filipino nationals received 3,565 H-1B visas in FY2024 and 3,350 in FY2025, up from 1,217 in FY2018. The Philippines' share of all H-1B approvals was not found in an official table.",
+   "value": 3565,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/philippines-phl",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Filipino applicants",
+   "text": "In FY2024 EOIR reported fewer than four asylum grants and 11 denials for Filipino nationals, with 151 cases not adjudicated. The numbers are too small to give a rate.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Green card queues for the Philippines",
+   "text": "The Philippines has its own column in the visa bulletin. November 2026 final action dates as transcribed by law firms: F1 1 Nov 2013, F3 22 Jul 2006, F4 (siblings) 15 May 2008; EB-1 current, EB-2 1 Apr 2025, EB-3 15 Aug 2023.",
+   "value": 18,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Asia",
+  "castGroup": "philippines",
+  "ebQueue": "philippines",
+  "ebDates": "November 2026 Visa Bulletin final action dates for the Philippines: EB-1 current, EB-2 1 April 2025 (same as Rest of World), EB-3 15 August 2023 (law firm transcription, LIKELY, https://www.gozellaw.com/blog/november-2026-visa-bulletin).",
+  "asylumGrantPct": null,
+  "asylumNote": "Null because EOIR suppressed the grant count (fewer than four) for the Philippines in FY2024; 11 denials, 8 abandoned, 151 not adjudicated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

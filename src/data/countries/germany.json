@@ -1,0 +1,243 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "germany",
+  "name": "Germany",
+  "demonym": "German",
+  "language": "German, with Turkish, Russian or another home language for many families",
+  "departureCity": "Frankfurt",
+  "airportBoardLine": "LH 400  FRANKFURT  LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 850,
+  "flightEstimate": true,
+  "homeTravelNote": "an eight or nine hour flight, long but direct from most big US airports",
+  "names": {
+   "female": [
+    "Anna",
+    "Lena",
+    "Hannah",
+    "Marie",
+    "Sophie",
+    "Laura",
+    "Julia",
+    "Katharina",
+    "Johanna",
+    "Clara",
+    "Emma",
+    "Lea",
+    "Elif",
+    "Aylin"
+   ],
+   "male": [
+    "Lukas",
+    "Jonas",
+    "Felix",
+    "Maximilian",
+    "Paul",
+    "Leon",
+    "Tobias",
+    "Jan",
+    "Florian",
+    "Niklas",
+    "Moritz",
+    "Stefan",
+    "Emre",
+    "Can"
+   ]
+  },
+  "skinTones": [
+   "#f7dfd0",
+   "#efcbb2",
+   "#e0b08f",
+   "#c68f68",
+   "#9c6a47",
+   "#6a442e"
+  ],
+  "foods": {
+   "dish": "schnitzel with potato salad",
+   "cookLines": [
+    "You pound the cutlets thin, bread them and lay them in the hot pan, and the apartment smells like a Sunday at home.",
+    "You taste the potato salad and add a little more vinegar and mustard, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and squeeze lemon over the last crisp piece."
+   ],
+   "groceryStore": "the German deli"
+  },
+  "studentAssociation": "German Students' Association",
+  "festivals": [
+   {
+    "id": "unity-day-de",
+    "title": "Day of German Unity, 3 October",
+    "body": "At home it is a public holiday, with a big citizens' festival in a different host city each year and a quiet day off for most families. Here it is a regular weekday.",
+    "month": 2,
+    "join": "Go to the German club's evening get-together.",
+    "joinText": "There are pretzels, a long table and people from every corner of the country comparing dialects. You stay later than you planned.",
+    "host": "Invite friends over for a simple German dinner.",
+    "hostText": "Your friends ask what the day marks, and you find yourself telling them about 1990 and what your parents remember. The potato salad disappears.",
+    "skip": "Send greetings to the family chat and get on with the day.",
+    "skipText": "Your father replies with a photo from their walk in the woods. You save it and go back to work."
+   },
+   {
+    "id": "advent-de",
+    "title": "Advent and Christmas Eve",
+    "body": "At home December means an Advent wreath with four candles, Christmas markets, homemade cookies and the big evening on the 24th. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas Eve with a German family from the club.",
+    "joinText": "There are candles, carols you know by heart and presents opened in the evening, just as at home. They send you off with a tin of cookies.",
+    "host": "Bake Christmas cookies with friends and light the candles.",
+    "hostText": "Flour everywhere, with cinnamon stars and vanilla crescents cooling on every surface. Your friends take a box each and ask for the recipes.",
+    "skip": "Call home on the evening of the 24th and keep it quiet.",
+    "skipText": "The tree is lit behind your parents and your brother is playing the piano. You feel close to it all."
+   },
+   {
+    "id": "easter-de",
+    "title": "Easter",
+    "body": "Easter falls in April this year. At home there would be painted eggs hanging from branches, an egg hunt in the garden and a long family breakfast.",
+    "month": 8,
+    "join": "Join the Easter brunch organised by the German club.",
+    "joinText": "Someone has braided a sweet Easter loaf and someone else has hidden chocolate eggs around the room. You find three.",
+    "host": "Dye eggs with your friends and make a big breakfast.",
+    "hostText": "Your friends get dye on their fingers and take the project very seriously. The eggs sit in a bowl all week looking cheerful.",
+    "skip": "Call home on Sunday morning, then enjoy a slow day.",
+    "skipText": "Your mother turns the phone so you can see the table. You promise to be there next spring."
+   }
+  ],
+  "familyCall": [
+   "It is evening in Germany when the call connects, six hours ahead of the East Coast and nine ahead of the West.",
+   "Your mother asks whether you are eating properly and whether you have found decent bread yet.",
+   "Your father leans in to ask how the work is going, and your grandmother waves from the sofa.",
+   "By the time you hang up it is nearly midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from euros, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at the India baseline of 1.0. No sourced figure was found that would justify more or less family support for German students, so the factor is left unchanged. Flight costs are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "German nationals received 5,879 F-1 visas in FY2024, and more than a quarter of the 9,123 German students counted in 2024/25 were on non-degree exchange programs.",
+   "H1B": "German nationals received 771 H-1B visas in FY2024 and wait in the Rest of World green card queue, not India's.",
+   "B2": "Germany has been in the Visa Waiver Program since 15 July 1989, so a visit of up to 90 days needs an approved ESTA instead of a B-2 visa.",
+   "O1": "German nationals received 725 O-1 visas in FY2024 and 814 in FY2025.",
+   "FAM": "Germany is charged to the Rest of World queue, where the November 2026 bulletin is reaching sibling petitions filed before 22 October 2012, and people born in Germany can enter the Diversity Visa lottery.",
+   "EWI": "CBP does not report German citizens separately in its border encounter data, and a visitor who stays past the 90 days allowed under the Visa Waiver Program has few ways to fix status from inside the US.",
+   "ASY": "EOIR's FY2024 table lists 5 asylum grants for German nationals and suppresses the denial count because it is below four, so no rate can be calculated."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Germany",
+   "text": "Germany is on Central European Time, UTC+1, and UTC+2 in summer. It is 6 hours ahead of US Eastern and 9 hours ahead of Pacific for most of the year, and 5 and 8 for a few weeks in March and around the end of October when the clocks change on different dates.",
+   "value": 6,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Germany to US",
+   "text": "Design estimate of $850. No sourced fare was retrieved for this route; the figure is a planning number, not a quote.",
+   "value": 850,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Germans",
+   "text": "German nationals received 5,879 F-1 visas in FY2024, against 5,874 in FY2023 and 5,535 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 5879,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/germany-deu",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "German students in the US",
+   "text": "Open Doors counted 9,123 German students in US higher education in 2024/25, down from 9,230, the 21st largest group. 2,433 of them, about 27 percent, were non-degree students.",
+   "value": 9123,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Germany_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Germany",
+   "text": "World Bank data put personal remittances received by Germany at about $22.2 billion in 2024 and $23.9 billion in 2025.",
+   "value": 22.2,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/DEU/indicator/BX.TRF.PWKR.CD.DT?format=json&date=2022:2025",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Germans",
+   "text": "German nationals received 771 H-1B visas in FY2024 and 801 in FY2025. Germany's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 771,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/germany-deu",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for German applicants",
+   "text": "EOIR's FY2024 table by nationality lists 5 grants and 6 cases not adjudicated for German nationals, and suppresses denials because the count is below four. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Germany",
+   "text": "Germany is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Germany is not named in the 2025 entry proclamations or on the reported list of 75 countries whose immigrant visas were paused in January 2026.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "visa-waiver",
+   "topic": "rules",
+   "title": "Visa Waiver Program",
+   "text": "DHS lists Germany in the Visa Waiver Program with travel beginning 15 July 1989. Stays are limited to 90 days.",
+   "value": 1989,
+   "unit": "year",
+   "year": 1989,
+   "source": "https://www.dhs.gov/visa-waiver-program",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Europe",
+  "castGroup": "germany",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "null: EOIR FY2024 lists 5 grants for German nationals but suppresses denials (fewer than four), so grants over grants plus denials cannot be computed. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

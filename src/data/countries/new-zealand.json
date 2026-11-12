@@ -1,0 +1,209 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "new-zealand",
+  "name": "New Zealand",
+  "demonym": "New Zealand",
+  "language": "English, te reo Māori or your home language",
+  "departureCity": "Auckland",
+  "airportBoardLine": "NZ 6    AUCKLAND   LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1400,
+  "flightEstimate": true,
+  "homeTravelNote": "a long overnight flight across the Pacific",
+  "names": {
+   "female": [
+    "Charlotte",
+    "Isla",
+    "Olivia",
+    "Amelia",
+    "Ruby",
+    "Sophie",
+    "Emma",
+    "Aroha",
+    "Mere",
+    "Anahera",
+    "Kiri",
+    "Hine",
+    "Ngaio",
+    "Sina",
+    "Mei"
+   ],
+   "male": [
+    "Oliver",
+    "Jack",
+    "Noah",
+    "Liam",
+    "James",
+    "Hunter",
+    "Hemi",
+    "Tāne",
+    "Nikau",
+    "Wiremu",
+    "Rāwiri",
+    "Mikaere",
+    "Tama",
+    "Sione",
+    "Arjun"
+   ]
+  },
+  "skinTones": [
+   "#f3d9c4",
+   "#e6c2a0",
+   "#d4a57e",
+   "#bd8a60",
+   "#9a6a45",
+   "#74492f"
+  ],
+  "foods": {
+   "dish": "roast lamb with kūmara",
+   "cookLines": [
+    "Lamb and kūmara roast in the oven, and the whole apartment smells like a Sunday at home.",
+    "You baste the lamb and add a little more rosemary, the way your nan would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share plates at the counter and finish with a slightly lopsided pavlova you are still proud of."
+   ],
+   "groceryStore": "the import shop that stocks Marmite, Whittaker's and pineapple lumps"
+  },
+  "studentAssociation": "New Zealand Students' Association",
+  "festivals": [
+   {
+    "id": "christmas-nz",
+    "title": "Christmas in winter",
+    "body": "At home Christmas is summer: pōhutukawa in flower, a barbecue, the beach and the whole family at the bach. Here it is cold, and it gets dark in the afternoon.",
+    "month": 4,
+    "join": "Join an orphans' Christmas with other New Zealanders and Australians.",
+    "joinText": "Someone has found a ham, someone has made a pavlova, and the friendly argument about who invented it lasts through dessert.",
+    "host": "Host a summer Christmas indoors for friends who are staying in town.",
+    "hostText": "You turn up the heating, put out a platter and play Christmas songs from home. Your friends ask for the pavlova recipe.",
+    "skip": "Call home on Christmas morning their time and keep the day quiet.",
+    "skipText": "Your family is on the deck in the sun, passing the phone from hand to hand. You show them the frost on your window."
+   },
+   {
+    "id": "waitangi-day-nz",
+    "title": "Waitangi Day, 6 February",
+    "body": "At home it is a public holiday that marks the signing of Te Tiriti o Waitangi, with ceremonies, kapa haka, food and a lot of conversation about what the day means. Here it is a regular class day.",
+    "month": 6,
+    "join": "Go to the Waitangi Day gathering the local New Zealand community holds.",
+    "joinText": "There is a karakia to open, then waiata that half the room knows by heart. You eat too much and meet people from three towns near yours.",
+    "host": "Cook for friends and tell them about the day.",
+    "hostText": "Your friends ask good questions and you find you have more to say than you expected. Someone asks you to teach them a waiata next time.",
+    "skip": "Watch the dawn ceremony from Waitangi online and message your whānau.",
+    "skipText": "The sun comes up over the Treaty Grounds on your laptop while it is still yesterday for you. You send a photo of your screen home."
+   },
+   {
+    "id": "matariki-nz",
+    "title": "Matariki",
+    "body": "At home Matariki, the Māori New Year, is a public holiday in midwinter, this year in late June. It is a time to remember those who have passed, share food and look ahead. Here it is early summer and nobody has the day off.",
+    "month": 10,
+    "join": "Join the Matariki evening the New Zealand community is holding.",
+    "joinText": "People share kai and the names of those they are remembering this year. You say your grandmother's name aloud, and it feels right.",
+    "host": "Host a shared dinner and look for the stars with your friends.",
+    "hostText": "Everyone brings a dish. Afterward you stand outside with a star map, not quite finding the cluster, and nobody minds.",
+    "skip": "Call home and hear how your whānau marked the day.",
+    "skipText": "They got up before dawn to look for the stars and are full of it. You promise to be there for the next one."
+   }
+  ],
+  "familyCall": [
+   "It is already tomorrow afternoon in Auckland when your evening call connects, 16 to 21 hours ahead of you.",
+   "Your mum asks if you are eating properly and whether it has snowed yet.",
+   "Your dad asks about your classes, then your nan takes the phone and wants to see your room.",
+   "By the time you hang up they are getting on with a day you have not reached yet, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from New Zealand dollars, so the exchange rate on the day decides how far it goes.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at 1.0, the India baseline. No sourced reason was found to move it for New Zealand, so it is left unchanged.",
+  "entryNotes": {
+   "F1": "Open Doors counted 1,781 New Zealand students in US higher education in 2024/25, and New Zealanders received 661 F-1 visas in FY2024.",
+   "H1B": "New Zealand nationals received 166 H-1B visas in FY2024; the E-3 work visa next door is for Australian nationals only, so New Zealanders use the H-1B lottery.",
+   "B2": "New Zealand is in the Visa Waiver Program, so New Zealanders can visit for up to 90 days with an ESTA authorization and no visa.",
+   "O1": "The O-1 is open to New Zealanders on the same terms as everyone else, and no country limit applies to it.",
+   "FAM": "New Zealand is charged to the Rest of World family queue and New Zealanders can enter the Diversity Visa lottery; 37 diversity visas went to New Zealand in FY2024.",
+   "EWI": "CBP's public encounters file does not list New Zealanders separately; for New Zealanders, staying past the 90 days of a visa waiver visit is the usual way of falling out of status.",
+   "ASY": "EOIR's FY2024 asylum table by nationality has no row for New Zealand, so no grant rate can be given."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Auckland",
+   "text": "Auckland is on New Zealand Time, UTC+12, or UTC+13 during its own daylight saving from late September to early April. It is 18 hours ahead of US Eastern in the US winter and 16 in the US summer, and 21 and 19 hours ahead of Pacific.",
+   "value": 18,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, New Zealand to US",
+   "text": "Design estimate of $1,400. No sourced fare was found; real prices move widely with season and route.",
+   "value": 1400,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to New Zealanders",
+   "text": "New Zealand nationals received 661 F-1 visas in FY2024 and 598 in FY2025, compared with 681 in FY2018. Figures are State Department data republished by VisaGrader.",
+   "value": 661,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/new-zealand-nzl",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "New Zealand students in the US",
+   "text": "Open Doors counted 1,781 New Zealand students in US higher education in 2024/25, up from 1,696 the year before, the 62nd largest group. More than half were undergraduates.",
+   "value": 1781,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_New-Zealand_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for New Zealanders",
+   "text": "New Zealand nationals received 166 H-1B visas in FY2024 and 169 in FY2025, compared with 183 in FY2018. New Zealand's share of all H-1B approvals was not found.",
+   "value": 166,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/new-zealand-nzl",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for New Zealand",
+   "text": "New Zealand is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Oceania",
+  "castGroup": "new-zealand",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR's FY2024 Asylum Decisions by Nationality table has no row for New Zealand. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

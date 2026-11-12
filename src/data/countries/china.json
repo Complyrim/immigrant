@@ -1,0 +1,220 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "china",
+  "name": "China",
+  "demonym": "Chinese",
+  "language": "Mandarin, Cantonese or your home language",
+  "departureCity": "Shanghai",
+  "airportBoardLine": "MU 587  SHANGHAI   LANDED",
+  "timeDifference": "It is already tomorrow morning there.",
+  "roundTripFlightUsd": 1400,
+  "flightEstimate": true,
+  "homeTravelNote": "a long flight across the Pacific, half a day in the air",
+  "names": {
+   "female": [
+    "Li Na",
+    "Xiaoyan",
+    "Mei",
+    "Jing",
+    "Yan",
+    "Xue",
+    "Hui",
+    "Ying",
+    "Fang",
+    "Lan",
+    "Yuting",
+    "Zihan",
+    "Xinyi",
+    "Wenjing"
+   ],
+   "male": [
+    "Wei",
+    "Jun",
+    "Lei",
+    "Hao",
+    "Ming",
+    "Tao",
+    "Jian",
+    "Bo",
+    "Peng",
+    "Yong",
+    "Haoran",
+    "Zihao",
+    "Yuxuan",
+    "Chen"
+   ]
+  },
+  "skinTones": [
+   "#f3d9c0",
+   "#ecc9a8",
+   "#e2b890",
+   "#d4a57a",
+   "#c39166",
+   "#ad7c54"
+  ],
+  "foods": {
+   "dish": "dumplings",
+   "cookLines": [
+    "You mix pork, cabbage and ginger for the filling, and the smell of sesame oil takes you straight home.",
+    "You fold the dumplings the way your grandmother taught you, a little crooked but sealed tight.",
+    "{roommate} wanders in and asks if they can try folding one.",
+    "You eat them hot from the pot at the counter, dipping each one in black vinegar."
+   ],
+   "groceryStore": "the Chinese supermarket"
+  },
+  "studentAssociation": "Chinese Students and Scholars Association",
+  "festivals": [
+   {
+    "id": "mid-autumn-cn",
+    "title": "Mid-Autumn Festival",
+    "body": "The Mid-Autumn Festival falls on a weekday this year. At home your family would sit together under the full moon and share mooncakes. Here you have a problem set due.",
+    "month": 1,
+    "join": "Go to the student association's Mid-Autumn gathering.",
+    "joinText": "Someone has brought boxes of mooncakes from three different bakeries, and people argue happily about which filling is best. You stand outside with new friends and look at the moon.",
+    "host": "Buy mooncakes and invite your floor to share them.",
+    "hostText": "You cut each mooncake into small wedges so everyone can taste. A friend asks about the story of the moon, and you tell it as well as you can remember.",
+    "skip": "Video call your family and look at the same moon.",
+    "skipText": "It is morning there, so the moon has already set for them. Your mother says it was bright last night, and you tell her it is bright for you now."
+   },
+   {
+    "id": "spring-festival-cn",
+    "title": "Spring Festival, far from home",
+    "body": "Lunar New Year falls in the middle of the term this year. At home there would be a reunion dinner, red envelopes and the whole family around one table. Classes here carry on as usual.",
+    "month": 6,
+    "join": "Join the Lunar New Year dinner on campus.",
+    "joinText": "A hundred people fold dumplings at long tables while a holiday broadcast plays on a projector. Someone you just met hands you a red envelope with a chocolate coin inside.",
+    "host": "Cook a reunion dinner for friends in your apartment.",
+    "hostText": "You make fish, dumplings and too many side dishes. Your friends learn to say happy new year, and nobody leaves until the food is gone.",
+    "skip": "Call home during their reunion dinner and go to class.",
+    "skipText": "The phone is passed around the table so every relative can wish you well. You carry their voices with you through the day."
+   },
+   {
+    "id": "dragon-boat-cn",
+    "title": "Dragon Boat Festival",
+    "body": "The Dragon Boat Festival falls on a weekday this year. At home there would be zongzi, sticky rice wrapped in leaves, and boat races on the river.",
+    "month": 10,
+    "join": "Join friends from the association to make zongzi.",
+    "joinText": "Your first few come out lopsided, and an older student shows you how to tie the string. You go home with a bag of them for the freezer.",
+    "host": "Steam store-bought zongzi and share them with your housemates.",
+    "hostText": "They unwrap the leaves carefully and ask what is inside. You explain the fillings, and someone asks where to buy more.",
+    "skip": "Send a greeting to the family chat and keep working.",
+    "skipText": "Your aunt posts a photo of the zongzi she made this morning. You save it, and promise yourself you will be home for the next one."
+   }
+  ],
+  "familyCall": [
+   "It is morning in Shanghai when you call at night, twelve to sixteen hours ahead of you.",
+   "Your mother asks if you are eating properly and tells you to wear more layers.",
+   "Your father comes into view to ask about your classes, and your grandmother waves from behind him.",
+   "They are starting their day as you end yours, and you fall asleep a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from yuan, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Chinese students, so the factor is left unchanged.",
+  "entryNotes": {
+   "F1": "China is the second largest source of international students, 265,919 in 2024/25; since 2020 a proclamation bars F and J visas for some graduate students and researchers tied to certain Chinese institutions, and undergraduates are not covered.",
+   "H1B": "China-born workers received about 11.7 percent of H-1B approvals in FY2024, second after India, and China has its own employment green card queue.",
+   "B2": "China is not in the Visa Waiver Program, so every visitor needs a B visa before travelling.",
+   "O1": "The O-1 has no lottery or country limit, but the EB-1 green card that often follows has a separate China queue, at 1 August 2023 in the November 2026 bulletin.",
+   "FAM": "China has its own column in the visa bulletin; in November 2026 sibling petitions filed before 22 October 2012 are being processed, and people born in mainland China are not eligible for the Diversity Visa lottery.",
+   "EWI": "CBP counts Chinese nationals as a separate group in its border encounter data, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 2,998 and denied 903 asylum cases from Chinese nationals, about 77 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Shanghai",
+   "text": "All of China uses China Standard Time, UTC+8, with no daylight saving. It is 13 hours ahead of US Eastern in winter and 12 in summer, and 16 hours ahead of Pacific in winter and 15 in summer.",
+   "value": 13,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, China to US",
+   "text": "Design estimate of $1,400. No sourced fare was found; real prices change a great deal with season and route.",
+   "value": 1400,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued in China",
+   "text": "US consulates in China issued 73,724 F-1 visas in FY2024, down from 100,476 in FY2019, and 52,278 in FY2025. This counts everyone interviewed in China, not only Chinese nationals. Figures are State Department data republished by VisaGrader.",
+   "value": 73724,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/china-chn",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Chinese students in the US",
+   "text": "Open Doors counted 265,919 students from China in US higher education in 2024/25, down about 4 percent from 277,398, the 2nd largest group. The peak was 372,532 in 2019/20.",
+   "value": 265919,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_China_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B approvals for China-born workers",
+   "text": "China-born workers received 46,680 of 399,395 H-1B approvals in FY2024, about 11.7 percent, second after India. Figures are from the USCIS characteristics report as cited by VisaVerge.",
+   "value": 11.7,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.visaverge.com/news/india-leads-h-1b-approvals-in-fy-2024-capturing-71-share/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Chinese applicants",
+   "text": "In FY2024 immigration courts granted 2,998 and denied 903 asylum cases from Chinese nationals, about 77 percent of decisions. Another 1,605 were not adjudicated and 363 were abandoned. Individual claims matter more than averages.",
+   "value": 77,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Green card queues for China",
+   "text": "Mainland China has its own column in the visa bulletin. November 2026 final action dates as transcribed by law firms: EB-1 1 Aug 2023, EB-2 1 Oct 2021, EB-3 22 Jan 2022; family dates match the worldwide ones, F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Asia",
+  "castGroup": "china",
+  "ebQueue": "china",
+  "ebDates": "November 2026 Visa Bulletin final action dates for mainland China: EB-1 1 August 2023, EB-2 1 October 2021, EB-3 22 January 2022 (law firm transcription, LIKELY, https://www.gozellaw.com/blog/november-2026-visa-bulletin).",
+  "asylumGrantPct": 77,
+  "asylumNote": "2,998 grants and 903 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024); 2,998 / 3,901 = 76.9 percent. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

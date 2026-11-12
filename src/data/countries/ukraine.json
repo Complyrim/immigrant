@@ -1,0 +1,255 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "ukraine",
+  "name": "Ukraine",
+  "demonym": "Ukrainian",
+  "language": "Ukrainian, and for many families Russian or another home language too",
+  "departureCity": "Kyiv",
+  "airportBoardLine": "LO 3    VIA WARSAW LANDED",
+  "timeDifference": "It is already late evening there.",
+  "roundTripFlightUsd": 1300,
+  "flightEstimate": true,
+  "homeTravelNote": "a long trip with at least one connection, and since 2022 it begins with a train or bus across the border before the flight",
+  "names": {
+   "female": [
+    "Olena",
+    "Oksana",
+    "Iryna",
+    "Nataliia",
+    "Kateryna",
+    "Anastasiia",
+    "Yuliia",
+    "Mariia",
+    "Sofiia",
+    "Tetiana",
+    "Daryna",
+    "Viktoriia",
+    "Solomiia",
+    "Halyna"
+   ],
+   "male": [
+    "Oleksandr",
+    "Andrii",
+    "Dmytro",
+    "Serhii",
+    "Mykola",
+    "Volodymyr",
+    "Taras",
+    "Bohdan",
+    "Maksym",
+    "Yurii",
+    "Ivan",
+    "Oleh",
+    "Artem",
+    "Vasyl"
+   ]
+  },
+  "skinTones": [
+   "#f8e1d2",
+   "#f1d0ba",
+   "#e6bb9f",
+   "#d6a282",
+   "#bb8765",
+   "#96684b"
+  ],
+  "foods": {
+   "dish": "borscht",
+   "cookLines": [
+    "Beets, cabbage, carrots and potatoes go into the pot one after another, and the whole apartment smells like home.",
+    "You taste the borscht and add a little more dill and garlic, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share bowls at the counter, with a spoonful of sour cream on top and dark bread on the side."
+   ],
+   "groceryStore": "the Eastern European grocery store"
+  },
+  "studentAssociation": "Ukrainian Students' Association",
+  "festivals": [
+   {
+    "id": "independence-ua",
+    "title": "Independence Day, 24 August",
+    "body": "At home there are blue and yellow flags, embroidered shirts and a day off. Here it is an ordinary day in a city you are still learning.",
+    "month": 0,
+    "join": "Go to the gathering organised by the local Ukrainian community.",
+    "joinText": "People in embroidered shirts sing songs you have known since childhood. A woman from Lviv presses a plate of varenyky into your hands.",
+    "host": "Invite new friends over and cook for them.",
+    "hostText": "You put on your vyshyvanka and serve borscht with garlic rolls. Your friends ask about the embroidery, and you tell them what your region's pattern means.",
+    "skip": "Send greetings to the family chat and carry on with your day.",
+    "skipText": "Your phone fills with flags and photos from home. You answer every one."
+   },
+   {
+    "id": "rizdvo-ua",
+    "title": "Christmas",
+    "body": "At home Christmas Eve means Sviat Vechir, twelve meatless dishes beginning with kutia, and carols sung from door to door. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Holy Evening with a Ukrainian family from the church or the community.",
+    "joinText": "The table is set with twelve dishes and a sheaf of wheat stands in the corner. After dinner everyone sings carols, and you know every word.",
+    "host": "Cook a Holy Evening dinner for friends who could not travel.",
+    "hostText": "You manage kutia, borscht with little dumplings and stuffed cabbage, not quite twelve dishes. Your friends try each one and ask what the wheat and honey stand for.",
+    "skip": "Call home on Christmas Eve and keep it quiet.",
+    "skipText": "Your family holds the bowl of kutia up to the camera so you can see it. You promise to be at the table next year."
+   },
+   {
+    "id": "velykden-ua",
+    "title": "Easter",
+    "body": "Easter falls in April this year. At home there would be a basket with paska bread and decorated eggs carried to church to be blessed, and a long family breakfast.",
+    "month": 8,
+    "join": "Take a basket to the blessing at the Ukrainian church.",
+    "joinText": "Rows of baskets covered with embroidered cloths line the path. Someone is teaching the children to write pysanky with wax, and you join in.",
+    "host": "Bake paska and invite your friends for Easter breakfast.",
+    "hostText": "The paska rises taller than the tin and you are prouder of it than of any exam. Your friends each take home a painted egg.",
+    "skip": "Call home on Sunday morning and have a calm day.",
+    "skipText": "Your grandmother gives you the Easter greeting and waits for the answer. You give it, and she smiles."
+   }
+  ],
+  "familyCall": [
+   "It is late evening in Kyiv when the call connects, seven hours ahead of the East Coast and ten ahead of the West.",
+   "Your mother asks whether you are eating well and whether you have warm clothes for the winter.",
+   "Your father leans in to ask how the work is going, and your grandmother tells you everyone at home is thinking of you.",
+   "By the time you hang up it is past midnight there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from hryvnia, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 0.8,
+  "familySupportNote": "Designed at 0.8 of the India baseline. World Bank data show money mostly flowing toward families in Ukraine (remittances worth about 6 percent of GDP in 2024), and the full-scale war since 2022 displaced over 10 million people in its first months, so the design assumes less spare money to send abroad. Kept modest because many families still support their students.",
+  "entryNotes": {
+   "F1": "Ukrainian nationals received 810 F-1 visas in FY2024, and Open Doors counted 2,346 Ukrainian students in 2024/25, most of them undergraduates.",
+   "H1B": "Ukrainian nationals received 132 H-1B visas in FY2024 and wait in the Rest of World green card queue, not India's.",
+   "B2": "Ukraine is not in the Visa Waiver Program, so visitors need a B visa, and Uniting for Ukraine, the sponsored parole process that brought almost 240,000 people from 2022, has taken no new applications since January 2025.",
+   "O1": "Ukrainian nationals received 95 O-1 visas in FY2024 and 118 in FY2025.",
+   "FAM": "Ukraine is charged to the Rest of World queue, people born there can enter the Diversity Visa lottery, and Ukraine is not on the 2025 proclamation lists or the reported list of 75 countries whose immigrant visas were paused in 2026.",
+   "EWI": "CBP reports Ukraine as its own citizenship line in its border encounter data, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "Immigration courts granted about 82 percent of decided Ukrainian asylum cases in FY2024, and TPS for Ukrainians living in the US since 16 August 2023 passed its 19 October 2026 end date with no decision yet published by DHS."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Kyiv",
+   "text": "Kyiv is on Eastern European Time, UTC+2, and UTC+3 in summer. It is 7 hours ahead of US Eastern and 10 hours ahead of Pacific for most of the year, and 6 and 9 for a few weeks in March and around the end of October when the clocks change on different dates.",
+   "value": 7,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Ukraine to US",
+   "text": "Design estimate of $1,300. No sourced fare was retrieved for this route; the figure is a planning number, not a quote. Ukraine's airspace has been closed to passenger flights since February 2022, so the trip starts overland to a neighbouring country.",
+   "value": 1300,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Ukrainians",
+   "text": "Ukrainian nationals received 810 F-1 visas in FY2024, down from a peak of 1,327 in FY2022, and 826 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 810,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/ukraine-ukr",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Ukrainian students in the US",
+   "text": "Open Doors counted 2,346 Ukrainian students in US higher education in 2024/25, up from 2,183, the 53rd largest group. 1,379 were undergraduates.",
+   "value": 2346,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Ukraine_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Ukraine",
+   "text": "World Bank data put personal remittances received by Ukraine at about $12.0 billion in 2024, roughly 6.3 percent of GDP, down from $16.8 billion in 2022. The 2025 figure is $9.9 billion.",
+   "value": 12.0,
+   "unit": "usd-billion",
+   "year": 2024,
+   "source": "https://api.worldbank.org/v2/country/UKR/indicator/BX.TRF.PWKR.CD.DT?format=json&date=2022:2025",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Ukrainians",
+   "text": "Ukrainian nationals received 132 H-1B visas in FY2024 and 150 in FY2025, down from 242 in FY2018. Ukraine's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 132,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/ukraine-ukr",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Ukrainian applicants",
+   "text": "In FY2024 immigration courts granted 179 and denied 38 asylum cases from Ukrainian nationals, about 82 percent of decisions. Another 382 were not adjudicated, 18 were abandoned and 19 withdrawn. The numbers are small and individual claims matter more than averages.",
+   "value": 82,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Ukraine",
+   "text": "Ukraine is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Ukraine is not named in the 2025 entry proclamations or on the reported list of 75 countries whose immigrant visas were paused in January 2026.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "tps-status",
+   "topic": "rules",
+   "title": "Temporary Protected Status for Ukraine",
+   "text": "Ukraine was designated for TPS on 19 April 2022 and again on 20 October 2023; applicants must have lived in the US continuously since 16 August 2023. The published designation ran through 19 October 2026. Since that day the USCIS page says only that an announcement will be made at the appropriate time and that people with TPS keep protection and work authorization until then. Advocates say the law extends it automatically to 19 April 2027; DHS has not confirmed that.",
+   "value": 2026,
+   "unit": "year",
+   "year": 2026,
+   "source": "https://www.uscis.gov/humanitarian/temporary-protected-status/temporary-protected-status-designated-country-ukraine",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "u4u-parole",
+   "topic": "rules",
+   "title": "Uniting for Ukraine",
+   "text": "Uniting for Ukraine opened in April 2022 and let Ukrainians with a US sponsor enter on humanitarian parole for up to two years. Almost 240,000 people were paroled through it between 2022 and 2024. New applications have been paused since January 2025; people already here can ask for re-parole case by case, with a fee.",
+   "value": 240000,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://ukrainetaskforce.org/wp-content/uploads/2026/05/U4U-Four-Year-Retrospective.pdf",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Europe",
+  "castGroup": "ukraine",
+  "ebQueue": "row",
+  "asylumGrantPct": 82,
+  "asylumNote": "179 grants and 38 denials in immigration court, FY2024 (179 / 217 = 82 percent); 382 not adjudicated, 18 abandoned, 19 withdrawn. Small numbers. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

@@ -1,0 +1,233 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "ghana",
+  "name": "Ghana",
+  "demonym": "Ghanaian",
+  "language": "English, Twi, Ga, Ewe, Dagbani or your home language",
+  "departureCity": "Accra",
+  "airportBoardLine": "DL 157  ACCRA      LANDED",
+  "timeDifference": "It is already evening there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a long overnight flight across the Atlantic, sometimes with a connection",
+  "names": {
+   "female": [
+    "Ama",
+    "Akosua",
+    "Abena",
+    "Adwoa",
+    "Efua",
+    "Esi",
+    "Akua",
+    "Afia",
+    "Yaa",
+    "Araba",
+    "Dzifa",
+    "Enyonam",
+    "Naa",
+    "Mariama",
+    "Fuseina"
+   ],
+   "male": [
+    "Kwame",
+    "Kofi",
+    "Kwaku",
+    "Kwabena",
+    "Yaw",
+    "Kojo",
+    "Kwesi",
+    "Fiifi",
+    "Nii",
+    "Selorm",
+    "Edem",
+    "Nana",
+    "Abdulai",
+    "Alhassan",
+    "Ebo"
+   ]
+  },
+  "skinTones": [
+   "#8a5a3a",
+   "#7a4b2e",
+   "#6b4329",
+   "#5c3a24",
+   "#4a2e1c",
+   "#3d2516"
+  ],
+  "foods": {
+   "dish": "waakye",
+   "cookLines": [
+    "Rice and beans simmer together until they turn a deep red-brown, and the apartment starts to smell like a Saturday morning at home.",
+    "You fry plantain, boil eggs and open the jar of shito you carried in your suitcase.",
+    "{roommate} wanders in and asks what the dark pepper sauce is.",
+    "You pile two plates high with waakye, gari and plantain, and warn that the shito is hotter than it looks."
+   ],
+   "groceryStore": "the African grocery store"
+  },
+  "studentAssociation": "Ghanaian Students' Association",
+  "festivals": [
+   {
+    "id": "independence-gh",
+    "title": "Independence Day, 6 March",
+    "body": "At home there are parades at Black Star Square, school marches and a public holiday. Here it is an ordinary weekday with a midterm coming.",
+    "month": 7,
+    "join": "Go to the student association's Independence Day dinner.",
+    "joinText": "Red, gold and green on every table, highlife and hiplife from the speakers, and a long line for jollof and kelewele. Someone teaches the room a dance and you do not sit down again.",
+    "host": "Cook for friends and put a small flag on the table.",
+    "hostText": "Your friends try groundnut soup for the first time and ask what the black star on the flag means. You tell them, and it feels good to say it out loud.",
+    "skip": "Send greetings to the family group chat and study.",
+    "skipText": "Your phone fills with flags and photos of cousins in school uniform. You smile at each one, then go back to your notes."
+   },
+   {
+    "id": "christmas-newyear-gh",
+    "title": "Christmas and New Year",
+    "body": "At home December means relatives returning from every region, new clothes for church and a watch night service on the 31st. Campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Ghanaian family from church or the association.",
+    "joinText": "An auntie you met once will not let you leave hungry. You go home with a container of light soup and an invitation for New Year's Eve.",
+    "host": "Host a New Year's Eve dinner for students who could not travel.",
+    "hostText": "Six people, one small kitchen and a countdown on someone's phone. At midnight everyone calls home, though home crossed into the new year hours ago.",
+    "skip": "Call home at midnight Accra time and go to bed.",
+    "skipText": "It is still early evening for you, but you hear the church singing and the fireworks through the phone. You feel close to it all."
+   },
+   {
+    "id": "easter-gh",
+    "title": "Easter",
+    "body": "Easter falls in April this year. At home it is a long weekend of church conventions, picnics and families travelling back to their hometowns.",
+    "month": 8,
+    "join": "Join the Easter service and picnic with the Ghanaian fellowship.",
+    "joinText": "The service runs long and the singing is loud. Afterward there are coolers of food in the park and someone has brought a football.",
+    "host": "Cook an Easter lunch for friends.",
+    "hostText": "You make more rice and stew than four people can finish. Everyone takes a container home.",
+    "skip": "Call home on Sunday, then catch up on coursework.",
+    "skipText": "Your family passes the phone around the compound so everyone can greet you. You promise to be there next Easter."
+   }
+  ],
+  "familyCall": [
+   "It is evening in Accra when the call connects, four to eight hours ahead of you.",
+   "Your mother asks if you are eating well and whether you have found anywhere that sells proper kenkey.",
+   "Your father asks about your classes, and your little sister squeezes into the frame to show you her school report.",
+   "By the time you hang up it is late there, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from cedis, and the exchange rate on the day decides how far it stretches.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at 1.0, the India baseline. No sourced reason was found to move it; reported remittance inflows to Ghana were strong in 2025 (about $7.8 billion, per the Bank of Ghana governor).",
+  "entryNotes": {
+   "F1": "Open Doors counted 12,825 Ghanaian students in the US in 2024/25, up from 9,394 a year earlier, and Ghana is not named in the 2025 or 2026 entry proclamations.",
+   "H1B": "Ghanaian nationals received 499 H-1B visas in FY2024, and Ghanaians wait in the shorter Rest of World green card queue, not India's.",
+   "B2": "Visitor visas for Ghanaians were cut to three months and a single entry in July 2025, then restored to five years and multiple entries at the end of September 2025.",
+   "O1": "Ghanaian nationals received 20 O-1 visas in FY2024, up from 6 in FY2018.",
+   "FAM": "People born in Ghana have been eligible for the Diversity Visa lottery through DV-2026; immigrant visas for Ghanaians were paused from 21 January 2026 until a court set the pause aside on 21 August 2026.",
+   "EWI": "Entering without inspection usually blocks a green card from inside the US later, even through a US citizen spouse.",
+   "ASY": "In FY2024 immigration courts granted 238 and denied 125 asylum cases from Ghanaian nationals, about 66 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Accra",
+   "text": "Accra is on Greenwich Mean Time, UTC+0, with no daylight saving. It is 5 hours ahead of US Eastern in winter and 4 in summer, and 8 hours ahead of Pacific in winter and 7 in summer.",
+   "value": 5,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Ghana to US",
+   "text": "Design estimate of $1,500. No sourced fare was found; the figure is set close to the game's Nigeria estimate because the distance is similar.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Ghanaians",
+   "text": "Ghanaian nationals received 5,203 F-1 visas in FY2024, up from 3,343 in FY2022, and 2,692 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 5203,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/ghana-gha",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Ghanaian students in the US",
+   "text": "Open Doors counted 12,825 Ghanaian students in US higher education in 2024/25, up from 9,394 the year before, the 14th largest group. About two thirds were graduate students.",
+   "value": 12825,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Ghana_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Ghana",
+   "text": "The Governor of the Bank of Ghana said in April 2026 that remittance inflows reached about $7.8 billion by the end of 2025, up from about $4.6 billion in 2024. The World Bank's series for Ghana is much lower, so treat the figure with care.",
+   "value": 7.8,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://www.myjoyonline.com/ghana-records-7-8bn-remittances-as-bog-pushes-diaspora-funds-into-investment-drive/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Ghanaians",
+   "text": "Ghanaian nationals received 499 H-1B visas in FY2024 and 539 in FY2025, up from 100 in FY2018. Ghana's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 499,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/ghana-gha",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Ghanaian applicants",
+   "text": "In FY2024 immigration courts granted 238 and denied 125 asylum cases from Ghanaian nationals, about 66 percent of decisions. Another 152 were not adjudicated. Individual claims matter more than averages.",
+   "value": 66,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Ghana",
+   "text": "Ghana is charged to the Rest of World queue. November 2026 final action dates as transcribed by a law firm: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Immigrant visa issuance for nationals of 75 countries, this one included, was paused from 21 January 2026 until a federal court set the pause aside on 21 August 2026; the government has appealed.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Africa",
+  "castGroup": "ghana",
+  "ebQueue": "row",
+  "asylumGrantPct": 66,
+  "asylumNote": "238 grants and 125 denials, FY2024, EOIR Asylum Decisions by Nationality (data generated 10 October 2024), https://www.justice.gov/eoir/media/1344846/dl. Rate is grants divided by grants plus denials.",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

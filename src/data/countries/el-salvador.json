@@ -1,0 +1,231 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "el-salvador",
+  "name": "El Salvador",
+  "demonym": "Salvadoran",
+  "language": "Spanish or your home language",
+  "departureCity": "San Salvador",
+  "airportBoardLine": "AV 580 SAN SALVADOR LANDED",
+  "timeDifference": "It is about the same time there, give or take an hour or two.",
+  "roundTripFlightUsd": 550,
+  "flightEstimate": true,
+  "homeTravelNote": "a flight of a few hours, close enough that home feels within reach",
+  "names": {
+   "female": [
+    "María",
+    "Ana",
+    "Carmen",
+    "Gabriela",
+    "Karla",
+    "Alejandra",
+    "Sofía",
+    "Fátima",
+    "Daniela",
+    "Katherine",
+    "Andrea",
+    "Rosa",
+    "Marcela",
+    "Camila"
+   ],
+   "male": [
+    "José",
+    "Carlos",
+    "Juan",
+    "Luis",
+    "Óscar",
+    "Mauricio",
+    "René",
+    "Kevin",
+    "Diego",
+    "Rodrigo",
+    "Fernando",
+    "Miguel",
+    "Ernesto",
+    "Jorge"
+   ]
+  },
+  "skinTones": [
+   "#e1b791",
+   "#d4a37b",
+   "#c38d62",
+   "#b17a51",
+   "#9c6741",
+   "#875538"
+  ],
+  "foods": {
+   "dish": "pupusas",
+   "cookLines": [
+    "You pat masa between your palms, and the slap of it sounds like every evening at home.",
+    "The first pupusa splits on the griddle, the second holds, and the cheese starts to brown at the edges.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You pile on curtido and salsa and eat with your hands at the counter, the only proper way."
+   ],
+   "groceryStore": "the Latin American grocery store"
+  },
+  "studentAssociation": "Salvadoran Students' Association",
+  "festivals": [
+   {
+    "id": "fiestas-agostinas-sv",
+    "title": "Fiestas Agostinas",
+    "body": "In the first week of August, San Salvador celebrates its patron, the Divine Saviour of the World, with processions, fairs and days off work. You are busy unpacking and finding your way around.",
+    "month": 0,
+    "join": "Find the local Salvadoran community's celebration.",
+    "joinText": "A church hall, a long table of pupusas and yuca frita, and people asking which town your family is from. You leave with three phone numbers and a plate wrapped in foil.",
+    "host": "Cook for your new neighbours to mark the week.",
+    "hostText": "You are still missing half your kitchen, so everything is served from one pan. Nobody minds, and the horchata is gone in ten minutes.",
+    "skip": "Watch the procession online and keep unpacking.",
+    "skipText": "The crowd in front of the cathedral fills your phone screen. You prop it on a box and fold clothes to the sound of home."
+   },
+   {
+    "id": "independence-sv",
+    "title": "Independence Day, 15 September",
+    "body": "At home there are school parades, marching bands and blue and white flags on every corner. Here it is a normal week of classes.",
+    "month": 1,
+    "join": "Go to the Central American students' Independence party.",
+    "joinText": "Blue and white banners, cumbia from a speaker and a table of pupusas that empties fast. Students from five countries cheer for each other's flags.",
+    "host": "Invite friends over for a Salvadoran dinner.",
+    "hostText": "You hang a small flag in the window and teach everyone to shape pupusas. Theirs come out lopsided, and they are proud of every one.",
+    "skip": "Watch the parade clips your family sends and keep studying.",
+    "skipText": "Your niece twirls a baton in the school band and nearly drops it. You watch it three times."
+   },
+   {
+    "id": "nochebuena-sv",
+    "title": "Nochebuena",
+    "body": "At home, Christmas Eve means a late family dinner, panes con pavo, new clothes and fireworks in the street at midnight. Campus is emptying out for the break.",
+    "month": 4,
+    "join": "Spend the evening with a Salvadoran family nearby.",
+    "joinText": "Their abuela hands you a plate before you take off your coat. At midnight everyone hugs everyone, including you.",
+    "host": "Make panes con pavo for whoever is still on campus.",
+    "hostText": "The turkey simmers in its sauce all afternoon and the bread soaks it up. Your friends decide this is the best sandwich they have ever had.",
+    "skip": "Video-call the family dinner and go to bed early.",
+    "skipText": "Your cousins hold the phone up so you can hear the fireworks. You fall asleep to the sound of home."
+   }
+  ],
+  "familyCall": [
+   "El Salvador is never more than two hours from your clock, so your mother calls while she is making lunch.",
+   "She turns the phone toward the comal so you can see what is cooking.",
+   "Your grandmother asks when you are coming home, and your little cousin grabs the phone to show you a missing tooth.",
+   "You hang up hungry and homesick, and a little lighter."
+  ],
+  "homeMoneyNote": "El Salvador uses the US dollar, so money from home arrives without an exchange rate, only transfer fees.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Salvadoran students, so it is left neutral.",
+  "entryNotes": {
+   "F1": "About 1,384 Salvadorans studied in the US in 2024/25, and Salvadoran nationals received 338 F-1 visas in FY2024.",
+   "H1B": "TN status is only for Canadian and Mexican citizens, so Salvadoran professionals need an H-1B or another work visa; El Salvador is charged to the Rest of World green card queue.",
+   "B2": "El Salvador is not in the Visa Waiver Program, so visitors need a B visa from a US consulate before travelling.",
+   "O1": "O-1 status needs a petition approved by USCIS and then a visa interview at a US consulate.",
+   "FAM": "El Salvador is charged to the Rest of World family queue and is not eligible for the Diversity Visa lottery.",
+   "EWI": "Border Patrol recorded 45,686 southwest apprehensions of Salvadorans in FY2024 and 7,805 in FY2025; new arrivals cannot get TPS, which requires living in the US since 13 February 2001.",
+   "ASY": "In FY2024 immigration courts granted 1,684 and denied 2,880 asylum cases from Salvadoran nationals, about 37 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to San Salvador",
+   "text": "El Salvador is on UTC-6 all year with no daylight saving time. It is 1 hour behind US Eastern in winter and 2 hours behind in summer, level with US Central in winter, and 2 hours ahead of Pacific in winter and 1 in summer.",
+   "value": -1,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, El Salvador to US",
+   "text": "Design estimate of $550. No sourced fare range for El Salvador to US round trips was found; real fares vary widely by route and season.",
+   "value": 550,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Salvadorans",
+   "text": "Salvadoran nationals received 338 F-1 visas in FY2024, compared with 307 in FY2023 and 360 in FY2022, and 231 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 338,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/el-salvador-slv",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Salvadoran students in the US",
+   "text": "1,384 students from El Salvador studied in the US in 2024/25, down from 1,451 the year before. El Salvador ranked 72nd among places of origin (Open Doors 2025).",
+   "value": 1384,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_El-Salvador_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to El Salvador",
+   "text": "El Salvador received about $9.99 billion in family remittances in 2025, up 17.8 percent on 2024 (International Organization for Migration figures, as reported by EFE and Infobae).",
+   "value": 9.99,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://www.infobae.com/el-salvador/2026/02/19/las-remesas-familiares-crecen-en-centroamerica-y-alcanzan-usd-47730-millones-en-2025/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Salvadoran applicants",
+   "text": "In FY2024 immigration courts granted 1,684 and denied 2,880 asylum cases from Salvadoran nationals, about 37 percent of decisions. Another 20,572 were not adjudicated and 941 were abandoned. Individual claims matter more than averages.",
+   "value": 37,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "tps-status",
+   "topic": "numbers",
+   "title": "Temporary Protected Status for El Salvador",
+   "text": "El Salvador was designated for TPS on 9 March 2001, and only people living in the US continuously since 13 February 2001 qualify. About 224,070 Salvadorans held TPS in June 2026. The latest extension ran to 9 September 2026; no termination or extension has been published since, and USCIS says holders keep protection and work authorization until an announcement is made (page updated 7 October 2026).",
+   "value": 224070,
+   "unit": "count",
+   "year": 2026,
+   "source": "https://www.uscis.gov/humanitarian/temporary-protected-status/temporary-protected-status-designated-country-el-salvador",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for El Salvador",
+   "text": "El Salvador is charged to the Rest of World queue. November 2026 Visa Bulletin final action dates, as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "North America",
+  "castGroup": "el-salvador",
+  "ebQueue": "row",
+  "asylumGrantPct": 37,
+  "asylumNote": "FY2024 EOIR Asylum Decisions by Nationality: 1,684 grants and 2,880 denials (36.9 percent); 941 abandoned, 20,572 not adjudicated, 1,195 withdrawn. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

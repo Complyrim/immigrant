@@ -1,0 +1,220 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "tonga",
+  "name": "Tonga",
+  "demonym": "Tongan",
+  "language": "Tongan and English",
+  "departureCity": "Nuku'alofa",
+  "airportBoardLine": "NZ 6    NUKU'ALOFA LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1800,
+  "flightEstimate": true,
+  "homeTravelNote": "two long flights with a connection through Fiji or New Zealand",
+  "names": {
+   "female": [
+    "Mele",
+    "Ana",
+    "Sela",
+    "Lupe",
+    "Seini",
+    "Salote",
+    "Losa",
+    "'Ofa",
+    "Luseane",
+    "Meleane",
+    "Kalolaine",
+    "Sisilia",
+    "Lesieli",
+    "Tupou",
+    "Mele'ana"
+   ],
+   "male": [
+    "Sione",
+    "Tevita",
+    "Viliami",
+    "Siosaia",
+    "Semisi",
+    "Mosese",
+    "Paula",
+    "Soane",
+    "Sitiveni",
+    "Taniela",
+    "'Etuate",
+    "Maka",
+    "Siaosi",
+    "Pita",
+    "Kelepi"
+   ]
+  },
+  "skinTones": [
+   "#d2a276",
+   "#c08f62",
+   "#ab7a4f",
+   "#966843",
+   "#7f5636",
+   "#69452b"
+  ],
+  "foods": {
+   "dish": "lu pulu",
+   "cookLines": [
+    "Taro leaves, corned beef, onion and coconut cream are wrapped tight and set to bake, and the whole apartment smells like Sunday at home.",
+    "You check the parcels and pour in a little more coconut cream, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You open the parcels at the counter, with boiled cassava on the side, and nobody speaks until the plates are clean."
+   ],
+   "groceryStore": "the Pacific Islander market"
+  },
+  "studentAssociation": "Tongan Students' Association",
+  "festivals": [
+   {
+    "id": "christmas-newyear-to",
+    "title": "Christmas and Uike Lotu",
+    "body": "At home Christmas and New Year run together: church, family arriving from overseas, feasting, and then Uike Lotu, the week of prayer that opens the year. Here campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas with a Tongan family from church.",
+    "joinText": "The singing fills the hall without a single instrument. Afterward an auntie loads your plate twice and tells you which village her family is from.",
+    "host": "Cook for students who could not travel.",
+    "hostText": "The oven stands in for the 'umu. Your friends unwrap lu pulu for the first time and go quiet, which you take as praise.",
+    "skip": "Call home after church their time and keep the day quiet.",
+    "skipText": "The family is still in their Sunday best, ta'ovala and all, passing the phone down the row. You hear the hymn they are practising."
+   },
+   {
+    "id": "fakame-to",
+    "title": "Fakamē, Children's Sunday",
+    "body": "At home on the first Sunday of May, children dress in white, stand up in church to recite and sing, and are served first at the meal afterward. Here it is the last week of classes.",
+    "month": 9,
+    "join": "Go to the Fakamē service at the local Tongan church.",
+    "joinText": "The little ones are word perfect and very proud. You remember being that small, in white, with your whole family watching.",
+    "host": "Cook a Sunday lunch for friends and tell them about the day.",
+    "hostText": "You explain that today the children eat first. Your youngest friend claims the honour and everyone lets her have it.",
+    "skip": "Call home and watch your nieces and nephews recite.",
+    "skipText": "Your sister holds the phone steady through every verse. You clap alone in your room, loud enough for them to hear."
+   },
+   {
+    "id": "heilala-to",
+    "title": "Heilala Festival and the King's birthday",
+    "body": "At home early July means the Heilala Festival and the public holiday for the King's birthday on the 4th, with dancing, brass bands and float parades. Here the 4th of July belongs to a different celebration.",
+    "month": 11,
+    "join": "Join the Tongan community picnic in the park.",
+    "joinText": "There is a lakalaka the elders have been rehearsing for weeks, and a line of food that runs the length of three tables. When the fireworks start that night, you decide they are for both holidays.",
+    "host": "Invite friends over for food and Tongan music.",
+    "hostText": "You teach your friends a few steps and they try their best. Someone asks you to explain the heilala flower, and you find a photo.",
+    "skip": "Watch the parade clips from home and get on with your day.",
+    "skipText": "Your cousin sends video of the floats going past the palace. You watch it twice on your break."
+   }
+  ],
+  "familyCall": [
+   "It is already tomorrow afternoon in Tonga when your evening call connects, 17 to 21 hours ahead of you.",
+   "Your mother asks if you are eating well and whether you have found a church yet.",
+   "Your father asks about your classes, then calls your grandmother over so she can see your face.",
+   "The call ends with a prayer, as it always does, and your chest feels lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from pa'anga, and in most Tongan families money more often travels toward home than away from it.",
+  "familySupportFactor": 0.8,
+  "familySupportNote": "Designed at 0.8 of the India baseline. World Bank data show remittances received equal to about 39 percent of Tonga's GDP in 2024 and 2025, so in most families money flows toward home from relatives overseas, and a student abroad is more likely to be sending than receiving.",
+  "entryNotes": {
+   "F1": "Open Doors counted 195 Tongan students in US higher education in 2024/25, mostly in Hawaii and Utah; since 1 January 2026 new F-1 visas for Tongans applying from outside the US are suspended.",
+   "H1B": "H-1B visas are not suspended for Tongans under the 2026 proclamation, but consular officers are told to shorten the validity of the visas they issue; Tonga is charged to the Rest of World green card queue.",
+   "B2": "Since 1 January 2026 new B-1 and B-2 visitor visas for Tongan nationals are suspended under Proclamation 10998, which cites a visitor visa overstay rate of 6.45 percent.",
+   "O1": "O-1 visas are not suspended for Tongans under the 2026 proclamation, though the validity of new visas is reduced.",
+   "FAM": "Since 1 January 2026 new immigrant visas for Tongan nationals abroad are suspended under Proclamation 10998; before that, 65 diversity visas went to Tonga in FY2024.",
+   "EWI": "CBP's public encounters file does not list Tongans separately; the overstay rates cited in the 2026 proclamation point to visa overstays as the main way Tongans fall out of status.",
+   "ASY": "EOIR's FY2024 asylum table by nationality has no row for Tonga, so no grant rate can be given."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Tonga",
+   "text": "Tonga is on Tonga Time, UTC+13, with no daylight saving at present. It is 18 hours ahead of US Eastern in winter and 17 in summer, and 21 hours ahead of Pacific in winter and 20 in summer.",
+   "value": 18,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Tonga to US",
+   "text": "Design estimate of $1,800, assuming a connection through Fiji or New Zealand. No sourced fare was found; real prices move widely with season and route.",
+   "value": 1800,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Tongans",
+   "text": "Tongan nationals received 10 F-1 visas in FY2024 and 6 in FY2025; the highest recent year was FY2022 with 17. Figures are State Department data republished by VisaGrader. New F-1 visas have been suspended since 1 January 2026.",
+   "value": 10,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/tonga-ton",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Tongan students in the US",
+   "text": "Open Doors counted 195 Tongan students in US higher education in 2024/25, up from 185 the year before. More than nine in ten were undergraduates, and the top receiving states were Hawaii and Utah.",
+   "value": 195,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Tonga_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Tonga",
+   "text": "World Bank data put personal remittances received by Tonga at about $267 million in 2025, about 39 percent of GDP, up from about $255 million in 2024. Few countries rely on remittances as much.",
+   "value": 267,
+   "unit": "usd-million",
+   "year": 2025,
+   "source": "https://api.worldbank.org/v2/country/TON;WSM;FJI/indicator/BX.TRF.PWKR.CD.DT?format=json&mrv=4",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Tonga",
+   "text": "Tonga is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012. Since 1 January 2026, new immigrant visas for Tongan nationals abroad are also suspended under Proclamation 10998.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Oceania",
+  "castGroup": "tonga",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR's FY2024 Asylum Decisions by Nationality table has no row for Tonga. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": [
+   {
+    "from": 2026,
+    "routes": [
+     "F1",
+     "B2",
+     "FAM"
+    ],
+    "reason": "Since 1 January 2026, Proclamation 10998 suspends new immigrant visas and new visitor, student and exchange visas for Tongan nationals who are outside the US without a valid visa. Choose an earlier arrival year or another route.",
+    "source": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/"
+   }
+  ]
+ }
+}

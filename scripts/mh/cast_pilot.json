@@ -1,0 +1,5 @@
+[
+ {"id": "pilot_student_m", "gender": 1.0, "age": 0.46, "weight": 0.5, "muscle": 0.45, "height": 0.5, "race": {"asian": 0.25, "caucasian": 0.55, "african": 0.2}, "skin": "middleage_asian_male", "hair": "short02", "eyebrows": "eyebrow003", "clothes": ["male_casualsuit02", "shoes03"]},
+ {"id": "pilot_woman_f", "gender": 0.0, "age": 0.5, "weight": 0.62, "muscle": 0.4, "height": 0.42, "race": {"asian": 0.05, "caucasian": 0.1, "african": 0.85}, "skin": "young_african_female", "hair": "afro01", "eyebrows": "eyebrow006", "clothes": ["toigo_shift_dress", "toigo_ballet_flats"]},
+ {"id": "pilot_elder_m", "gender": 0.95, "age": 0.82, "weight": 0.72, "muscle": 0.3, "height": 0.4, "race": {"asian": 0.3, "caucasian": 0.6, "african": 0.1}, "skin": "old_caucasian_male", "hair": "short04", "eyebrows": "eyebrow009", "clothes": ["male_worksuit01", "shoes05"]}
+]

@@ -1,0 +1,229 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "brazil",
+  "name": "Brazil",
+  "demonym": "Brazilian",
+  "language": "Portuguese or your home language",
+  "departureCity": "São Paulo",
+  "airportBoardLine": "LA 8180 SAO PAULO  LANDED",
+  "timeDifference": "It is an hour or two later there, close enough to call after dinner.",
+  "roundTripFlightUsd": 1100,
+  "flightEstimate": true,
+  "homeTravelNote": "a long overnight flight, far enough that a visit home takes planning",
+  "names": {
+   "female": [
+    "Ana",
+    "Maria",
+    "Juliana",
+    "Fernanda",
+    "Camila",
+    "Beatriz",
+    "Larissa",
+    "Mariana",
+    "Letícia",
+    "Gabriela",
+    "Aline",
+    "Thaís",
+    "Bruna"
+   ],
+   "male": [
+    "João",
+    "Pedro",
+    "Lucas",
+    "Gabriel",
+    "Rafael",
+    "Thiago",
+    "Felipe",
+    "Gustavo",
+    "Matheus",
+    "Bruno",
+    "Leonardo",
+    "Rodrigo",
+    "Vinícius"
+   ]
+  },
+  "skinTones": [
+   "#f0cfb0",
+   "#e0b48f",
+   "#c99a72",
+   "#a87650",
+   "#80563a",
+   "#573a28"
+  ],
+  "foods": {
+   "dish": "feijoada",
+   "cookLines": [
+    "Black beans simmer with garlic and bay leaves, and the whole apartment smells like a Saturday at home.",
+    "You taste the feijoada and let it cook a little longer, the way your mother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share bowls over rice with orange slices on the side, and for an hour the world is small and warm."
+   ],
+   "groceryStore": "the Brazilian market"
+  },
+  "studentAssociation": "Brazilian Students' Association",
+  "festivals": [
+   {
+    "id": "natal-reveillon-br",
+    "title": "Natal and Réveillon",
+    "body": "At home December means a late Christmas Eve supper, summer heat and New Year's Eve in white by the water. Here campus is quiet and cold.",
+    "month": 4,
+    "join": "Spend Christmas Eve with a Brazilian family from the association.",
+    "joinText": "Supper starts close to midnight and nobody is in a hurry. You leave with a container of rabanada and three new phone numbers.",
+    "host": "Host a New Year's Eve dinner for students who could not travel.",
+    "hostText": "Everyone wears white, someone brings lentils for luck and the countdown happens twice, once for Brazil and once for here.",
+    "skip": "Call home at midnight Brazilian time and go to bed.",
+    "skipText": "You hear fireworks through the phone and your whole family shouting at once. You fall asleep smiling."
+   },
+   {
+    "id": "carnaval-br",
+    "title": "Carnaval, far from home",
+    "body": "At home the streets are full of blocos, drums and glitter, and nobody is working. Carnaval falls in the middle of the term this year.",
+    "month": 6,
+    "join": "Go to the student association's Carnaval party.",
+    "joinText": "Someone has a surdo drum, someone else has a bag of glitter and the playlist is all samba and axé. You sing every word.",
+    "host": "Throw a small Carnaval party in your apartment.",
+    "hostText": "Your friends arrive in whatever costumes they could find. You teach them a marchinha and they sing it badly and happily.",
+    "skip": "Watch the parades on your laptop between assignments.",
+    "skipText": "The samba schools cross the screen while you finish your reading. You tap the rhythm on the desk anyway."
+   },
+   {
+    "id": "festa-junina-br",
+    "title": "Festa Junina",
+    "body": "At home June means bonfires, checked shirts, quadrilha dancing and tables of corn dishes. Here the semester has just ended and campus is emptying.",
+    "month": 10,
+    "join": "Go to the Brazilian community's Festa Junina in the park.",
+    "joinText": "Paper flags hang between the trees and an auntie hands you a cup of canjica. You get pulled into the quadrilha and remember every step.",
+    "host": "Cook corn dishes and invite friends over.",
+    "hostText": "You make pamonha from a recipe your grandmother dictated over the phone. Your friends ask for the paçoca by name before they leave.",
+    "skip": "Send photos to the family group chat and stay in.",
+    "skipText": "Your cousins send videos of the bonfire and the dancing. You watch each one twice."
+   }
+  ],
+  "familyCall": [
+   "It is only an hour or two later in São Paulo, so your mother calls right after her dinner.",
+   "She asks if you are eating properly and whether it is really as cold as the photos look.",
+   "Your father leans into the frame to ask about your classes, and your grandmother blows a kiss at the screen.",
+   "You hang up with saudade sitting in your chest, and somehow a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from reais, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. The research has no sourced figure that would justify more or less family support for Brazilian students. The cost of flights home is handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "About 17,277 Brazilians studied in the US in 2024/25, the 10th largest group, and Brazilian nationals received 7,434 F-1 visas in FY2024.",
+   "H1B": "Brazilian nationals received 1,802 H-1B visas in FY2024, and Brazilians wait in the shorter Rest of World green card queue, not India's or China's.",
+   "B2": "Brazil is not in the Visa Waiver Program, so Brazilians cannot use ESTA and need a visitor visa before any trip.",
+   "O1": "Brazilian nationals received 1,671 O-1 visas in FY2024, up from 1,497 in FY2018.",
+   "FAM": "Brazil is charged to the Rest of World queue and is not eligible for the Diversity Visa lottery; a State Department pause on immigrant visas for Brazilians ran from January 2026 until a court set it aside in August 2026.",
+   "EWI": "Border Patrol encounters of Brazilians at the southwest border fell from 26,192 in FY2024 to 476 in FY2026, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 548 and denied 2,331 asylum cases from Brazilian nationals, about 19 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to São Paulo",
+   "text": "São Paulo is on UTC-3 all year and has not used daylight saving time since 2019. It is 2 hours ahead of US Eastern in winter and 1 hour ahead in summer, and 5 hours ahead of Pacific in winter and 4 in summer.",
+   "value": 2,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Brazil to US",
+   "text": "Design estimate of $1,100. No sourced fare range for Brazil to US round trips was found in the research; real fares vary widely by route and season.",
+   "value": 1100,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Brazilians",
+   "text": "Brazilian nationals received 7,434 F-1 visas in FY2024, down from 9,823 in FY2022, and 7,201 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 7434,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/brazil-bra",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Brazilian students in the US",
+   "text": "Open Doors counted 17,277 Brazilian students in US higher education in 2024/25, up from 16,877 the year before, the 10th largest group.",
+   "value": 17277,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Brazil_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "H-1B visas for Brazilians",
+   "text": "Brazilian nationals received 1,802 H-1B visas in FY2024 and 1,899 in FY2025, up from 1,119 in FY2018. Brazil's share of all H-1B approvals was not found; many people switch status inside the US without a visa stamp.",
+   "value": 1802,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/H1B/brazil-bra",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Brazilian applicants",
+   "text": "In FY2024 immigration courts granted 548 and denied 2,331 asylum cases from Brazilian nationals, about 19 percent of decisions. Another 5,234 were not adjudicated. Individual claims matter more than averages.",
+   "value": 19,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Brazil",
+   "text": "Brazil is charged to the Rest of World queue, with no separate column in the Visa Bulletin. November 2026 final action dates as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "border-encounters",
+   "topic": "numbers",
+   "title": "Border Patrol encounters of Brazilian nationals",
+   "text": "Border Patrol recorded 21,632 encounters of Brazilian nationals at the southwest border in FY2023, 26,192 in FY2024, 3,019 in FY2025 and 476 in FY2026. Totals are summed from CBP's public encounters file.",
+   "value": 476,
+   "unit": "count",
+   "year": 2026,
+   "source": "https://www.cbp.gov/sites/default/files/2026-10/nationwide-encounters-fy23-fy26-sep-aor.csv",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "South America",
+  "castGroup": "brazil",
+  "ebQueue": "row",
+  "asylumGrantPct": 19,
+  "asylumNote": "548 grants and 2,331 denials in immigration court, FY2024 (548 of 2,879 decisions, 19.0 percent); 5,234 more not adjudicated. EOIR Asylum Decisions by Nationality, https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

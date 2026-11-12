@@ -1,0 +1,221 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "australia",
+  "name": "Australia",
+  "demonym": "Australian",
+  "language": "English or your home language",
+  "departureCity": "Sydney",
+  "airportBoardLine": "QF 11   SYDNEY     LANDED",
+  "timeDifference": "It is already tomorrow there.",
+  "roundTripFlightUsd": 1500,
+  "flightEstimate": true,
+  "homeTravelNote": "a very long flight across the Pacific, most of a day door to door",
+  "names": {
+   "female": [
+    "Charlotte",
+    "Olivia",
+    "Amelia",
+    "Isla",
+    "Mia",
+    "Chloe",
+    "Ruby",
+    "Matilda",
+    "Zoe",
+    "Sophie",
+    "Grace",
+    "Kirra",
+    "Mei",
+    "Priya",
+    "Yasmin"
+   ],
+   "male": [
+    "Oliver",
+    "Jack",
+    "Noah",
+    "William",
+    "Lachlan",
+    "Thomas",
+    "Liam",
+    "Cooper",
+    "Angus",
+    "Harry",
+    "Ethan",
+    "Jarrah",
+    "Dimitri",
+    "Anh",
+    "Arjun"
+   ]
+  },
+  "skinTones": [
+   "#f5dcc8",
+   "#ebc8a8",
+   "#dcb08a",
+   "#c4946a",
+   "#9c6b47",
+   "#6b4630"
+  ],
+  "foods": {
+   "dish": "a lamb roast",
+   "cookLines": [
+    "Lamb, rosemary and garlic go into the oven, and the whole apartment smells like a Sunday at home.",
+    "You turn the potatoes and pumpkin in the pan, the way your dad would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You carve at the counter, pass the gravy and argue happily about who gets the crispy potatoes."
+   ],
+   "groceryStore": "the import shop that stocks Vegemite and Tim Tams"
+  },
+  "studentAssociation": "Australian Students' Association",
+  "festivals": [
+   {
+    "id": "grand-final-au",
+    "title": "Grand final weekend",
+    "body": "At home, the footy grand finals take over the end of September and the start of October: barbecues, team scarves and everyone picking a side. Here the game kicks off late at night and nobody around you has heard of your team.",
+    "month": 1,
+    "join": "Watch the game with other Australians at a sports bar that agreed to stream it.",
+    "joinText": "A dozen people in mismatched team colours shout at one screen. Someone has brought party pies, and you sing the winning club's song whether it is yours or not.",
+    "host": "Stream it at your place and teach your friends the rules.",
+    "hostText": "Your friends pick a team by the colour of the jumper and are yelling at the umpire by half time. You heat sausage rolls in the oven and feel very at home.",
+    "skip": "Follow the score on your phone and read the family group chat.",
+    "skipText": "Your uncle sends a running commentary nobody asked for. You laugh out loud in the library, then get back to work."
+   },
+   {
+    "id": "christmas-au",
+    "title": "Christmas in winter",
+    "body": "At home Christmas is the middle of summer: prawns and cold ham, pavlova, backyard cricket and the beach on Boxing Day. Here it is dark by five and there is snow on the path.",
+    "month": 4,
+    "join": "Join an orphans' Christmas lunch with other Australians and New Zealanders.",
+    "joinText": "Everyone brings one thing from home. There are two pavlovas, a long debate about who invented it, and paper crowns from the crackers all afternoon.",
+    "host": "Host a summer Christmas indoors for friends who are staying in town.",
+    "hostText": "You turn the heating up, serve cold prawns and mango, and make everyone wear sunglasses for the photo. Your friends say it is the strangest and best Christmas lunch they have had.",
+    "skip": "Call home on Christmas morning their time and keep the day quiet.",
+    "skipText": "The whole family is already at the table in shorts, passing the phone around. You show them the snow out the window and they all groan with envy."
+   },
+   {
+    "id": "anzac-day-au",
+    "title": "Anzac Day, 25 April",
+    "body": "At home there are dawn services, a public holiday and Anzac biscuits in every kitchen. Here it is an ordinary day in the last weeks of the semester.",
+    "month": 8,
+    "join": "Go to the small dawn service the consulate and local Australians hold.",
+    "joinText": "You stand in the cold half light with strangers who know all the same words. Afterward there is tea, and someone's grandmother's Anzac biscuits.",
+    "host": "Bake Anzac biscuits and share them with your friends.",
+    "hostText": "Oats, golden syrup and coconut, and the smell is exactly right. You explain what the day means, and your friends listen closely.",
+    "skip": "Watch the dawn service from home online and call your grandparents.",
+    "skipText": "Your grandfather tells you where he stood this morning and who he saw. You are glad you called."
+   }
+  ],
+  "familyCall": [
+   "It is already tomorrow in Sydney, late morning, when your evening call connects, 14 to 19 hours ahead of you.",
+   "Your mum asks if you are warm enough and whether you have found decent coffee yet.",
+   "Your dad wanders into frame to ask about your classes, then turns the phone so the dog can say hello.",
+   "By the time you hang up they are heading out into a sunny day you will not see until tomorrow, and you feel a little closer to it."
+  ],
+  "homeMoneyNote": "Money from home is converted from Australian dollars, so the exchange rate on the day decides how far it goes.",
+  "familySupportFactor": 1.0,
+  "familySupportNote": "Designed at 1.0, the India baseline. No sourced reason was found to move it for Australia, so it is left unchanged.",
+  "entryNotes": {
+   "F1": "Open Doors counted 4,620 Australian students in US higher education in 2024/25, and Australians received 2,075 F-1 visas in FY2024.",
+   "H1B": "Australians have their own work visa, the E-3, which only Australian nationals can use and which renews in two-year periods; 3,931 E-3 visas were issued in FY2024 against 511 H-1B visas.",
+   "B2": "Australia is in the Visa Waiver Program, so Australians can visit for up to 90 days with an ESTA authorization and no visa.",
+   "O1": "Australian nationals received 665 O-1 visas in FY2024.",
+   "FAM": "Australia is charged to the Rest of World family queue and Australians can enter the Diversity Visa lottery; 158 diversity visas went to Australia in FY2024.",
+   "EWI": "CBP's public encounters file does not list Australians separately; for Australians, staying past the 90 days of a visa waiver visit is the usual way of falling out of status.",
+   "ASY": "EOIR's FY2024 asylum table shows fewer than four grants and fewer than four denials for Australian nationals, so no grant rate can be given."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Sydney",
+   "text": "Sydney is on Australian Eastern Time, UTC+10, or UTC+11 during its own daylight saving from October to April. It is 16 hours ahead of US Eastern in the US winter and 14 in the US summer, and 19 and 17 hours ahead of Pacific.",
+   "value": 16,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Australia to US",
+   "text": "Design estimate of $1,500. No sourced fare was found; real prices move widely with season and route.",
+   "value": 1500,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Australians",
+   "text": "Australian nationals received 2,075 F-1 visas in FY2024 and 1,976 in FY2025, compared with 2,326 in FY2018. Figures are State Department data republished by VisaGrader.",
+   "value": 2075,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/australia-aus",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Australian students in the US",
+   "text": "Open Doors counted 4,620 Australian students in US higher education in 2024/25, up from 4,432 the year before, the 31st largest group. Just over half were undergraduates.",
+   "value": 4620,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Australia_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "E-3 and H-1B visas for Australians",
+   "text": "Most Australian professionals use the E-3, a visa only Australian nationals can get: 3,931 E-3 visas were issued in FY2024 and 3,752 in FY2025, against 511 and 489 H-1B visas. Australia's share of all H-1B approvals was not found.",
+   "value": 3931,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/E3/australia-aus",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Australian applicants",
+   "text": "EOIR's FY2024 table lists Australia with every column suppressed, which means fewer than four grants and fewer than four denials. No grant rate can be calculated.",
+   "value": null,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Australia",
+   "text": "Australia is charged to the Rest of World queue. November 2026 final action dates as transcribed by law firms: F1 22 Jan 2021, F3 22 Oct 2015, F4 (siblings) 22 Oct 2012.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "Oceania",
+  "castGroup": "australia",
+  "ebQueue": "row",
+  "asylumGrantPct": null,
+  "asylumNote": "Null. EOIR's FY2024 Asylum Decisions by Nationality table lists Australia with grants and denials both suppressed (fewer than four each), so no rate can be calculated. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": true,
+  "arrivalLimits": []
+ }
+}

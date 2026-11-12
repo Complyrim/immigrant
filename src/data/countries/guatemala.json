@@ -1,0 +1,219 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "guatemala",
+  "name": "Guatemala",
+  "demonym": "Guatemalan",
+  "language": "Spanish, K'iche', Kaqchikel, Mam or your home language",
+  "departureCity": "Guatemala City",
+  "airportBoardLine": "AV 640  GUATEMALA  LANDED",
+  "timeDifference": "It is about the same time there, give or take an hour or two.",
+  "roundTripFlightUsd": 550,
+  "flightEstimate": true,
+  "homeTravelNote": "a flight of a few hours, often with one connection",
+  "names": {
+   "female": [
+    "María",
+    "Ana",
+    "Sofía",
+    "Gabriela",
+    "Andrea",
+    "Lucía",
+    "Paola",
+    "Karla",
+    "Alejandra",
+    "Daniela",
+    "Mónica",
+    "Rosa",
+    "Ixchel",
+    "Itzel"
+   ],
+   "male": [
+    "José",
+    "Juan",
+    "Luis",
+    "Carlos",
+    "Pedro",
+    "Diego",
+    "Marvin",
+    "Byron",
+    "Edgar",
+    "Kevin",
+    "Francisco",
+    "Mario",
+    "Tomás",
+    "Rodrigo"
+   ]
+  },
+  "skinTones": [
+   "#e0b690",
+   "#d3a179",
+   "#c28b60",
+   "#b0784f",
+   "#9a653f",
+   "#855336"
+  ],
+  "foods": {
+   "dish": "pepián",
+   "cookLines": [
+    "Squash seeds, sesame and dried chiles toast in the pan, and the whole apartment smells like home.",
+    "You taste the pepián and let it simmer a little longer, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share it over rice with warm tortillas, and for an hour the kitchen feels like your family's."
+   ],
+   "groceryStore": "the Latin American grocery store"
+  },
+  "studentAssociation": "Guatemalan Students' Association",
+  "festivals": [
+   {
+    "id": "independence-gt",
+    "title": "Independence Day, 15 September",
+    "body": "At home, schoolchildren run with torches on the 14th and march in parades on the 15th, with blue and white flags on every street. Here it is a normal week of classes.",
+    "month": 1,
+    "join": "Go to the Central American students' Independence party.",
+    "joinText": "Blue and white banners, marimba from a speaker and paper plates of tostadas and rellenitos. Students from five countries cheer for each other's flags.",
+    "host": "Invite friends over for a Guatemalan dinner.",
+    "hostText": "You hang a small flag in the window and serve black beans, plantains and sweet atol. Your friends ask about the quetzal on the flag, and you tell them.",
+    "skip": "Watch the parade clips your family sends and keep studying.",
+    "skipText": "Your little cousin is somewhere in the school band, slightly out of step. You watch it three times."
+   },
+   {
+    "id": "todos-santos-gt",
+    "title": "Día de Todos los Santos",
+    "body": "On 1 November your family visits the cemetery with flowers, shares fiambre and looks up at the giant kites flying over Sumpango and Santiago Sacatepéquez. Here it is midterm season.",
+    "month": 3,
+    "join": "Join other Guatemalans to build and fly a kite.",
+    "joinText": "Tissue paper, glue and bamboo cover a common-room floor. The kite is far smaller than the ones at home, and it flies anyway.",
+    "host": "Make fiambre and invite friends to share it.",
+    "hostText": "It takes two days and more ingredients than your fridge can hold. Your friends have never seen a salad like it, and they come back for more.",
+    "skip": "Light a candle and call home.",
+    "skipText": "Your mother walks the phone through the cemetery so you can see the flowers on your grandfather's grave. You stay on the line a long time."
+   },
+   {
+    "id": "semana-santa-gt",
+    "title": "Semana Santa",
+    "body": "Holy Week falls in the middle of the semester this year. At home, neighbours are laying carpets of dyed sawdust and flowers along the streets before the processions pass.",
+    "month": 8,
+    "join": "Attend Holy Week services with the local Guatemalan community.",
+    "joinText": "After the service, families share sweet bread and stories about the carpets in Antigua. An older woman insists you take some home.",
+    "host": "Make a small paper and flower carpet with friends.",
+    "hostText": "You sketch a pattern on the hallway floor and fill it with petals and coloured paper. People stop to look, and you explain why it is meant to last only a day.",
+    "skip": "Watch the processions online between classes.",
+    "skipText": "The purple robes and the slow drums fill your small screen. You send your aunt a message telling her how beautiful her street looks."
+   }
+  ],
+  "familyCall": [
+   "Guatemala is never more than two hours from your clock, so your mother calls while she is making lunch.",
+   "She asks whether you are eating properly and whether it is cold there yet.",
+   "Your grandmother takes the phone to give you her blessing, and your younger brother shows you the dog.",
+   "You hang up hungry for home cooking, and a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from quetzales, so every transfer loses a little to fees and the exchange rate.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. This research found no sourced figure that would justify more or less family support for Guatemalan students, so it is left neutral.",
+  "entryNotes": {
+   "F1": "About 1,344 Guatemalans studied in the US in 2024/25, and Guatemalan nationals received 941 F-1 visas in FY2024.",
+   "H1B": "TN status is only for Canadian and Mexican citizens, so Guatemalan professionals need an H-1B or another work visa; Guatemala is charged to the Rest of World green card queue.",
+   "B2": "Guatemala is not in the Visa Waiver Program, so visitors need a B visa from a US consulate before travelling.",
+   "O1": "O-1 status needs a petition approved by USCIS and then a visa interview at a US consulate.",
+   "FAM": "Immigrant visas for Guatemalans were paused from 21 January 2026 until a federal court vacated the pause on 21 August 2026; Guatemala is eligible for the Diversity Visa lottery.",
+   "EWI": "Guatemalans were about 13 percent of Border Patrol southwest apprehensions in both FY2024 (195,294) and FY2025 (30,035), and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 1,592 and denied 2,736 asylum cases from Guatemalan nationals, about 37 percent of decisions."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Guatemala City",
+   "text": "Guatemala is on UTC-6 all year with no daylight saving time. It is 1 hour behind US Eastern in winter and 2 hours behind in summer, level with US Central in winter, and 2 hours ahead of Pacific in winter and 1 in summer.",
+   "value": -1,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Guatemala to US",
+   "text": "Design estimate of $550. No sourced fare range for Guatemala to US round trips was found; real fares vary widely by route and season.",
+   "value": 550,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "f1-visas-issued-fy2024",
+   "topic": "numbers",
+   "title": "F-1 visas issued to Guatemalans",
+   "text": "Guatemalan nationals received 941 F-1 visas in FY2024, up from 795 in FY2023 and 686 in FY2022, and 915 in FY2025. Figures are State Department data republished by VisaGrader.",
+   "value": 941,
+   "unit": "count",
+   "year": 2024,
+   "source": "https://visagrader.com/visa-approvals-and-refusals/F1/guatemala-gtm",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Guatemalan students in the US",
+   "text": "1,344 students from Guatemala studied in the US in 2024/25, almost level with 1,352 the year before. Guatemala ranked 75th among places of origin (Open Doors 2025).",
+   "value": 1344,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Guatemala_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Guatemala",
+   "text": "Guatemala received about $25.53 billion in family remittances in 2025, up 18.7 percent on 2024 (International Organization for Migration figures, as reported by EFE and Infobae).",
+   "value": 25.53,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://www.infobae.com/el-salvador/2026/02/19/las-remesas-familiares-crecen-en-centroamerica-y-alcanzan-usd-47730-millones-en-2025/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Guatemalan applicants",
+   "text": "In FY2024 immigration courts granted 1,592 and denied 2,736 asylum cases from Guatemalan nationals, about 37 percent of decisions. Another 23,822 were not adjudicated and 1,715 were abandoned. Individual claims matter more than averages.",
+   "value": 37,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Guatemala",
+   "text": "Guatemala is charged to the Rest of World queue. November 2026 Visa Bulletin final action dates, as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "North America",
+  "castGroup": "guatemala",
+  "ebQueue": "row",
+  "asylumGrantPct": 37,
+  "asylumNote": "FY2024 EOIR Asylum Decisions by Nationality: 1,592 grants and 2,736 denials (36.8 percent); 1,715 abandoned, 23,822 not adjudicated, 1,826 withdrawn. https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

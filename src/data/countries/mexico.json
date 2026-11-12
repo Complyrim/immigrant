@@ -1,0 +1,205 @@
+{
+ "asOf": "2026-11-09",
+ "culture": {
+  "id": "mexico",
+  "name": "Mexico",
+  "demonym": "Mexican",
+  "language": "Spanish or your home language",
+  "departureCity": "Mexico City",
+  "airportBoardLine": "AM 400  MEXICO CITY LANDED",
+  "timeDifference": "It is about the same time there, give or take an hour or two.",
+  "roundTripFlightUsd": 450,
+  "flightEstimate": true,
+  "homeTravelNote": "a flight of a few hours, close enough that home feels within reach",
+  "names": {
+   "female": [
+    "María",
+    "Guadalupe",
+    "Sofía",
+    "Valentina",
+    "Ximena",
+    "Fernanda",
+    "Daniela",
+    "Camila",
+    "Andrea",
+    "Mariana",
+    "Regina",
+    "Lucía",
+    "Alejandra"
+   ],
+   "male": [
+    "José",
+    "Juan",
+    "Luis",
+    "Carlos",
+    "Miguel",
+    "Jesús",
+    "Santiago",
+    "Diego",
+    "Alejandro",
+    "Emiliano",
+    "Javier",
+    "Fernando",
+    "Leonardo"
+   ]
+  },
+  "skinTones": [
+   "#e3b994",
+   "#d9a77f",
+   "#c68e63",
+   "#b47a52",
+   "#a0683f",
+   "#8d5a3b"
+  ],
+  "foods": {
+   "dish": "mole",
+   "cookLines": [
+    "Dried chiles toast in the pan and the whole apartment smells like home.",
+    "You taste the mole and stir in a little more chocolate, the way your grandmother would.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You share warm tortillas at the counter, and for an hour the world is small and warm."
+   ],
+   "groceryStore": "the Mexican grocery store"
+  },
+  "studentAssociation": "Mexican Students' Association",
+  "festivals": [
+   {
+    "id": "independence-mx",
+    "title": "El Grito, far from home",
+    "body": "On the night of 15 September, people at home gather to shout \"¡Viva México!\" for Independence Day on the 16th. Here it is a regular school night.",
+    "month": 1,
+    "join": "Go to the student association's Grito party.",
+    "joinText": "Green, white and red streamers, pozole in paper bowls and a room full of people shouting together. You lose your voice and do not mind.",
+    "host": "Invite friends over for pozole and the Grito on a laptop.",
+    "hostText": "Your friends learn to shout \"¡Viva!\" on cue. Someone's cousin sends a video from the Zócalo at the perfect moment.",
+    "skip": "Watch the Grito on your phone between assignments.",
+    "skipText": "The bells ring from the screen while you finish a problem set. You whisper along anyway."
+   },
+   {
+    "id": "dia-de-muertos",
+    "title": "Día de Muertos",
+    "body": "At home your family is setting up the ofrenda with marigolds, candles and photos of the people you miss. Here, the first week of November is midterm season.",
+    "month": 3,
+    "join": "Help with the community ofrenda at the student center.",
+    "joinText": "You place a photo of your grandfather next to dozens of others. Strangers ask about him, and you tell them.",
+    "host": "Build a small ofrenda in your room and invite friends.",
+    "hostText": "A shelf becomes an altar with paper flowers and pan de muerto from the bakery. Your friends bring photos of their own people.",
+    "skip": "Light one candle and call home.",
+    "skipText": "Your mother turns the phone toward the altar so you can see every face. It is enough for tonight."
+   },
+   {
+    "id": "nochebuena",
+    "title": "Nochebuena",
+    "body": "At home, Christmas Eve means a late dinner, tamales, family everywhere and someone falling asleep before midnight. The dorms are emptying out for the break.",
+    "month": 4,
+    "join": "Go to a friend's family dinner across town.",
+    "joinText": "Their tía hands you a plate before you take off your coat. You stay past midnight.",
+    "host": "Make tamales with whoever is still on campus.",
+    "hostText": "The kitchen turns into an assembly line of husks and masa. Half the tamales fall apart and everyone eats them anyway.",
+    "skip": "Video-call the family dinner and go to bed early.",
+    "skipText": "Your little cousins pass the phone around the table. You fall asleep to the sound of home."
+   }
+  ],
+  "familyCall": [
+   "It is barely an hour's difference, so your mother calls while she is making lunch.",
+   "She tilts the phone toward the stove so you can see the pot of beans.",
+   "Your little cousin grabs the phone to show you a drawing, and your grandmother asks when you are coming home.",
+   "You hang up hungry and homesick, and a little lighter."
+  ],
+  "homeMoneyNote": "Money from home is converted from pesos, and every swing in the exchange rate shows up in your account.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Kept at the India baseline. The research has no sourced figure that would justify more or less family support for Mexican students; money still moves through peso exchange rates much as it does through rupees. Cheaper flights home are handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "Mexico is not among the top five F-1 source countries; some graduates later move from F-1 to TN status.",
+   "H1B": "Many Mexican professionals use the TN visa instead, which has no lottery; Mexicans received 15,630 of 15,672 TN visas in FY2024.",
+   "B2": "Mexicans can apply for a Border Crossing Card, a ten-year visitor card; about 1.87 million were issued in FY2024.",
+   "O1": "Mexican nationals received 880 O-1 visas in FY2024.",
+   "FAM": "Family preference waits for Mexico are among the longest; in the November 2026 bulletin, sibling petitions from before April 2001 are being processed.",
+   "EWI": "Mexican nationals were 47 percent of Border Patrol southwest apprehensions in FY2025, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted about 16 percent of decided asylum cases from Mexican applicants."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Mexico City",
+   "text": "Mexico City is on UTC-6 all year and no longer uses daylight saving time. It is 1 hour behind US Eastern in winter and 2 hours behind in summer, level with US Central in winter, and 1 to 2 hours ahead of Pacific.",
+   "value": -1,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Mexico to US",
+   "text": "Design estimate of $450. No sourced fare range for Mexico to US round trips was found in the research; real fares vary widely by route and season.",
+   "value": 450,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "remittances-latest",
+   "topic": "money",
+   "title": "Remittances to Mexico",
+   "text": "Mexico received $61.79 billion in remittances in 2025, down 4.6 percent from $64.7 billion in 2024, the biggest fall since 2009 (Banxico, as reported).",
+   "value": 61.79,
+   "unit": "usd-billion",
+   "year": 2025,
+   "source": "https://mexiconewsdaily.com/news/remittance-biggest-decline-in-16-years/",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "h1b-share-latest",
+   "topic": "numbers",
+   "title": "Mexico and the TN visa",
+   "text": "Mexico's share of H-1B approvals was not found in the research. The main professional route is the TN visa: Mexicans received 15,630 of 15,672 TN visas in FY2024 (99.7 percent).",
+   "value": 99.7,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://usafacts.org/explainers/what-is-a-visa/visa-category/tn/",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Mexican applicants",
+   "text": "In FY2024 immigration courts granted 751 and denied 3,910 asylum cases from Mexican nationals, about 16 percent of decisions. Another 12,775 were not adjudicated. Individual claims matter more than averages.",
+   "value": 16,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Mexico",
+   "text": "November 2026 Visa Bulletin final action dates for Mexico, as transcribed by law firms: adult children of citizens (F1) 22 Sep 2008, married children (F3) 15 Jul 2001, siblings (F4) 22 Apr 2001. A sibling petition filed today faces a wait of roughly 25 years.",
+   "value": 25,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "North America",
+  "castGroup": "mexico",
+  "ebQueue": "mexico",
+  "asylumGrantPct": 18,
+  "asylumNote": "751 grants and 3,910 denials in FY2024, about 16 percent; the game has used 18 (research/unauthorized-entry.md 2.5).",
+  "visaWaiver": false,
+  "arrivalLimits": []
+ }
+}

@@ -1,0 +1,259 @@
+{
+ "asOf": "2026-11-11",
+ "culture": {
+  "id": "venezuela",
+  "name": "Venezuela",
+  "demonym": "Venezuelan",
+  "language": "Spanish or your home language",
+  "departureCity": "Caracas",
+  "airportBoardLine": "CM 226  CARACAS    LANDED",
+  "timeDifference": "It is about the same time there, give or take an hour.",
+  "roundTripFlightUsd": 900,
+  "flightEstimate": true,
+  "homeTravelNote": "a trip that often means a connection along the way, so going home takes planning",
+  "names": {
+   "female": [
+    "María",
+    "Andreína",
+    "Gabriela",
+    "Daniela",
+    "Valentina",
+    "Mariana",
+    "Oriana",
+    "Génesis",
+    "Yuliana",
+    "Carolina",
+    "Alejandra",
+    "Victoria",
+    "Patricia"
+   ],
+   "male": [
+    "José",
+    "Luis",
+    "Carlos",
+    "Jesús",
+    "Miguel",
+    "Gabriel",
+    "Daniel",
+    "Alejandro",
+    "Rafael",
+    "Simón",
+    "Andrés",
+    "Eduardo",
+    "Ricardo"
+   ]
+  },
+  "skinTones": [
+   "#eecbac",
+   "#ddb18c",
+   "#c99a73",
+   "#b07f59",
+   "#8d6243",
+   "#634432"
+  ],
+  "foods": {
+   "dish": "arepas",
+   "cookLines": [
+    "You knead the corn flour dough until it is smooth, and the first arepas hit the hot pan.",
+    "You tap one to hear the hollow sound that means it is ready, the way your mother taught you.",
+    "{roommate} wanders in and asks what smells so good.",
+    "You split them open at the counter and fill them with chicken and avocado, and for an hour the world is small and warm."
+   ],
+   "groceryStore": "the Latin American grocery store"
+  },
+  "studentAssociation": "Venezuelan Students' Association",
+  "festivals": [
+   {
+    "id": "navidad-ve",
+    "title": "Navidad and the hallacas",
+    "body": "At home December means the whole family around one table making hallacas, gaitas on the radio and pan de jamón from the bakery. Here it is finals week.",
+    "month": 4,
+    "join": "Join a Venezuelan family's hallaca day.",
+    "joinText": "You are put on tying duty within five minutes. Three generations argue kindly about whose stew is best, and you go home with a dozen hallacas.",
+    "host": "Make hallacas with friends in your kitchen.",
+    "hostText": "It takes all day and every pot you own. Your friends learn to fold the plantain leaves, and the first batch tastes almost like home.",
+    "skip": "Call home while the family cooks.",
+    "skipText": "Your aunt props the phone against the pot so you can watch. Everyone shouts instructions at you as if you were there."
+   },
+   {
+    "id": "carnaval-ve",
+    "title": "Carnaval",
+    "body": "At home Carnaval means two days off, costumes, music in the plazas and children armed with water balloons. It falls in the middle of the term this year.",
+    "month": 6,
+    "join": "Go to the student association's Carnaval party.",
+    "joinText": "There are masks, calypso and salsa, and a table of tequeños that empties in minutes. You dance until your feet hurt.",
+    "host": "Invite friends over for tequeños and music.",
+    "hostText": "Your friends cannot stop eating the tequeños. Someone asks for the playlist, and you send it before they reach the door.",
+    "skip": "Look through the family photos and keep studying.",
+    "skipText": "Your nieces are dressed as princesses and superheroes. You save every picture."
+   },
+   {
+    "id": "independence-ve",
+    "title": "Independence Day, 5 July",
+    "body": "At home 5 July brings parades, flags of yellow, blue and red and a public holiday. Here it is a quiet day after the American fireworks.",
+    "month": 11,
+    "join": "Go to the Venezuelan community picnic.",
+    "joinText": "Someone has a cuatro, someone has a cooler of papelón con limón and everyone sings \"Alma Llanera\" at the end. You know all the words.",
+    "host": "Cook arepas for friends and tell them the story.",
+    "hostText": "Your friends choose their own fillings and compare notes. You hang a small flag on the shelf, and it stays there.",
+    "skip": "Send greetings to the family group chat.",
+    "skipText": "Messages come in from four countries, because your family is spread across the map now. You answer every one."
+   }
+  ],
+  "familyCall": [
+   "Caracas is within an hour of the East Coast, so your mother calls as she finishes work.",
+   "She asks if you are eating well, and tells you which cousin has moved to which city this month.",
+   "Your father leans in to ask about your classes, and your grandmother gives you her blessing before she lets you go.",
+   "You hang up missing all of them, and a little lighter."
+  ],
+  "homeMoneyNote": "Money from home takes patience to send and often comes in dollars from relatives spread across several countries.",
+  "familySupportFactor": 1,
+  "familySupportNote": "Designed value, kept at the India baseline of 1.0. No sourced figure on what Venezuelan families can send to students was opened in this research, so the factor is not moved. Travel cost is handled by roundTripFlightUsd, not by this factor.",
+  "entryNotes": {
+   "F1": "About 3,886 Venezuelans studied in the US in 2024/25; since 9 June 2025 new F, M and J visas for Venezuelans applying from outside the US are suspended by presidential proclamation.",
+   "H1B": "H-1B visas are not among the suspended categories for Venezuelans, but the proclamation tells consular officers to shorten the validity of other visas; Venezuelans wait in the Rest of World green card queue.",
+   "B2": "New B-1 and B-2 visitor visas for Venezuelans outside the US have been suspended since 9 June 2025 under Proclamation 10949, and the suspension was continued from 1 January 2026.",
+   "O1": "O-1 visas are not among the suspended categories for Venezuelans, though the proclamation directs consular officers to reduce the validity of other nonimmigrant visas.",
+   "FAM": "Immigrant visas for Venezuelans abroad are suspended; the exception for spouses, children and parents of US citizens ended on 1 January 2026, and Venezuela is not eligible for the Diversity Visa lottery.",
+   "EWI": "Border Patrol encounters of Venezuelans at the southwest border fell from 134,329 in FY2024 to 1,593 in FY2026, and entering without inspection usually blocks a green card from inside the US later.",
+   "ASY": "In FY2024 immigration courts granted 2,656 and denied 1,430 asylum cases from Venezuelan nationals, about 65 percent of decisions; Venezuela's TPS designations and the CHNV parole programme ended in 2025."
+  }
+ },
+ "facts": [
+  {
+   "id": "time-difference",
+   "topic": "time",
+   "title": "Time difference to Caracas",
+   "text": "Caracas is on UTC-4 all year with no daylight saving time. It is 1 hour ahead of US Eastern in winter and level with it in summer, and 4 hours ahead of Pacific in winter and 3 in summer.",
+   "value": 1,
+   "unit": "hours",
+   "year": 2026,
+   "source": "https://www.iana.org/time-zones",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "flight-roundtrip",
+   "topic": "flight",
+   "title": "Round-trip flight, Venezuela to US",
+   "text": "Design estimate of $900. No sourced fare range for Venezuela to US round trips was found in the research; real fares vary widely by route and season.",
+   "value": 900,
+   "unit": "usd",
+   "year": 2026,
+   "source": "https://www.bts.gov",
+   "confidence": "UNVERIFIED",
+   "estimate": true
+  },
+  {
+   "id": "students-in-us-latest",
+   "topic": "numbers",
+   "title": "Venezuelan students in the US",
+   "text": "Open Doors counted 3,886 Venezuelan students in US higher education in 2024/25, the 36th largest group, down from 8,371 in 2017/18.",
+   "value": 3886,
+   "unit": "count",
+   "year": 2025,
+   "source": "https://opendoorsdata.org/wp-content/uploads/2026/01/OD_Venezuela_Fact-Sheet-2025.pdf",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "asylum-context",
+   "topic": "numbers",
+   "title": "Asylum decisions for Venezuelan applicants",
+   "text": "In FY2024 immigration courts granted 2,656 and denied 1,430 asylum cases from Venezuelan nationals, about 65 percent of decisions. Another 20,134 were not adjudicated. Individual claims matter more than averages.",
+   "value": 65,
+   "unit": "percent",
+   "year": 2024,
+   "source": "https://www.justice.gov/eoir/media/1344846/dl",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "family-backlog",
+   "topic": "numbers",
+   "title": "Family green card queue for Venezuela",
+   "text": "Venezuela is charged to the Rest of World queue, with no separate column in the Visa Bulletin. November 2026 final action dates as transcribed by a law firm: adult children of citizens (F1) 22 Jan 2021, married children (F3) 22 Oct 2015, siblings (F4) 22 Oct 2012. A sibling petition filed today faces a wait of roughly 14 years.",
+   "value": 14,
+   "unit": "years",
+   "year": 2026,
+   "source": "https://www.gozellaw.com/blog/november-2026-visa-bulletin",
+   "confidence": "LIKELY",
+   "estimate": false
+  },
+  {
+   "id": "border-encounters",
+   "topic": "numbers",
+   "title": "Border Patrol encounters of Venezuelan nationals",
+   "text": "Border Patrol recorded 200,668 encounters of Venezuelan nationals at the southwest border in FY2023, 134,329 in FY2024, 9,660 in FY2025 and 1,593 in FY2026. Totals are summed from CBP's public encounters file.",
+   "value": 1593,
+   "unit": "count",
+   "year": 2026,
+   "source": "https://www.cbp.gov/sites/default/files/2026-10/nationwide-encounters-fy23-fy26-sep-aor.csv",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "travel-proclamation",
+   "topic": "rules",
+   "title": "Visa suspension for Venezuelans",
+   "text": "Proclamation 10949 suspended entry of Venezuelans as immigrants and on B-1, B-2, F, M and J visas from 9 June 2025, for people outside the US without a valid visa on that date. The December 2025 proclamation continued it from 1 January 2026 and removed the exception for immediate relatives of US citizens. Visas already issued were not revoked.",
+   "value": 2025,
+   "unit": "year",
+   "year": 2025,
+   "source": "https://www.whitehouse.gov/presidential-actions/2025/06/restricting-the-entry-of-foreign-nationals-to-protect-the-united-states-from-foreign-terrorists-and-other-national-security-and-public-safety-threats/",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "tps-status",
+   "topic": "rules",
+   "title": "TPS for Venezuela has ended",
+   "text": "The 2023 TPS designation for Venezuela was terminated, and the Supreme Court let that take effect on 3 October 2025. The 2021 designation ended on 7 November 2025. Work permits kept alive by a court order for one group ran out on 2 October 2026.",
+   "value": 2025,
+   "unit": "year",
+   "year": 2025,
+   "source": "https://www.uscis.gov/humanitarian/temporary-protected-status/temporary-protected-status-designated-country-venezuela",
+   "confidence": "CONFIRMED",
+   "estimate": false
+  },
+  {
+   "id": "chnv-parole",
+   "topic": "rules",
+   "title": "CHNV parole has ended",
+   "text": "DHS announced the end of the parole processes for Cubans, Haitians, Nicaraguans and Venezuelans in a notice dated 25 March 2025, and USCIS stopped taking new requests. On 30 May 2025 the Supreme Court allowed the government to revoke parole for more than 500,000 people from the four countries while the case continues.",
+   "value": 2025,
+   "unit": "year",
+   "year": 2025,
+   "source": "https://www.scotusblog.com/2025/05/supreme-court-allows-dhs-to-end-parole-for-a-half-million-noncitizens/",
+   "confidence": "LIKELY",
+   "estimate": false
+  }
+ ],
+ "mechanics": {
+  "continent": "South America",
+  "castGroup": "venezuela",
+  "ebQueue": "row",
+  "asylumGrantPct": 65,
+  "asylumNote": "2,656 grants and 1,430 denials in immigration court, FY2024 (2,656 of 4,086 decisions, 65.0 percent); 20,134 more not adjudicated, so most Venezuelan cases that year ended without a decision on the merits. EOIR Asylum Decisions by Nationality, https://www.justice.gov/eoir/media/1344846/dl",
+  "visaWaiver": false,
+  "arrivalLimits": [
+   {
+    "from": 2025,
+    "routes": [
+     "F1",
+     "B2"
+    ],
+    "reason": "Since 9 June 2025 a presidential proclamation has suspended new student and visitor visas for Venezuelans applying from outside the US. Choose an earlier arrival year or another route.",
+    "source": "https://www.whitehouse.gov/presidential-actions/2025/06/restricting-the-entry-of-foreign-nationals-to-protect-the-united-states-from-foreign-terrorists-and-other-national-security-and-public-safety-threats/"
+   },
+   {
+    "from": 2026,
+    "routes": [
+     "FAM"
+    ],
+    "reason": "New immigrant visas for Venezuelans abroad are suspended by presidential proclamation, and since 1 January 2026 there is no exception for spouses, children or parents of US citizens. Choose an earlier arrival year or another route.",
+    "source": "https://www.whitehouse.gov/presidential-actions/2025/12/restricting-and-limiting-the-entry-of-foreign-nationals-to-protect-the-security-of-the-united-states/"
+   }
+  ]
+ }
+}
