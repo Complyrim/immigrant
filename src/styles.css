@@ -478,3 +478,9 @@ details.names input { width: 55%; }
 .btn[data-act='resume-journey'] { display: grid; gap: 2px; }
 .btn[data-act='resume-journey'] small { font-weight: 400; opacity: 0.8; font-size: 0.82em; }
 .hud .hud-btns { grid-area: gear; display: flex; gap: 6px; }
+
+/* Shown instead of the game when the browser has no WebGL. */
+.no-gl { max-width: 520px; text-align: left; display: grid; gap: 10px; }
+.no-gl h2 { margin: 0; font-size: 1.15rem; }
+.no-gl p, .no-gl ul { margin: 0; }
+.no-gl ul { padding-left: 1.1em; display: grid; gap: 6px; }
