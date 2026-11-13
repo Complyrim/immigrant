@@ -1,5 +1,7 @@
 # Immigrant
 
+**[Play it in your browser](https://complyrim.github.io/immigrant/)** (free, no install; works on phones too)
+
 A narrative life-sim about moving to the United States. You choose where you come from, how you arrive and where you land, then live it one month at a time: three decisions a month, evenings in between, and consequences that carry from year to year.
 
 ![The arrival inspection](docs/screens/arrival.jpg)
@@ -14,7 +16,7 @@ A narrative life-sim about moving to the United States. You choose where you com
 
 ## Play
 
-- **Online:** GitHub Pages, once enabled for this repository (Settings, Pages, Source: GitHub Actions). The address is `https://<owner>.github.io/<repo>/`.
+- **Online:** https://complyrim.github.io/immigrant/ (rebuilt automatically from `main` after every push that passes the checks).
 - **Locally:**
 
 ```bash
