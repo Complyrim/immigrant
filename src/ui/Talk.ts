@@ -13,6 +13,18 @@ export interface TalkHost {
   reduced(): boolean;
   /** 'all': recordings, and the device's speech voice for every other line; 'recorded': recordings only; 'off'. */
   voices(): 'all' | 'recorded' | 'off';
+  /** The name to show over a person's lines (a roommate's own name, say); falls back to the role. */
+  nameOf?(role: string): string | null;
+}
+
+/** A spoken line, or a line of narration that goes in the transcript only (no bubble, no voice). */
+export type TalkLine = Line | { who: 'narrator'; text: string; voice?: undefined };
+
+export interface PlayOptions {
+  /** Reading time multiplier: under 1 is quicker. */
+  pace?: number;
+  /** Called as each line starts, so the scene can act it out. */
+  onLine?: (line: TalkLine, index: number) => void;
 }
 
 const synth: SpeechSynthesis | null = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
@@ -46,40 +58,59 @@ export class Talk {
   }
 
   /** Play the lines in order; `log` receives each line as it is spoken. */
-  async play(lines: Line[], log: HTMLElement | null): Promise<void> {
+  /** Play the lines in order; `log` receives each line as it is spoken. Resolves true if it played to the end. */
+  async play(lines: TalkLine[], log: HTMLElement | null, opts: PlayOptions = {}): Promise<boolean> {
     this.stop();
     const run = ++this.run;
     this.raf = requestAnimationFrame(this.place);
     // Let the cast load and the camera settle before anyone speaks.
     await this.wait(900, run);
-    for (const line of lines) {
-      if (run !== this.run) return;
-      this.show(line);
+    for (const [i, line] of lines.entries()) {
+      if (run !== this.run) return false;
+      opts.onLine?.(line, i);
+      const narr = line.who === 'narrator';
+      if (narr) this.hide();
+      else this.show(line);
       if (log) {
+        for (const old of Array.from(log.children)) old.classList.remove('now');
         const li = document.createElement('li');
-        li.className = line.who === 'player' ? 'you' : '';
-        li.innerHTML = `<b></b> <span></span>`;
-        (li.querySelector('b') as HTMLElement).textContent = line.who === 'player' ? 'You' : label(line.who);
+        li.className = `${narr ? 'narr' : line.who === 'player' ? 'you' : ''} now`;
+        li.innerHTML = narr ? '<span></span>' : `<b></b> <span></span>`;
+        const b = li.querySelector('b');
+        if (b) b.textContent = this.nameFor(line.who);
         (li.querySelector('span') as HTMLElement).textContent = line.text;
         log.appendChild(li);
         log.hidden = false;
+        log.scrollTop = log.scrollHeight;
       }
-      const read = Math.max(2400, 1200 + line.text.length * 55);
-      const mode = this.host.voices();
+      const read = Math.max(2400, 1200 + line.text.length * 55) * (opts.pace ?? 1);
+      const mode = narr ? 'off' : this.host.voices();
       // A recording if there is one; otherwise (or if it is missing) the device's own speech voice.
       let spoken: Promise<boolean> | null = null;
       if (mode !== 'off' && line.voice && line.who !== 'player') {
         spoken = this.say(line.voice, run).then((ok) => (ok || mode !== 'all' ? ok : this.speak(line, run, read)));
       } else if (mode === 'all') {
-        spoken = this.speak(line, run, read);
+        spoken = this.speak(line as Line, run, read);
       }
       // A voice that plays gets half a second after it; no voice leaves the line up for reading time.
       await Promise.race([spoken ? spoken.then((ok) => this.wait(ok ? 500 : read, run)) : this.wait(read, run), this.skipped(run)]);
       synth?.cancel();
     }
-    if (run !== this.run) return;
+    if (run !== this.run) return false;
     await this.wait(1600, run);
-    if (run === this.run) this.hide();
+    if (run !== this.run) return false;
+    this.hide();
+    return true;
+  }
+
+  /** Move on to the next line now (a tap on the dialogue box or the Next button). */
+  next(): void {
+    if (!this.paused) this.skip?.();
+  }
+
+  private nameFor(who: string): string {
+    if (who === 'player') return 'You';
+    return this.host.nameOf?.(who) ?? label(who);
   }
 
   /** Hold the conversation where it is (voice and timing), or carry on. */
@@ -106,13 +137,13 @@ export class Talk {
     this.hide();
   }
 
-  private show(line: Line): void {
+  private show(line: TalkLine): void {
     this.hide();
     const b = document.createElement('div');
     b.className = `bubble${line.who === 'player' ? ' you' : ''}${this.host.reduced() ? ' still' : ''}`;
     b.setAttribute('role', 'status');
     const name = document.createElement('small');
-    name.textContent = line.who === 'player' ? 'You' : label(line.who);
+    name.textContent = this.nameFor(line.who);
     const text = document.createElement('span');
     text.textContent = line.text;
     b.append(name, text);

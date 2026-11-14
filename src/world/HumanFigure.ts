@@ -152,8 +152,8 @@ export const GESTURES: Partial<Record<Pose, Gesture>> = {
   type: (t) => [
     { bone: 'upperarm_r', x: 0.4 },
     { bone: 'upperarm_l', x: 0.4 },
-    { bone: 'lowerarm_r', x: 1.15 + wob(t, 5, 0.04) },
-    { bone: 'lowerarm_l', x: 1.15 + wob(t + 0.3, 4.3, 0.04) },
+    { bone: 'lowerarm_r', x: 1.15 + wob(t, 2.4, 0.025) },
+    { bone: 'lowerarm_l', x: 1.15 + wob(t + 0.3, 2.1, 0.025) },
     { bone: 'Head', x: 0.18 },
   ],
   think: () => [
@@ -187,10 +187,16 @@ export const GESTURES: Partial<Record<Pose, Gesture>> = {
       { bone: 'Head', x: 0.08 + k * 0.1 },
     ];
   },
-  laugh: (t) => [
-    { bone: 'spine_02', x: wob(t, 5.5, 0.045) },
-    { bone: 'Head', x: -0.12 + wob(t, 5.5, 0.07) },
-  ],
+  // A slow chuckle: the head tips back and the shoulders rise and fall about twice a second. A faster
+  // rocking read as shaking, worst on someone seated.
+  laugh: (t) => {
+    const k = (Math.sin(t * Math.PI * 2 * 1.8) + 1) / 2;
+    const swell = (Math.sin(t * 0.9) + 1) / 2;
+    return [
+      { bone: 'spine_02', x: -0.03 * k * swell },
+      { bone: 'Head', x: -0.14 - 0.06 * k * swell },
+    ];
+  },
 };
 
 /* -------------------------------------------------------------- clothing shells */

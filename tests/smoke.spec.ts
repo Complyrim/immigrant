@@ -53,8 +53,10 @@ test('a card plays: choose, see the result, move on', async ({ page }) => {
   const evening = page.locator('[data-act="activity"]').first();
   if (await evening.isVisible().catch(() => false)) {
     await evening.click();
-    await page.locator('#skip-btn').evaluate((b) => b.removeAttribute('hidden'));
-    await page.locator('#skip-btn').click();
+    // The evening plays as a scene: lines arrive in the dialogue box, Next moves on, Skip ends it.
+    await expect(page.locator('#scene-log li').first()).toBeVisible({ timeout: 10_000 });
+    await page.locator('[data-act="next-line"]').click();
+    await page.locator('[data-act="skip-interlude"]').click();
     await page.locator('[data-act="interlude-done"]').click();
   }
   await expect(page.locator('.card-main h2')).not.toHaveText(first ?? '', { timeout: 15_000 });

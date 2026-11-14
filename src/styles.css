@@ -500,3 +500,24 @@ details.names input { width: 55%; }
 }
 .btn.primary small { opacity: 0.75; }
 .btn.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Between tasks: the evening plays as a scene. Narration and what people say build up in a dialogue box;
+   the newest line is bright, earlier ones fade, and a tap moves on. */
+.scene-log { max-height: 15.5em; overflow-y: auto; cursor: pointer; scroll-behavior: smooth; margin: 8px 0 10px; }
+.scene-log li { opacity: 0.55; transition: opacity 0.3s ease; }
+.scene-log li.now { opacity: 1; animation: line-in 0.35s ease; }
+.scene-log li.narr { background: none; font-style: italic; color: var(--muted); padding-left: 2px; }
+.scene-log li.you { background: rgba(255, 215, 154, 0.12); }
+@keyframes line-in { from { transform: translateY(6px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .scene-log li.now { animation: none; } }
+/* In the split view the evening card keeps its buttons in reach: the dialogue box takes the room that is
+   left and scrolls, newest line at the bottom. */
+#app[data-layout='split'] .evening.playing { display: flex; flex-direction: column; overflow: hidden; }
+#app[data-layout='split'] .evening.playing .scene-log { flex: 1 1 auto; min-height: 3.2em; max-height: none; }
+#app[data-layout='split'] .evening.playing .actions { flex: none; margin-top: 4px; }
+#app[data-layout='split'] .evening.playing .kicker .tag { white-space: nowrap; }
+@media (max-height: 620px) {
+  #app[data-layout='split'] .evening.playing .aside { display: none; }
+  #app[data-layout='split'] .evening.playing .scene-log { min-height: 2.6em; margin: 4px 0 6px; }
+  #app[data-layout='split'] .evening.playing .actions .btn { padding-top: 8px; padding-bottom: 8px; }
+}

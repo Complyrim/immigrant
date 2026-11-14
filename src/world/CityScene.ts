@@ -7,7 +7,7 @@ import { backdropEnv, CITY_CAM, cityDepth, cityPaint, fitBackdrop, paintReady, p
 import { makeRelief } from './relief';
 import { loadHdri, pbrMaterial, setMaxAnisotropy, type HdriId } from './pbr';
 import { buildSky, buildSkyEnvironment, type SkyHandle } from './Sky';
-import type { CastSpec, CityId, CommuteMode, Profile, StageId } from '../engine/types';
+import type { CastSpec, CityId, CommuteMode, Pose, Profile, StageId } from '../engine/types';
 
 type Focus = 'orbit' | 'commute';
 
@@ -34,6 +34,7 @@ export interface StageHandle {
   paintCam?: { h: number; d0: number; f: number; vh: number };
   relief?: number;
   anchor?(role: string): THREE.Vector3 | null;
+  act?(role: string, pose: Pose | null): void;
 }
 export type StageBuilder = (id: StageId, cast: CastSpec[], profile: Profile, variant?: 'movie' | 'call') => StageHandle;
 
@@ -746,6 +747,11 @@ export class CityScene {
     p.project(this.camera);
     if (p.z > 1 || p.z < -1) return null;
     return { x: ((p.x + 1) / 2) * this.canvas.clientWidth, y: ((1 - p.y) / 2) * this.canvas.clientHeight };
+  }
+
+  /** A person in the current scene acts out a moment (see StageResult.act). */
+  act(role: string, pose: Pose | null): void {
+    if (this.view === 'stage') this.stage?.act?.(role, pose);
   }
 
   get ready(): boolean {

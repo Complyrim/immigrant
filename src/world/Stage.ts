@@ -1189,6 +1189,11 @@ function campus(b: SB, cast: CastSpec[], player: FigureLook): Cfg {
 /* ------------------------------------------------------------ entry */
 
 type Builder = (b: SB, cast: CastSpec[], player: FigureLook) => Cfg;
+/** Poses someone can drop to act out a moment of conversation, and back. */
+const AT_EASE = new Set<Pose>(['idle', 'talk', 'laugh', 'think', 'phone', 'sit', 'wave', 'cheer']);
+const SEATED_ACTS = new Set<Pose>(['sit', 'talk', 'laugh', 'think', 'phone']);
+const STANDING_ACTS = new Set<Pose>(['idle', 'talk', 'laugh', 'think', 'phone', 'wave', 'cheer']);
+
 const BUILDERS: Partial<Record<StageId, Builder>> = {
   airport,
   'intl-office': intlOffice,
@@ -1363,7 +1368,8 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
   let paintCam: StageResult['paintCam'];
   let relief: THREE.Mesh | null = null;
   // Someone sitting on a painted seat or standing behind a painted counter is pinned to the picture; the
-  // depth model's guess for that furniture is never exact, so the camera drifts less in those scenes.
+  // depth model's guess for that furniture is never exact, so the camera holds still in those scenes
+  // (any drift made a seated person slide on the painted seat).
   let pinned = false;
   if (backdrop) {
     // Painted backdrop: hide the coded room, keep the people and the furniture they use.
@@ -1810,7 +1816,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     update: (dt, time) => b.tick(dt, time),
     dispose: () => b.free(),
     ...cfg,
-    ...(backdrop ? { backdrop, fog: null, span, person: backdropPerson(id), focusU: paintFocus, paintCam, dim: paintDim, relief: relief ? (pinned ? 0.3 : 1) : 0 } : {}),
+    ...(backdrop ? { backdrop, fog: null, span, person: backdropPerson(id), focusU: paintFocus, paintCam, dim: paintDim, relief: relief && !pinned ? 1 : 0 } : {}),
     ready: castSettled(),
     anchor: (role) => {
       const f = b.figs.find((q) => q.look.role === role && q.group.visible);
@@ -1818,6 +1824,20 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       const box = new THREE.Box3().setFromObject(f.group);
       if (box.isEmpty()) return null;
       return new THREE.Vector3((box.min.x + box.max.x) / 2, box.max.y + 0.06, (box.min.z + box.max.z) / 2);
+    },
+    act: (role, pose) => {
+      const f = b.figs.find((q) => q.look.role === role && q.group.visible);
+      if (!f) return;
+      const base = (f.group.userData.basePose as Pose | undefined) ?? f.pose;
+      f.group.userData.basePose = base;
+      // Only people at ease change what they are doing: someone cooking, dancing, typing or asleep keeps at it.
+      if (!AT_EASE.has(base)) return;
+      let next = pose ?? base;
+      const seated = Boolean(f.group.userData.seated);
+      // A seated person talks, laughs, thinks or looks at a phone from their seat; nobody standing sits on air.
+      if (seated && !SEATED_ACTS.has(next)) next = next === 'wave' || next === 'cheer' ? 'talk' : base;
+      if (!seated && !STANDING_ACTS.has(next)) next = base;
+      if (next !== f.pose) f.setPose(next);
     },
   };
   if (backdrop && fit) {

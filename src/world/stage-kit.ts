@@ -53,6 +53,8 @@ export interface StageResult {
   relief?: number;
   /** World position just above the head of the first visible person with this role (speech bubbles hang here). */
   anchor?(role: string): THREE.Vector3 | null;
+  /** Act out a moment: this person takes a pose for now, or goes back to the one the scene gave them (null). */
+  act?(role: string, pose: Pose | null): void;
   /** Painted scenes: called each frame with the way the painting maps to the world, so seated people stay on their painted seats. */
   fit?(m: PaintFrame): void;
 }
@@ -64,7 +66,7 @@ export interface PaintFrame {
   back: number;
 }
 
-export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor'>;
+export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor' | 'act'>;
 export type Upd = (dt: number, t: number) => void;
 export type C = string | THREE.Material;
 

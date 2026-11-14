@@ -1,11 +1,12 @@
-import { Talk } from './Talk';
+import { Talk, type TalkLine } from './Talk';
+import { INTERLUDE_TALK } from '../engine/interlude-talk';
 import { Sound } from '../audio/Sound';
 import { ACTIVITIES, pickActivities, pickScript } from '../engine/activities';
 import type { Activity } from '../engine/activities';
-import { fill, withLine } from '../engine/people';
+import { fill, peopleFor, withLine } from '../engine/people';
 import { CITIES, getCity, getFact, srcNum, type CityData } from '../engine/data';
 import { commuteInfo, monthlyBudget, netMonthly, START_MONEY } from '../engine/economy';
-import type { BudgetLine, GameState, ScheduleItem, Statement } from '../engine/types';
+import type { BudgetLine, CastSpec, GameState, Pose, Role, ScheduleItem, Statement } from '../engine/types';
 import { Game, gpaOf, monthLabel, REALITY_MOD, slotLabel } from '../engine/game';
 import { createSeededRandom } from '../utils/random';
 import type {
@@ -201,6 +202,10 @@ export class App {
       volume: () => this.settings.sfx,
       reduced: () => this.settings.reduceMotion,
       voices: () => this.settings.voices ?? 'all',
+      nameOf: (role) => {
+        if (!this.game || !['roommate', 'friend', 'partner', 'classmate', 'sibling'].includes(role)) return null;
+        return peopleFor(this.game.state)[role as 'roommate'].name;
+      },
     });
     this.scene.setReducedMotion(this.settings.reduceMotion);
     this.scene.setStageBuilder((id, cast, profile, variant) => {
@@ -287,6 +292,7 @@ export class App {
       case 'pivot': return this.resolveCrossroads(d.v ?? '');
       case 'activity': return this.startActivity(d.v ?? '');
       case 'skip-interlude': return this.finishInterlude();
+      case 'next-line': return this.talk.next();
       case 'interlude-done': return void this.next();
       case 'skip-evening': return void this.next();
       case 'toggle-interlude': {
@@ -944,48 +950,42 @@ export class App {
     const a = ACTIVITIES.find((x) => x.id === id);
     if (!g || !a) return;
     this.currentActivity = a;
-    const script = pickScript(a, g.state, createSeededRandom(g.state.seed + g.state.index * 13 + this.activityCount++ * 101 + 5));
+    const rng = createSeededRandom(g.state.seed + g.state.index * 13 + this.activityCount++ * 101 + 5);
+    const script = pickScript(a, g.state, rng);
     const lines = script.lines.map((l) => fill(l, g.state));
     const cast = script.cast ?? a.cast;
     const withText = script.with ?? withLine(cast, g.state);
     this.scene.showStage(a.stage, cast, g.state.profile, undefined, a.variant);
     this.sound.setScene(a.stage);
-    const seconds = ({ off: 0, short: 20, normal: 45, long: 90 } as const)[this.settings.interlude] || 45;
+    // The evening plays as a scene: the narration goes in the dialogue box, the people talk in bubbles over
+    // their heads, and everyone acts out each moment.
+    const beats = interludeBeats(a, script.lines, lines, cast, rng);
+    const pace = ({ off: 1, short: 0.7, normal: 1, long: 1.45 } as const)[this.settings.interlude] ?? 1;
     this.put(
       `${this.hud()}
       <section class="screen play"><article class="panel card-main evening playing">
         <div class="kicker"><span class="tag">Between tasks</span><span>${esc(a.label)}</span></div>
         ${withText ? `<p class="aside">${esc(withText)}</p>` : ''}
-        <p class="caption in" id="cap">${esc(lines[0])}</p>
-        <div class="progress"><i id="prog"></i></div>
-        <div class="actions"><button class="btn ghost" id="skip-btn" data-act="skip-interlude" hidden>Skip</button></div>
+        <ol class="talk-log scene-log" id="scene-log" aria-live="polite" title="Tap for the next line"></ol>
+        <div class="actions"><button class="btn ghost" data-act="next-line">Next</button><button class="btn ghost" data-act="skip-interlude">Skip</button></div>
       </article></section>`,
       'is-play',
     );
-    window.clearInterval(this.interludeTimer);
-    let last = performance.now();
-    let t = 0;
-    let shown = 0;
-    this.interludeTimer = window.setInterval(() => {
-      const now = performance.now();
-      if (!this.paused) t += (now - last) / 1000;
-      last = now;
-      const frac = Math.min(1, t / seconds);
-      const prog = document.getElementById('prog');
-      if (prog) prog.style.width = `${Math.round(frac * 100)}%`;
-      const idx = Math.min(lines.length - 1, Math.floor(frac * lines.length));
-      const cap = document.getElementById('cap');
-      if (cap && idx !== shown) {
-        shown = idx;
-        cap.textContent = lines[idx];
-        cap.classList.remove('in');
-        void cap.offsetWidth;
-        cap.classList.add('in');
-      }
-      const skip = document.getElementById('skip-btn');
-      if (skip && t > 5) skip.hidden = false;
-      if (frac >= 1) this.finishInterlude();
-    }, 120);
+    const log = document.getElementById('scene-log');
+    log?.addEventListener('click', () => this.talk.next());
+    const roles = cast.map((c) => c.role).filter((r) => r !== 'player');
+    void this.talk
+      .play(beats, log, {
+        pace,
+        onLine: (line) => {
+          // Everyone goes back to what they were doing, then whoever this moment is about acts it out.
+          for (const r of ['player', ...roles]) this.scene.act(r, null);
+          for (const [who, pose] of actingFor(line, roles)) this.scene.act(who, pose);
+        },
+      })
+      .then((done) => {
+        if (done && this.currentActivity === a) this.finishInterlude();
+      });
   }
 
   private finishInterlude(): void {
@@ -1168,4 +1168,51 @@ export class App {
   monthlyNet(): number {
     return this.game ? netMonthly(monthlyBudget(this.game.state.profile, this.game.state.flags)) : 0;
   }
+}
+
+/** Words in a moment of narration and what the person it is about does. */
+const ACTING: [RegExp, Pose][] = [
+  [/\blaugh|joke|funny|giggl|grin|tease/i, 'laugh'],
+  [/\bwave|waves|waving/i, 'wave'],
+  [/\bcheer|clap|applau/i, 'cheer'],
+  [/\bphone|text|screen|message|call\b|calls\b|app\b|swipe/i, 'phone'],
+  [/\bwonder|think|thought|remember|homesick|quiet|alone|stare/i, 'think'],
+  [/\bask|tell|says|said|talk|argue|explain|promise|teach|chat|story|stories/i, 'talk'],
+];
+
+/** Who acts in this moment and how: the speaker talks; narration moves whoever it names, or you. */
+function actingFor(line: TalkLine, roles: Role[]): [string, Pose][] {
+  if (line.who !== 'narrator') {
+    return [[line.who, 'talk']];
+  }
+  const hit = ACTING.find(([re]) => re.test(line.text));
+  if (!hit) return [];
+  const named = (line as { about?: Role[] }).about ?? [];
+  const who: Role[] = named.length ? named : ['player'];
+  return who.filter((r) => r === 'player' || roles.includes(r)).map((r) => [r, hit[1]]);
+}
+
+/**
+ * The evening as a sequence: the first moment of narration sets the scene, the conversation follows in
+ * bubbles, and the rest of the narration closes it. A speaker who is not in tonight's cast (a sibling on
+ * the call instead of a parent, say) hands their lines to whoever is.
+ */
+function interludeBeats(a: Activity, raw: string[], lines: string[], cast: CastSpec[], rng: () => number): TalkLine[] {
+  const roles = cast.map((c) => c.role).filter((r) => r !== 'player');
+  const about = (t: string): Role[] => {
+    const out: Role[] = [];
+    for (const m of t.matchAll(/\{(roommate|friend|partner|classmate|sibling)\}/g)) {
+      const r = (m[1] === 'sibling' ? roles.find((q) => q !== 'parent') ?? 'parent' : m[1]) as Role;
+      if (!out.includes(r)) out.push(r);
+    }
+    return out;
+  };
+  const narr = lines.map((text, i) => ({ who: 'narrator' as const, text, about: about(raw[i] ?? '') }));
+  const options = INTERLUDE_TALK[a.id] ?? [];
+  const pick = options.length ? options[Math.floor(rng() * options.length)] : [];
+  const talk: TalkLine[] = pick
+    .map((l) => ({ ...l, who: l.who === 'player' || roles.includes(l.who) ? l.who : roles[0] }))
+    .filter((l): l is { who: Role; text: string } => Boolean(l.who));
+  if (!narr.length) return talk;
+  return [narr[0], ...talk, ...narr.slice(1)];
 }
