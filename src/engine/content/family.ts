@@ -579,6 +579,17 @@ const EWI_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'What doors are open?',
     body: `A DOJ-accredited representative at a nonprofit reviews your situation for free. ${has(s, 'usCitizenPartner') || has(s, 'marriedCitizen') ? 'You mention the US citizen you love. ' : ''}She speaks slowly, so you can take it in.`,
+    narration: 'A DOJ-accredited representative at a nonprofit reviews your situation for free. She speaks slowly, so you can take it in.',
+    lines: [
+      { who: 'advisor', text: 'What you tell me here is confidential. Let us start with how you came.' },
+      {
+        who: 'player',
+        text: has(s, 'usCitizenPartner') || has(s, 'marriedCitizen')
+          ? 'I was never inspected at the border. And I love someone who is a US citizen.'
+          : 'I was never inspected at the border. I have been here ever since.',
+      },
+      { who: 'advisor', text: 'Thank you for telling me. Some of what I say may be hard to hear.' },
+    ],
     stage: 'intl-office',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
     inlineFact: FX_AOS,
@@ -692,6 +703,13 @@ const ASY_CARDS: ChallengeDef[] = [
       track: 'status',
       title: 'The asylum interview',
       body: 'A small office, a box of tissues on the table, an interpreter on the phone. The asylum officer asks you to swear to tell the truth, then asks about the worst days of your life, in order, with dates.',
+      narration: 'A small office, a box of tissues on the table, an interpreter on the phone.',
+      lines: [
+        { who: 'officer', text: 'Please raise your right hand. Do you swear to tell the truth today?' },
+        { who: 'player', text: 'I do.' },
+        { who: 'officer', text: 'Tell me about the worst days of your life, in order, with dates if you can.' },
+        { who: 'advisor', text: 'Take your time. You can ask for a pause whenever you need one.' },
+      ],
       stage: 'intl-office',
       cast: [{ ...YOU, pose: 'sit' }, { role: 'officer', pose: 'talk' }, { role: 'advisor', pose: 'idle' }],
       inlineFact: FX_ASY_REFER,
@@ -725,6 +743,12 @@ const ASY_CARDS: ChallengeDef[] = [
       track: 'status',
       title: 'Before the judge',
       body: 'A wood-panelled courtroom. A government attorney at one table, your representative beside you at the other. The judge asks you to raise your right hand. This time the decision is made here.',
+      narration: 'A wood-panelled courtroom, with a government attorney at one table and your representative beside you at the other. This time the judge decides, here.',
+      lines: [
+        { who: 'advisor', text: 'Breathe. Answer only what is asked, and take your time.' },
+        { who: 'officer', text: 'We are on the record. Please stand and raise your right hand.' },
+        { who: 'officer', text: 'Do you swear that the testimony you give today will be the truth?' },
+      ],
       stage: 'conference',
       cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }, { role: 'advisor', pose: 'talk' }],
       choices: [
@@ -845,6 +869,21 @@ const MARRIAGE_CARDS: ChallengeDef[] = [
       body: ewi
         ? 'Your spouse can petition for you as an immediate relative. But because you entered without inspection, you cannot finish the green card here. The usual road is to file the petition, ask for a waiver of the bar, and then go to a consulate in your home country for the visa interview.'
         : 'Your spouse is a US citizen, so you are an immediate relative. Because you were inspected and admitted, you can file the petition (I-130) and your green card application (I-485) together and wait here.',
+      narration: ewi
+        ? 'You and your spouse sit across from a legal adviser with a stack of forms. Your spouse can petition for you, but the road is not simple.'
+        : 'You and your spouse sit across from a legal adviser with a stack of forms. Your spouse is a US citizen, so you are an immediate relative.',
+      lines: ewi
+        ? [
+            { who: 'advisor', text: 'Your spouse can file a petition for you, the I-130, as an immediate relative.' },
+            { who: 'advisor', text: 'But because you entered without inspection, you cannot finish the green card here.' },
+            { who: 'spouse', text: 'Then how do we finish it?' },
+            { who: 'advisor', text: 'Usually: file the petition, ask for a waiver, then a visa interview at a consulate.' },
+          ]
+        : [
+            { who: 'advisor', text: 'You were inspected and admitted, so the I-130 and I-485 can be filed together.' },
+            { who: 'spouse', text: 'And you can stay here while they decide?' },
+            { who: 'advisor', text: 'Yes. Once the green card application is filed, you wait for it here.' },
+          ],
       stage: 'intl-office',
       cast: [{ ...YOU, pose: 'type' }, { role: 'spouse', pose: 'idle' }, { role: 'advisor', pose: 'talk' }],
       inlineFact: ewi ? FX_I601A : FX_AOS,
@@ -1002,6 +1041,21 @@ const AOS_CARDS: ChallengeDef[] = [
       body: marriage
         ? 'You and your spouse sit side by side across from an officer, who asks about your life together: how you met, who wakes up first, what you did last weekend, what is on your bedside table. The officer is testing whether the marriage is real.'
         : `An officer reviews ${basisText(s)}, your history and your answers under oath, line by line.`,
+      narration: marriage
+        ? 'You and your spouse sit side by side across from an officer, who is testing whether the marriage is real.'
+        : `An officer reviews ${basisText(s)}, your history and your answers under oath, line by line.`,
+      lines: marriage
+        ? [
+            { who: 'officer', text: 'Please both raise your right hands. Do you swear your answers today are true?' },
+            { who: 'officer', text: 'How did you two meet? And who wakes up first in the morning?' },
+            { who: 'spouse', text: 'You tell it. You always tell it better than I do.' },
+            { who: 'officer', text: 'After that: what you did last weekend, and what is on your bedside table.' },
+          ]
+        : [
+            { who: 'officer', text: 'Please raise your right hand. Do you swear your answers today are true?' },
+            { who: 'player', text: 'I do.' },
+            { who: 'officer', text: 'Then let us go through your application, one line at a time.' },
+          ],
       stage: 'intl-office',
       cast: marriage
         ? [{ ...YOU, pose: 'sit' }, { role: 'spouse', pose: 'sit' }, { role: 'officer', pose: 'talk' }]
@@ -1182,6 +1236,13 @@ const LPR_CARDS: ChallengeDef[] = [
     track: 'big',
     title: 'The citizenship interview',
     body: 'The officer checks your application line by line. Then the tests: read a sentence aloud in English, write one, and answer civics questions about US history and government.',
+    narration: 'The citizenship interview. The officer checks your application line by line before the tests begin.',
+    lines: [
+      { who: 'officer', text: 'Please raise your right hand. Is everything in your application true?' },
+      { who: 'player', text: 'Yes, it is.' },
+      { who: 'officer', text: 'Good. Please read this sentence aloud, then write the one I say.' },
+      { who: 'officer', text: 'After that, some civics questions about US history and government.' },
+    ],
     stage: 'intl-office',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'officer', pose: 'talk' }],
     inlineFact: FX_OATH,

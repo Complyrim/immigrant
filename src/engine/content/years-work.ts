@@ -48,6 +48,12 @@ export const CARDS: ChallengeDef[] = [
       id: 'yw-review', track: 'work',
       title: again ? 'The yearly review, again' : 'The yearly review',
       body: `${again ? `You have sat through enough of these to know the form. After ${y} years the surprise is how little is said about the work itself.` : 'Your manager books an hour to talk about your year. There is a form with boxes, and a space for you to describe your own work.'}${sponsored(s) ? ' You both know your status rests on this job, and neither of you says it.' : ''}`,
+      narration: `${again ? `You have sat through enough of these to know the form. After ${y} years the surprise is how little is said about the work itself.` : 'Your manager books an hour to talk about your year. There is a form with boxes, and a space for you to describe your own work.'}${sponsored(s) ? ' You both know your status rests on this job, and neither of you says it.' : ''}`,
+      lines: [
+        { who: 'advisor', text: again ? 'Same form as last year. Let us go through it.' : 'Thanks for making the time. Let us go through your year.' },
+        { who: 'advisor', text: 'There is a box here for your own work. How would you describe your year?' },
+        { who: 'player', text: 'Where should I start? There is a lot I could say.' },
+      ],
       stage: 'workplace', cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
       choices: [
         c('list', 'Bring a written list of what you delivered, with numbers.', ok('Your manager copies two of your lines straight into the form. It feels like boasting, and it works.', { career: 5, wellbeing: 1, flags: mark(s, 'review') })),

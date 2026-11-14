@@ -229,6 +229,11 @@ export interface CounterSpot {
 export function backdropCounter(id: StageId): CounterSpot | null {
   return (META[keyOf(id)] as (BackdropLight & { counter?: CounterSpot }) | undefined)?.counter ?? null;
 }
+/** Background people for this painting: standing spots, or walkers crossing between two points, all on its floor. */
+export type ExtraSpot = { u: number; vf: number; ry: number; pose: string } | { walk: [number, number]; vf: number; speed: number };
+export function backdropExtras(id: StageId): ExtraSpot[] {
+  return ((META[keyOf(id)] as { extras?: ExtraSpot[] } | undefined)?.extras ?? []) as ExtraSpot[];
+}
 /** Where someone cooking stands in this painting (at its stove), if it has one. */
 export function backdropCookSpot(id: StageId): { u: number; vf: number; ry: number } | null {
   return (META[keyOf(id)] as SeatMeta | undefined)?.cookAt ?? null;

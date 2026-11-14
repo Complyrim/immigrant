@@ -228,6 +228,8 @@ function dustTex(): THREE.CanvasTexture {
 
 export class SB {
   readonly g = new THREE.Group();
+  /** Set in scenes where nobody would wear a backpack (home, work, a clinic): backpacks are left off. */
+  noBags = false;
   readonly figs: FigureLike[] = [];
   readonly upd: Upd[] = [];
   readonly looks: Array<{ fig: FigureLike; v: THREE.Vector3 }> = [];
@@ -492,6 +494,7 @@ export class SB {
   }
 
   person(look: FigureLook, x: number, z: number, ry: number, pose: Pose, o: { seated?: boolean; y?: number; lite?: boolean; look?: [number, number, number]; scale?: number } = {}): FigureLike {
+    if (this.noBags && look.accessory === 'backpack') look = { ...look, accessory: 'none' };
     const f: FigureLike = USE_HUMANS && castReady() ? new MhFigure(look, o.lite ?? false) : USE_HUMANS && humansReady() && !castReady() ? new HumanFigure(look, o.lite ?? false) : new Figure(look, o.lite ?? false);
     f.group.position.set(x, o.y ?? 0, z);
     f.group.rotation.y = ry;

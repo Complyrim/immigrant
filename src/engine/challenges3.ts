@@ -66,6 +66,13 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
       track: 'status',
       title: 'Asking to be reinstated',
       body: 'Your DSO says you could ask USCIS to reinstate your student status. It needs a recommendation from the school, a form and a fee, and the answer can take months. The window is short, and a denial is final.',
+      narration: 'Your DSO closes the office door and pulls up your record. There may still be one road back.',
+      lines: [
+        { who: 'dso', text: 'You could ask USCIS to reinstate your student status. The school has to recommend it.' },
+        { who: 'dso', text: 'There is a form and a fee, and the answer can take months.' },
+        { who: 'player', text: 'And if they say no?' },
+        { who: 'dso', text: 'A denial is final, with no appeal. And the window to ask is short.' },
+      ],
       stage: 'intl-office',
       cast: [{ ...YOU, pose: 'idle' }, { role: 'dso', pose: 'talk' }],
       choices: [
@@ -103,6 +110,12 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'The pay does not come',
     body: 'Your boss says he will pay you next week. Then next week again. Three weeks of wages are missing, and he knows you are in no position to complain.',
+    narration: 'Three weeks of wages are missing, and your boss knows you are in no position to complain.',
+    lines: [
+      { who: 'owner', text: 'Not today. I will pay you next week, I promise.' },
+      { who: 'player', text: 'You said that last week, and the week before. It has been three weeks.' },
+      { who: 'owner', text: 'Business is slow. Where else are you going to go?' },
+    ],
     stage: 'cafe',
     cast: [{ ...YOU, pose: 'talk' }, { role: 'owner', pose: 'talk' }],
     choices: [

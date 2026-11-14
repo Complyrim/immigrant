@@ -823,6 +823,12 @@ const NONE_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'An honest consultation',
     body: 'You save for an hour with a licensed immigration attorney. She asks how you entered, every date, every family tie, every time you met the police. Then she puts down her pen.',
+    narration: 'You saved up for an hour with a licensed immigration attorney. She writes down everything you say.',
+    lines: [
+      { who: 'advisor', text: 'Tell me how you entered, and every date you can remember.' },
+      { who: 'advisor', text: 'Any family ties here? Any time at all that you met the police?' },
+      { who: 'player', text: 'That is all of it. Is there anything you can see?' },
+    ],
     stage: 'legal',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
     choices: [

@@ -32,6 +32,20 @@ export const CARDS: ChallengeDef[] = [
     body: noStatus(s) || waiting(s)
       ? 'A one-bedroom is open two streets away. The application asks for a Social Security number and a credit history, and you leave both lines empty. The landlord looks at the form, then at you.'
       : 'A one-bedroom is open two streets away. For the first time the lease would have only your name on it. The landlord wants first month, last month and a deposit.',
+    narration: noStatus(s) || waiting(s)
+      ? 'A one-bedroom is open two streets away. The application asks for a Social Security number and a credit history, and you leave both lines empty.'
+      : 'A one-bedroom is open two streets away. For the first time, the lease would have only your name on it.',
+    lines: noStatus(s) || waiting(s)
+      ? [
+          { who: 'landlord', text: 'You left the Social Security number and the credit history empty.' },
+          { who: 'player', text: 'I do not have those yet. I have always paid my rent on time.' },
+          { who: 'landlord', text: 'Then I would need more up front. Let me think about it.' },
+        ]
+      : [
+          { who: 'landlord', text: 'First month, last month and a deposit, all before you move in.' },
+          { who: 'player', text: 'All of it at once? That is more than I expected.' },
+          { who: 'landlord', text: 'That is how it works around here. The place will not stay open long.' },
+        ],
     stage: 'apartment',
     cast: [{ ...YOU, pose: 'think' }, { role: 'landlord', pose: 'talk' }],
     choices: [
@@ -547,6 +561,13 @@ export const CARDS: ChallengeDef[] = [
     track: 'life',
     title: 'The numbers on the chart',
     body: `You have not slept through a night in months, and you finally see a doctor. The blood pressure cuff tightens twice. "It is high," she says. "Does this run in your family? How is your sleep? How is your stress?" You almost laugh at the last one.`,
+    narration: 'You have not slept through a night in months, and you finally see a doctor. The blood pressure cuff tightens twice.',
+    lines: [
+      { who: 'doctor', text: 'It is high. Does high blood pressure run in your family?' },
+      { who: 'player', text: 'I am not sure. Nobody at home ever talked about it.' },
+      { who: 'doctor', text: 'How is your sleep? And how is your stress?' },
+      { who: 'player', text: 'My sleep is bad. My stress, I almost want to laugh.' },
+    ],
     stage: 'clinic',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'doctor', pose: 'talk' }],
     choices: [

@@ -21,6 +21,8 @@ interface Tint {
   hi?: number;
   /** Brightness multiplier, for turning a dark garment pale. */
   gain?: number;
+  /** Ignore the texture's pattern and shade as one solid colour (for prints that read badly small). */
+  flat?: boolean;
   /** Tint only these parts of the texture, [left, top, right, bottom] as fractions (for one-piece outfits). */
   uv?: number[][];
 }
@@ -200,6 +202,7 @@ uniform vec2 uBody;  // lowest point, height
 uniform vec2 uLook;  // rim light strength, skin warmth (0 for cloth)
 uniform vec4 uUvA;   // texture areas to tint; z = 0 means no limit
 uniform vec4 uUvB;
+uniform float uFlat; // 1 = solid colour, ignore the texture's pattern
 uniform vec3 uPalShade; // the painting's shadow colour (luminance 1)
 uniform vec3 uPalKey;   // the painting's light colour (luminance 1)
 uniform vec2 uPal;      // palette strength, brush strength
@@ -212,7 +215,7 @@ float pNoise(vec3 x) {
 `;
 const RECOLOUR = /* glsl */ `
 {
-  float l = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
+  float l = mix(dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114)), 0.55, uFlat);
   float y01 = (vBind.y - uBody.x) / uBody.y;
   float inRange = step(uTintP.y, y01) * step(y01, uTintP.z);
 #ifdef USE_MAP
@@ -307,6 +310,7 @@ function illustrate(mat: THREE.MeshStandardMaterial, tint: Tint | null, bodyMinY
     uTint: { value: new THREE.Color(tint?.color ?? '#ffffff') },
     uTintP: { value: new THREE.Vector4(tint ? 0.94 : 0, tint?.lo ?? -1, tint?.hi ?? 3, tint?.gain ?? 1) },
     uBody: { value: new THREE.Vector2(bodyMinY, Math.max(0.1, bodyH)) },
+    uFlat: { value: tint?.flat ? 1 : 0 },
   };
   mat.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, uniforms, PALETTE);
@@ -317,7 +321,7 @@ function illustrate(mat: THREE.MeshStandardMaterial, tint: Tint | null, bodyMinY
       .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>\n${BANDS}`)
       .replace('#include <opaque_fragment>', `${PAINT}\n#include <opaque_fragment>`);
   };
-  mat.customProgramCacheKey = () => 'immigrant-mh-v5';
+  mat.customProgramCacheKey = () => 'immigrant-mh-v6';
 }
 
 const inkMats = new Map<number, THREE.MeshBasicMaterial>();
@@ -338,8 +342,11 @@ function inkMaterial(push: number): THREE.MeshBasicMaterial {
 /* ------------------------------------------------------------------- figure */
 
 const CUTOUT = new Set(['hair', 'brows', 'lashes', 'beard']);
-/** Shoe assets whose texture is plain white. */
-const WHITE_SHOES = new Set(['toigo_ankle_boots_female']);
+/** Standing poses where the feet should rest flat on the floor. */
+const FLAT_FOOT = new Set<Pose>(['idle', 'talk', 'wave', 'carry', 'think', 'phone', 'laugh', 'cook', 'present', 'cheer', 'type']);
+/** Shoe assets that read badly at game size: a plain white texture (reads as socks) or a leopard print (reads as
+ * bare feet). They are shaded as solid leather instead. */
+const PLAIN_SHOES = new Set(['toigo_ankle_boots_female', 'toigo_flats']);
 
 export class MhFigure {
   readonly group = new THREE.Group();
@@ -443,11 +450,11 @@ export class MhFigure {
       mat.normalMap = null;
       let tint: Tint | null = def?.tints?.[asset] ?? null;
       // These boots come with a plain white texture that reads as socks: give them leather, varied per person.
-      if (!tint && kind === 'shoe' && WHITE_SHOES.has(asset)) {
-        const leather = ['#3a2a20', '#1e1c1c', '#6b4a30', '#4a2026'];
+      if (!tint && kind === 'shoe' && PLAIN_SHOES.has(asset)) {
+        const leather = ['#2a1f19', '#141313', '#5a3c26', '#3d1c22', '#1f2638'];
         let h = 0;
         for (const ch of this.castId) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-        tint = { color: leather[h % leather.length], gain: 0.8 };
+        tint = { color: leather[h % leather.length], gain: 0.85, flat: true };
       }
       if ((kind === 'hair' || kind === 'beard' || kind === 'brows') && def?.hairTint) tint = { color: def.hairTint };
       if (kind === 'body' && def?.skinTint) mat.color.set(def.skinTint);
@@ -608,6 +615,37 @@ export class MhFigure {
     boxObj.scale.set(Math.max(0.7, Math.min(1.3, (span - 0.04) / (0.42 * s))), 1, 1);
   }
 
+  /**
+   * The library's clips were made for another skeleton, and on these people the feet tip forward so they
+   * look as if they stand on tiptoe. While standing, turn each foot so the ball of the foot sits level with
+   * the heel (a few millimetres lower, as feet rest), keeping the foot's heading.
+   */
+  private levelFeet(): void {
+    const v = MhFigure.v;
+    for (const side of ['l', 'r'] as const) {
+      const foot = this.bones.get(`foot_${side}`);
+      const ball = this.bones.get(`ball_${side}`);
+      if (!foot || !ball || !foot.parent) continue;
+      foot.updateWorldMatrix(true, true);
+      const heel = foot.getWorldPosition(new THREE.Vector3());
+      const toe = ball.getWorldPosition(v);
+      const dir = toe.sub(heel);
+      const len = dir.length();
+      if (len < 1e-4) continue;
+      dir.divideScalar(len);
+      const flat = Math.hypot(dir.x, dir.z);
+      if (flat < 1e-3) continue;
+      // Target: the same heading, dropping only slightly toward the toe (about 8 degrees).
+      const target = new THREE.Vector3(dir.x / flat, 0, dir.z / flat).multiplyScalar(Math.cos(0.14));
+      target.y = -Math.sin(0.14);
+      if (dir.angleTo(target) < 0.03) continue;
+      const turn = new THREE.Quaternion().setFromUnitVectors(dir, target.normalize());
+      const fw = foot.getWorldQuaternion(new THREE.Quaternion());
+      const pw = foot.parent.getWorldQuaternion(new THREE.Quaternion());
+      foot.quaternion.copy(pw.invert().multiply(turn.multiply(fw)));
+    }
+  }
+
   private static readonly gesturing: ReadonlySet<Pose> = new Set<Pose>(['talk', 'present', 'laugh', 'think', 'phone']);
 
   private rot(bone: string, x: number, y: number, z: number, w: number): void {
@@ -653,6 +691,7 @@ export class MhFigure {
     if (g) for (const r of g(this.clock)) this.rot(r.bone, r.x ?? 0, r.y ?? 0, r.z ?? 0, this.blend);
     const gf = MhFigure.gestureFix[this.pose];
     if (gf) for (const [bn, x, y, z] of gf) this.rot(bn, x, y, z, this.blend);
+    if (!this.seated && FLAT_FOOT.has(this.pose)) this.levelFeet();
     this.animateFace(dt);
     if (this.phoneProp) this.phoneProp.visible = this.pose === 'phone';
     if (this.boxProp) this.boxProp.visible = this.pose === 'carry';

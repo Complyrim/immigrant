@@ -109,6 +109,13 @@ const CORE: ChallengeDef[] = [
     track: 'status',
     title: 'International student orientation',
     body: 'The international office (the DSO) is running orientation for new students. There is a sign-in table, a long line, and a folder of forms. You are still jet-lagged.',
+    narration: 'The international office is running orientation for new students. There is a sign-in table, a long line and a folder of forms, and you are still jet-lagged.',
+    lines: [
+      { who: 'dso', text: 'Welcome! I am one of the DSOs here. We look after your student record.' },
+      { who: 'dso', text: 'We need to check you in soon, so your record shows that you have arrived.' },
+      { who: 'player', text: 'Today? I have barely slept since the flight.' },
+      { who: 'dso', text: 'It only takes a few minutes, and you will know who to call if something goes wrong.' },
+    ],
     stage: 'intl-office',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'dso', pose: 'talk' }],
     inlineFact: FACT_REPORT,
@@ -444,6 +451,13 @@ const CORE: ChallengeDef[] = [
     track: 'work',
     title: 'You get sick',
     body: 'A fever and a bad cough hit midweek. US healthcare is expensive and the options are confusing: campus clinic, urgent care, emergency room, or waiting it out.',
+    narration: 'A fever and a bad cough hit midweek. US healthcare is expensive, and the options are confusing.',
+    lines: [
+      { who: 'nurse', text: 'A fever and a cough since midweek? Any trouble breathing?' },
+      { who: 'player', text: 'No, just hot and tired. I do not even know where I should go.' },
+      { who: 'nurse', text: 'The campus health center is the cheapest. Urgent care is faster, but costs more.' },
+      { who: 'nurse', text: 'The emergency room is for real emergencies. Its bills can be very large.' },
+    ],
     stage: 'clinic',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'nurse', pose: 'talk' }, { role: 'doctor', pose: 'idle' }],
     choices: [
@@ -466,6 +480,12 @@ const CORE: ChallengeDef[] = [
       track: 'work',
       title: 'The rent goes up',
       body: `Your landlord announces a rent increase of about ${money(amt)} a month. In ${city.name}, rents have been moving fast.`,
+      narration: `Your landlord knocks with a printed notice. In ${city.name}, rents have been moving fast.`,
+      lines: [
+        { who: 'landlord', text: `From next month the rent goes up by about ${money(amt)} a month.` },
+        { who: 'player', text: 'That is a lot. Is there any room to talk about it?' },
+        { who: 'landlord', text: 'Everyone on this block is raising. I am still below what new tenants pay.' },
+      ],
       stage: 'apartment',
       cast: [{ ...YOU, pose: 'think' }, { role: 'landlord', pose: 'talk' }],
       choices: [
@@ -495,6 +515,13 @@ const CORE: ChallengeDef[] = [
     track: 'work',
     title: 'The career fair',
     body: 'Booths line the gym. Several recruiters smile, then say "we don\'t sponsor visas". Others say the opposite. You are a first-year student and the job market feels far off.',
+    narration: 'Booths line the gym. You are a first-year student, and the job market still feels far off.',
+    lines: [
+      { who: 'recruiter', text: 'Hi there! What are you studying, and when do you graduate?' },
+      { who: 'player', text: 'I am in my first year. Does your company sponsor visas?' },
+      { who: 'recruiter', text: 'Sorry, we do not sponsor. I think the booth by the door does.' },
+      { who: 'student', text: 'Three tables told me no, then the next one said yes. It is all over the place.' },
+    ],
     stage: 'careerfair',
     cast: [{ ...YOU, pose: 'talk' }, { role: 'recruiter', pose: 'talk' }, { role: 'student', pose: 'idle' }],
     choices: [

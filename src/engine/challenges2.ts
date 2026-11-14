@@ -26,6 +26,12 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'study',
     title: 'A low grade and a red pen',
     body: 'Your first paper comes back covered in comments and a grade lower than you are used to. Back home this kind of writing was not what was graded.',
+    narration: 'Your first paper comes back covered in comments, with a grade lower than you are used to. Back home, this kind of writing was not what was graded.',
+    lines: [
+      { who: 'professor', text: 'You clearly did the reading. But I could not find your argument.' },
+      { who: 'player', text: 'I summarized every source carefully. Was that not the task?' },
+      { who: 'professor', text: 'Here I want your own claim up front, then the evidence for it.' },
+    ],
     stage: 'classroom',
     cast: [{ ...YOU, pose: 'think' }, { role: 'professor', pose: 'talk' }],
     choices: [
@@ -96,6 +102,12 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'status',
     title: 'A registration mix-up',
     body: 'The course you registered for is full, and the system dropped you from it. The new schedule looks lighter. You are not sure how many courses you now have.',
+    narration: 'The course you registered for filled up, and the system dropped you from it. Your new schedule looks lighter.',
+    lines: [
+      { who: 'dso', text: 'Hi, come on in. What can I help you with?' },
+      { who: 'player', text: 'The system dropped me from a full course. I am not sure how many I have left.' },
+      { who: 'dso', text: 'Students on F-1 need to keep a full course load. Your program sets the minimum.' },
+    ],
     stage: 'intl-office',
     cast: [{ ...YOU, pose: 'think' }, { role: 'dso', pose: 'talk' }],
     choices: [
@@ -125,6 +137,12 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'Opening a bank account',
     body: 'You need a US bank account. One bank charges a monthly fee unless you keep a minimum balance. Another is friendly to students but far from campus.',
+    narration: 'You need a US bank account. The branch near you is busy, and a bank that is friendly to students is far from campus.',
+    lines: [
+      { who: 'teller', text: 'Our basic checking account has a monthly fee, unless you keep a minimum balance.' },
+      { who: 'player', text: 'What is the minimum? I am a student.' },
+      { who: 'teller', text: 'It is all on this fee table. Some banks offer student accounts with no fee.' },
+    ],
     stage: 'bank',
     cast: [{ ...YOU, pose: 'talk' }, { role: 'teller', pose: 'talk' }],
     choices: [

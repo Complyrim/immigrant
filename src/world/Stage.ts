@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { beginCastScene, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
-import { backdropDepth, backdropCookSpot, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats } from './backdrops';
+import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats } from './backdrops';
 import type { SeatSpot } from './backdrops';
 import { pbrMaterial } from './pbr';
 import type { CastSpec, Pose } from '../engine/types';
@@ -1340,13 +1340,19 @@ function seatProp(b: SB, g: THREE.Group, kind: NonNullable<SeatSpot['prop']>, n:
   }
 }
 
+/** Where the player plausibly has a bag on their back: school, the commute, an office visit. Not at home or work. */
+const BAG_STAGES = new Set<StageId>(['campus', 'classroom', 'library', 'lab', 'street', 'walk', 'careerfair', 'intl-office', 'conference']);
+
 export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, palette: string[], variant?: 'movie' | 'call'): StageResult {
   setFigurePalette(null);
   setShadowTone(null);
+  // What the player carries depends on where they are: luggage on arrival, a backpack around campus, nothing at home.
+  player = { ...player, accessory: id === 'airport' ? 'suitcase' : BAG_STAGES.has(id) ? 'backpack' : 'none' };
   beginCastScene();
   // Seats that belong: a park bench outdoors, a wooden chair at home or in a kitchen, an office chair elsewhere.
   setSeatStyle(OUTDOOR.has(id) ? 'bench' : HOMELY.has(id) ? 'wood' : 'office');
   const b = new SB(palette);
+  b.noBags = !BAG_STAGES.has(id);
   const build = BUILDERS[id] ?? airport;
   const cfg = build(b, cast, player);
   const backdrop = backdropFor(id);
@@ -1687,6 +1693,22 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       else row.add(k);
     }
     for (const f of standers) row.add(f.group);
+    // Background people on the painting's own floor: smaller with distance, never in front of the main cast.
+    if (!variant) {
+      backdropExtras(id).forEach((e, i) => {
+        const look = crowdLook(300 + i * 17 + id.length * 5);
+        if ('walk' in e) {
+          const a = atDepth(e.walk[0], e.vf);
+          const z = a.z;
+          const bx = atDepth(e.walk[1], e.vf).x;
+          b.walker(look, a.x, z, bx, z, e.speed, (i * 0.37) % 1, true);
+        } else {
+          const at = atDepth(e.u, e.vf);
+          b.person(look, at.x, at.z, e.ry, e.pose as Pose, { lite: true });
+          b.blob(at.x, at.z + 0.04, 0.9, 0.55);
+        }
+      });
+    }
     // Everyone looks at someone: the player at the nearest other person, the others at the player.
     const gaze = !watch && main.length > 1 ? main.filter((f) => f !== cook).map((f, i) => ({ fig: f, to: main[i === 0 ? 1 : 0], v: new THREE.Vector3() })) : [];
     for (const q of gaze) b.looks.push({ fig: q.fig, v: q.v });

@@ -307,6 +307,13 @@ const ARRIVAL: ChallengeDef[] = [
     track: 'work',
     title: 'First week at the office',
     body: `Your badge works on the second try. Your manager walks you through a ${String(s.flags.jobTitle ?? 'new')} role, a laptop setup checklist and a payroll form asking for a Social Security number you do not have yet.`,
+    narration: 'Your badge works on the second try. Your first week starts with a laptop checklist and a lot of new names.',
+    lines: [
+      { who: 'advisor', text: 'Welcome aboard. Here is your setup checklist, and payroll needs one form today.' },
+      { who: 'advisor', text: 'It asks for your Social Security number.' },
+      { who: 'player', text: 'I do not have one yet. I only just arrived.' },
+      { who: 'friend', text: 'Same thing happened to me. Also, a few of us get lunch at noon.' },
+    ],
     stage: 'lab',
     cast: [{ ...YOU, pose: 'type' }, { role: 'advisor', pose: 'talk' }, { role: 'friend', pose: 'wave' }],
     choices: [
@@ -401,6 +408,18 @@ const F1_ROAD: ChallengeDef[] = [
       track: 'status',
       title: 'Graduation is coming',
       body: `Your last term. The DSO walks you through what comes after: practical training (OPT), another degree, or going home. She checks your degree code and says it ${stem ? 'is' : 'is not'} on the STEM list${stem ? ', so a 24-month extension could follow OPT' : ''}. The work permit application costs about ${money(fee)} (a designed estimate; check the current USCIS fee).`,
+      narration: `Your last term. The work permit application for practical training costs about ${money(fee)} (a designed estimate; check the current USCIS fee).`,
+      lines: [
+        { who: 'dso', text: 'Let us talk about what comes after: practical training (OPT), another degree, or home.' },
+        {
+          who: 'dso',
+          text: stem
+            ? 'Your degree code is on the STEM list, so a 24-month extension could follow OPT.'
+            : 'Your degree code is not on the STEM list, so there is no STEM extension after OPT.',
+        },
+        { who: 'player', text: 'When would I need to file?' },
+        { who: 'dso', text: 'Up to 90 days before your program ends, and no later than 30 days after.' },
+      ],
       stage: 'intl-office',
       cast: [{ ...YOU, pose: 'think' }, { role: 'dso', pose: 'talk' }],
       inlineFact: FACT_OPT_FILE,
@@ -735,6 +754,13 @@ const H1B_CARDS: ChallengeDef[] = [
     track: 'work',
     title: 'A calendar invite with no title',
     body: 'Fifteen minutes with your manager and someone from HR. The company is cutting a tenth of the team, and your name is on the list. Your access ends at five.',
+    narration: 'A calendar invite with no title: fifteen minutes with your manager and someone from HR.',
+    lines: [
+      { who: 'advisor', text: 'Thank you for coming in. The company is cutting a tenth of the team.' },
+      { who: 'advisor', text: 'I am sorry. Your role is on the list, and your access ends at five today.' },
+      { who: 'player', text: 'Today? My visa depends on this job.' },
+      { who: 'advisor', text: 'I know. HR can answer questions about your last day and severance.' },
+    ],
     stage: 'lab',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
     fact: 'h1b-60-day-grace',
