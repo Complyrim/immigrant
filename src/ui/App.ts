@@ -249,7 +249,6 @@ export class App {
       case 'title': return this.title();
       case 'start': return this.setup(1);
       case 'help': return this.modal('help');
-      case 'credits': return this.modal('credits');
       case 'settings': return this.modal('settings');
       case 'close': return this.closeModal();
       case 'next': return this.setup(this.step + 1);
@@ -369,7 +368,6 @@ export class App {
           <button class="btn${loadJourney() ? '' : ' primary'}" data-act="start">${loadJourney() ? 'Start a new journey' : 'Start a journey'}</button>
           <button class="btn" data-act="help">How it works</button>
           <button class="btn" data-act="settings">Settings</button>
-          <button class="btn ghost" data-act="credits">Credits</button>
         </div>
         <p class="fine">Seven ways to arrive, thirty home countries, and every year of the road until it ends. Not legal advice. Built from public data, with sources shown in the game.</p>
       </section>`,
@@ -1060,7 +1058,7 @@ export class App {
 
   // ---------------------------------------------------------------- modals
 
-  private modal(kind: 'help' | 'credits' | 'settings' | 'ledger'): void {
+  private modal(kind: 'help' | 'settings' | 'ledger'): void {
     this.closeModal();
     let inner = '';
     if (kind === 'help') {
@@ -1071,16 +1069,13 @@ export class App {
           <li>Your status is a thing you protect. Some tempting choices, such as unauthorized work or dropping courses, can end your student record.</li>
           <li>Money figures marked "est." are designed estimates. Sourced facts show where they come from and how sure we are.</li>
           <li>This is a game built from public information. It is not legal advice.</li>
-        </ul>`;
+        </ul>
+        <p class="hint">Made by ComplyRim. Open-source code and asset licences on <a href="https://github.com/Complyrim/immigrant" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>`;
     } else if (kind === 'ledger') {
       const g = this.game;
       inner = g
         ? `<h2>Money this month</h2><p class="hint">Every change since the last month-end, so the balance always adds up. Bills and income are added at the end of each month.</p>${this.statementTable(g.statementNow(), monthlyBudget(g.state.profile, g.state.flags))}`
         : '<h2>Money</h2>';
-    } else if (kind === 'credits') {
-      inner = `<h2>Credits</h2>
-        <p>Code, city scenes, ambience and music are generated in your browser. People, animation, textures and sky lighting use CC0 assets from Quaternius and Poly Haven. Research files with sources are in the project's research folder.</p>
-        <p class="hint">Asset credits are listed in assets/CREDITS.md.</p>`;
     } else {
       inner = `<h2>Settings</h2>
         <label class="field row"><span>Music</span><input id="s-music" type="range" min="0" max="100" value="${Math.round(this.settings.music * 100)}" /></label>

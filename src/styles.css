@@ -484,3 +484,17 @@ details.names input { width: 55%; }
 .no-gl h2 { margin: 0; font-size: 1.15rem; }
 .no-gl p, .no-gl ul { margin: 0; }
 .no-gl ul { padding-left: 1.1em; display: grid; gap: 6px; }
+.sheet .hint a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---- phone fit (checked on 360 to 430 px wide, and 844 x 390 sideways) ---- */
+/* The date may take two lines on a narrow phone instead of being cut short. */
+@media (max-width: 520px) {
+  .hud .when b { white-space: normal; overflow: visible; text-overflow: clip; font-size: 0.9rem; line-height: 1.15; }
+}
+/* The money figure opens the month's breakdown: give it a full-size tap area. */
+.hud .cash[data-act='ledger'] { min-height: 40px; min-width: 44px; display: flex; flex-direction: column; justify-content: center; align-items: flex-end; padding: 2px 4px; border-radius: 10px; }
+.hud .cash[data-act='ledger']:active { background: rgba(255, 255, 255, 0.06); }
+/* In a tall pop-up on a short screen, the Close button stays in view at the bottom. */
+.sheet > .actions { position: sticky; bottom: 0; padding: 14px 0 4px; background: linear-gradient(180deg, rgba(14, 18, 34, 0) 0%, rgb(14, 18, 34) 40%); }
+/* Sideways on a phone: room below the last title button. */
+@media (max-height: 460px) { .screen.center { padding-bottom: 28px; } }
