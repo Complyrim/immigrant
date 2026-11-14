@@ -80,17 +80,27 @@ export function blobShadowMaterial(): THREE.MeshBasicMaterial {
     c.width = c.height = 64;
     const g = c.getContext('2d');
     if (g) {
-      const gr = g.createRadialGradient(32, 32, 2, 32, 32, 31);
-      gr.addColorStop(0, 'rgba(0,0,0,0.5)');
-      gr.addColorStop(0.5, 'rgba(0,0,0,0.22)');
-      gr.addColorStop(1, 'rgba(0,0,0,0)');
+      // White with a soft alpha falloff: the material colour sets the shadow's tone (the painting's shadow hue).
+      const gr = g.createRadialGradient(32, 32, 1, 32, 32, 31);
+      gr.addColorStop(0, 'rgba(255,255,255,0.7)');
+      gr.addColorStop(0.28, 'rgba(255,255,255,0.42)');
+      gr.addColorStop(0.62, 'rgba(255,255,255,0.14)');
+      gr.addColorStop(1, 'rgba(255,255,255,0)');
       g.fillStyle = gr;
       g.fillRect(0, 0, 64, 64);
     }
     blobTex = new THREE.CanvasTexture(c);
-    blobMat = new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, depthWrite: false, toneMapped: false });
+    blobMat = new THREE.MeshBasicMaterial({ map: blobTex, color: shadowTone.clone(), transparent: true, depthWrite: false, toneMapped: false });
   }
   return blobMat;
+}
+const shadowTone = new THREE.Color('#000000');
+/** Tone for contact shadows: a deep version of the painting's shadow colour, or plain black. */
+export function setShadowTone(hex: string | null): THREE.Color {
+  if (hex) shadowTone.set(hex).multiplyScalar(0.16);
+  else shadowTone.set('#000000');
+  blobMat?.color.copy(shadowTone);
+  return shadowTone;
 }
 export const blobGeo = (): THREE.PlaneGeometry => geo('blob', () => {
   const g = new THREE.PlaneGeometry(1, 1);

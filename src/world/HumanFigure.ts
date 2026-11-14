@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { clone as cloneSkinned } from 'three/addons/utils/SkeletonUtils.js';
 import type { Pose } from '../engine/types';
 import type { FigureLook } from './Figure';
@@ -707,9 +708,32 @@ export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look
     const acc = look.accessory;
     // Bone frames: Y runs along the bone (up for spine and head), Z is forward, X is the character's left.
     if (acc === 'backpack' && spine) {
-      const bp = box(0.3, 0.38, 0.15, '#3d4a63', spine, 0, 0.0, -0.17, 0.85);
-      box(0.24, 0.16, 0.05, '#2f3a50', bp, 0, -0.06, -0.09);
-      for (const sx of [-0.1, 0.1]) box(0.04, 0.34, 0.025, '#2a3245', spine, sx, 0.01, 0.12);
+      // A daypack: rounded shell, front pocket with a zip, side bottle pockets, grab handle and padded straps.
+      const bp = new THREE.Group();
+      bp.position.set(0, 0, -0.17);
+      spine.add(bp);
+      const fabric = std('#3d4a63', 0.9);
+      const trim = std('#2a3245', 0.85);
+      const shell = new THREE.Mesh(keep(new RoundedBoxGeometry(0.3, 0.4, 0.15, 3, 0.05)), fabric);
+      shell.castShadow = true;
+      bp.add(shell);
+      const pocket = new THREE.Mesh(keep(new RoundedBoxGeometry(0.22, 0.16, 0.06, 3, 0.025)), trim);
+      pocket.position.set(0, -0.08, -0.085);
+      bp.add(pocket);
+      box(0.2, 0.008, 0.008, '#c9a24a', bp, 0, -0.005, -0.115, 0.4);
+      for (const sx of [-1, 1]) {
+        const side = new THREE.Mesh(keep(new RoundedBoxGeometry(0.04, 0.14, 0.1, 2, 0.015)), trim);
+        side.position.set(sx * 0.165, -0.11, 0);
+        bp.add(side);
+      }
+      const handle = new THREE.Mesh(keep(new THREE.TorusGeometry(0.035, 0.009, 6, 14, Math.PI)), trim);
+      handle.position.set(0, 0.2, 0.02);
+      bp.add(handle);
+      for (const sx of [-0.1, 0.1]) {
+        const strap = new THREE.Mesh(keep(new RoundedBoxGeometry(0.045, 0.34, 0.022, 2, 0.008)), trim);
+        strap.position.set(sx, 0.01, 0.12);
+        spine.add(strap);
+      }
     }
     if (acc === 'glasses' && head) {
       const rim = std('#14161a', 0.4);
@@ -750,8 +774,46 @@ export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look
       }
     }
     if (acc === 'suitcase') {
-      const sc = box(0.34, 0.55, 0.2, '#3a4f78', group, -0.42, 0.28, 0.12, 0.55);
-      box(0.02, 0.35, 0.02, '#c8ccd2', sc, 0, 0.42, -0.04, 0.3);
+      // A hard-shell carry-on: rounded shell with ribs, a zip seam, four spinner wheels and a pulled-up handle.
+      const sc = new THREE.Group();
+      sc.position.set(-0.42, 0, 0.12);
+      group.add(sc);
+      const W = 0.36, H = 0.56, D = 0.23;
+      const shell = new THREE.Mesh(keep(new RoundedBoxGeometry(W, H, D, 4, 0.035)), std('#33507f', 0.42));
+      shell.position.y = 0.07 + H / 2;
+      shell.castShadow = true;
+      sc.add(shell);
+      const ribMat = std('#3d5d92', 0.38);
+      for (const x of [-0.11, 0, 0.11]) {
+        for (const z of [D / 2 + 0.002, -D / 2 - 0.002]) {
+          const rib = new THREE.Mesh(keep(new RoundedBoxGeometry(0.03, H - 0.08, 0.012, 2, 0.005)), ribMat);
+          rib.position.set(x, shell.position.y, z);
+          sc.add(rib);
+        }
+      }
+      box(W + 0.006, H - 0.03, 0.012, '#1d2433', sc, 0, shell.position.y, 0, 0.6);
+      const metal = std('#b9bec7', 0.3);
+      const dark = std('#1b1d22', 0.6);
+      for (const x of [-W / 2 + 0.05, W / 2 - 0.05]) {
+        for (const z of [-D / 2 + 0.045, D / 2 - 0.045]) {
+          const w = new THREE.Mesh(keep(new THREE.CylinderGeometry(0.026, 0.026, 0.024, 16)), dark);
+          w.rotation.z = Math.PI / 2;
+          w.position.set(x, 0.028, z);
+          sc.add(w);
+          box(0.03, 0.04, 0.03, '#2a2d33', sc, x, 0.06, z, 0.5);
+        }
+      }
+      for (const x of [-0.07, 0.07]) {
+        const rod = new THREE.Mesh(keep(new THREE.CylinderGeometry(0.008, 0.008, 0.36, 10)), metal);
+        rod.position.set(x, 0.07 + H + 0.17, -D / 2 + 0.03);
+        sc.add(rod);
+      }
+      const grip = new THREE.Mesh(keep(new RoundedBoxGeometry(0.19, 0.03, 0.035, 2, 0.012)), dark);
+      grip.position.set(0, 0.07 + H + 0.35, -D / 2 + 0.03);
+      sc.add(grip);
+      const top = new THREE.Mesh(keep(new RoundedBoxGeometry(0.12, 0.022, 0.03, 2, 0.01)), dark);
+      top.position.set(0, 0.07 + H + 0.012, 0.02);
+      sc.add(top);
     }
     // Hand and chest props shown only for the poses that use them.
     const hand = find('hand_r');
@@ -761,7 +823,25 @@ export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look
       phone = ph;
     }
     if (spine) {
-      const bx = box(0.42, 0.28, 0.3, '#b98a57', spine, 0, 0.0, 0.32, 0.9);
+      // A moving box: cardboard with packing tape over the flap seam and a shipping label.
+      const bx = new THREE.Group();
+      bx.position.set(0, 0, 0.32);
+      spine.add(bx);
+      const card = new THREE.Mesh(keep(new RoundedBoxGeometry(0.42, 0.28, 0.3, 2, 0.008)), std('#b7864f', 0.95));
+      card.castShadow = true;
+      bx.add(card);
+      box(0.43, 0.012, 0.004, '#8e6436', bx, 0, 0.14, 0, 0.9);
+      const tape = std('#d9b47c', 0.45);
+      const tTop = new THREE.Mesh(keep(new THREE.BoxGeometry(0.07, 0.004, 0.31)), tape);
+      tTop.position.set(0, 0.142, 0);
+      bx.add(tTop);
+      for (const z of [0.152, -0.152]) {
+        const t = new THREE.Mesh(keep(new THREE.BoxGeometry(0.07, 0.11, 0.004)), tape);
+        t.position.set(0, 0.09, z);
+        bx.add(t);
+      }
+      box(0.13, 0.08, 0.004, '#f2efe6', bx, -0.11, -0.03, 0.152, 0.8);
+      for (const dy of [-0.012, -0.03, -0.048]) box(0.09, 0.006, 0.003, '#5b5650', bx, -0.11, dy, 0.155, 0.8);
       bx.visible = false;
       boxProp = bx;
     }

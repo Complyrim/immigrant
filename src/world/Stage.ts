@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { beginCastScene, castSettled } from './MhFigure';
+import { beginCastScene, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
 import { backdropDepth, backdropCookSpot, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats } from './backdrops';
 import type { SeatSpot } from './backdrops';
 import { pbrMaterial } from './pbr';
 import type { CastSpec, Pose } from '../engine/types';
-import { ROLE_LOOKS, crowdLook, stdMat } from './Figure';
+import { ROLE_LOOKS, crowdLook, setShadowTone, stdMat } from './Figure';
 import type { FigureLook } from './Figure';
 import { SB, SL, m, aim, V, rng, ryTo, setSeatStyle, skyGrad, skylineTex, booksTex, textTex, codeTex } from './stage-kit';
 import type { Cfg, FigureLike, Slot, StageResult } from './stage-kit';
@@ -1341,6 +1341,8 @@ function seatProp(b: SB, g: THREE.Group, kind: NonNullable<SeatSpot['prop']>, n:
 }
 
 export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, palette: string[], variant?: 'movie' | 'call'): StageResult {
+  setFigurePalette(null);
+  setShadowTone(null);
   beginCastScene();
   // Seats that belong: a park bench outdoors, a wooden chair at home or in a kitchen, an office chair elsewhere.
   setSeatStyle(OUTDOOR.has(id) ? 'bench' : HOMELY.has(id) ? 'wood' : 'office');
@@ -1677,7 +1679,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         furniture.push(seat);
       }
       // A soft contact shadow grounds each person on the painted floor.
-      if (f.pose !== 'sleep') row.add(b.blob(nx, nz + 0.05, 1.15, 0.7));
+      if (f.pose !== 'sleep') row.add(b.blob(nx, nz + 0.04, 0.95, 0.62));
       rowHalf = Math.max(rowHalf, Math.abs(nx) + (f.pose === 'sleep' ? 1.3 : 0.62));
     });
     for (const k of furniture) {
@@ -1718,6 +1720,9 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     // A medium shot from about the shins up: floor contact never has to match the painting.
     // Light the people with colours measured from the painting, from its brighter side.
     const lit = backdropLight(id);
+    // The cast takes on the painting's own shadow and light colours, so they sit in it rather than on it.
+    setFigurePalette(lit ? { shade: lit.ground, key: lit.key } : null);
+    const shadowHue = setShadowTone(lit ? lit.ground : null).clone();
     if (lit) {
       const sky = new THREE.Color(lit.sky).lerp(new THREE.Color('#ffffff'), 0.22);
       cfg.ambient = { sky: `#${sky.getHexString()}`, ground: lit.ground, intensity: 1.2 + lit.lum * 1.2 };
@@ -1735,7 +1740,8 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     cfg.camera = lying
       ? { position: new THREE.Vector3(0, 1.5, 5.2), target: new THREE.Vector3(0, 0.55, 0), fov: 30 }
       : { position: new THREE.Vector3(0, 1.4, 6.3), target: new THREE.Vector3(0, 0.98, 0), fov: 30 };
-    const catcher = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.34 }));
+    // The cast shadow takes the painting's shadow hue, a little stronger than before, so feet sit on the floor.
+    const catcher = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.44, color: shadowHue }));
     catcher.rotation.x = -Math.PI / 2;
     catcher.position.y = 0.004;
     catcher.receiveShadow = true;

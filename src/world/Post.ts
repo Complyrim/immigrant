@@ -40,6 +40,7 @@ const GradeShader = {
     uSat: { value: 1.06 },
     uContrast: { value: 1.07 },
     uExposure: { value: 1 },
+    uPaper: { value: 0.045 },
   },
   vertexShader: /* glsl */ `
     varying vec2 vUv;
@@ -47,8 +48,11 @@ const GradeShader = {
   fragmentShader: /* glsl */ `
     uniform sampler2D tDiffuse; uniform float uVignette; uniform float uAspect;
     uniform vec3 uShadow; uniform vec3 uHighlight; uniform float uSat; uniform float uContrast; uniform float uExposure;
+    uniform float uPaper;
     varying vec2 vUv;
     float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+    float vn(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y); }
     void main() {
       vec4 t = texture2D(tDiffuse, vUv);
       vec3 c = max(t.rgb, vec3(0.0)) * uExposure;
@@ -63,6 +67,10 @@ const GradeShader = {
       vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0);
       float v = smoothstep(0.35, 1.05, length(p) * 1.15);
       c *= 1.0 - uVignette * v;
+      // canvas: a faint fixed weave over everything, so the people and the paintings share one surface
+      vec2 px = vUv * vec2(uAspect, 1.0) * 700.0;
+      float weave = vn(px * 0.45) * 0.55 + vn(px * 1.6) * 0.3 + (sin(px.x * 2.1) * sin(px.y * 2.1)) * 0.075 + 0.075;
+      c *= 1.0 + (weave - 0.5) * uPaper;
       // a hair of noise hides banding in soft gradients
       c += (hash(vUv * 1024.0) - 0.5) * 0.0035;
       gl_FragColor = vec4(c, t.a);

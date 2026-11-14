@@ -670,9 +670,14 @@ export class SB {
   laptop(x: number, y: number, z: number, ry: number, tex: THREE.Texture | null, glow = false): void {
     const g = this.grp(x, y, z, ry);
     this.box(0.32, 0.016, 0.22, '#c9ccd2', 0, 0.008, 0, 0, g);
+    // Keyboard well with a hint of keys, and a trackpad.
+    this.box(0.28, 0.002, 0.1, '#2b2e35', 0, 0.0168, -0.035, 0, g);
+    for (let r = 0; r < 4; r++) this.box(0.26, 0.0008, 0.004, '#4a4e57', 0, 0.0182, -0.075 + r * 0.025, 0, g);
+    this.box(0.11, 0.0015, 0.065, '#b7bbc3', 0, 0.0166, 0.065, 0, g);
     const lid = this.grp(0, 0.015, -0.1, 0, g);
     lid.rotation.x = -0.35;
     this.box(0.32, 0.22, 0.012, '#aeb2ba', 0, 0.11, 0, 0, lid);
+    this.box(0.305, 0.205, 0.002, '#121418', 0, 0.11, 0.0062, 0, lid);
     const sm = tex ? this.basic(tex) : m('#1b2230', { emissive: glow ? '#4aa0ff' : '#000000', ei: 0.8 });
     this.plane(0.29, 0.19, sm, 0, 0.11, 0.0075, 0, 0, lid);
     if (glow) this.glow('#7fc4ff', 0.55, x, y + 0.2, z + 0.1, 0.22);

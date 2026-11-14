@@ -200,6 +200,15 @@ uniform vec2 uBody;  // lowest point, height
 uniform vec2 uLook;  // rim light strength, skin warmth (0 for cloth)
 uniform vec4 uUvA;   // texture areas to tint; z = 0 means no limit
 uniform vec4 uUvB;
+uniform vec3 uPalShade; // the painting's shadow colour (luminance 1)
+uniform vec3 uPalKey;   // the painting's light colour (luminance 1)
+uniform vec2 uPal;      // palette strength, brush strength
+float pHash(vec3 p) { p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float pNoise(vec3 x) {
+  vec3 i = floor(x); vec3 f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(pHash(i), pHash(i + vec3(1, 0, 0)), f.x), mix(pHash(i + vec3(0, 1, 0)), pHash(i + vec3(1, 1, 0)), f.x), f.y),
+             mix(mix(pHash(i + vec3(0, 0, 1)), pHash(i + vec3(1, 0, 1)), f.x), mix(pHash(i + vec3(0, 1, 1)), pHash(i + vec3(1, 1, 1)), f.x), f.y), f.z);
+}
 `;
 const RECOLOUR = /* glsl */ `
 {
@@ -239,6 +248,55 @@ const BANDS = /* glsl */ `
 reflectedLight.directSpecular *= 0.18;
 reflectedLight.indirectSpecular *= 0.3;
 `;
+/**
+ * The painter's pass: shadows take the painting's shadow colour and lights its light colour, saturation
+ * eases a touch, and fine vertical brush strokes (fixed to the body, so they move with it) break up the
+ * smooth CG surfaces. Strength comes from the scene; 0 leaves the figure as rendered.
+ */
+const PAINT = /* glsl */ `
+{
+  float pl = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
+  vec3 tone = mix(uPalShade, uPalKey, smoothstep(0.03, 0.45, pl));
+  outgoingLight = mix(outgoingLight, outgoingLight * tone, uPal.x);
+  float pl2 = dot(outgoingLight, vec3(0.2126, 0.7152, 0.0722));
+  outgoingLight = mix(vec3(pl2), outgoingLight, 1.0 - 0.12 * uPal.x);
+  vec3 q = (vBind - vec3(0.0, uBody.x, 0.0)) / uBody.y;
+  float stroke = pNoise(q * vec3(38.0, 105.0, 38.0)) * 0.6 + pNoise(q * vec3(95.0, 260.0, 95.0)) * 0.4;
+  outgoingLight *= 1.0 + (stroke - 0.5) * uPal.y;
+}
+`;
+
+/** One set of palette uniforms shared by every figure: a scene sets it once and everyone takes it on. */
+const PALETTE = {
+  uPalShade: { value: new THREE.Color(1, 1, 1) },
+  uPalKey: { value: new THREE.Color(1, 1, 1) },
+  uPal: { value: new THREE.Vector2(0, 0) },
+};
+const unitLum = (hex: string, toward: number): THREE.Color => {
+  const c = new THREE.Color(hex);
+  const l = Math.max(0.05, 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b);
+  c.multiplyScalar(1 / l);
+  // Keep the hue but not the full push: a gentle bias, not a colour filter.
+  return new THREE.Color(1, 1, 1).lerp(c, toward);
+};
+/**
+ * Paint the cast with a scene's colours (from the painting's measured light), or pass null for a plain look.
+ * Also tints the ink lines with the painting's shadow colour.
+ */
+export function setFigurePalette(p: { shade: string; key: string } | null): void {
+  if (!p) {
+    PALETTE.uPal.value.set(0, 0);
+    for (const m of inkMats.values()) m.color.set('#1d1512');
+    return;
+  }
+  PALETTE.uPalShade.value.copy(unitLum(p.shade, 0.55));
+  PALETTE.uPalKey.value.copy(unitLum(p.key, 0.35));
+  PALETTE.uPal.value.set(0.6, 0.14);
+  const ink = new THREE.Color(p.shade).multiplyScalar(0.22).lerp(new THREE.Color('#1d1512'), 0.45);
+  for (const m of inkMats.values()) m.color.copy(ink);
+  inkTint.copy(ink);
+}
+const inkTint = new THREE.Color('#1d1512');
 
 function illustrate(mat: THREE.MeshStandardMaterial, tint: Tint | null, bodyMinY: number, bodyH: number, inflate = 0, rim = 0.12, warmth = 0): void {
   const uniforms = {
@@ -251,14 +309,15 @@ function illustrate(mat: THREE.MeshStandardMaterial, tint: Tint | null, bodyMinY
     uBody: { value: new THREE.Vector2(bodyMinY, Math.max(0.1, bodyH)) },
   };
   mat.onBeforeCompile = (sh) => {
-    Object.assign(sh.uniforms, uniforms);
+    Object.assign(sh.uniforms, uniforms, PALETTE);
     sh.vertexShader = sh.vertexShader.replace('#include <common>', `#include <common>\n${DECL_V}`).replace('#include <begin_vertex>', '#include <begin_vertex>\n\tvBind = position;\n\ttransformed += normalize( normal ) * uInflate;');
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', `#include <common>\n${DECL_F}`)
       .replace('#include <color_fragment>', `#include <color_fragment>\n${RECOLOUR}`)
-      .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>\n${BANDS}`);
+      .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>\n${BANDS}`)
+      .replace('#include <opaque_fragment>', `${PAINT}\n#include <opaque_fragment>`);
   };
-  mat.customProgramCacheKey = () => 'immigrant-mh-v4';
+  mat.customProgramCacheKey = () => 'immigrant-mh-v5';
 }
 
 const inkMats = new Map<number, THREE.MeshBasicMaterial>();
@@ -266,7 +325,7 @@ const inkMats = new Map<number, THREE.MeshBasicMaterial>();
 function inkMaterial(push: number): THREE.MeshBasicMaterial {
   let m = inkMats.get(push);
   if (!m) {
-    m = new THREE.MeshBasicMaterial({ color: '#1d1512', side: THREE.BackSide });
+    m = new THREE.MeshBasicMaterial({ color: inkTint.clone(), side: THREE.BackSide });
     m.onBeforeCompile = (sh) => {
       sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>\n\ttransformed += normalize( normal ) * ${push.toFixed(4)};`);
     };
@@ -279,6 +338,8 @@ function inkMaterial(push: number): THREE.MeshBasicMaterial {
 /* ------------------------------------------------------------------- figure */
 
 const CUTOUT = new Set(['hair', 'brows', 'lashes', 'beard']);
+/** Shoe assets whose texture is plain white. */
+const WHITE_SHOES = new Set(['toigo_ankle_boots_female']);
 
 export class MhFigure {
   readonly group = new THREE.Group();
@@ -381,6 +442,13 @@ export class MhFigure {
       mat.roughness = kind === 'eyes' ? 0.06 : kind === 'shoe' ? 0.6 : kind === 'body' ? 0.7 : kind === 'hair' || kind === 'beard' ? 0.55 : 0.92;
       mat.normalMap = null;
       let tint: Tint | null = def?.tints?.[asset] ?? null;
+      // These boots come with a plain white texture that reads as socks: give them leather, varied per person.
+      if (!tint && kind === 'shoe' && WHITE_SHOES.has(asset)) {
+        const leather = ['#3a2a20', '#1e1c1c', '#6b4a30', '#4a2026'];
+        let h = 0;
+        for (const ch of this.castId) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+        tint = { color: leather[h % leather.length], gain: 0.8 };
+      }
       if ((kind === 'hair' || kind === 'beard' || kind === 'brows') && def?.hairTint) tint = { color: def.hairTint };
       if (kind === 'body' && def?.skinTint) mat.color.set(def.skinTint);
       if (kind === 'eyes') {
@@ -415,7 +483,7 @@ export class MhFigure {
     if (this.look.uniform === 'officer') officerKit(this.group, meshes, this.bones, this.owned);
     if (!this.lite) {
       for (const m of ink) {
-        let inkMat = inkMaterial(kindOf(m)[0] === 'cloth' ? 0.0096 : 0.0038);
+        let inkMat = inkMaterial(kindOf(m)[0] === 'cloth' ? 0.0068 : 0.0028);
         const clipTo = this.group.userData.clip as THREE.Plane[] | undefined;
         if (clipTo) {
           const key = inkMat.customProgramCacheKey;
