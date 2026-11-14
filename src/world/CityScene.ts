@@ -644,7 +644,7 @@ export class CityScene {
         // the part of it on screen line up exactly with what the 3D camera sees.
         // A painting with depth lets the camera drift slowly, so the room opens up around the people.
         const drift = (this.stage.relief ?? 0) * sway;
-        this.camera.position.set(Math.sin(time * 0.19) * 0.16 * drift, pc.h + Math.sin(time * 0.13 + 1) * 0.04 * drift, pc.d0 - (0.5 - 0.5 * Math.cos(time * 0.09)) * 0.25 * drift);
+        this.camera.position.set(Math.sin(time * 0.19) * 0.16 * drift, pc.h + Math.sin(time * 0.13 + 1) * 0.04 * drift, pc.d0 - (0.5 - 0.5 * Math.cos(time * 0.09)) * 0.14 * drift);
         this.camera.quaternion.identity();
         const n = this.camera.near;
         const fa = this.camera.far;

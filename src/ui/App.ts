@@ -219,6 +219,8 @@ export class App {
     this.root.addEventListener('click', (e) => this.onClick(e));
     this.root.addEventListener('input', (e) => this.onInput(e));
     this.root.addEventListener('change', (e) => this.onInput(e));
+    window.addEventListener('resize', () => requestAnimationFrame(this.syncScene));
+    new ResizeObserver(() => this.syncScene()).observe(this.root);
     window.addEventListener('pointerdown', () => this.sound.unlock(), { once: true });
     window.addEventListener('keydown', () => this.sound.unlock(), { once: true });
     window.addEventListener('keydown', (e) => {
@@ -357,11 +359,38 @@ export class App {
   private put(html: string, cls = ''): void {
     this.talk.stop();
     this.root.className = cls;
-    this.root.innerHTML = this.game ? fill(html, this.game.state) : html;
+    const split = cls === 'is-play' || cls === 'is-transit';
+    let out = this.game ? fill(html, this.game.state) : html;
+    // In play the 3D scene gets its own window between the top bar and the card. The menu layer reserves an
+    // empty slot for it and the scene is placed over that slot, so no browser can draw the card over the people.
+    if (split) {
+      const at = out.indexOf('</header>');
+      out = at >= 0 ? `${out.slice(0, at + 9)}<div class="scene-slot" aria-hidden="true"></div>${out.slice(at + 9)}` : `<div class="scene-slot" aria-hidden="true"></div>${out}`;
+    }
+    this.root.innerHTML = out;
     this.root.scrollTop = 0;
     const app = document.getElementById('app');
-    if (app) app.dataset.layout = cls === 'is-play' || cls === 'is-transit' ? 'split' : 'full';
+    if (app) app.dataset.layout = split ? 'split' : 'full';
+    this.syncScene();
   }
+
+  /** Put the 3D scene exactly over the reserved slot (play screens), or back to full screen (menus). */
+  private syncScene = (): void => {
+    const c = document.getElementById('scene');
+    const slot = this.root.querySelector<HTMLElement>('.scene-slot');
+    const app = document.getElementById('app');
+    if (!c) return;
+    if (!slot || !app) {
+      c.style.left = c.style.top = c.style.width = c.style.height = '';
+      return;
+    }
+    const ar = app.getBoundingClientRect();
+    const r = slot.getBoundingClientRect();
+    c.style.left = `${Math.round(r.left - ar.left)}px`;
+    c.style.top = `${Math.round(r.top - ar.top)}px`;
+    c.style.width = `${Math.round(r.width)}px`;
+    c.style.height = `${Math.round(r.height)}px`;
+  };
 
   private title(): void {
     this.game = null;

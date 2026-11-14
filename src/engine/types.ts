@@ -153,7 +153,11 @@ export type Pose =
   | 'cook'
   | 'eat'
   | 'exercise'
-  | 'laugh';
+  | 'laugh'
+  /** Cricket and other bat-and-ball games: batting (bat in hand), bowling (ball in hand), fielding (ready crouch). */
+  | 'bat'
+  | 'bowl'
+  | 'field';
 
 export interface CastSpec {
   role: Role;

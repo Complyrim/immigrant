@@ -327,32 +327,25 @@ input[type='range'] { width: 55%; accent-color: var(--accent); }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* ---- split layout: the 3D scene has its own framed area; the card never covers it ---- */
+/* ---- split layout: the 3D scene has its own framed area; the card never covers it ----
+   The menu layer is a grid of top bar / empty scene slot / card. The 3D canvas is placed over the slot by
+   App.syncScene, so this does not depend on display: contents (which some iPhone browsers ignore). */
 .reaction { font-size: 1.12rem; line-height: 1.6; }
-#app[data-layout='split'] {
+#app[data-layout='split'] { background: radial-gradient(120% 90% at 50% 0%, #1a2042 0%, #0b1020 70%); }
+#app[data-layout='split'] #ui {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(180px, 42%) minmax(0, 1fr);
-  grid-template-areas: 'hud' 'scene' 'card';
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  background: radial-gradient(120% 90% at 50% 0%, #1a2042 0%, #0b1020 70%);
+  grid-template-areas: 'hud' 'slot' 'card';
+  overflow: hidden;
+  background: none;
 }
+#app[data-layout='split'] .scene-slot { grid-area: slot; margin: 6px 10px 4px; min-height: 0; }
 #app[data-layout='split'] #scene {
-  position: relative;
   inset: auto;
-  grid-area: scene;
-  width: calc(100% - 20px);
-  height: calc(100% - 10px);
-  margin: 6px 10px 4px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 180, 84, 0.12);
-}
-#app[data-layout='split'] #ui {
-  display: contents;
-  overflow: visible;
-  padding: 0;
-  background: none;
 }
 #app[data-layout='split'] .hud { grid-area: hud; position: static; }
 #app[data-layout='split'] .screen.play,
@@ -371,12 +364,12 @@ input[type='range'] { width: 55%; accent-color: var(--accent); }
   overscroll-behavior: contain;
 }
 @media (min-width: 700px) and (min-aspect-ratio: 23/20) {
-  #app[data-layout='split'] {
+  #app[data-layout='split'] #ui {
     grid-template-columns: minmax(0, 58%) minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
-    grid-template-areas: 'hud hud' 'scene card';
+    grid-template-areas: 'hud hud' 'slot card';
   }
-  #app[data-layout='split'] #scene { width: calc(100% - 16px); height: calc(100% - 16px); margin: 8px 4px 8px 12px; }
+  #app[data-layout='split'] .scene-slot { margin: 8px 4px 8px 12px; }
   #app[data-layout='split'] .screen.play, #app[data-layout='split'] .screen { padding: 8px 12px 12px 4px; justify-content: stretch; }
   #app[data-layout='split'] .card-main { width: 100%; }
 }
@@ -498,3 +491,12 @@ details.names input { width: 55%; }
 .sheet > .actions { position: sticky; bottom: 0; padding: 14px 0 4px; background: linear-gradient(180deg, rgba(14, 18, 34, 0) 0%, rgb(14, 18, 34) 40%); }
 /* Sideways on a phone: room below the last title button. */
 @media (max-height: 460px) { .screen.center { padding-bottom: 28px; } }
+
+/* ---- dark text on every yellow element (never white on yellow) ---- */
+.btn { -webkit-appearance: none; appearance: none; }
+.btn.primary, .btn.primary *, .chip.on, .chip.on *, .track-big .tag, .track-big .tag * {
+  color: var(--accent-ink);
+  -webkit-text-fill-color: var(--accent-ink);
+}
+.btn.primary small { opacity: 0.75; }
+.btn.primary:disabled { opacity: 0.5; cursor: not-allowed; }

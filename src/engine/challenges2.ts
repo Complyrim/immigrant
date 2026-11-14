@@ -355,7 +355,8 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     title: 'Sunday cricket',
     body: 'A group of students plays cricket in the park on Sundays with a tennis ball and a plank for a bat. They need one more player.',
     stage: 'park',
-    cast: [{ ...YOU, pose: 'cheer' }, { role: 'friend', pose: 'cheer' }, { role: 'student', pose: 'wave' }],
+    // A street-cricket game in progress: the player batting, a student fielding, a friend bowling.
+    cast: [{ ...YOU, pose: 'bat' }, { role: 'student', pose: 'field' }, { role: 'friend', pose: 'bowl' }],
     choices: [
       c('play', 'Join the game.', ok('You drop a catch and everyone laughs. Then you hit a six and nobody lets you forget it.', { community: 6, wellbeing: 5 })),
       c('watch', 'Watch from the side and chat.', ok('A good afternoon without any pressure.', { community: 3, wellbeing: 2 })),

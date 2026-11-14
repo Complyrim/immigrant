@@ -287,6 +287,13 @@ const ARRIVAL: ChallengeDef[] = [
     track: 'big',
     title: 'Port of entry with a work visa',
     body: `The officer asks for your passport with the H-1B visa and the approval notice your employer's lawyer mailed you (Form I-797). Behind you a family with four suitcases is trying to keep a toddler in line.${s.profile.country === 'nigeria' ? ' You have read the news about 2026 visa restrictions for Nigeria; the research for this game found that they name student and visitor visas, not the H-1B, but you still hold your breath.' : ''}`,
+    narration: 'The arrivals hall is loud and bright. You hold your passport and the approval notice your employer mailed you.',
+    lines: [
+      { who: 'officer', text: 'Passport and visa, please. Do you have your approval notice?' },
+      { who: 'player', text: 'Yes, here is the I-797 from my employer.' },
+      { who: 'officer', text: 'Who will you be working for, and what is your role?' },
+      { who: 'officer', text: 'Same employer as on the petition? Good.' },
+    ],
     stage: 'airport',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }],
     choices: [
@@ -328,6 +335,12 @@ const ARRIVAL: ChallengeDef[] = [
     track: 'big',
     title: 'Port of entry with an O-1',
     body: 'The officer looks at your O-1 visa and approval notice, then at you. "Extraordinary ability," he reads aloud. "In what?" Your folder of evidence is in your bag, heavy with printouts.',
+    narration: 'The officer studies your visa and approval notice. Your folder of evidence is heavy in your bag.',
+    lines: [
+      { who: 'officer', text: 'Extraordinary ability. In what field?' },
+      { who: 'player', text: 'My work has been recognized in my field. I have the evidence with me.' },
+      { who: 'officer', text: 'Who is your petitioner here, and what is your first engagement?' },
+    ],
     stage: 'airport',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }],
     inlineFact: FACT_O1,

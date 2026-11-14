@@ -287,6 +287,13 @@ const FAM_ARRIVAL: ChallengeDef[] = [
     track: 'big',
     title: 'The sealed envelope',
     body: `Years of waiting end in an arrivals hall. In your hand is the sealed packet the consulate gave you with your immigrant visa. ${s.profile.country === 'mexico' ? 'Your family\'s petition sat in one of the longest lines in the world.' : 'Your family\'s petition sat in line for years.'} The officer holds out a hand.`,
+    narration: 'Years of waiting end in an arrivals hall. In your hand is the sealed packet from the consulate.',
+    lines: [
+      { who: 'officer', text: 'Welcome. Passport and the sealed packet, please. Do not open it.' },
+      { who: 'officer', text: 'Who filed the petition for you?' },
+      { who: 'player', text: 'My family did. They are waiting for me outside.' },
+      { who: 'officer', text: 'Your green card comes by mail. This stamp works until then.' },
+    ],
     stage: 'airport',
     cast: [{ ...YOU, pose: 'carry' }, { role: 'officer', pose: 'talk' }],
     inlineFact: FX_WAIT,
@@ -343,6 +350,13 @@ const B2_ARRIVAL: ChallengeDef[] = [
     track: 'big',
     title: 'Purpose of your visit',
     body: 'The officer looks at your visitor visa and asks why you are here and how long you will stay. Behind you the line stretches back to the escalators.',
+    narration: 'The officer looks at your visitor visa. Behind you the line stretches back to the escalators.',
+    lines: [
+      { who: 'officer', text: 'What is the purpose of your visit?' },
+      { who: 'player', text: 'I am visiting family for a few weeks.' },
+      { who: 'officer', text: 'How long will you stay, and where?' },
+      { who: 'officer', text: 'Do you have a return ticket?' },
+    ],
     stage: 'airport',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }],
     choices: [

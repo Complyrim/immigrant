@@ -1411,7 +1411,9 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     // Who sits where. The painting's own seats come first (a sofa, a bench, bus seats), then furniture built
     // to match; people sit facing each other or the room, not lined up toward the viewer.
     // Staff and officials sit only when the scene says so outright; they are not parked on a spare chair.
-    const wantsSeat = (f: FigureLike): boolean => f.pose === 'sit' || f.pose === 'type' || f.pose === 'eat' || (Boolean(f.group.userData.seated) && LOUNGERS.has(f.look.role ?? 'stranger') && f.pose !== 'sleep');
+    // Someone playing, dancing or exercising is on their feet, whatever seat the coded room gave them.
+    const ACTIVE = new Set<Pose>(['bat', 'bowl', 'field', 'cheer', 'dance', 'exercise', 'walk', 'carry', 'cook', 'present', 'wave']);
+    const wantsSeat = (f: FigureLike): boolean => !ACTIVE.has(f.pose) && (f.pose === 'sit' || f.pose === 'type' || f.pose === 'eat' || (Boolean(f.group.userData.seated) && LOUNGERS.has(f.look.role ?? 'stranger') && f.pose !== 'sleep'));
     const lounge = backdropLounge(id);
     const atRest = (f: FigureLike): boolean => lounge && LOUNGERS.has(f.look.role ?? 'stranger') && (f.pose === 'idle' || f.pose === 'talk' || f.pose === 'phone' || f.pose === 'think' || f.pose === 'laugh');
     const spots = variant === 'call' ? [...backdropSeats(id)].reverse() : backdropSeats(id);
@@ -1631,7 +1633,9 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       const ox = f.group.position.x;
       const oz = f.group.position.z;
       const nx = (i - (count - 1) / 2) * gap;
-      const nz = tight ? (i % 2 ? -0.75 : 0.1) : i % 2 ? 0.3 : 0;
+      // Nobody stands in front of the painting's foreground line (their feet would leave the window); the
+      // second rank steps back instead.
+      const nz = tight ? (i % 2 ? -0.75 : -0.1) : i % 2 ? -0.35 : 0;
       const sitter = wantsSeat(f);
       // Someone the coded room had seated, but who stands in this staging, gets up.
       if (!sitter && f.group.userData.seated) {
@@ -1686,6 +1690,18 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       }
       // A soft contact shadow grounds each person on the painted floor.
       if (f.pose !== 'sleep') row.add(b.blob(nx, nz + 0.04, 0.95, 0.62));
+      // A batter guards a set of stumps: three stumps and two bails just behind them.
+      if (f.pose === 'bat') {
+        const sx = Math.cos(facing), sz = -Math.sin(facing);
+        const bx = nx - Math.sin(facing) * 0.6, bz = nz - Math.cos(facing) * 0.6;
+        for (const k of [-1, 0, 1]) b.cyl(0.016, 0.71, '#e9dcc0', bx + sx * k * 0.1, 0.355, bz + sz * k * 0.1, row, 10);
+        for (const k of [-0.5, 0.5]) {
+          const bail = b.cyl(0.008, 0.1, '#d9c7a0', bx + sx * k * 0.1, 0.72, bz + sz * k * 0.1, row, 8);
+          bail.rotation.z = Math.PI / 2;
+          bail.rotation.y = facing;
+        }
+        row.add(b.blob(bx, bz, 0.35, 0.3));
+      }
       rowHalf = Math.max(rowHalf, Math.abs(nx) + (f.pose === 'sleep' ? 1.3 : 0.62));
     });
     for (const k of furniture) {
@@ -1727,7 +1743,8 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       }
       paintFocus = focusFix ?? focus;
       // A row too wide for the view stands further into the room, where the floor has space for it.
-      row.position.z = -(m.back - 1) * d0;
+      // A little into the room from the painting's foreground line, so feet keep clear space below them.
+      row.position.z = -(m.back - 1) * d0 - 0.45;
       row.position.x = used.length ? (rowAt - 0.5) * K * m.back * texA : 0;
       b.g.updateMatrixWorld(true);
       for (const q of gaze) {

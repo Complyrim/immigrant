@@ -369,6 +369,8 @@ export class MhFigure {
   private lookPitch = 0;
   private phoneProp: THREE.Object3D | null = null;
   private boxProp: THREE.Object3D | null = null;
+  private batProp: THREE.Object3D | null = null;
+  private ballProp: THREE.Object3D | null = null;
   private gone = false;
   private face: { mesh: THREE.Mesh; blink: number; open: number; smile: number } | null = null;
   private nextBlink = 1 + Math.random() * 4;
@@ -487,6 +489,8 @@ export class MhFigure {
     const props = attachAccessories(root, this.group, worn, this.owned);
     this.phoneProp = props.phone;
     this.boxProp = props.box;
+    this.batProp = props.bat;
+    this.ballProp = props.ball;
     if (this.look.uniform === 'officer') officerKit(this.group, meshes, this.bones, this.owned);
     if (!this.lite) {
       for (const m of ink) {
@@ -696,6 +700,8 @@ export class MhFigure {
     if (this.phoneProp) this.phoneProp.visible = this.pose === 'phone';
     if (this.boxProp) this.boxProp.visible = this.pose === 'carry';
     if (this.boxProp && this.pose === 'carry') this.gripBox(this.boxProp);
+    if (this.batProp) this.batProp.visible = this.pose === 'bat';
+    if (this.ballProp) this.ballProp.visible = this.pose === 'bowl';
     let yaw = 0;
     let pitch = 0;
     const head = this.bones.get('Head');

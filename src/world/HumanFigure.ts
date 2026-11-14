@@ -107,7 +107,11 @@ export const STANDING: Record<Pose, PoseClip> = {
   think: { clip: 'Idle_Loop', speed: 0.6 },
   carry: { clip: 'Idle_Loop' },
   present: { clip: 'Idle_Talking_Loop', speed: 0.85 },
-  cheer: { clip: 'Dance_Loop', speed: 0.8 },
+  // Arms raised from a standing pose (the dance clip's bent elbows twisted the wrists once the arms went up).
+  cheer: { clip: 'Idle_Loop' },
+  bat: { clip: 'Sword_Attack', speed: 0.55 },
+  bowl: { clip: 'Spell_Simple_Shoot', speed: 0.6 },
+  field: { clip: 'Crouch_Idle_Loop' },
   sleep: { clip: 'Death01', hold: true },
   dance: { clip: 'Dance_Loop' },
   cook: { clip: 'Interact', speed: 0.7 },
@@ -164,9 +168,12 @@ export const GESTURES: Partial<Record<Pose, Gesture>> = {
     { bone: 'lowerarm_l', x: 1.1 },
   ],
   cheer: (t) => [
-    { bone: 'upperarm_r', z: -2.75 - wob(t, 2, 0.18), x: 0.15 },
-    { bone: 'upperarm_l', z: 2.75 + wob(t + 0.25, 2, 0.18), x: 0.15 },
-    { bone: 'Head', x: -0.15 },
+    // Both arms up in a loose V, elbows a little bent, hands in line with the forearm (no bent-back wrists).
+    { bone: 'upperarm_r', z: -2.45 - wob(t, 2, 0.12), x: 0.1 },
+    { bone: 'upperarm_l', z: 2.45 + wob(t + 0.25, 2, 0.12), x: 0.1 },
+    { bone: 'lowerarm_r', z: -0.25 },
+    { bone: 'lowerarm_l', z: 0.25 },
+    { bone: 'Head', x: -0.12 },
   ],
   present: (t) => [
     { bone: 'upperarm_r', x: 0.55, z: -0.35 - wob(t, 0.7, 0.12) },
@@ -682,9 +689,15 @@ function tintFor(skin: THREE.Color, ref: THREE.Color): THREE.Color {
 }
 
 /** Backpack, glasses, lanyard and the other carried things, plus the phone and box props (hidden until a pose needs them). */
-export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look: FigureLook, owned: Array<{ dispose(): void }>): { phone: THREE.Object3D | null; box: THREE.Object3D | null } {
+/** Where the bat sits in the right hand (hand-bone space): grip offset and the handle's direction. */
+export const BAT_GRIP: [number, number, number] = [0, 0.07, 0];
+export const BAT_ROT: [number, number, number] = [0, 0, Math.PI / 2];
+
+export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look: FigureLook, owned: Array<{ dispose(): void }>): { phone: THREE.Object3D | null; box: THREE.Object3D | null; bat: THREE.Object3D | null; ball: THREE.Object3D | null } {
   let phone: THREE.Object3D | null = null;
   let boxProp: THREE.Object3D | null = null;
+  let batProp: THREE.Object3D | null = null;
+  let ballProp: THREE.Object3D | null = null;
     const find = (n: string): THREE.Object3D | undefined => root.getObjectByName(n);
     const std = (c: string, r = 0.7): THREE.MeshStandardMaterial => {
       const m = new THREE.MeshStandardMaterial({ color: c, roughness: r });
@@ -821,6 +834,30 @@ export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look
       const ph = box(0.07, 0.014, 0.135, '#15171c', hand, 0.0, 0.07, 0.0, 0.3);
       ph.visible = false;
       phone = ph;
+      // A street-cricket bat (a plank with a taped handle), gripped across the palm; shown while batting.
+      const bat = new THREE.Group();
+      bat.name = 'bat';
+      hand.add(bat);
+      const mount = new THREE.Group();
+      mount.position.set(BAT_GRIP[0], BAT_GRIP[1], BAT_GRIP[2]);
+      mount.rotation.set(BAT_ROT[0], BAT_ROT[1], BAT_ROT[2]);
+      bat.add(mount);
+      const handle = new THREE.Mesh(keep(new THREE.CylinderGeometry(0.017, 0.017, 0.26, 10)), std('#2b2b2e', 0.8));
+      handle.position.y = 0.05;
+      mount.add(handle);
+      const blade = new THREE.Mesh(keep(new RoundedBoxGeometry(0.1, 0.56, 0.03, 2, 0.01)), std('#c8a26b', 0.85));
+      blade.position.y = 0.46;
+      blade.castShadow = true;
+      mount.add(blade);
+      bat.visible = false;
+      batProp = bat;
+      // A taped tennis ball held in the bowling hand.
+      const ball = new THREE.Mesh(keep(new THREE.SphereGeometry(0.034, 14, 10)), std('#d7e04a', 0.7));
+      ball.position.set(0, 0.08, 0.03);
+      ball.name = 'ball';
+      hand.add(ball);
+      ball.visible = false;
+      ballProp = ball;
     }
     if (spine) {
       // A moving box: cardboard with packing tape over the flap seam and a shipping label.
@@ -845,7 +882,7 @@ export function attachAccessories(root: THREE.Object3D, group: THREE.Group, look
       bx.visible = false;
       boxProp = bx;
     }
-  return { phone, box: boxProp };
+  return { phone, box: boxProp, bat: batProp, ball: ballProp };
 }
 
 /** Drop-in for Figure: same members the stage code uses. */
