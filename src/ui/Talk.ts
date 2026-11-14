@@ -13,6 +13,8 @@ export interface TalkHost {
   reduced(): boolean;
   /** 'all': recordings, and the device's speech voice for every other line; 'recorded': recordings only; 'off'. */
   voices(): 'all' | 'recorded' | 'off';
+  /** Someone has started (true) or stopped (false) speaking: music and room sound dip under the voice. */
+  speaking?(on: boolean): void;
   /** The name to show over a person's lines (a roommate's own name, say); falls back to the role. */
   nameOf?(role: string): string | null;
 }
@@ -28,13 +30,37 @@ export interface PlayOptions {
 }
 
 const synth: SpeechSynthesis | null = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
-/** A steady voice per role: the same person always sounds the same, and different people sound different. */
-const ROLE_PITCH: Record<string, number> = { player: 1.04, officer: 0.86, dso: 1.12, professor: 0.9, advisor: 1.06, landlord: 0.84, roommate: 1.14, friend: 1.1, parent: 0.95, doctor: 0.97, nurse: 1.16, recruiter: 1.08, teller: 1.1, owner: 0.88, spouse: 1.08, student: 1.15 };
-function englishVoices(): SpeechSynthesisVoice[] {
+/**
+ * A steady voice per role: the same person always sounds the same, and different people sound different.
+ * Pitch moves only a little; larger shifts make device voices sound muffled.
+ */
+const ROLE_PITCH: Record<string, number> = { player: 1.02, officer: 0.95, dso: 1.04, professor: 0.96, advisor: 1.03, landlord: 0.95, roommate: 1.05, friend: 1.04, parent: 0.98, doctor: 0.99, nurse: 1.05, recruiter: 1.03, teller: 1.04, owner: 0.96, spouse: 1.03, student: 1.05 };
+
+/** Novelty, effect and old low-quality voices that devices ship: never used for a person. */
+const UNCLEAR = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|junior|organ|ralph|superstar|trinoids|whisper|wobble|zarvox|fred|kathy|grandma|grandpa|rocko|eddy|flo\b|reed|sandy|shelley|novelty/i;
+/** Voices known to read clearly, best first. Premium, enhanced and natural voices rank above all of them. */
+const CLEAR = ['samantha', 'ava', 'allison', 'alex', 'susan', 'tom', 'nathan', 'zoe', 'evan', 'joelle', 'noelle', 'aaron', 'nicky', 'daniel', 'karen', 'moira', 'tessa', 'serena', 'arthur', 'martha', 'rishi', 'google us english', 'google uk english', 'microsoft aria', 'microsoft jenny', 'microsoft guy'];
+
+function voiceScore(v: SpeechSynthesisVoice): number {
+  const n = v.name.toLowerCase();
+  let score = 0;
+  if (/premium|enhanced|natural|neural|siri/.test(n)) score += 100;
+  const i = CLEAR.findIndex((c) => n.includes(c));
+  if (i >= 0) score += 50 - i;
+  if (/US/i.test(v.lang)) score += 8;
+  if (v.localService) score += 2;
+  return score;
+}
+
+/** The clearest English voices on this device, a handful of them, best first. */
+export function englishVoices(): SpeechSynthesisVoice[] {
   const all = synth?.getVoices() ?? [];
-  const en = all.filter((v) => /^en(-|_|$)/i.test(v.lang));
-  const us = en.filter((v) => /US/i.test(v.lang));
-  return us.length >= 2 ? us : en.length ? en : all;
+  const en = all.filter((v) => /^en(-|_|$)/i.test(v.lang) && !UNCLEAR.test(v.name));
+  const ranked = en.sort((a, b) => voiceScore(b) - voiceScore(a));
+  // Keep only voices close to the best one, so nobody gets a noticeably worse voice than the rest.
+  const top = ranked.length ? voiceScore(ranked[0]) : 0;
+  const good = ranked.filter((v) => voiceScore(v) >= top - 60).slice(0, 6);
+  return good.length ? good : ranked.slice(0, 4);
 }
 
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
@@ -92,9 +118,14 @@ export class Talk {
       } else if (mode === 'all') {
         spoken = this.speak(line as Line, run, read);
       }
+      if (spoken) {
+        this.host.speaking?.(true);
+        void spoken.then(() => this.host.speaking?.(false));
+      }
       // A voice that plays gets half a second after it; no voice leaves the line up for reading time.
       await Promise.race([spoken ? spoken.then((ok) => this.wait(ok ? 500 : read, run)) : this.wait(read, run), this.skipped(run)]);
       synth?.cancel();
+      this.host.speaking?.(false);
     }
     if (run !== this.run) return false;
     await this.wait(1600, run);
@@ -128,6 +159,7 @@ export class Talk {
   stop(): void {
     this.run++;
     synth?.cancel();
+    this.host.speaking?.(false);
     cancelAnimationFrame(this.raf);
     window.clearTimeout(this.timer);
     this.audio?.pause();
@@ -194,8 +226,8 @@ export class Talk {
         u.lang = u.voice.lang;
       } else u.lang = 'en-US';
       u.pitch = ROLE_PITCH[line.who] ?? 1;
-      u.rate = 0.98;
-      u.volume = Math.min(1, vol * 1.1);
+      u.rate = 0.94;
+      u.volume = Math.min(1, vol * 1.4);
       let done = false;
       const finish = (ok: boolean): void => {
         if (done) return;
@@ -219,7 +251,7 @@ export class Talk {
         return;
       }
       const a = new Audio(`${base}/assets/voice/${file}.mp3`);
-      a.volume = Math.min(1, vol * 1.2);
+      a.volume = Math.min(1, vol * 1.4);
       this.audio = a;
       a.onended = () => resolve(run === this.run);
       a.onerror = () => resolve(false);

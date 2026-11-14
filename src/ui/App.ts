@@ -1,4 +1,4 @@
-import { Talk, type TalkLine } from './Talk';
+import { englishVoices, Talk, type TalkLine } from './Talk';
 import { INTERLUDE_TALK } from '../engine/interlude-talk';
 import { Sound } from '../audio/Sound';
 import { ACTIVITIES, pickActivities, pickScript } from '../engine/activities';
@@ -202,6 +202,7 @@ export class App {
       volume: () => this.settings.sfx,
       reduced: () => this.settings.reduceMotion,
       voices: () => this.settings.voices ?? 'all',
+      speaking: (on) => this.sound.duck(on),
       nameOf: (role) => {
         if (!this.game || !['roommate', 'friend', 'partner', 'classmate', 'sibling'].includes(role)) return null;
         return peopleFor(this.game.state)[role as 'roommate'].name;
@@ -1150,6 +1151,11 @@ export class App {
   }
 
   // ---------------------------------------------------------------- test helpers (?debug)
+
+  /** The speech voices people get on this device, best first (for checks). */
+  voicesInUse(): string[] {
+    return englishVoices().map((v) => `${v.name} (${v.lang})`);
+  }
 
   quickStart(partial: Partial<Profile> = {}): void {
     this.draft = { ...this.draft, name: 'Test', ...partial };

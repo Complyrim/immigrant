@@ -176,6 +176,7 @@ export class Sound {
   private turn = 0;
   private paused = false;
   private layer: ActiveLayer | null = null;
+  private ducked = false;
 
   unlock(): void {
     if (!this.ctx) {
@@ -202,6 +203,13 @@ export class Sound {
     this.enter(this.scene, true);
   }
 
+  /** Dip the music and room sound while someone speaks (true), and bring them back (false). */
+  duck(on: boolean): void {
+    if (this.ducked === on) return;
+    this.ducked = on;
+    this.apply();
+  }
+
   setVolumes(music: number, sfx: number): void {
     this.musicVol = music;
     this.sfxVol = sfx;
@@ -211,8 +219,11 @@ export class Sound {
   private apply(): void {
     if (!this.ctx || !this.music || !this.amb || !this.sfxBus) return;
     const t = this.ctx.currentTime;
-    this.music.gain.setTargetAtTime(this.musicVol * 0.35, t, 0.1);
-    this.amb.gain.setTargetAtTime(this.musicVol * 1.4, t, 0.1);
+    // Under a voice the music and the room drop well back, so every word is clear, and come back after.
+    const duck = this.ducked ? 0.22 : 1;
+    const tc = this.ducked ? 0.08 : 0.35;
+    this.music.gain.setTargetAtTime(this.musicVol * 0.35 * duck, t, tc);
+    this.amb.gain.setTargetAtTime(this.musicVol * 1.4 * duck, t, tc);
     this.sfxBus.gain.setTargetAtTime(this.sfxVol, t, 0.05);
   }
 
