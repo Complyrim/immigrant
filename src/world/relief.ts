@@ -38,11 +38,8 @@ export function readDepth(img: HTMLImageElement | ImageBitmap, size = 256): Dept
   return { w: size, h: size, data };
 }
 
-/** Mirror a coordinate into [0, 1] the way MirroredRepeatWrapping does. */
-const mirror = (u: number): number => {
-  const m = ((u % 2) + 2) % 2;
-  return m > 1 ? 2 - m : m;
-};
+/** Past the painting's sides the depth carries on from its edge (the colour fades out there; see makeRelief). */
+const mirror = (u: number): number => Math.min(1, Math.max(0, u));
 
 function kAt(g: DepthGrid, u: number, v: number): number {
   const x = mirror(u) * (g.w - 1);
@@ -61,7 +58,7 @@ function kAt(g: DepthGrid, u: number, v: number): number {
 
 /** Build the relief mesh in stage space (camera at (0, cam.h, cam.d0) looking down -z). */
 export function makeRelief(paint: THREE.Texture, depth: DepthGrid, cam: ReliefCam, texAspect: number, dim = 1): THREE.Mesh {
-  // The sides run past the painting with the same mirrored continuation the flat backdrop uses.
+  // The sides run past the painting as a soft, darkened blur of its edge, never a mirror image of the room.
   const u0 = -0.6, u1 = 1.6;
   // A little past the top and bottom too, so the camera's drift never shows an edge.
   const v0 = -0.1, v1 = 1.15;
@@ -94,11 +91,24 @@ export function makeRelief(paint: THREE.Texture, depth: DepthGrid, cam: ReliefCa
   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   geo.setIndex(index);
   const map = paint.clone();
-  map.wrapS = THREE.MirroredRepeatWrapping;
+  map.wrapS = THREE.ClampToEdgeWrapping;
   map.repeat.set(1, 1);
   map.offset.set(0, 0);
   map.needsUpdate = true;
   const mat = new THREE.MeshBasicMaterial({ map, toneMapped: false, depthWrite: false, fog: false });
+  // Beyond the left and right edges: the edge colour, blurred more the further out, and dimmed like a vignette.
+  mat.onBeforeCompile = (sh) => {
+    sh.fragmentShader = sh.fragmentShader.replace(
+      '#include <map_fragment>',
+      `#ifdef USE_MAP
+        float sideOut = max(-vMapUv.x, vMapUv.x - 1.0);
+        float blurAmt = max(0.0, sideOut + 0.02);
+        vec4 sampledDiffuseColor = texture2D(map, vec2(clamp(vMapUv.x, 0.0, 1.0), vMapUv.y), blurAmt * 40.0);
+        sampledDiffuseColor.rgb *= 1.0 - 0.7 * smoothstep(0.0, 0.3, max(0.0, sideOut));
+        diffuseColor *= sampledDiffuseColor;
+      #endif`,
+    );
+  };
   mat.color.setScalar(dim);
   const mesh = new THREE.Mesh(geo, mat);
   mesh.renderOrder = -100;

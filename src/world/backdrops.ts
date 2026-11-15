@@ -141,13 +141,13 @@ export interface BackdropFrame {
  * room. `person` is how tall a standing adult should be as a fraction of the painting's height (from the
  * furniture and perspective in it), and `feetFromTop` is where the open foreground floor is. The
  * painting covers the view; on very wide views it stops zooming before people would outgrow the frame,
- * and the sides are filled with a mirrored continuation of the room.
+ * and the sides fade out from the painting's edge (never a mirror image of the room).
  */
 export function fitBackdrop(t: THREE.Texture, viewAspect: number, person = 0.52, feetFromTop = 0.9, focusU = 0.5): BackdropFrame {
   const img = t.image as { width: number; height: number } | undefined;
   const texAspect = img && img.height ? img.width / img.height : 1;
-  if (t.wrapS !== THREE.MirroredRepeatWrapping) {
-    t.wrapS = THREE.MirroredRepeatWrapping;
+  if (t.wrapS !== THREE.ClampToEdgeWrapping) {
+    t.wrapS = THREE.ClampToEdgeWrapping;
     t.needsUpdate = true;
   }
   // Fraction of the painting's height on screen: cover the view, but keep a standing adult within 82% of it.
