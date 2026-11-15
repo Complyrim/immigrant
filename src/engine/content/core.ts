@@ -67,8 +67,8 @@ export const STATUSES: StatusDef[] = [
 /** Opens every year after the first, for anyone who is not a student. */
 /** How each year opens, by years since arrival (index 0 is the start of the second year). */
 const YEAR_OPENERS: string[] = [
-  'Another August, your second here. You know your streets now, your bus stop and the people at the corner store.',
-  'Your third August. You no longer convert every price in your head, and you have opinions about which train car to stand in.',
+  'Another August, your second here. You know your streets now, your shortcuts and the people at the corner store.',
+  'Your third August. You no longer convert every price in your head, and you have opinions about which supermarket is worth the trip.',
   'Year four. You have a drawer of keys, cards and letters with your name on them, and a favourite seat at the laundromat.',
   'Five years. Somebody new asks you for directions and you give them without thinking. You notice that afterwards.',
   'Year six. The photos on your phone from the first winter look like someone younger, standing very straight.',

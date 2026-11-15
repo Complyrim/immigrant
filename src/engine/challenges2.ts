@@ -1,9 +1,20 @@
 import { bad, c, def, ok, social } from './cx';
 import { priceFactor } from './economy';
-import type { ChallengeDef } from './types';
+import { statusOf } from './routes';
+import type { ChallengeDef, GameState } from './types';
 
 const YOU = { role: 'player' } as const;
 const m = (n: number, y: number): number => Math.round(n * priceFactor(y));
+/** Enrolled at a school right now. */
+const enrolled = (s: GameState): boolean => statusOf(s) === 'F1';
+/** What goes wrong on the way somewhere, for how this person actually gets around. */
+const STRANDED: Record<GameState['profile']['commute'], string> = {
+  transit: 'Your bus does not come.',
+  car: 'Your car will not start.',
+  bike: 'Your bike chain snaps two blocks from home.',
+  walk: 'The street you always walk is closed for roadworks.',
+  rideshare: 'No driver accepts your ride.',
+};
 
 export const MORE_CHALLENGES: ChallengeDef[] = [
   // ------------------------------------------------------------------ study and status
@@ -117,16 +128,16 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     ],
   }), { months: [1, 3, 5, 9] }),
 
-  def('exam-late', 'study', 1, () => ({
+  def('exam-late', 'study', 1, (s) => ({
     id: 'exam-late',
     track: 'study',
     title: 'Stuck on the way to an exam',
-    body: 'Your bus does not come. Your exam starts in 25 minutes and you are on the wrong side of the city.',
+    body: `${STRANDED[s.profile.commute]} Your exam starts in 25 minutes and you are on the wrong side of the city.`,
     stage: 'street',
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('rideshare', 'Pay for a ride-share.', ok('You arrive with two minutes to spare, and feel the cost.', { money: -28, study: 1 })),
-      c('run', 'Run for the next train.', ok('Sweaty but on time. The exam goes fine.', { wellbeing: -2 }), { roll: { base: 60 }, fail: bad('You arrive ten minutes late. The proctor lets you in, but you are flustered.', { study: -4, wellbeing: -4 }, 'You might have left earlier.') }),
+      c('run', 'Run for it.', ok('Sweaty but on time. The exam goes fine.', { wellbeing: -2 }), { roll: { base: 60 }, fail: bad('You arrive ten minutes late. The proctor lets you in, but you are flustered.', { study: -4, wellbeing: -4 }, 'You might have left earlier.') }),
       c('email', 'Email the professor and hope for understanding.', ok('The professor replies kindly, but your time is already running.', { study: -1, wellbeing: -2 })),
     ],
   }), { months: [2, 3, 5, 6, 9, 11] }),
@@ -241,12 +252,12 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'A job offer that arrives by text',
     body: 'A recruiter messages you about a flexible remote job with great pay. To start, you must buy equipment from their vendor and they will "reimburse" you.',
-    stage: 'library',
+    stage: enrolled(s) ? 'library' : 'apartment',
     cast: [{ ...YOU, pose: 'type' }],
     choices: [
-      c('decline', 'Decline and report the message.', ok('You block the number and send a note to the career center.', { community: 1, career: 1 })),
-      c('career-center', 'Ask the career center whether the company is real.', ok('The center has seen the same message from other students.', { career: 2, wellbeing: 1 })),
-      c('buy', 'Buy the equipment to get started.', bad('A check arrives, then bounces. The equipment money is gone.', { money: -m(450, s.profile.arrivalYear), wellbeing: -6 }, 'You should have asked someone first.', 'Fake job offers that ask you to buy equipment first, or send money out of a check, are a common scam aimed at students.')),
+      c('decline', 'Decline and report the message.', ok(enrolled(s) ? 'You block the number and send a note to the career center.' : 'You block the number and report it to the consumer fraud line.', { community: 1, career: 1 })),
+      c('career-center', enrolled(s) ? 'Ask the career center whether the company is real.' : 'Ask a friend who knows hiring whether the company is real.', ok(enrolled(s) ? 'The center has seen the same message from other students.' : 'Your friend has seen the same message before. It is a known scam.', { career: 2, wellbeing: 1 })),
+      c('buy', 'Buy the equipment to get started.', bad('A check arrives, then bounces. The equipment money is gone.', { money: -m(450, s.profile.arrivalYear), wellbeing: -6 }, 'You should have asked someone first.', 'Fake job offers that ask you to buy equipment first, or send money out of a check, are a common scam aimed at newcomers and students.')),
     ],
   }), { months: [2, 3, 5, 9, 11] }),
 
@@ -349,11 +360,11 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     ],
   }), { months: [1, 2, 3, 5, 6, 7, 9, 11] }),
 
-  def('cricket-sunday', 'life', 1, () => ({
+  def('cricket-sunday', 'life', 1, (s) => ({
     id: 'cricket-sunday',
     track: 'life',
     title: 'Sunday cricket',
-    body: 'A group of students plays cricket in the park on Sundays with a tennis ball and a plank for a bat. They need one more player.',
+    body: `A group of ${enrolled(s) ? 'students' : 'neighbours'} plays cricket in the park on Sundays with a tennis ball and a plank for a bat. They need one more player.`,
     stage: 'park',
     // A street-cricket game in progress: the player batting, a student fielding, a friend bowling.
     cast: [{ ...YOU, pose: 'bat' }, { role: 'student', pose: 'field' }, { role: 'friend', pose: 'bowl' }],
@@ -493,7 +504,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     ],
   }), { months: [1, 2, 3, 5, 6, 9, 11] }),
 
-  def('volunteer', 'life', 1, () => ({
+  def('volunteer', 'life', 1, (s) => ({
     id: 'volunteer',
     track: 'life',
     title: 'A volunteering invitation',
@@ -503,7 +514,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     choices: [
       c('sign-up', 'Sign up for a regular shift.', ok('You get to know the neighborhood and the people in it. It feels like you belong a little more.', { community: 8, wellbeing: 5, study: -2 })),
       c('once', 'Try one shift.', ok('A good morning and a nice story to share.', { community: 3, wellbeing: 3 })),
-      c('later', 'Say "maybe later".', ok('You stay focused on school.', { study: 2 })),
+      c('later', 'Say "maybe later".', ok(enrolled(s) ? 'You stay focused on school.' : 'You keep your weekends for rest and work.', enrolled(s) ? { study: 2 } : { wellbeing: 1 })),
     ],
   }), { months: [2, 3, 6, 7, 9, 11] }),
 ];

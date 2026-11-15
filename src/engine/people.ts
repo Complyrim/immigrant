@@ -1,5 +1,6 @@
 import { createSeededRandom } from '../utils/random';
 import { cultureOf } from './country';
+import { statusOf } from './routes';
 import type { CastSpec, GameState, Role } from './types';
 
 /**
@@ -57,6 +58,8 @@ export interface People {
   classmate: Person;
   partner: Person;
   sibling: Person;
+  /** The relative someone lives with when they chose to stay with family. */
+  relative: Person;
 }
 
 const cache = new Map<string, People>();
@@ -89,6 +92,7 @@ export function peopleFor(state: GameState): People {
     classmate: take(mixed),
     partner: take(mixed),
     sibling: take(home),
+    relative: take(home, sameSex),
   };
   // Names the player typed in setup replace the random ones.
   for (const k of ['roommate', 'friend', 'classmate', 'partner', 'sibling'] as const) {
@@ -100,11 +104,32 @@ export function peopleFor(state: GameState): People {
   return people;
 }
 
+/**
+ * Who shares the player's home, from the housing they chose: a roommate in a shared flat, a cousin when they
+ * live with relatives, nobody in a studio. A scene written with a roommate uses this person instead, and a
+ * studio dweller gets a visiting friend.
+ */
+export function housemate(state: GameState): { name: string; label: string; role: Role } {
+  const p = peopleFor(state);
+  const h = state.profile.housing;
+  if (h === 'relatives') return { name: p.relative.name, label: 'your cousin', role: 'roommate' };
+  if (h === 'studio') return { name: p.friend.name, label: 'your friend', role: 'friend' };
+  return { name: p.roommate.name, label: 'your roommate', role: 'roommate' };
+}
+
+/** A scene's cast with the roommate swapped for whoever actually shares this player's home. */
+export function homeCast(cast: CastSpec[], state: GameState): CastSpec[] {
+  const hm = housemate(state);
+  if (hm.role === 'roommate') return cast;
+  const hasFriend = cast.some((c) => c.role === 'friend');
+  return cast.flatMap((c) => (c.role !== 'roommate' ? [c] : hasFriend ? [] : [{ ...c, role: hm.role }]));
+}
+
 /** Replace {roommate}, {friend}, {classmate}, {partner}, {sibling} with this game's names. */
 export function fill(text: string, state: GameState): string {
   if (!text.includes('{')) return text;
   const p = peopleFor(state);
-  return text.replace(/\{(roommate|friend|classmate|partner|sibling)\}/g, (_m, k: keyof People) => p[k].name);
+  return text.replace(/\{(roommate|friend|classmate|partner|sibling)\}/g, (_m, k: keyof People) => (k === 'roommate' ? housemate(state).name : p[k].name));
 }
 
 /** "With Priya (your roommate) and Daniel (your friend)" for the people on screen. */
@@ -113,12 +138,14 @@ export function withLine(cast: CastSpec[], state: GameState): string {
   const m = state.profile.marital;
   const label = (role: Role): string | null => {
     switch (role) {
-      case 'roommate':
-        return `${p.roommate.name} (your roommate)`;
+      case 'roommate': {
+        const hm = housemate(state);
+        return `${hm.name} (${hm.label})`;
+      }
       case 'friend':
         return `${p.friend.name} (your friend)`;
       case 'student':
-        return `${p.classmate.name} (a classmate)`;
+        return `${p.classmate.name} (${statusOf(state) === 'F1' ? 'a classmate' : 'a friend of a friend'})`;
       case 'partner':
         return m === 'married'
           ? `${p.partner.name} (your spouse)`

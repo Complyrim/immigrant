@@ -157,7 +157,7 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     id: 'oos-medical',
     track: 'work',
     title: 'You are sick and have no insurance',
-    body: 'A fever and a pain in your side. You have no insurance and no student health center. Every option sounds expensive.',
+    body: `A fever and a pain in your side. You have no insurance${s.flags.formerStudent ? ' and no student health center' : ''}. Every option sounds expensive.`,
     stage: 'clinic',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'nurse', pose: 'talk' }],
     choices: [

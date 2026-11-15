@@ -3,7 +3,7 @@ import { INTERLUDE_TALK } from '../engine/interlude-talk';
 import { Sound } from '../audio/Sound';
 import { ACTIVITIES, pickActivities, pickScript } from '../engine/activities';
 import type { Activity } from '../engine/activities';
-import { fill, peopleFor, withLine } from '../engine/people';
+import { fill, homeCast, housemate, peopleFor, withLine } from '../engine/people';
 import { CITIES, getCity, getFact, srcNum, type CityData } from '../engine/data';
 import { commuteInfo, monthlyBudget, netMonthly, START_MONEY } from '../engine/economy';
 import type { BudgetLine, CastSpec, GameState, Pose, Role, ScheduleItem, Statement } from '../engine/types';
@@ -36,7 +36,7 @@ import { ALL_CARDS, ROUTES, STATUS_MAP, routeReady } from '../engine/content/ind
 import { statusOf } from '../engine/routes';
 import { blurbOf } from '../engine/activities';
 import { setBoardLine } from '../world/Stage';
-import type { Country, StatusId } from '../engine/types';
+import type { Country, StatusCode, StatusId } from '../engine/types';
 import { buildStage } from '../world/Stage';
 
 const esc = (s: string): string =>
@@ -117,6 +117,25 @@ const COMMUTE_NAME: Record<CommuteMode, string> = {
   rideshare: 'Ride-share',
 };
 
+/** Where the daily trip goes, for the status someone holds now: class for a student, work for a worker, errands otherwise. */
+function tripTo(st: StatusCode): { where: string; question: string } {
+  if (st === 'F1') return { where: 'to campus', question: 'How will you get to campus?' };
+  if (['OPT', 'STEM_OPT', 'H1B', 'O1', 'LPR', 'CITIZEN', 'ASYLEE'].includes(st)) return { where: 'to work', question: 'How will you get to work?' };
+  return { where: 'around town', question: 'How will you get around town?' };
+}
+
+/** The evening's heading: a different line each time, in the voice of the life this person is living now. */
+function eveningTitle(st: StatusCode, month: number, rng: () => number): string {
+  const winter = [4, 5, 6].includes(month);
+  const student = ['After the last class', 'Assignments done, for now', 'The library can wait', 'A free evening before the next deadline', 'Your study group cancelled'];
+  const worker = ['After the shift', 'Off the clock', 'Laptop closed for the day', 'The commute home is done', 'Payday week, finally'];
+  const waiting = ['Another day of waiting is over', 'The forms are filed for today', 'No letters in the mailbox today', 'A quiet hour after the errands'];
+  const shared = ['Dinner is done', 'The city lights come on', 'Your phone is finally quiet', winter ? 'Dark by five, and the night is long' : 'Still light out at eight', 'A Friday at last', 'The weekend starts tonight'];
+  const own = st === 'F1' ? student : ['OPT', 'STEM_OPT', 'H1B', 'O1', 'LPR', 'CITIZEN', 'ASYLEE'].includes(st) ? worker : waiting;
+  const pool = [...own, ...own, ...shared];
+  return pool[Math.floor(rng() * pool.length)];
+}
+
 /** Shared facts that describe India only; other countries see their own version or nothing. */
 const INDIA_ONLY_TOPICS = new Set(['numbers', 'family', 'time', 'flight']);
 
@@ -189,6 +208,8 @@ export class App {
   private busy = false;
   private pendingPivot: Pivot | null = null;
   private currentActivity: Activity | null = null;
+  /** The evening is a call with a sibling (the person on screen is family, not a classmate). */
+  private siblingCall = false;
   private activityCount = 0;
   private interludeTimer = 0;
   private paused = false;
@@ -204,8 +225,12 @@ export class App {
       voices: () => this.settings.voices ?? 'all',
       speaking: (on) => this.sound.duck(on),
       nameOf: (role) => {
-        if (!this.game || !['roommate', 'friend', 'partner', 'classmate', 'sibling'].includes(role)) return null;
-        return peopleFor(this.game.state)[role as 'roommate'].name;
+        if (!this.game) return null;
+        // On a call with a sibling, the second person on screen is that sibling.
+        if (role === 'student' && this.siblingCall) return peopleFor(this.game.state).sibling.name;
+        if (role === 'roommate') return housemate(this.game.state).name;
+        if (!['friend', 'partner', 'classmate', 'sibling'].includes(role)) return null;
+        return peopleFor(this.game.state)[role as 'friend'].name;
       },
     });
     this.scene.setReducedMotion(this.settings.reduceMotion);
@@ -642,7 +667,7 @@ export class App {
     this.put(
       `<section class="screen wizard">
         <div class="panel wide">
-          <h2>How will you get to campus?</h2>
+          <h2>${tripTo(statusOf(g.state)).question}</h2>
           <p class="hint">${esc(getCity(p.cityId).name)}. Your commute costs money every month and wears on your wellbeing, or helps it. Tap Preview to watch the trip.</p>
           <div class="cards commute">${COMMUTES.map((m) => {
             const info = commuteInfo(p, m);
@@ -676,6 +701,9 @@ export class App {
   private pickCommute(mode: CommuteMode): void {
     if (!this.game) return;
     this.game.state.profile.commute = mode;
+    // Remember the choice, so the next journey starts with it highlighted instead of public transit.
+    this.draft.commute = mode;
+    saveJson(PROFILE_KEY, this.draft);
     this.scene.setCommute(mode);
     this.showChallenge();
   }
@@ -784,7 +812,7 @@ export class App {
     this.result = null;
     this.saveJourney();
     this.scene.setMonth(item.month < 0 ? 7 : (7 + item.month) % 12);
-    this.scene.showStage(ch.stage ?? 'campus', ch.cast ?? [{ role: 'player' }], g.state.profile);
+    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile);
     this.sound.setScene(ch.stage ?? 'campus');
     const showOdds = this.settings.showOdds;
     const choices = ch.choices
@@ -852,7 +880,7 @@ export class App {
       const info = commuteInfo(g.state.profile, g.state.profile.commute);
       this.put(
         `${this.hud()}<section class="screen play"><div class="transit-note panel"><b>${esc(monthLabel(g.state.profile, item.month))}</b>
-          <span>${COMMUTE_NAME[g.state.profile.commute]} to campus, about ${info.minutesOneWay} minutes</span></div></section>`,
+          <span>${COMMUTE_NAME[g.state.profile.commute]} ${tripTo(statusOf(g.state)).where}, about ${info.minutesOneWay} minutes</span></div></section>`,
         'is-transit',
       );
       this.scene.setMonth((7 + item.month) % 12);
@@ -937,8 +965,8 @@ export class App {
       `${this.hud()}
       <section class="screen play"><article class="panel card-main evening">
         <div class="kicker"><span class="tag">Between tasks</span><span>The evening is yours</span></div>
-        <h2>Nothing is due tonight</h2>
-        <p class="body">The day is over. How do you spend the evening?</p>
+        <h2>${esc(eveningTitle(statusOf(g.state), g.item?.month ?? 0, rng))}</h2>
+        <p class="body">How do you spend the evening?</p>
         <div class="choices">${list}</div>
         <div class="actions"><button class="btn ghost" data-act="skip-evening">Skip to the next day</button></div>
       </article></section>`,
@@ -954,13 +982,14 @@ export class App {
     const rng = createSeededRandom(g.state.seed + g.state.index * 13 + this.activityCount++ * 101 + 5);
     const script = pickScript(a, g.state, rng);
     const lines = script.lines.map((l) => fill(l, g.state));
-    const cast = script.cast ?? a.cast;
+    const cast = homeCast(script.cast ?? a.cast, g.state);
+    this.siblingCall = (script.with ?? '').includes('{sibling}');
     const withText = script.with ?? withLine(cast, g.state);
     this.scene.showStage(a.stage, cast, g.state.profile, undefined, a.variant);
     this.sound.setScene(a.stage);
     // The evening plays as a scene: the narration goes in the dialogue box, the people talk in bubbles over
     // their heads, and everyone acts out each moment.
-    const beats = interludeBeats(a, script.lines, lines, cast, rng);
+    const beats = interludeBeats(a, script.lines, lines, cast, rng, this.siblingCall);
     const pace = ({ off: 1, short: 0.7, normal: 1, long: 1.45 } as const)[this.settings.interlude] ?? 1;
     this.put(
       `${this.hud()}
@@ -1203,18 +1232,18 @@ function actingFor(line: TalkLine, roles: Role[]): [string, Pose][] {
  * bubbles, and the rest of the narration closes it. A speaker who is not in tonight's cast (a sibling on
  * the call instead of a parent, say) hands their lines to whoever is.
  */
-function interludeBeats(a: Activity, raw: string[], lines: string[], cast: CastSpec[], rng: () => number): TalkLine[] {
+function interludeBeats(a: Activity, raw: string[], lines: string[], cast: CastSpec[], rng: () => number, sibling = false): TalkLine[] {
   const roles = cast.map((c) => c.role).filter((r) => r !== 'player');
   const about = (t: string): Role[] => {
     const out: Role[] = [];
     for (const m of t.matchAll(/\{(roommate|friend|partner|classmate|sibling)\}/g)) {
-      const r = (m[1] === 'sibling' ? roles.find((q) => q !== 'parent') ?? 'parent' : m[1]) as Role;
+      const r = (m[1] === 'sibling' ? roles.find((q) => q !== 'parent') ?? 'parent' : m[1] === 'roommate' && !roles.includes('roommate') ? 'friend' : m[1]) as Role;
       if (!out.includes(r)) out.push(r);
     }
     return out;
   };
   const narr = lines.map((text, i) => ({ who: 'narrator' as const, text, about: about(raw[i] ?? '') }));
-  const options = INTERLUDE_TALK[a.id] ?? [];
+  const options = INTERLUDE_TALK[sibling ? `${a.id}-sibling` : a.id] ?? INTERLUDE_TALK[a.id] ?? [];
   const pick = options.length ? options[Math.floor(rng() * options.length)] : [];
   const talk: TalkLine[] = pick
     .map((l) => ({ ...l, who: l.who === 'player' || roles.includes(l.who) ? l.who : roles[0] }))

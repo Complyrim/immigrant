@@ -33,7 +33,7 @@ export const INTERLUDE_TALK: Record<string, SpokenLine[][]> = {
     [
       { who: 'friend', text: 'Okay, worst moment of your first month. Go.' },
       { who: 'player', text: 'I tipped the bus driver. He just stared at me.' },
-      { who: 'student', text: 'That is nothing. I called my professor Mom.' },
+      { who: 'student', text: 'That is nothing. I called my landlord Mom.' },
       { who: 'friend', text: 'Nobody leaves until the sky goes dark.' },
     ],
     [
@@ -87,6 +87,20 @@ export const INTERLUDE_TALK: Record<string, SpokenLine[][]> = {
       { who: 'parent', text: 'Everyone here asks about you.' },
       { who: 'player', text: 'Tell them I am fine. Better than fine.' },
       { who: 'parent', text: 'Call again on Sunday. Promise me.' },
+    ],
+  ],
+  // A call with a sibling: the sibling is the second person on screen (cast as 'student').
+  'call-home-sibling': [
+    [
+      { who: 'student', text: 'Finally! Mom said you would never call me first.' },
+      { who: 'player', text: 'I am calling you first right now. Tell her that.' },
+      { who: 'student', text: 'Your old room is mine now, by the way.' },
+      { who: 'player', text: 'Keep it clean. I am coming back to visit.' },
+    ],
+    [
+      { who: 'student', text: 'You sound different. Your accent is changing.' },
+      { who: 'player', text: 'It is not. Okay, maybe a little.' },
+      { who: 'student', text: 'Everyone misses you. Even the dog.' },
     ],
   ],
   library: [

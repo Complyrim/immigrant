@@ -53,7 +53,7 @@ export function commuteInfo(p: Profile, mode: CommuteMode): CommuteInfo {
       cost = 0;
       minutes = Math.max(12, Math.round(avg.value * 0.7));
       wb = 1.2;
-      summary = 'Free and healthy, but only works close to campus.';
+      summary = 'Free and healthy, but only works if you live close.';
       estimate = true;
       break;
     case 'bike':
@@ -85,7 +85,7 @@ export function commuteInfo(p: Profile, mode: CommuteMode): CommuteInfo {
       cost = 22 * 15 * f;
       minutes = Math.round(avg.value * 0.8);
       wb = 0.1;
-      summary = 'Comfortable and fast, and hard on a student budget.';
+      summary = 'Comfortable and fast, and hard on a tight budget.';
       estimate = true;
       break;
   }
