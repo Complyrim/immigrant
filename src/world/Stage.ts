@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { beginCastScene, castSettled, setFigurePalette } from './MhFigure';
+import { beginCastScene, castSex, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
 import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats } from './backdrops';
 import type { SeatSpot } from './backdrops';
@@ -1824,6 +1824,10 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       const box = new THREE.Box3().setFromObject(f.group);
       if (box.isEmpty()) return null;
       return new THREE.Vector3((box.min.x + box.max.x) / 2, box.max.y + 0.06, (box.min.z + box.max.z) / 2);
+    },
+    sexOf: (role) => {
+      const f = b.figs.find((q) => q.look.role === role && q.group.visible);
+      return f ? castSex(f.castId) ?? (f.look.fem === undefined ? null : f.look.fem ? 'f' : 'm') : null;
     },
     act: (role, pose) => {
       const f = b.figs.find((q) => q.look.role === role && q.group.visible);

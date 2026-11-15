@@ -36,10 +36,10 @@ const CORE: ChallengeDef[] = [
       'Your flight lands after a long journey. In the arrivals hall a border officer reviews your passport, your F-1 visa and your school paperwork (the I-20). The line is long, you are tired, and everything you own is in two suitcases.',
     narration: 'Your flight lands after a long journey. The line is long, you are tired, and everything you own is in two suitcases.',
     lines: [
-      { who: 'officer', text: 'Good afternoon. Passport, visa and your I-20, please.', voice: 'arrival-officer-1' },
-      { who: 'officer', text: 'What brings you to the United States?', voice: 'arrival-officer-2' },
+      { who: 'officer', text: 'Good afternoon. Passport, visa and your I-20, please.' },
+      { who: 'officer', text: 'What brings you to the United States?' },
       { who: 'player', text: 'I am here to study. My program starts this month.' },
-      { who: 'officer', text: 'And how are you paying for your studies?', voice: 'arrival-officer-3' },
+      { who: 'officer', text: 'And how are you paying for your studies?' },
     ],
     stage: 'airport',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }],

@@ -12,6 +12,8 @@ export interface FigureLike {
   readonly group: THREE.Group;
   readonly look: FigureLook;
   readonly lite: boolean;
+  /** The cast person playing this figure (MakeHuman figures only). */
+  readonly castId?: string;
   pose: Pose;
   walkRate: number;
   setSeated(b: boolean): void;
@@ -53,6 +55,8 @@ export interface StageResult {
   relief?: number;
   /** World position just above the head of the first visible person with this role (speech bubbles hang here). */
   anchor?(role: string): THREE.Vector3 | null;
+  /** Whether the first visible person with this role is a woman ('f') or a man ('m'), so their recorded voice matches. */
+  sexOf?(role: string): 'f' | 'm' | null;
   /** Act out a moment: this person takes a pose for now, or goes back to the one the scene gave them (null). */
   act?(role: string, pose: Pose | null): void;
   /** Painted scenes: called each frame with the way the painting maps to the world, so seated people stay on their painted seats. */
@@ -66,7 +70,7 @@ export interface PaintFrame {
   back: number;
 }
 
-export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor' | 'act'>;
+export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor' | 'sexOf' | 'act'>;
 export type Upd = (dt: number, t: number) => void;
 export type C = string | THREE.Material;
 

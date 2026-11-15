@@ -34,6 +34,7 @@ export interface StageHandle {
   paintCam?: { h: number; d0: number; f: number; vh: number };
   relief?: number;
   anchor?(role: string): THREE.Vector3 | null;
+  sexOf?(role: string): 'f' | 'm' | null;
   act?(role: string, pose: Pose | null): void;
 }
 export type StageBuilder = (id: StageId, cast: CastSpec[], profile: Profile, variant?: 'movie' | 'call') => StageHandle;
@@ -747,6 +748,11 @@ export class CityScene {
     p.project(this.camera);
     if (p.z > 1 || p.z < -1) return null;
     return { x: ((p.x + 1) / 2) * this.canvas.clientWidth, y: ((1 - p.y) / 2) * this.canvas.clientHeight };
+  }
+
+  /** Whether the person with this role in the current scene is a woman or a man (null when nobody has that role). */
+  sexOf(role: string): 'f' | 'm' | null {
+    return this.view === 'stage' ? this.stage?.sexOf?.(role) ?? null : null;
   }
 
   /** A person in the current scene acts out a moment (see StageResult.act). */

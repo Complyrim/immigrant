@@ -42,6 +42,12 @@ const PEOPLE = peopleJson as unknown as PersonDef[];
 export const PEOPLE_IDS = PEOPLE.map((p) => p.id);
 const BY_ID = new Map(PEOPLE.map((p) => [p.id, p]));
 
+/** Whether the person cast as this figure is a woman ('f') or a man ('m'); null for a figure that is not a cast person. */
+export function castSex(id: string | undefined): 'f' | 'm' | null {
+  const p = id ? BY_ID.get(id) : undefined;
+  return p ? (p.sex as 'f' | 'm') : null;
+}
+
 /* ------------------------------------------------------------------ loading */
 
 let loader: GLTFLoader | null = null;

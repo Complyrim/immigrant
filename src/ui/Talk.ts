@@ -1,9 +1,16 @@
 import type { Line } from '../engine/types';
+import { clipName, voiceSlot } from '../engine/voices';
+import clipList from '../data/voice-clips.json';
+
+/** Recordings that exist (scripts/gen_voices.mjs keeps this list), so missing ones are never requested. */
+const CLIPS = new Set<string>(clipList as string[]);
 
 /**
  * Plays a card's spoken lines as speech bubbles over the people in the scene, one at a time, with a
- * recorded voice where one exists and the device's own speech voice for the rest. Every line is also written into the card's transcript, so nothing is
- * lost to players who read rather than listen, or who cannot hear. Tapping a bubble skips ahead.
+ * recorded voice where one exists (see engine/voices.ts). A line without a recording stays up for reading
+ * time; the device's own robotic speech voice is never used. Every line is also written into the card's
+ * transcript, so nothing is lost to players who read rather than listen, or who cannot hear. Tapping a
+ * bubble skips ahead.
  */
 export interface TalkHost {
   canvas: HTMLCanvasElement;
@@ -11,8 +18,10 @@ export interface TalkHost {
   screenOf(role: string): { x: number; y: number } | null;
   volume(): number;
   reduced(): boolean;
-  /** 'all': recordings, and the device's speech voice for every other line; 'recorded': recordings only; 'off'. */
-  voices(): 'all' | 'recorded' | 'off';
+  /** Recorded voices on or off. */
+  voices(): 'on' | 'off';
+  /** Whether the person with this role on screen is a woman or a man, so their voice matches. */
+  sexOf?(role: string): 'f' | 'm' | null;
   /** Someone has started (true) or stopped (false) speaking: music and room sound dip under the voice. */
   speaking?(on: boolean): void;
   /** The name to show over a person's lines (a roommate's own name, say); falls back to the role. */
@@ -27,40 +36,6 @@ export interface PlayOptions {
   pace?: number;
   /** Called as each line starts, so the scene can act it out. */
   onLine?: (line: TalkLine, index: number) => void;
-}
-
-const synth: SpeechSynthesis | null = typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
-/**
- * A steady voice per role: the same person always sounds the same, and different people sound different.
- * Pitch moves only a little; larger shifts make device voices sound muffled.
- */
-const ROLE_PITCH: Record<string, number> = { player: 1.02, officer: 0.95, dso: 1.04, professor: 0.96, advisor: 1.03, landlord: 0.95, roommate: 1.05, friend: 1.04, parent: 0.98, doctor: 0.99, nurse: 1.05, recruiter: 1.03, teller: 1.04, owner: 0.96, spouse: 1.03, student: 1.05 };
-
-/** Novelty, effect and old low-quality voices that devices ship: never used for a person. */
-const UNCLEAR = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|junior|organ|ralph|superstar|trinoids|whisper|wobble|zarvox|fred|kathy|grandma|grandpa|rocko|eddy|flo\b|reed|sandy|shelley|novelty/i;
-/** Voices known to read clearly, best first. Premium, enhanced and natural voices rank above all of them. */
-const CLEAR = ['samantha', 'ava', 'allison', 'alex', 'susan', 'tom', 'nathan', 'zoe', 'evan', 'joelle', 'noelle', 'aaron', 'nicky', 'daniel', 'karen', 'moira', 'tessa', 'serena', 'arthur', 'martha', 'rishi', 'google us english', 'google uk english', 'microsoft aria', 'microsoft jenny', 'microsoft guy'];
-
-function voiceScore(v: SpeechSynthesisVoice): number {
-  const n = v.name.toLowerCase();
-  let score = 0;
-  if (/premium|enhanced|natural|neural|siri/.test(n)) score += 100;
-  const i = CLEAR.findIndex((c) => n.includes(c));
-  if (i >= 0) score += 50 - i;
-  if (/US/i.test(v.lang)) score += 8;
-  if (v.localService) score += 2;
-  return score;
-}
-
-/** The clearest English voices on this device, a handful of them, best first. */
-export function englishVoices(): SpeechSynthesisVoice[] {
-  const all = synth?.getVoices() ?? [];
-  const en = all.filter((v) => /^en(-|_|$)/i.test(v.lang) && !UNCLEAR.test(v.name));
-  const ranked = en.sort((a, b) => voiceScore(b) - voiceScore(a));
-  // Keep only voices close to the best one, so nobody gets a noticeably worse voice than the rest.
-  const top = ranked.length ? voiceScore(ranked[0]) : 0;
-  const good = ranked.filter((v) => voiceScore(v) >= top - 60).slice(0, 6);
-  return good.length ? good : ranked.slice(0, 4);
 }
 
 const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
@@ -110,21 +85,14 @@ export class Talk {
         log.scrollTop = log.scrollHeight;
       }
       const read = Math.max(2400, 1200 + line.text.length * 55) * (opts.pace ?? 1);
-      const mode = narr ? 'off' : this.host.voices();
-      // A recording if there is one; otherwise (or if it is missing) the device's own speech voice.
-      let spoken: Promise<boolean> | null = null;
-      if (mode !== 'off' && line.voice && line.who !== 'player') {
-        spoken = this.say(line.voice, run).then((ok) => (ok || mode !== 'all' ? ok : this.speak(line, run, read)));
-      } else if (mode === 'all') {
-        spoken = this.speak(line as Line, run, read);
-      }
+      const clip = narr || this.host.voices() === 'off' ? null : this.clipFor(line);
+      const spoken: Promise<boolean> | null = clip ? this.say(clip, run) : null;
       if (spoken) {
         this.host.speaking?.(true);
         void spoken.then(() => this.host.speaking?.(false));
       }
       // A voice that plays gets half a second after it; no voice leaves the line up for reading time.
       await Promise.race([spoken ? spoken.then((ok) => this.wait(ok ? 500 : read, run)) : this.wait(read, run), this.skipped(run)]);
-      synth?.cancel();
       this.host.speaking?.(false);
     }
     if (run !== this.run) return false;
@@ -147,10 +115,6 @@ export class Talk {
   /** Hold the conversation where it is (voice and timing), or carry on. */
   setPaused(on: boolean): void {
     this.paused = on;
-    if (synth?.speaking) {
-      if (on) synth.pause();
-      else synth.resume();
-    }
     if (!this.audio) return;
     if (on) this.audio.pause();
     else void this.audio.play().catch(() => undefined);
@@ -158,7 +122,6 @@ export class Talk {
 
   stop(): void {
     this.run++;
-    synth?.cancel();
     this.host.speaking?.(false);
     cancelAnimationFrame(this.raf);
     window.clearTimeout(this.timer);
@@ -212,34 +175,12 @@ export class Talk {
     this.raf = requestAnimationFrame(this.place);
   };
 
-  /** Speak a line with the device's own voice. Resolves true when it finished, false if speech is unavailable. */
-  private speak(line: Line, run: number, read: number): Promise<boolean> {
-    return new Promise((resolve) => {
-      const vol = this.host.volume();
-      if (!synth || vol <= 0 || run !== this.run) return resolve(false);
-      const u = new SpeechSynthesisUtterance(line.text);
-      const voices = englishVoices();
-      if (voices.length) {
-        let h = 0;
-        for (const ch of line.who) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-        u.voice = voices[h % voices.length];
-        u.lang = u.voice.lang;
-      } else u.lang = 'en-US';
-      u.pitch = ROLE_PITCH[line.who] ?? 1;
-      u.rate = 0.94;
-      u.volume = Math.min(1, vol * 1.4);
-      let done = false;
-      const finish = (ok: boolean): void => {
-        if (done) return;
-        done = true;
-        resolve(ok);
-      };
-      u.onend = () => finish(true);
-      u.onerror = () => finish(false);
-      // Some phones never report the end of an utterance: give up after a generous reading time.
-      window.setTimeout(() => finish(true), read * 1.6 + 1500);
-      synth.speak(u);
-    });
+  /** The recording of this line in the speaker's voice, or null when there is none. */
+  private clipFor(line: TalkLine): string | null {
+    const slot = voiceSlot(line.who, this.host.sexOf?.(line.who) ?? null);
+    if (!slot) return null;
+    const name = clipName(slot, line.text);
+    return CLIPS.has(name) ? name : null;
   }
 
   /** Play a recorded line; resolves true when it played to the end, false when there was nothing to hear. */

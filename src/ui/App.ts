@@ -1,4 +1,4 @@
-import { englishVoices, Talk, type TalkLine } from './Talk';
+import { Talk, type TalkLine } from './Talk';
 import { INTERLUDE_TALK } from '../engine/interlude-talk';
 import { Sound } from '../audio/Sound';
 import { ACTIVITIES, pickActivities, pickScript } from '../engine/activities';
@@ -51,7 +51,8 @@ interface Settings {
   showOdds: boolean;
   interlude: 'off' | 'short' | 'normal' | 'long';
   /** Spoken lines: recordings plus the device voice, recordings only, or silent (text only). Missing means 'all'. */
-  voices?: 'all' | 'recorded' | 'off';
+  /** Recorded voices. 'all' and 'recorded' are older saved values and mean on. */
+  voices?: 'on' | 'all' | 'recorded' | 'off';
   /** Painted scene backdrops (true) or the older 3D rooms (false). Missing in old saves means painted. */
   painted?: boolean;
 }
@@ -222,7 +223,8 @@ export class App {
       screenOf: (role) => this.scene.screenOf(role),
       volume: () => this.settings.sfx,
       reduced: () => this.settings.reduceMotion,
-      voices: () => this.settings.voices ?? 'all',
+      voices: () => (this.settings.voices === 'off' ? 'off' : 'on'),
+      sexOf: (role) => this.scene.sexOf(role),
       speaking: (on) => this.sound.duck(on),
       nameOf: (role) => {
         if (!this.game) return null;
@@ -328,8 +330,7 @@ export class App {
         return this.modal('settings');
       }
       case 'toggle-voices': {
-        const order = ['all', 'recorded', 'off'] as const;
-        this.settings.voices = order[(order.indexOf(this.settings.voices ?? 'all') + 1) % order.length];
+        this.settings.voices = this.settings.voices === 'off' ? 'on' : 'off';
         saveJson(SETTINGS_KEY, this.settings);
         return this.modal('settings');
       }
@@ -1150,7 +1151,7 @@ export class App {
         <label class="field row"><span>Effects</span><input id="s-sfx" type="range" min="0" max="100" value="${Math.round(this.settings.sfx * 100)}" /></label>
         <div class="field row"><span>Reduce motion</span><button class="btn small${this.settings.reduceMotion ? ' primary' : ''}" data-act="toggle-motion" aria-pressed="${this.settings.reduceMotion}">${this.settings.reduceMotion ? 'On' : 'Off'}</button></div>
         <div class="field row"><span>Scene art</span><button class="btn small" data-act="toggle-painted">${this.settings.painted === false ? '3D rooms' : 'Painted scenes'}</button></div>
-        <div class="field row"><span>Voices</span><button class="btn small" data-act="toggle-voices">${({ all: 'Recorded and device', recorded: 'Recorded only', off: 'Off' } as const)[this.settings.voices ?? 'all']}</button></div>
+        <div class="field row"><span>Voices</span><button class="btn small" data-act="toggle-voices">${this.settings.voices === 'off' ? 'Off' : 'On'}</button></div>
         <div class="field row"><span>Between-task scenes</span><button class="btn small" data-act="toggle-interlude">${({ off: 'Off', short: 'Short', normal: 'Normal', long: 'Long' } as const)[this.settings.interlude]}</button></div>
         <div class="field row"><span>Show odds hints (learning mode)</span><button class="btn small${this.settings.showOdds ? ' primary' : ''}" data-act="toggle-odds" aria-pressed="${this.settings.showOdds}">${this.settings.showOdds ? 'On' : 'Off'}</button></div>
         <div class="field row"><span>Saved settings</span><button class="btn small danger" data-act="reset">Reset</button></div>`;
@@ -1180,11 +1181,6 @@ export class App {
   }
 
   // ---------------------------------------------------------------- test helpers (?debug)
-
-  /** The speech voices people get on this device, best first (for checks). */
-  voicesInUse(): string[] {
-    return englishVoices().map((v) => `${v.name} (${v.lang})`);
-  }
 
   quickStart(partial: Partial<Profile> = {}): void {
     this.draft = { ...this.draft, name: 'Test', ...partial };
