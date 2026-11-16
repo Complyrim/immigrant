@@ -21,7 +21,7 @@ export const CITY_PAINT_IDS = ['nyc', 'la', 'houston', 'bayarea', 'dallas', 'chi
 export const COMMUTE_PAINT_IDS = ['commute-bike', 'commute-transit', 'commute-car', 'commute-rideshare'];
 
 /** Alternate paintings a stage borrows for particular moments (the passport booth for the arrival inspection). */
-export const ALT_PAINT_IDS = ['airport-booth'];
+export const ALT_PAINT_IDS = ['airport-booth', 'pantry', 'worksite-warehouse', 'worksite-store', 'worksite-hotel', 'worksite-construction'];
 /** Backdrops with a baked depth map (<id>-depth.png from scripts/bake_depth.py): these get a 3D relief. */
 export const DEPTH_IDS: string[] = [...BACKDROP_IDS, ...COMMUTE_PAINT_IDS, ...ALT_PAINT_IDS, ...CITY_PAINT_IDS.map((c) => `city-${c}`)];
 const depths = new Map<string, DepthGrid>();
@@ -38,6 +38,8 @@ export function setBackdropAlias(stage: StageId | null, paint?: string): void {
   alias = stage && paint && loaded.has(paint) ? { stage, paint } : null;
 }
 const keyOf = (id: StageId): string => (alias && alias.stage === id ? alias.paint : id);
+/** The painting a stage is shown with right now (its own, or one it borrows). */
+export const paintKey = keyOf;
 export function paintReady(key: string): boolean {
   return enabled && loaded.has(key);
 }
@@ -214,6 +216,8 @@ export interface SeatSpot {
   prop?: 'bench' | 'stools' | 'chairs' | 'office' | 'wood' | 'table';
   /** A seat at a desk or table: people typing or eating take it first. */
   desk?: boolean;
+  /** A painted bed: only someone asleep goes here, lying on it. */
+  bed?: boolean;
 }
 type SeatMeta = BackdropLight & { seats?: SeatSpot[]; lounge?: boolean; vh?: number; cookAt?: { u: number; vf: number; ry: number } };
 /** A service counter in the painting: staff stand behind it (hidden below the counter top), the player in front. */

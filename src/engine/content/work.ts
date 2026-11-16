@@ -49,6 +49,7 @@ const unempLimit = (s: GameState): number => (statusOf(s) === 'STEM_OPT' ? 150 :
 const startJob = (s: GameState, salary: number, jobTitle: string, extra: Flags = {}): Flags => ({
   salary,
   jobTitle,
+  jobKind: 'office',
   optUnempDays: unempDays(s),
   ...extra,
 });
@@ -99,7 +100,7 @@ const isWorker = (s: GameState): boolean => ['H1B', 'O1'].includes(statusOf(s));
 const becomeStudent = (s: GameState): Flags => {
   const used = statusOf(s) === 'H1B' ? Math.max(0, now(s) - num(s, 'h1bSince')) + num(s, 'h1bUsedBefore') : num(s, 'h1bUsedBefore');
   return {
-    status: 'F1', salary: 0, jobTitle: '', degreeStart: s.year, gradYear: '',
+    status: 'F1', salary: 0, jobKind: '', jobTitle: '', degreeStart: s.year, gradYear: '',
     graduated: false, researchTrack: false, optApplied: false, optStarted: false, optMissed: false, stemApplied: false,
     pendingOffer: false, h1bPetitionFiled: false, h1bSelected: false, capGap: false, capExempt: false,
     inGrace: false, graceUsed: false, h1bMaxUntil: '', h1bUsedBefore: used, optUnempDays: 0, unempSince: '',
@@ -222,7 +223,7 @@ export const ROUTES: RouteDef[] = [
     note: 'A US employer registered you, you were selected, and your petition was approved. You arrive with a job, a salary and a visa tied to that employer.',
     startStatus: 'H1B',
     arrival: ['work-h1b-port', 'work-h1b-first-days', 'work-arrival-home'],
-    startFlags: { salary: 5800, jobTitle: 'software engineer', h1bSince: 0, wageLevel: 2, advancedDegree: true, everify: true },
+    startFlags: { salary: 5800, jobTitle: 'software engineer', jobKind: 'office', h1bSince: 0, wageLevel: 2, advancedDegree: true, everify: true },
     startMoney: 4500,
   },
   {
@@ -231,7 +232,7 @@ export const ROUTES: RouteDef[] = [
     note: 'Your record of publications, judging and recognized work earned you an O-1. There is no lottery, but the visa rests on the evidence you keep building.',
     startStatus: 'O1',
     arrival: ['work-o1-port', 'work-o1-first-engagement', 'work-arrival-home'],
-    startFlags: { salary: 6200, jobTitle: 'research scientist', o1ValidUntil: 35, evPubs: true, evJudge: true, evCritical: true, advancedDegree: true },
+    startFlags: { salary: 6200, jobTitle: 'research scientist', jobKind: 'office', o1ValidUntil: 35, evPubs: true, evJudge: true, evCritical: true, advancedDegree: true },
     startMoney: 5000,
   },
 ];
@@ -461,7 +462,7 @@ const F1_ROAD: ChallengeDef[] = [
         choices: [
           c('enroll', 'Enroll in another program and get a new I-20.', ok('A new program, new tuition, and your student status continues.', { money: -cost(s, 3000), study: 2, flags: { optMissed: false, graduated: false } })),
           c('home', 'Go home and apply from there.', { text: 'You leave within the 30 days, with your record clean.', effects: { family: 6 }, passed: true, ends: 'went-home', lookback: 'Leaving within the grace period keeps your record clean for future visas.' }),
-          c('stay', 'Stay and hope something comes up.', bad('The 30 days pass. You are now out of status.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: 'opt-missed', salary: 0 } }, 'Staying without a plan has costs that grow.', 'Unlawful presence of more than 180 days can bar a return for 3 years after you leave, and a year or more for 10 years (INA 212(a)(9)(B)).')),
+          c('stay', 'Stay and hope something comes up.', bad('The 30 days pass. You are now out of status.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: 'opt-missed', salary: 0, jobKind: '' } }, 'Staying without a plan has costs that grow.', 'Unlawful presence of more than 180 days can bar a return for 3 years after you leave, and a year or more for 10 years (INA 212(a)(9)(B)).')),
         ],
       };
     }
@@ -481,12 +482,12 @@ const F1_ROAD: ChallengeDef[] = [
       fact: 'opt-length',
       choices: pending
         ? [
-            c('start', 'Start the job and report your employer to the DSO.', ok('Your first paycheck as a graduate. You send part of it home.', { career: 5, family: 3, legal: 3, flags: { status: 'OPT', optStarted: true, pendingOffer: false, salary, jobTitle: title, optUnempDays: 0 } }, 'On OPT you must report your employer, address changes and any interruption of employment to your DSO (8 CFR 214.2(f)(12)).')),
-            c('start-quiet', 'Start the job; you will tell the DSO later.', bad('Work begins. The reporting email sits unread.', { career: 4, legal: -6, flags: { status: 'OPT', optStarted: true, pendingOffer: false, salary, jobTitle: title, optUnempDays: 0, optUnreported: true } }, 'Something feels unfinished.', 'Unreported OPT employment can look like unemployment in your record. Since 2025 ICE has sent warnings about unreported jobs (research fact mistake-unreported-opt-job, LIKELY).')),
+            c('start', 'Start the job and report your employer to the DSO.', ok('Your first paycheck as a graduate. You send part of it home.', { career: 5, family: 3, legal: 3, flags: { status: 'OPT', optStarted: true, pendingOffer: false, salary, jobTitle: title, jobKind: 'office', optUnempDays: 0 } }, 'On OPT you must report your employer, address changes and any interruption of employment to your DSO (8 CFR 214.2(f)(12)).')),
+            c('start-quiet', 'Start the job; you will tell the DSO later.', bad('Work begins. The reporting email sits unread.', { career: 4, legal: -6, flags: { status: 'OPT', optStarted: true, pendingOffer: false, salary, jobTitle: title, jobKind: 'office', optUnempDays: 0, optUnreported: true } }, 'Something feels unfinished.', 'Unreported OPT employment can look like unemployment in your record. Since 2025 ICE has sent warnings about unreported jobs (research fact mistake-unreported-opt-job, LIKELY).')),
           ]
         : [
-            c('search', 'Start OPT and throw yourself into the search.', ok('A spreadsheet, a schedule and a lot of coffee.', { career: 2, wellbeing: -2, flags: { status: 'OPT', optStarted: true, salary: 0, unempSince: now(s), optUnempDays: 0 } })),
-            c('rest', 'Start OPT, but take two weeks to rest first.', ok('You sleep, cook and call home. The counter ticks quietly.', { wellbeing: 4, flags: { status: 'OPT', optStarted: true, salary: 0, unempSince: now(s), optUnempDays: 0 } })),
+            c('search', 'Start OPT and throw yourself into the search.', ok('A spreadsheet, a schedule and a lot of coffee.', { career: 2, wellbeing: -2, flags: { status: 'OPT', optStarted: true, salary: 0, jobKind: '', unempSince: now(s), optUnempDays: 0 } })),
+            c('rest', 'Start OPT, but take two weeks to rest first.', ok('You sleep, cook and call home. The counter ticks quietly.', { wellbeing: 4, flags: { status: 'OPT', optStarted: true, salary: 0, jobKind: '', unempSince: now(s), optUnempDays: 0 } })),
           ],
     };
   }, { statuses: ['F1'], when: (s) => s.year >= 1 && (Boolean(s.flags.optApplied) || Boolean(s.flags.optMissed)) && !s.flags.optStarted && (s.year > num(s, 'gradYear') || monthOf(s) >= 9) }),
@@ -499,19 +500,19 @@ const exitChoices = (s: GameState, reason: string): Choice[] => {
   if (s.flags.capExempt && hasJob(s)) {
     out.push(c('cap-exempt', 'Ask your university employer to file a cap-exempt H-1B petition.', ok('No lottery for this employer. The petition is filed, then approved, and you move to H-1B.', { legal: 15, wellbeing: 6, flags: { status: 'H1B', h1bSince: now(s) - num(s, 'h1bUsedBefore'), capGap: false } }, 'Universities and affiliated nonprofit or government research employers are exempt from the H-1B cap (USCIS H-1B page).'), {
       roll: { base: 85, mods: [legal()] },
-      fail: bad('The petition gets a request for more evidence and the timing slips. Your OPT runs out first.', { legal: -20, wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0 } }, 'Timing was tight.'),
+      fail: bad('The petition gets a request for more evidence and the timing slips. Your OPT runs out first.', { legal: -20, wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0, jobKind: '' } }, 'Timing was tight.'),
     }));
   }
   if (evCount(s) >= 3) {
     out.push(c('o1', 'Ask your employer to petition for an O-1 on your record.', ok('Your publications, your judging and your role at the lab carry it. You change status to O-1.', { legal: 15, wellbeing: 6, money: -cost(s, 4000), flags: { status: 'O1', o1ValidUntil: now(s) + 36 } }, 'O-1 needs at least three of eight kinds of evidence and a peer consultation (8 CFR 214.2(o)(3)(iii), (o)(5)). Lawyer fees are a designed estimate.'), {
       roll: { base: 55, mods: [career()], flagMods: [{ flag: 'legalHelp', delta: 10, label: 'legal help' }] },
-      fail: bad('The petition is denied. The evidence was close, but not there yet.', { money: -cost(s, 4000), wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0 } }, 'Close is a hard word.'),
+      fail: bad('The petition is denied. The evidence was close, but not there yet.', { money: -cost(s, 4000), wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0, jobKind: '' } }, 'Close is a hard word.'),
     }));
   }
   out.push(
     c('enroll', 'Enroll in a new degree program.', ok('A higher degree, a new I-20 and, later, a new year of practical training. It costs money and years.', { money: -cost(s, 4000), study: 3, flags: becomeStudent(s) }, 'A student becomes eligible for another 12 months of practical training after moving to a higher educational level (8 CFR 214.2(f)(10)).')),
     c('home', 'Go home with what you have built.', { text: 'You pack your desk, take a photo of the city from the train, and fly home with savings and a resume that opens doors.', effects: { family: 8, wellbeing: 2 }, passed: true, ends: 'went-home', lookback: 'The rule text gives 30 days after OPT ends to depart or take another lawful step (8 CFR 214.2(f)(5)(v)). Leaving inside that window keeps future visas open.' }),
-    c('stay', 'Stay without status and keep trying.', bad('The end date passes. Your work permit is just a card now.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0, jobTitle: '' } }, 'This road narrows month by month.', 'Unlawful presence of more than 180 days can bar a return for 3 years after leaving, a year or more for 10 years (INA 212(a)(9)(B)).')),
+    c('stay', 'Stay without status and keep trying.', bad('The end date passes. Your work permit is just a card now.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0, jobKind: '', jobTitle: '' } }, 'This road narrows month by month.', 'Unlawful presence of more than 180 days can bar a return for 3 years after leaving, a year or more for 10 years (INA 212(a)(9)(B)).')),
   );
   return out;
 };
@@ -749,7 +750,7 @@ const H1B_CARDS: ChallengeDef[] = [
       cast: [{ ...YOU, pose: 'talk' }, { role: 'recruiter', pose: 'talk' }],
       inlineFact: lose || s.flags.i140Approved ? FACT_PD : FACT_PORT,
       choices: [
-        c('move', 'Accept and start once the new petition is filed.', ok('The lawyer files the petition on Monday and you start with the new team the next week.', { career: 5, wellbeing: 3, flags: { salary: num(s, 'salary') + 900, jobTitle: 'senior engineer', wageLevel: Math.min(4, num(s, 'wageLevel', 2) + 1), ...(lose ? { permFiled: false, priorityYear: '' } : {}) } }, 'You may start new H-1B employment once the new employer files a nonfrivolous petition, if you were lawfully admitted and have not worked without authorization (8 CFR 214.2(h)(2)(i)(H)).'), {
+        c('move', 'Accept and start once the new petition is filed.', ok('The lawyer files the petition on Monday and you start with the new team the next week.', { career: 5, wellbeing: 3, flags: { salary: num(s, 'salary') + 900, jobTitle: 'senior engineer', jobKind: 'office', wageLevel: Math.min(4, num(s, 'wageLevel', 2) + 1), ...(lose ? { permFiled: false, priorityYear: '' } : {}) } }, 'You may start new H-1B employment once the new employer files a nonfrivolous petition, if you were lawfully admitted and have not worked without authorization (8 CFR 214.2(h)(2)(i)(H)).'), {
           roll: { base: 80, mods: [career()], flagMods: [{ flag: 'h1bUnauthWork', delta: -40, label: 'past unauthorized work' }] },
           fail: bad('The new company\'s lawyer finds a problem and the offer stalls. You stay where you are, a little embarrassed.', { wellbeing: -4 }, 'Not every door opens on the first push.'),
         }),
@@ -778,9 +779,9 @@ const H1B_CARDS: ChallengeDef[] = [
     cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
     fact: 'h1b-60-day-grace',
     choices: [
-      c('ask', 'Ask HR for your last day in writing and for severance.', ok('You get the date in writing and two weeks of pay. That date starts your 60 days.', { money: cost(s, 2500), wellbeing: -8, flags: { salary: 0, jobTitle: '', inGrace: true, graceSince: now(s) } }, 'The grace period runs up to 60 consecutive days from when employment ends, or until your stay ends if sooner (8 CFR 214.1(l)(2)).')),
-      c('call', 'Call your closest friend from the car park.', ok('They pick up on the first ring and stay on the line all the way home.', { wellbeing: -5, community: 3, flags: { salary: 0, jobTitle: '', inGrace: true, graceSince: now(s) } })),
-      c('freeze', 'Go home and stare at the wall.', bad('A whole day disappears. Then two.', { wellbeing: -10, flags: { salary: 0, jobTitle: '', inGrace: true, graceSince: now(s) } }, 'The clock started even while you were still.')),
+      c('ask', 'Ask HR for your last day in writing and for severance.', ok('You get the date in writing and two weeks of pay. That date starts your 60 days.', { money: cost(s, 2500), wellbeing: -8, flags: { salary: 0, jobKind: '', jobTitle: '', inGrace: true, graceSince: now(s) } }, 'The grace period runs up to 60 consecutive days from when employment ends, or until your stay ends if sooner (8 CFR 214.1(l)(2)).')),
+      c('call', 'Call your closest friend from the car park.', ok('They pick up on the first ring and stay on the line all the way home.', { wellbeing: -5, community: 3, flags: { salary: 0, jobKind: '', jobTitle: '', inGrace: true, graceSince: now(s) } })),
+      c('freeze', 'Go home and stare at the wall.', bad('A whole day disappears. Then two.', { wellbeing: -10, flags: { salary: 0, jobKind: '', jobTitle: '', inGrace: true, graceSince: now(s) } }, 'The clock started even while you were still.')),
     ],
   }), { statuses: ['H1B', 'O1'], when: (s) => hasJob(s) && !s.flags.inGrace && !s.flags.graceUsed }),
 
@@ -805,11 +806,11 @@ const H1B_CARDS: ChallengeDef[] = [
             c('stay', 'Stay and keep interviewing.', bad('You are out of status now.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: 'grace-ended', inGrace: false, graceUsed: true } }, 'The ground moved under you.', 'Once the grace period ends without a new petition or status, you are out of status, and unlawful presence can later bar a return (INA 212(a)(9)(B)).')),
           ]
         : [
-            c('sponsor', 'Interview everywhere and ask each company if it can file quickly.', ok(`A company that knows the process files a petition for you within weeks.${country === 'india' ? ' Your mother lights a lamp at home.' : ''}`, { career: 3, wellbeing: 8, legal: 6, flags: { inGrace: false, graceUsed: true, salary: 5500, jobTitle: 'software engineer', ...(s.flags.permFiled && !s.flags.i140Approved ? { permFiled: false, priorityYear: '' } : {}) } }, 'A new employer can file a petition during the grace period and you may start once it is filed (8 CFR 214.1(l)(2); 214.2(h)(2)(i)(H)).'), {
+            c('sponsor', 'Interview everywhere and ask each company if it can file quickly.', ok(`A company that knows the process files a petition for you within weeks.${country === 'india' ? ' Your mother lights a lamp at home.' : ''}`, { career: 3, wellbeing: 8, legal: 6, flags: { inGrace: false, graceUsed: true, salary: 5500, jobTitle: 'software engineer', jobKind: 'office', ...(s.flags.permFiled && !s.flags.i140Approved ? { permFiled: false, priorityYear: '' } : {}) } }, 'A new employer can file a petition during the grace period and you may start once it is filed (8 CFR 214.1(l)(2); 214.2(h)(2)(i)(H)).'), {
               roll: { base: 45, mods: [career(), social()] },
               fail: bad('Final rounds, then silence. The days keep falling off.', { wellbeing: -8 }, 'You gave it everything.'),
             }),
-            c('visitor', 'File to change to visitor status to buy time.', ok('The change is filed. You cannot work as a visitor, but you are not out of status while it is pending.', { money: -cost(s, 500), legal: 2, flags: { status: 'B2', inGrace: false, graceUsed: true, salary: 0 } }, 'During the grace period you may apply to change status (8 CFR 214.1(l)(2); 8 CFR 248.1). A visitor may not work (8 CFR 214.1(e)). The fee is a designed estimate.')),
+            c('visitor', 'File to change to visitor status to buy time.', ok('The change is filed. You cannot work as a visitor, but you are not out of status while it is pending.', { money: -cost(s, 500), legal: 2, flags: { status: 'B2', inGrace: false, graceUsed: true, salary: 0, jobKind: '' } }, 'During the grace period you may apply to change status (8 CFR 214.1(l)(2); 8 CFR 248.1). A visitor may not work (8 CFR 214.1(e)). The fee is a designed estimate.')),
             // attorney review: a change of status filed inside the grace period (8 CFR 214.1(l)(2); 248.1).
             c('student', 'Get into a graduate program, take the I-20, and file to change to F-1 before the 60 days end.', ok('A school admits you for the next term and issues an I-20. You pay the SEVIS fee and file Form I-539 inside the grace period. Student life again, with savings this time.', { money: -cost(s, 4000) - cost(s, 470) - 350, study: 3, flags: becomeStudent(s) }, 'During the grace period you may apply to change status (8 CFR 214.1(l)(2); 8 CFR 248.1). Fees here are designed estimates: about $470 for Form I-539 and $350 for the SEVIS fee, plus a tuition deposit.')),
             c('home', 'Go home now, on your own terms.', { text: 'You book the flight with weeks to spare, and leave a clean record behind you.', effects: { family: 8, wellbeing: 1 }, passed: true, ends: 'went-home' }),
@@ -935,7 +936,7 @@ const H1B_CARDS: ChallengeDef[] = [
     }
     choices.push(
       c('home', 'Go home for the year abroad the rule requires, and maybe come back.', { text: 'You leave on good terms. Your manager says your seat will be there if a petition can be filed after a year away.', effects: { family: 8, career: -2 }, passed: true, ends: 'went-home', lookback: 'After six years in H or L status, you must spend a year outside the US before returning in H or L (8 CFR 214.2(h)(13)(iii)(A)).' }),
-      c('stay', 'Stay past the end date.', bad('The end date passes. Your badge still works; your status does not.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: 'h1b-six-years', salary: 0, jobTitle: '' } }, 'This could cost more than it saves.', 'Staying past your authorized stay builds unlawful presence (INA 212(a)(9)(B)).')),
+      c('stay', 'Stay past the end date.', bad('The end date passes. Your badge still works; your status does not.', { legal: -25, wellbeing: -8, flags: { status: 'NONE', statusLostReason: 'h1b-six-years', salary: 0, jobKind: '', jobTitle: '' } }, 'This could cost more than it saves.', 'Staying past your authorized stay builds unlawful presence (INA 212(a)(9)(B)).')),
     );
     return {
       id: 'work-h1b-six-year',
@@ -1041,7 +1042,7 @@ const O1_CARDS: ChallengeDef[] = [
     choices: [
       c('file', 'File the extension with everything you have.', ok('Approved for another year.', { money: -cost(s, 1500), legal: 10, wellbeing: 5, flags: { o1ValidUntil: now(s) + 12 } }, 'O-1 extensions are granted in steps of up to 1 year to continue the same activity (8 CFR 214.2(o)(12)(ii)). Legal fees are a designed estimate.'), {
         roll: { base: 72, mods: [career(), legal()], flagMods: [{ flag: 'evFolder', delta: 12, label: 'kept evidence' }, { flag: 'h1bUnauthWork', delta: -25, label: 'unauthorized work' }] },
-        fail: bad('Denied. There is no appeal. Your stay ends with the current approval.', { money: -cost(s, 1500), legal: -25, wellbeing: -12, flags: { status: 'NONE', statusLostReason: 'o1-extension-denied', salary: 0, jobTitle: '' } }, 'The folder was thinner than the work deserved.', 'A denied O-1 extension cannot be appealed (8 CFR 214.2(o)(12)(iii)). Keeping evidence current is the best protection.'),
+        fail: bad('Denied. There is no appeal. Your stay ends with the current approval.', { money: -cost(s, 1500), legal: -25, wellbeing: -12, flags: { status: 'NONE', statusLostReason: 'o1-extension-denied', salary: 0, jobKind: '', jobTitle: '' } }, 'The folder was thinner than the work deserved.', 'A denied O-1 extension cannot be appealed (8 CFR 214.2(o)(12)(iii)). Keeping evidence current is the best protection.'),
       }),
       c('home', 'Let it end and go home to a job offer there.', { text: 'You leave at the end of your approval, with a body of work and a network on two continents.', effects: { family: 8 }, passed: true, ends: 'went-home' }),
     ],

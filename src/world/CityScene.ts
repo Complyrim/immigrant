@@ -123,6 +123,8 @@ export class CityScene {
   private playMs = 3500;
   private playStart = 0;
   private mode: CommuteMode = 'transit';
+  /** On the way to work in a painted commute scene: the view bumps and sways with the ride. */
+  private riding: CommuteMode | null = null;
   private reduced = false;
   private raf = 0;
   private last = 0;
@@ -317,8 +319,10 @@ export class CityScene {
     const paint = this.mode === 'walk' ? null : `commute-${this.mode}`;
     const base: StageId = this.mode === 'walk' ? 'walk' : 'street';
     if (profile && this.stageBuilder && paintReady(paint ?? 'walk')) {
-      const pose = this.mode === 'walk' ? 'walk' : this.mode === 'rideshare' || this.mode === 'transit' ? 'phone' : 'idle';
+      // Driving: in the driver's seat, hands on the wheel. Bus and ride-share: in a seat, on the phone. Bike: on the move.
+      const pose = this.mode === 'walk' ? 'walk' : this.mode === 'bike' ? 'idle' : this.mode === 'car' ? 'sit' : 'phone';
       this.showStage(base, [{ role: 'player', pose }], profile, paint ?? undefined);
+      this.riding = this.mode;
       if (this.view === 'stage') return new Promise((resolve) => window.setTimeout(resolve, this.reduced ? 600 : ms));
     }
     this.showCity();
@@ -508,6 +512,7 @@ export class CityScene {
   }
 
   private clearStage(): void {
+    this.riding = null;
     if (!this.stage) return;
     this.scene.remove(this.stage.group);
     this.stage.dispose();
@@ -647,6 +652,14 @@ export class CityScene {
         // A painting with depth lets the camera drift slowly, so the room opens up around the people.
         const drift = (this.stage.relief ?? 0) * sway;
         this.camera.position.set(Math.sin(time * 0.19) * 0.16 * drift, pc.h + Math.sin(time * 0.13 + 1) * 0.04 * drift, pc.d0 - (0.5 - 0.5 * Math.cos(time * 0.09)) * 0.14 * drift);
+        if (this.riding && sway) {
+          // The ride itself: a vehicle hums and bumps over the road and leans gently into turns; on foot or on a
+          // bike the view bobs with each step or pedal stroke.
+          const vehicle = this.riding === 'car' || this.riding === 'rideshare' || this.riding === 'transit';
+          const bump = vehicle ? Math.sin(time * 19) * 0.004 + Math.sin(time * 7.3) * 0.006 : Math.abs(Math.sin(time * 4.2)) * 0.02;
+          this.camera.position.y += bump;
+          this.camera.position.x += vehicle ? Math.sin(time * 0.6) * 0.03 : Math.sin(time * 2.1) * 0.01;
+        }
         this.camera.quaternion.identity();
         const n = this.camera.near;
         const fa = this.camera.far;

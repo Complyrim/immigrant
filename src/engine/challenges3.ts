@@ -1,5 +1,6 @@
 import { bad, c, def, ok } from './cx';
 import { priceFactor } from './economy';
+import { CASH_JOBS, pickOne } from './content/jobs';
 import type { ChallengeDef, GameState } from './types';
 
 const YOU = { role: 'player' } as const;
@@ -91,19 +92,30 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     };
   }, { when: (s) => oos(s) && Boolean(s.flags.canReinstate) && !s.flags.reinstateDenied }),
 
-  def('oos-cash-job', 'work', 3, () => ({
-    id: 'oos-cash-job',
-    track: 'work',
-    title: 'Cash work',
-    body: 'Rent comes due whether or not you have a record. A restaurant owner and a cleaning contractor both say they can pay you in cash. Nobody asks for papers, and nobody promises they will keep paying.',
-    stage: 'cafe',
-    cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
-    choices: [
-      c('kitchen', 'Take the kitchen job.', ok('Twelve-hour shifts, hot steel and a staff meal at the end. The money keeps you afloat.', { wellbeing: -3, flags: { informalWork: true } })),
-      c('cleaning', 'Take the cleaning job.', ok('Nights in empty offices, a bucket and silence. It pays more than you feared.', { wellbeing: -4, flags: { informalWork: true } })),
-      c('hold-out', 'Hold out and live on savings.', bad('You skip a meal here and there. The savings melt quickly.', { money: -300, wellbeing: -4 }, 'You cannot hold out forever.')),
-    ],
-  }), { when: (s) => oos(s) && !s.flags.informalWork }),
+  def('oos-cash-job', 'work', 3, (s) => {
+    const one = pickOne(s, 'oos-cash-a', [CASH_JOBS.kitchen, CASH_JOBS.store]);
+    const two = pickOne(s, 'oos-cash-b', [CASH_JOBS.cleaning, CASH_JOBS.care, CASH_JOBS.construction]);
+    const end: Record<string, string> = {
+      kitchen: 'The money keeps you afloat.',
+      store: 'The owner pays on Fridays, mostly on time.',
+      cleaning: 'It pays more than you feared.',
+      care: 'The family is kind and pays on time.',
+      construction: 'The foreman pays every Saturday from a roll of bills.',
+    };
+    return {
+      id: 'oos-cash-job',
+      track: 'work',
+      title: 'Cash work',
+      body: `Rent comes due whether or not you have a record. ${one.where.charAt(0).toUpperCase() + one.where.slice(1)} and ${two.where} both say they can pay you in cash. Nobody asks for papers, and nobody promises they will keep paying.`,
+      stage: 'cafe',
+      cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
+      choices: [
+        c(one.short, `Take the ${one.short} job.`, ok(`${one.text} ${end[one.kind]}`, { wellbeing: -3, flags: { informalWork: true, jobKind: one.kind } })),
+        c(two.short, `Take the ${two.short} job.`, ok(`${two.text} ${end[two.kind]}`, { wellbeing: -4, flags: { informalWork: true, jobKind: two.kind } })),
+        c('hold-out', 'Hold out and live on savings.', bad('You skip a meal here and there. The savings melt quickly.', { money: -300, wellbeing: -4 }, 'You cannot hold out forever.')),
+      ],
+    };
+  }, { when: (s) => oos(s) && !s.flags.informalWork }),
 
   def('oos-wage-theft', 'work', 2, (s) => ({
     id: 'oos-wage-theft',
@@ -125,7 +137,7 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     ],
   }), { when: (s) => oos(s) && Boolean(s.flags.informalWork) }),
 
-  def('oos-boss-threat', 'work', 2, () => ({
+  def('oos-boss-threat', 'work', 2, (s) => ({
     id: 'oos-boss-threat',
     track: 'work',
     title: 'A threat in a friendly voice',
@@ -135,7 +147,7 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     choices: [
       c('quiet', 'Say nothing and work through the illness.', bad('You get sicker. Nobody mentions it again.', { wellbeing: -7 }, 'Silence kept you in the job and cost you something.')),
       c('advice', 'Ask a legal aid group what you can do.', ok('They tell you threats like this are a known tactic and that you have options. It is frightening and a relief.', { wellbeing: 3, flags: { legalHelp: true } })),
-      c('quit', 'Quit.', ok('You walk out with your head up and an empty wallet.', { wellbeing: 2, money: -m(200, 2025), flags: { informalWork: false } })),
+      c('quit', 'Quit.', ok('You walk out with your head up and an empty wallet.', { wellbeing: 2, money: -m(200, 2025), flags: { informalWork: false, ...(Number(s.flags.salary ?? 0) > 0 ? {} : { jobKind: '' }) } })),
     ],
   }), { when: (s) => oos(s) && Boolean(s.flags.informalWork) }),
 
@@ -311,7 +323,7 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     cast: [{ ...YOU, pose: 'think' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('decline', 'Decline and ask a workers\' center what options exist.', ok('They cannot make you legal overnight, but they tell you which jobs do not need one and where wage claims are protected.', { wellbeing: 2, community: 2, flags: { legalHelp: true } })),
-      c('use', 'Use the borrowed documents.', bad('The new job pays well and you start the next day. Every shift starts with a cold feeling at the door.', { money: 0, wellbeing: -6, flags: { crime: 1, informalWork: true } }, 'It pays, and it scares you.', 'Using another person\'s identity documents is a serious crime and can lead to prosecution and removal (INA 237(a)(2) criminal grounds).')),
+      c('use', 'Use the borrowed documents.', bad('The new job pays well and you start the next day. Every shift starts with a cold feeling at the door.', { money: 0, wellbeing: -6, flags: { crime: 1, informalWork: true, jobKind: 'warehouse' } }, 'It pays, and it scares you.', 'Using another person\'s identity documents is a serious crime and can lead to prosecution and removal (INA 237(a)(2) criminal grounds).')),
       c('stay', 'Stay where you are.', ok('The pay is half and the work is harder, but you sleep.', { wellbeing: -2 })),
     ],
   }), { when: () => false }),

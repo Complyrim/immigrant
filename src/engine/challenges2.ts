@@ -337,7 +337,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     title: 'The grocery trap',
     body: 'Familiar brands cost double at the big store. An international grocery across town has your spices and dals, but the bus ride is long.',
     stage: 'street',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'stranger', pose: 'idle' }],
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('trip', 'Make the trip once a month and stock up.', ok('Home feels closer for a week. You save money too.', { money: m(40, s.profile.arrivalYear), wellbeing: 3, family: 1 })),
       c('nearby', 'Shop at the nearby store and adapt your cooking.', ok('The food is not quite right, but it is quick.', { money: -m(25, s.profile.arrivalYear), wellbeing: -1 })),
@@ -352,7 +352,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     title: 'Cooking for friends',
     body: 'You decide to cook the dish your mother makes for guests. The kitchen is small, the stove is temperamental and you are missing two spices.',
     stage: 'apartment',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'roommate', pose: 'talk' }, { role: 'friend', pose: 'cheer' }],
+    cast: [{ ...YOU, pose: 'cook' }, { role: 'roommate', pose: 'talk' }, { role: 'friend', pose: 'cheer' }],
     choices: [
       c('invite-all', 'Invite everyone on the floor.', ok('It is chaos and delicious. Someone brings dessert and someone brings a guitar.', { community: 8, wellbeing: 6, money: -35 })),
       c('small', 'Keep it to two or three close friends.', ok('A quiet, warm night. You feel at home for the first time.', { community: 4, wellbeing: 5, money: -20 })),
@@ -509,7 +509,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'life',
     title: 'A volunteering invitation',
     body: 'A neighborhood food pantry needs weekend volunteers. A friend says it is a good way to meet locals and build a sense of belonging.',
-    stage: 'park',
+    stage: 'cafe',
     cast: [{ ...YOU, pose: 'carry' }, { role: 'friend', pose: 'talk' }, { role: 'stranger', pose: 'wave' }],
     choices: [
       c('sign-up', 'Sign up for a regular shift.', ok('You get to know the neighborhood and the people in it. It feels like you belong a little more.', { community: 8, wellbeing: 5, study: -2 })),

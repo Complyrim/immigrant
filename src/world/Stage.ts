@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { beginCastScene, castSex, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
-import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats } from './backdrops';
+import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, paintKey } from './backdrops';
 import type { SeatSpot } from './backdrops';
 import { pbrMaterial } from './pbr';
 import type { CastSpec, Pose } from '../engine/types';
@@ -1352,12 +1352,14 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
   setFigurePalette(null);
   setShadowTone(null);
   // What the player carries depends on where they are: luggage on arrival, a backpack around campus, nothing at home.
-  player = { ...player, accessory: id === 'airport' ? 'suitcase' : BAG_STAGES.has(id) ? 'backpack' : 'none' };
+  // Seated in a car, a ride-share or on the train, nobody keeps a backpack on their back.
+  const seatedRide = /^commute-(car|rideshare|transit)$/.test(paintKey(id));
+  player = { ...player, accessory: id === 'airport' ? 'suitcase' : BAG_STAGES.has(id) && !seatedRide ? 'backpack' : 'none' };
   beginCastScene();
   // Seats that belong: a park bench outdoors, a wooden chair at home or in a kitchen, an office chair elsewhere.
   setSeatStyle(OUTDOOR.has(id) ? 'bench' : HOMELY.has(id) ? 'wood' : 'office');
   const b = new SB(palette);
-  b.noBags = !BAG_STAGES.has(id);
+  b.noBags = !BAG_STAGES.has(id) || seatedRide;
   const build = BUILDERS[id] ?? airport;
   const cfg = build(b, cast, player);
   const backdrop = backdropFor(id);
@@ -1448,10 +1450,19 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     const service = backdropCounter(id);
     const served = Boolean(service?.cust && main.some((f) => service.roles.includes(f.look.role ?? '')));
     for (const f of main) {
-      if (f.pose === 'sleep' || !(wantsSeat(f) || atRest(f))) continue;
+      // Someone asleep goes into the painting's own bed, if it has one, not onto a bed built in front of it.
+      if (f.pose === 'sleep') {
+        const bed = groups.find((g) => g.spot.bed && g.who.length === 0);
+        if (bed) {
+          bed.who.push(f);
+          inGroup.add(f);
+        }
+        continue;
+      }
+      if (!(wantsSeat(f) || atRest(f))) continue;
       if (served && f.look.role === 'player' && f.pose !== 'sit' && f.pose !== 'type' && f.pose !== 'eat') continue;
       const desk = f.pose === 'type' || f.pose === 'eat';
-      const free = groups.filter((g) => g.who.length < g.cap);
+      const free = groups.filter((g) => g.who.length < g.cap && !g.spot.bed);
       // People who came to talk share a seat that already has someone on it before starting a new one.
       const g = (desk ? free.find((q) => q.spot.desk) : undefined) ?? free.find((q) => q.who.length > 0) ?? free[0];
       if (!g) continue;
@@ -1473,6 +1484,20 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       node.rotation.y = spot.ry ?? 0;
       if (spot.prop && talkers.length) node.rotation.y = (seatMid < 0.5 ? 1 : -1) * 0.95;
       node.position.set(((spot.u - 0.5) * g.depth * texA) / PAINT_F, g.y, d0 - g.depth);
+      if (spot.bed) {
+        // Lying on the mattress, head toward the headboard.
+        for (const f of who) {
+          node.add(f.group);
+          f.group.position.set(0, 0.02, 0);
+          f.group.rotation.y = 0;
+          f.group.userData.noShadow = true;
+          f.group.userData.seated = false;
+        }
+        pinned = true;
+        node.traverse((o) => { o.castShadow = false; });
+        b.g.add(node);
+        continue;
+      }
       who.forEach((f, i) => {
         const lx = across ? (i ? gap / 2 : -gap / 2) : (i - (who.length - 1) / 2) * gap;
         const turn = across ? (i ? -Math.PI / 2 : Math.PI / 2) : -Math.sign(lx) * (spot.fan ?? 0);
@@ -1806,6 +1831,41 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     span = used.length ? (standers.length ? (rowHalf + seatHalf) * 0.75 : 0) : rowHalf;
     // A medium shot from about the shins up: floor contact never has to match the painting.
     // Light the people with colours measured from the painting, from its brighter side.
+    // Cycling to work: the player rides a bicycle toward the viewer, seated on the saddle, down the bike lane.
+    if (paintKey(id) === 'commute-bike') {
+      const rider = main.find((f) => f.look.role === 'player');
+      const at = rider?.group.parent;
+      if (rider && at) {
+        // Re-applied once the figure has loaded: a pose set before then can be lost to the loading one.
+        const sitDown = (): void => {
+          rider.setSeated(true);
+          rider.setPose('talk');
+        };
+        sitDown();
+        void castSettled().then(sitDown);
+        rider.group.userData.seated = true;
+        rider.group.userData.basePose = 'talk';
+        rider.group.rotation.y = 0.55;
+        rider.group.position.y = 0.5;
+        const frame = '#2f7f86';
+        const bk = new THREE.Group();
+        bk.position.set(rider.group.position.x - 0.06, 0, rider.group.position.z - 0.11);
+        bk.rotation.y = -Math.PI / 2 + 0.55;
+        at.add(bk);
+        for (const wx of [-0.5, 0.5]) {
+          b.ring(0.33, 0.04, '#1b1c1f', wx, 0.34, 0, 0, 0, bk);
+          b.cyl(0.05, 0.08, '#9aa0a8', wx, 0.34, 0, bk, 10).rotation.x = Math.PI / 2;
+        }
+        b.cyl(0.08, 0.03, '#9aa0a8', 0.0, 0.32, 0.03, bk, 14).rotation.x = Math.PI / 2;
+        b.box(1.0, 0.04, 0.04, frame, 0, 0.56, 0, 0, bk).rotation.z = -0.12;
+        b.box(0.04, 0.42, 0.04, frame, -0.12, 0.5, 0, 0, bk);
+        b.box(0.22, 0.04, 0.1, '#1b1c1f', -0.12, 0.72, 0, 0, bk);
+        b.box(0.04, 0.42, 0.04, '#1b1c1f', 0.46, 0.58, 0, 0, bk);
+        b.box(0.04, 0.04, 0.5, '#1b1c1f', 0.46, 0.8, 0, 0, bk);
+        bk.traverse((o) => { o.castShadow = true; });
+        b.blob(rider.group.position.x, rider.group.position.z + 0.12, 0.5, 1.2);
+      }
+    }
     const lit = backdropLight(id);
     // The cast takes on the painting's own shadow and light colours, so they sit in it rather than on it.
     setFigurePalette(lit ? { shade: lit.ground, key: lit.key } : null);

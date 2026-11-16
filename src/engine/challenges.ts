@@ -151,7 +151,7 @@ const CORE: ChallengeDef[] = [
       title: 'Winter break: home or stay?',
       body: `Classes pause for three weeks and your family wants you home. Getting there is ${cu?.homeTravelNote ?? 'a long trip'}, and a round trip costs roughly ${money(cost)} (a designed estimate). Travel with a current travel signature on your I-20 (check with your international office).`,
       stage: 'airport',
-      cast: [{ ...YOU, pose: 'carry' }, { role: 'friend', pose: 'wave' }],
+      cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'wave' }],
       fact: 'time-difference',
       choices: [
         c(

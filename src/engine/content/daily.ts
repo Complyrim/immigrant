@@ -1,10 +1,13 @@
 /**
  * Everyday life once you are here (ids `daily-`): ordinary work days and the first errands of a new life.
  *
- * - Work days: one card per duty. Each card has two settings and picks one from the player's job:
- *   an office or lab for professional work, and a work floor (kitchen, warehouse, hotel, store, site) for
- *   hands-on work, including work without authorization. Office days are never shown to anyone who
- *   cannot work lawfully, and nobody on F-1 or B-2 sees any of these.
+ * - Work days: one card per duty. Each card has an office or lab version for professional work and a
+ *   hands-on version for each kind of work in flags.jobKind (content/jobs.ts; the title is the fallback):
+ *   a kitchen shift, a warehouse order, a store till, a hotel room turnover, a construction site, a care
+ *   visit, a delivery route or a cleaning shift, including work without authorization. Kitchen, warehouse,
+ *   store, hotel and construction use the 'worksite' stage (the engine picks the painting for jobKind),
+ *   care uses 'clinic', delivery 'street' and cleaning 'workplace'. Office days are never shown to anyone
+ *   who cannot work lawfully, and nobody on F-1 or B-2 sees any of these.
  * - The Social Security office (status track, the first months of a new work-authorized status).
  * - The licence office and the road test (life track), then buying a first car.
  *
@@ -15,7 +18,9 @@
  * years-home.ts also yh_licence, yh_licenceSkipY, yh_ownsCar, yh_carY, yh_carSkipY, yh_carLoan.
  */
 import { bad, c, def, mod, money, ok, well } from '../cx';
-import type { CastSpec, ChallengeDef, Choice, GameState, Line, Outcome, StageId, StatusCode } from '../types';
+import type { CastSpec, ChallengeDef, Choice, GameState, Line, Outcome, Pose, Role, StageId, StatusCode } from '../types';
+import { CASH_DEFAULT_KINDS, jobKindOf, stageForKind } from './jobs';
+import type { SiteKind } from './jobs';
 import { YOU, band, cost, has, is, mayWork, noStatus, num, settled } from './yx';
 
 // ------------------------------------------------------------------ helpers
@@ -25,18 +30,20 @@ const career = (label = 'career standing') => mod('career', 50, 0.3, label);
 const ties = (label = 'people who know you') => mod('community', 40, 0.25, label);
 const title = (s: GameState): string => String(s.flags.jobTitle || '');
 
-/** Job titles in the game that mean work with your hands on a floor, not at a desk. */
-const HANDS_ON = /housekeep|warehouse|retail|cashier|kitchen|cook|clean|crew|driver|construction|labor/i;
-
 /** Paid, lawful work right now (including a work permit held by someone with a pending case). Never without status. */
 const lawfulJob = (s: GameState): boolean => settled(s) && !noStatus(s) && mayWork(s) && num(s, 'salary') > 0;
 /** Cash work with no lawful paid job behind it (flags.informalWork); F-1 and B-2 never count. */
 const cashWork = (s: GameState): boolean => settled(s) && has(s, 'informalWork') && !lawfulJob(s);
-/** A hands-on work floor: cash work, or a lawful job with a hands-on title. */
-const siteJob = (s: GameState): boolean => cashWork(s) || (lawfulJob(s) && HANDS_ON.test(title(s)));
+/** A hands-on work floor: cash work, or a lawful job whose kind (flags.jobKind, else the title) is not office work. */
+const siteJob = (s: GameState): boolean => cashWork(s) || (lawfulJob(s) && jobKindOf(s) !== 'office');
 /** A professional job in an office or a lab. */
-const officeJob = (s: GameState): boolean => lawfulJob(s) && !HANDS_ON.test(title(s));
+const officeJob = (s: GameState): boolean => lawfulJob(s) && jobKindOf(s) === 'office';
 const cashPaid = (s: GameState): boolean => cashWork(s);
+/** The kind of hands-on work today. Cash work never happens at a desk, so an office kind falls back to a seeded one. */
+const siteKind = (s: GameState): SiteKind => {
+  const k = jobKindOf(s);
+  return k === 'office' ? CASH_DEFAULT_KINDS[s.seed % CASH_DEFAULT_KINDS.length] : k;
+};
 
 /** Everyone who could be working. F-1 and B-2 are never here. */
 const WORKERS: StatusCode[] = ['OPT', 'STEM_OPT', 'H1B', 'O1', 'LPR', 'CITIZEN', 'ASYLEE', 'AOS_PENDING', 'ASY_PENDING', 'NONE'];
@@ -51,15 +58,9 @@ const asTitle = (s: GameState): string => {
   const t = title(s);
   return !t || /work in your field|or retail work/i.test(t) ? '' : ` as ${/^[aeiou]/i.test(t) ? 'an' : 'a'} ${t}`;
 };
-/** Where a hands-on shift happens, as words. */
-const place = (s: GameState): string => {
-  const t = title(s);
-  if (/housekeep/i.test(t)) return 'the hotel';
-  if (/warehouse/i.test(t)) return 'the warehouse';
-  if (/retail|cashier/i.test(t)) return 'the store';
-  return 'work';
-};
 const payWord = (s: GameState): string => (cashPaid(s) ? 'the envelope' : 'your paycheck');
+const extraPay = (s: GameState, cash: string, stub: string): string => (cashPaid(s) ? cash : stub);
+const cap = (t: string): string => t.charAt(0).toUpperCase() + t.slice(1);
 
 interface Scene {
   title: string;
@@ -74,14 +75,13 @@ interface Scene {
 export const DAILY_WORK_IDS: string[] = [];
 
 /**
- * One work duty with an office or lab version and a hands-on version. Each duty fits four months a
- * quarter apart (the nth duty fits months n, n+3, n+6, n+9), so a year spreads them about one a month
- * instead of drawing several in the same month.
+ * One work duty with an office or lab version and a hands-on version (SITE below, one variant per kind
+ * of work). Each duty fits four months a quarter apart (the nth duty fits months n, n+3, n+6, n+9), so a
+ * year spreads them about one a month instead of drawing several in the same month.
  */
 const day = (
   id: string,
   office: (s: GameState) => Scene,
-  site: (s: GameState) => Scene,
   extraWhen: (s: GameState) => boolean = () => true,
 ): ChallengeDef => {
   const n = DAILY_WORK_IDS.length;
@@ -94,7 +94,7 @@ const day = (
     'work',
     14,
     (s) => {
-      const sc = siteJob(s) ? site(s) : office(s);
+      const sc = siteJob(s) ? SITE[id](s, siteKind(s)) : office(s);
       const choices = sc.choices.map((ch) => ({ ...ch, success: mark(s, ch.success), ...(ch.fail ? { fail: mark(s, ch.fail) } : {}) }));
       return { id, track: 'work', title: sc.title, body: sc.narration, narration: sc.narration, lines: sc.lines, stage: sc.stage, cast: sc.cast, choices };
     },
@@ -106,9 +106,612 @@ const day = (
   );
 };
 
-const boss = (pose: CastSpec['pose'] = 'talk'): CastSpec => ({ role: 'owner', pose });
 const manager = (pose: CastSpec['pose'] = 'talk'): CastSpec => ({ role: 'advisor', pose });
 const coworker = (pose: CastSpec['pose'] = 'idle'): CastSpec => ({ role: 'friend', pose });
+
+// ------------------------------------------------------------------ hands-on work days, by kind of work
+
+/** Words and people for each kind of hands-on work. Only warehouse and store work shows you holding boxes. */
+interface Floor {
+  /** Who is in charge, as words. */
+  boss: string;
+  /** Who speaks for the person in charge: a care coordinator is a nurse, everyone else a boss. */
+  bossRole: Role;
+  /** What is handed to you on your first day alone. */
+  station: string;
+  /** One piece of the work: "every plate", "every stop". */
+  unit: string;
+  /** One stretch of work: "shift", "route". */
+  shift: string;
+  /** The people you work with. */
+  crew: string;
+  /** Your usual pose at work. */
+  pose: Pose;
+  /** Your coworker's usual pose. */
+  mate: Pose;
+  /** Alone on the job (no coworker standing next to you). */
+  alone: boolean;
+}
+
+const FLOOR: Record<SiteKind, Floor> = {
+  kitchen: { boss: 'the head cook', bossRole: 'owner', station: 'the grill station', unit: 'plate', shift: 'shift', crew: 'the kitchen crew', pose: 'cook', mate: 'cook', alone: false },
+  warehouse: { boss: 'the shift lead', bossRole: 'owner', station: 'a picking zone', unit: 'order', shift: 'shift', crew: 'the crew', pose: 'carry', mate: 'carry', alone: false },
+  store: { boss: 'the store manager', bossRole: 'owner', station: 'the front till', unit: 'sale', shift: 'shift', crew: 'the crew', pose: 'idle', mate: 'idle', alone: false },
+  hotel: { boss: 'the head housekeeper', bossRole: 'owner', station: 'a whole floor of rooms', unit: 'room', shift: 'shift', crew: 'the housekeepers', pose: 'idle', mate: 'talk', alone: false },
+  construction: { boss: 'the foreman', bossRole: 'owner', station: 'a section of the site', unit: 'cut', shift: 'day', crew: 'the crew', pose: 'idle', mate: 'think', alone: false },
+  care: { boss: 'the care coordinator', bossRole: 'nurse', station: 'a list of three clients', unit: 'visit', shift: 'round of visits', crew: 'the other aides', pose: 'talk', mate: 'phone', alone: true },
+  driver: { boss: 'the dispatcher', bossRole: 'owner', station: 'a route of ninety stops', unit: 'stop', shift: 'route', crew: 'the other drivers', pose: 'phone', mate: 'phone', alone: true },
+  cleaning: { boss: 'the cleaning supervisor', bossRole: 'owner', station: 'a whole floor of offices', unit: 'room', shift: 'shift', crew: 'the cleaning crew', pose: 'idle', mate: 'talk', alone: false },
+};
+
+const bossOf = (k: SiteKind, pose: Pose = 'talk'): CastSpec => ({ role: FLOOR[k].bossRole, pose });
+const mateOf = (k: SiteKind, pose?: Pose): CastSpec => coworker(pose ?? FLOOR[k].mate);
+const yourPose = (k: SiteKind, stock = false): Pose => (stock && (k === 'warehouse' || k === 'store') ? 'carry' : FLOOR[k].pose);
+
+/** A hands-on scene in the setting for its kind of work (the engine picks the painting for jobKind on 'worksite'). */
+const floor = (k: SiteKind, title: string, narration: string, lines: Line[], cast: CastSpec[], choices: Choice[]): Scene => ({
+  title,
+  narration,
+  lines,
+  stage: stageForKind(k),
+  cast,
+  choices,
+});
+
+/** The first slip on your own, by kind. */
+const MISHAP: Record<SiteKind, string> = {
+  kitchen: 'You drop a full tray in the rush. Nobody yells, which is somehow worse.',
+  warehouse: 'A stack of boxes slides off your cart in the rush. Nobody yells, which is somehow worse.',
+  store: 'You ring up the same item three times while the line watches you fix it. Nobody yells, which is somehow worse.',
+  hotel: 'You forget the towels in two rooms and have to run back. Nobody yells, which is somehow worse.',
+  construction: 'You cut a board short in the rush and the foreman just sighs, which is somehow worse.',
+  care: 'You rush a client through breakfast and she goes quiet on you for the rest of the visit.',
+  driver: 'You leave a parcel at the wrong door and have to drive back across town for it.',
+  cleaning: 'You skip a whole row of bins in the rush and find a polite note about it the next night.',
+};
+
+/** The trick a coworker shows you. */
+const TRICK: Record<SiteKind, string> = {
+  kitchen: 'a faster way to hold the knife',
+  warehouse: 'a trick for the heavy part',
+  store: 'a trick for the old till that sticks',
+  hotel: 'how to make a bed in half the time',
+  construction: 'how to carry a full bucket without wrecking your back',
+  care: 'how to help someone stand without hurting either of you',
+  driver: 'which stops have dogs and which have back doors',
+  cleaning: 'the right mix for the hard floors',
+};
+
+const SITE: Record<string, (s: GameState, k: SiteKind) => Scene> = {
+  'daily-first-assignment': (_s, k) => {
+    const F = FLOOR[k];
+    const narration =
+      k === 'care'
+        ? 'For two weeks someone came on every visit with you. Today the care coordinator hands you a list of three clients and says they are yours.'
+        : k === 'driver'
+          ? 'For two weeks someone rode along with you. Today the dispatcher hands you the van keys and a route of ninety stops.'
+          : `For two weeks someone stood next to you. Today ${F.boss} points at ${F.station} and says it is yours until close.`;
+    return floor(
+      k,
+      'Your first shift alone',
+      narration,
+      [
+        { who: F.bossRole, text: 'You watched long enough. This is yours today.' },
+        { who: 'player', text: k === 'care' ? 'All three? On my own?' : k === 'driver' ? 'Ninety stops? On my own?' : 'All of it? Until close?' },
+        { who: 'friend', text: F.alone ? 'Call me if anything feels wrong. My phone is always on.' : 'Shout if it gets busy. I am two steps away.' },
+      ],
+      [{ ...YOU, pose: yourPose(k) }, bossOf(k), mateOf(k)],
+      [
+        c('steady', `Go slow and get every ${F.unit} right.`, ok(`You are slower than the others and nothing comes back. By the end of the ${F.shift}, ${F.boss} nods at you once.`, { career: 2, wellbeing: 2 })),
+        c('fast', 'Go as fast as the others from the first hour.', ok('You keep up, mostly. Your hands shake a little at the end.', { career: 3, wellbeing: -2 }), {
+          roll: { base: 55, mods: [well()] },
+          fail: bad(MISHAP[k], { wellbeing: -4 }, 'Speed comes after the hands know the work.'),
+        }),
+        c('help', 'Ask your coworker the moment you are unsure.', ok(`She shows you ${TRICK[k]}. You owe her a coffee and you mean to pay it.`, { community: 3, career: 1 })),
+      ],
+    );
+  },
+
+  'daily-deadline': (s, k) => {
+    const F = FLOOR[k];
+    const V: Record<SiteKind, [string, string, string]> = {
+      kitchen: ['The big booking', 'A party of eighty is booked for lunch tomorrow, and the prep has to start tonight or very early.', 'Eighty for lunch tomorrow. Who stays tonight to prep?'],
+      warehouse: ['The big order', 'An order for two hundred comes in for six in the morning. That means everyone stays late tonight, or someone comes in very early.', 'Two hundred, ready by six. Who stays tonight?'],
+      store: ['The early truck', 'A truck of holiday stock arrives at six in the morning, and the shelves have to be full before the doors open.', 'The truck comes at six. Who stays tonight to clear the stockroom?'],
+      hotel: ['The full house', 'A conference checks in at noon tomorrow, and sixty rooms still need a deep clean first.', 'Sixty rooms by noon tomorrow. Who stays tonight?'],
+      construction: ['The early pour', 'The concrete truck is booked for six in the morning, and the forms are not finished.', 'The truck pours at six. Who stays to finish the forms?'],
+      care: ['Coming home tomorrow', 'Your client comes home from hospital tomorrow. The house has to be ready: the bed moved downstairs, the bathroom safe, the fridge stocked.', 'She comes home tomorrow. Can someone stay late to get the house ready?'],
+      driver: ['The double route', 'A holiday rush: every route doubles tomorrow, and the vans have to be loaded before the sun is up.', 'Double routes tomorrow. Who stays tonight to load the vans?'],
+      cleaning: ['The big meeting', 'The office you clean has a board meeting at eight tomorrow, and every floor has to shine before it.', 'Board meeting at eight. Who stays to finish every floor?'],
+    };
+    const [t, narration, ask] = V[k];
+    return floor(
+      k,
+      t,
+      narration,
+      [
+        { who: F.bossRole, text: ask },
+        { who: 'friend', text: 'I have my kids tonight. I can come at four.' },
+        { who: 'player', text: 'I can stay. How late?' },
+      ],
+      [{ ...YOU, pose: yourPose(k, true) }, bossOf(k), mateOf(k, 'think')],
+      [
+        c('stay', 'Stay late and get it done.', ok(`You leave at midnight with sore feet. ${extraPay(s, 'There is a little extra in the envelope that week.', 'The extra hours show on your next pay stub.')}`, { money: cost(s, 120), wellbeing: -3 })),
+        c('early', 'Come in very early with your coworker instead.', ok('The two of you work side by side with the radio on before anyone else is awake. It is the best morning of the month.', { money: cost(s, 100), community: 3, wellbeing: -1 })),
+        c('no', 'Say you cannot do either this time.', ok(`${cap(F.boss)} shrugs and calls someone else. Next time the others get asked first.`, { wellbeing: 2, career: -2 })),
+      ],
+    );
+  },
+
+  'daily-present': (_s, k) => {
+    const F = FLOOR[k];
+    const WAY: Record<SiteKind, string> = {
+      kitchen: 'the prep line set up your way',
+      warehouse: 'the picking shelves laid out your way',
+      store: 'the shelves stocked your way',
+      hotel: 'the carts stocked your way',
+      construction: 'the tools and materials laid out your way each morning',
+      care: 'the visit checklist done your way',
+      driver: 'the vans loaded in stop order, your way',
+      cleaning: 'the carts and the route through each floor done your way',
+    };
+    return floor(
+      k,
+      'Show the new way',
+      `${cap(F.boss)} wants ${WAY[k]}, because yours is faster. Before the next ${F.shift} starts, you are to show ${F.crew}.`,
+      [
+        { who: F.bossRole, text: 'Your way is faster. Show them before we start.' },
+        { who: 'player', text: 'Me? Some of them have been here ten years.' },
+        { who: 'friend', text: 'Then show us something good. We are listening.' },
+      ],
+      [{ ...YOU, pose: 'present' }, bossOf(k, 'idle'), mateOf(k, 'idle')],
+      [
+        c('show', 'Do it once slowly, with your hands, and let them try.', ok(`An older worker nods and changes one small thing, and it is better. By noon it is everyone's way, not yours.`, { community: 4, career: 3 })),
+        c('tell', 'Explain it quickly and get back to work.', ok('Half of them do it your way. The other half do it the old way, a little louder.', { career: 1, community: -1 })),
+        c('credit', `Say it was the boss's idea, to keep the peace.`, ok(`${cap(F.boss)} looks pleased and says nothing. Everyone knows anyway.`, { community: 2, career: -1 })),
+      ],
+    );
+  },
+
+  'daily-mistake': (s, k) => {
+    const F = FLOOR[k];
+    const V: Record<SiteKind, [string, string, string, string]> = {
+      kitchen: ['The plate that came back', 'A plate comes back from the pass before it reaches the table. The ticket said no nuts, and the garnish has nuts. You plated it.', 'This ticket says no nuts. Who plated it?', 'The two garnish tubs look the same. It happens to all of us.'],
+      warehouse: ['The wrong pallet', `A delivery comes back. The labels were right, and the boxes inside were somebody else's order. You packed it.`, 'This came back. Who packed it?', 'Those two codes look the same. It happens to all of us.'],
+      store: ['The short till', 'Your till is forty dollars short at the end of the night. You count twice. You gave a twenty in change instead of a five.', 'Your drawer is forty short. What happened?', 'The twenties and fives sit side by side in that drawer. It happens to all of us.'],
+      hotel: ['The room you missed', 'A guest calls the front desk: their room was never made up. It was on your list, and you skipped it by mistake.', 'Room 412 was never done. It was on your list.', 'Those two doors are right next to each other. It happens to all of us.'],
+      construction: ['Off the line', 'A wall you framed yesterday is two inches off the line on the plan. You measured it.', 'This wall is two inches off. Who framed it?', 'That plan is hard to read in this light. It happens to all of us.'],
+      care: ['The locked door', `You lock your client's keys inside when you leave, and her daughter has to call a locksmith to get back in.`, 'Her daughter had to call a locksmith. What happened?', 'Those doors lock by themselves. It happens to all of us.'],
+      driver: ['The wrong door', 'A parcel comes back to the depot. The address was right, and you left it at the house next door.', 'This came back. You left it at number twelve, not fourteen.', 'Those two houses look the same. It happens to all of us.'],
+      cleaning: ['The room you missed', 'The office manager calls: the conference room was not cleaned before a client meeting. It was on your floor.', 'The conference room was a mess this morning. It was yours.', 'That room hides behind the kitchen. It happens to all of us.'],
+    };
+    const [t, narration, ask, comfort] = V[k];
+    return floor(
+      k,
+      t,
+      narration,
+      [
+        { who: F.bossRole, text: ask },
+        { who: 'player', text: 'That was me. I am sorry. I can put it right now.' },
+        { who: 'friend', text: comfort },
+      ],
+      [{ ...YOU, pose: yourPose(k, k === 'warehouse') }, bossOf(k), mateOf(k)],
+      [
+        c('redo', 'Say it was you and put it right on your break.', ok(`You miss your lunch and it gets fixed. ${cap(F.boss)} stops frowning at you by the afternoon.`, { career: 2, wellbeing: -2 })),
+        c('fix', 'Put it right, and suggest a simple check so it cannot happen again.', ok(`${cap(F.boss)} grumbles about the extra step, then makes it the rule. Nobody makes that mistake again.`, { career: 4, community: 2 })),
+        c('pay', `Offer to pay for the mistake out of ${payWord(s)}.`, bad(`${cap(F.boss)} takes the offer. ${extraPay(s, 'The envelope is lighter that week.', 'It comes out of your pay.')} Nobody else is ever offered the same deal.`, { money: -cost(s, 150), wellbeing: -3 }, 'Mistakes at work are part of the cost of running a business.')),
+      ],
+    );
+  },
+
+  'daily-new-hire': (s, k) => {
+    const F = FLOOR[k];
+    const TEACH: Record<SiteKind, string> = {
+      kitchen: 'Teach him the safe way with knives and hot oil, then the fast way, in that order.',
+      warehouse: 'Teach him the safe way to lift and the fast way to work, in that order.',
+      store: 'Teach him the safe way to lift a case, then the till, in that order.',
+      hotel: 'Teach him the safe way to lift a mattress and the fast way to work, in that order.',
+      construction: 'Teach him the safe way to lift and the fast way to work, in that order.',
+      care: 'Teach him the safe way to help someone stand, then the rest, in that order.',
+      driver: 'Teach him the safe way to drive and carry, then the fast way, in that order.',
+      cleaning: 'Teach him which cleaners never mix, then the fast way, in that order.',
+    };
+    return floor(
+      k,
+      'The new one is yours',
+      `A new worker starts today, barely older than your cousin and very nervous. ${cap(F.boss)} puts him with you for the week and walks off.`,
+      [
+        { who: F.bossRole, text: 'Show him everything. He is with you all week.' },
+        { who: 'stranger', text: 'I have never done this before. Is it hard?' },
+        { who: 'player', text: 'The first week is hard. Then your hands learn it.' },
+      ],
+      [{ ...YOU, pose: 'talk' }, bossOf(k, 'idle'), { role: 'stranger', pose: 'idle' }],
+      [
+        c('teach', TEACH[k], ok('He is slow all week and does not get hurt. On Friday he brings you a pastry from his mother.', { community: 5, wellbeing: 1 })),
+        c('pay', `Ask ${F.boss} for a little extra for training him.`, ok('The answer is no, then a little extra appears anyway at the end of the month.', { money: cost(s, 60), career: 1 }), {
+          roll: { base: 50, mods: [ties()] },
+          fail: ok('The answer is no, and the new one still needs teaching. You teach him.', { community: 2 }),
+        }),
+        c('own', 'Keep your head down and let him watch.', ok('He watches and copies everything, including your one bad habit.', { wellbeing: 1, community: -1 })),
+      ],
+    );
+  },
+
+  'daily-client': (_s, k) => {
+    const F = FLOOR[k];
+    const V: Record<SiteKind, [string, string, string, string]> = {
+      kitchen: ['The plate sent back', 'A diner sends his plate back for the second time and asks for the person in charge. The head cook is out, and the server is looking at you.', 'Twice now. I want whoever is in charge.', 'He is out for an hour. Tell me what is wrong and I will fix it.'],
+      warehouse: ['The angry driver', 'A truck driver has waited two hours at the loading dock and wants someone in charge. The shift lead is in a meeting, and the driver is looking at you.', 'Two hours I have been sitting here. Who is in charge?', 'She is in a meeting. Tell me what you need and I will try.'],
+      store: ['The customer at the counter', 'A customer at the counter wants to speak to someone in charge, and the someone in charge is out. He is getting louder, and he is looking at you.', 'This is the second time. I want to talk to someone in charge.', 'He is out for an hour. Tell me what happened and I will try.'],
+      hotel: ['The guest in the hallway', 'A guest stops you in the hallway, angry that his room was not ready at check-in. The front desk sent him up anyway, and now he is looking at you.', 'I was told the room would be ready. This is the second time.', 'I am sorry. Give me fifteen minutes and it will be right.'],
+      construction: ['The angry neighbor', 'A neighbor walks onto the site, furious about the dust on his car and the noise at seven. The foreman is at the supply yard, and the neighbor is looking at you.', 'Every morning at seven. Who is in charge here?', 'The foreman is out for an hour. Tell me and I will pass it on.'],
+      care: ['The worried son', `Your client's son calls during your visit, upset that his mother waited for lunch yesterday when another aide was late. He wants someone in charge, and you are the one who answered.`, 'My mother sat hungry for two hours yesterday. Who do I talk to?', 'I am with her now. Let me tell you how she is, then I will pass it on.'],
+      driver: ['The parcel that came late', 'A man is waiting on his doorstep when you pull up, angry that his parcel is a day late. It is not your fault, and he is looking at you.', 'A day late. I took the day off for this.', 'I am sorry. It is here now. Let me find out what happened.'],
+      cleaning: ['The desk that was moved', 'An office worker staying late is angry that her desk was moved so the floor could be cleaned. Your supervisor is on another floor, and she is looking at you.', 'Who moved my things? I had everything in order.', 'I did, to clean under it. Show me how it was and I will put it back.'],
+    };
+    const [t, narration, angry, reply] = V[k];
+    const lines: Line[] = [
+      { who: 'stranger', text: angry },
+      { who: 'player', text: reply },
+    ];
+    if (!F.alone) lines.push({ who: 'friend', text: 'Stay calm. You are doing fine.' });
+    const cast: CastSpec[] = [{ ...YOU, pose: k === 'care' || k === 'driver' ? 'phone' : 'idle' }, { role: 'stranger', pose: 'talk' }];
+    if (!F.alone) cast.push(mateOf(k, 'idle'));
+    return floor(
+      k,
+      t,
+      narration,
+      lines,
+      cast,
+      [
+        c('listen', 'Let them finish, then fix the part you can fix.', ok('It was a small thing in the end. No thank you, which counts as a win here.', { career: 2, wellbeing: 1 })),
+        c('call', `Call ${F.boss} and hand over the phone.`, ok(`${cap(F.boss)} sorts it in two minutes and tells you later to just say sorry and offer something small next time.`, { wellbeing: 1 })),
+        c('back', 'Say calmly that you will not be shouted at.', ok('They go quiet, surprised. Later your coworker laughs when you tell the story.', { wellbeing: 3, community: 1 }), {
+          roll: { base: 55, mods: [ties()] },
+          fail: bad(`A complaint reaches ${F.boss}, who sides with them and frowns at you for a week.`, { wellbeing: -3, career: -1 }, 'You were right, and it still cost you.'),
+        }),
+      ],
+    );
+  },
+
+  'daily-overtime': (s, k) => {
+    const F = FLOOR[k];
+    return floor(
+      k,
+      k === 'driver' ? 'A double route' : k === 'care' ? 'A double round' : 'A double shift',
+      `Someone did not show up. ${cap(F.boss)} asks whether you can stay and do the next ${F.shift} too, right now, straight through.`,
+      [
+        { who: F.bossRole, text: 'He did not come in. Can you do the next one too?' },
+        { who: 'player', text: 'I have been going since six.' },
+        { who: 'friend', text: 'I can do half if you do half.' },
+      ],
+      [{ ...YOU, pose: yourPose(k) }, bossOf(k), mateOf(k, 'think')],
+      [
+        c('double', 'Do the whole double.', ok(`Sixteen hours. ${extraPay(s, 'The extra is in the envelope.', 'The extra hours show on your pay stub.')} Your back reminds you for two days.`, { money: cost(s, 180), wellbeing: -6 })),
+        c('half', 'Split it with your coworker.', ok('Four extra hours each. You head home at the same time, too tired to talk, which is its own kind of friendship.', { money: cost(s, 90), community: 3, wellbeing: -2 })),
+        c('no', 'Go home. You are done for today.', ok(`${cap(F.boss)} is short with you the next morning, then forgets about it.`, { wellbeing: 3, career: -1 })),
+      ],
+    );
+  },
+
+  'daily-safety': (s, k) => {
+    const F = FLOOR[k];
+    const lost = `you lose three days of work and ${cashPaid(s) ? 'three days of pay' : 'some pay'}`;
+    interface Hazard { t: string; n: string; ask: string; warn: string; safe: [string, string]; slow: [string, string]; quick: [string, string, string] }
+    const V: Record<SiteKind, Hazard> = {
+      kitchen: {
+        t: 'The grease by the fryer', n: 'The floor by the fryer is slick with grease again, and the head cook wants a full pot of boiling stock moved across it, now.',
+        ask: 'Move that pot to the back. Now, before the rush.', warn: 'Someone slipped there last month. Mind the grease.',
+        safe: ['Throw salt on the grease and get a second pair of hands first.', 'It takes a minute longer. The head cook taps the counter, and nobody gets burned.'],
+        slow: ['Ladle it into smaller pots and move them one by one.', 'More trips and a sore arm, but the boiling stock stays in the pots.'],
+        quick: ['Carry it across in one go. The rush is coming.', 'You make it across, heart pounding.', `Your foot slides and hot stock splashes your arm. Nothing serious, but ${lost}.`],
+      },
+      warehouse: {
+        t: 'The wet floor', n: 'There is a leak near the back and the floor by the heavy shelves is wet again. You are asked to carry a stack across it, quickly.',
+        ask: 'Move those across before the truck comes. Quickly.', warn: 'Someone slipped there last week. Take the long way.',
+        safe: ['Mop and put out a sign first, then carry.', 'It takes five extra minutes. The shift lead taps a watch, and nobody falls.'],
+        slow: ['Take the long way round with smaller loads.', 'More trips and a sore back, but you stay on your feet.'],
+        quick: ['Do it the quick way. The truck is coming.', 'You make it across, twice, heart pounding.', `Your foot goes out from under you. Nothing is broken, but ${lost}.`],
+      },
+      store: {
+        t: 'The wet stockroom', n: 'The cooler in the stockroom is leaking again and the floor by the shelves is wet. You are asked to carry a stack of cases across it, quickly.',
+        ask: 'Get those cases out front before we open. Quickly.', warn: 'Someone slipped there last week. Take the long way.',
+        safe: ['Mop and put out a sign first, then carry.', 'It takes five extra minutes. The manager taps a watch, and nobody falls.'],
+        slow: ['Take the long way round with smaller loads.', 'More trips and a sore back, but you stay on your feet.'],
+        quick: ['Do it the quick way. The doors open soon.', 'You make it across, twice, heart pounding.', `Your foot goes out from under you. Nothing is broken, but ${lost}.`],
+      },
+      hotel: {
+        t: 'The broken lift', n: 'The service lift is broken again. The head housekeeper wants a full load of linen carried down three flights of stairs before checkout, quickly.',
+        ask: 'All of that downstairs before checkout. Quickly.', warn: 'You cannot see your feet with that pile. Take two trips.',
+        safe: ['Ask for a second person and carry it down together.', 'It takes ten minutes to find someone. Nobody falls on the stairs.'],
+        slow: ['Take smaller loads and more trips.', 'More trips and burning legs, but you can see every step.'],
+        quick: ['Carry it all in one go. Checkout is coming.', 'You make it down, heart pounding, the pile up to your chin.', `You miss a step you could not see past the linen. Nothing is broken, but ${lost}.`],
+      },
+      construction: {
+        t: 'The cracked ladder', n: 'The only tall ladder on site has a cracked foot, and the foreman wants you up it, quickly, to finish a ceiling before the inspector comes.',
+        ask: 'Up you go. The inspector is here in an hour.', warn: 'That foot is cracked right through. I would not.',
+        safe: ['Refuse that ladder and ask for the scaffold or a new one.', 'The foreman grumbles and sends someone to the yard. The inspector waits ten minutes, and nobody falls.'],
+        slow: ['Have your coworker hold the ladder while you work slowly.', `Slow and awkward, with your coworker's weight on the bottom rung. It holds.`],
+        quick: ['Go up it anyway. The inspector is coming.', 'You finish the ceiling with your heart in your throat.', `The ladder shifts and you come down hard on one knee. Nothing is broken, but ${lost}.`],
+      },
+      care: {
+        t: 'The slippery bath', n: 'Your client wants a bath today. There is no grab bar and no mat, she is unsteady on her feet, and she does not want to wait.',
+        ask: 'Do what is safe. Call me if you are unsure.', warn: 'That bathroom scares me too. Do not do it alone.',
+        safe: ['Help her wash sitting down today and report the missing bar.', 'She is a little cross about the chair. The agency sends someone to fit a grab bar the next week.'],
+        slow: ['Wait until your coworker can come and help with the bath.', 'Two of you, slow and careful. Your coworker loses half her lunch break and does not mind.'],
+        quick: ['Help her into the bath on your own. She insists.', 'She gets her bath, and you hold her the whole time, arms shaking.', `She slips, and you catch her and twist your back. She is unhurt, but ${lost}.`],
+      },
+      driver: {
+        t: 'The icy driveway', n: 'The last stop of the day is up a steep driveway glazed with ice, with a heavy box and the light going. The dispatcher wants the route finished.',
+        ask: 'Last stop. Finish it and come in.', warn: 'That hill is a sheet of ice. I fell there last winter.',
+        safe: ['Leave a note and bring it back tomorrow with a hand truck.', 'The dispatcher sighs at your late stop. You stay on your feet.'],
+        slow: ['Walk up the grass beside the drive, one careful step at a time.', 'Slow and muddy, but you stay up.'],
+        quick: ['Carry it straight up the ice. You want to go home.', 'You make it up and back, heart pounding.', `Your feet go out from under you. Nothing is broken, but ${lost}.`],
+      },
+      cleaning: {
+        t: 'The two bottles', n: 'A coffee stain will not come out of the carpet, and the supervisor says to mix the two strong cleaners on your cart to get it done fast.',
+        ask: 'Mix the two. It works faster.', warn: 'My aunt got sick doing that. Do not mix them.',
+        safe: ['Refuse to mix them and give one cleaner more time.', 'It takes twenty minutes longer. The stain mostly comes out, and nobody breathes anything bad.'],
+        slow: ['Open a window and ask your coworker what she uses.', 'She hands you a different bottle. It works, slowly.'],
+        quick: ['Mix them. The supervisor said so.', 'The stain comes out. Your eyes sting for an hour.', `The fumes make you dizzy and sick. Nothing lasting, but ${lost}.`],
+      },
+    };
+    const h = V[k];
+    return floor(
+      k,
+      h.t,
+      h.n,
+      [
+        { who: F.bossRole, text: h.ask },
+        { who: 'player', text: 'This does not look safe.' },
+        { who: 'friend', text: h.warn },
+      ],
+      [{ ...YOU, pose: yourPose(k, true) }, bossOf(k), mateOf(k)],
+      [
+        c('mop', h.safe[0], ok(h.safe[1], { wellbeing: 2, community: 1 })),
+        c('long', h.slow[0], ok(h.slow[1], { wellbeing: -1 })),
+        c('quick', h.quick[0], ok(h.quick[1], { career: 1 }), {
+          roll: { base: 70 },
+          fail: bad(h.quick[2], { money: -cost(s, 300), wellbeing: -8 }, 'Nobody should have asked you to take that risk.'),
+        }),
+      ],
+    );
+  },
+
+  'daily-credit': (s, k) => {
+    const F = FLOOR[k];
+    const V: Record<SiteKind, [string, string]> = {
+      kitchen: ['The head cook praises the spotless walk-in fridge in front of everyone and thanks your coworker. You scrubbed it on Sunday, alone, unpaid.', 'I spent my Sunday on that.'],
+      warehouse: ['The shift lead praises the sorted returns shelf in front of everyone and thanks your coworker. You sorted it on Sunday, alone, unpaid.', 'I spent my Sunday on that.'],
+      store: ['The store manager praises the clean storeroom in front of everyone and thanks your coworker. You did it on Sunday, alone, unpaid.', 'I spent my Sunday on that.'],
+      hotel: ['The head housekeeper praises the tidy linen room in front of everyone and thanks your coworker. You sorted it on your day off, alone, unpaid.', 'I spent my day off on that.'],
+      construction: ['The foreman praises the cleared site in front of the owner and thanks your coworker. You hauled the scrap on Saturday, alone, unpaid.', 'I spent my Saturday on that.'],
+      care: [`The care coordinator reads out a thank-you card from a client's family and thanks your coworker. It was your client. You did those visits for three months.`, 'Those were my visits.'],
+      driver: ['The dispatcher praises your coworker for finishing a huge route early. You took thirty of her stops on top of your own.', 'Thirty of those stops were mine.'],
+      cleaning: ['The building manager praises the shining lobby floor and thanks your coworker. You stripped and waxed it on Sunday, alone, unpaid.', 'I spent my Sunday on that.'],
+    };
+    const [narration, mine] = V[k];
+    return floor(
+      k,
+      'Who did the work',
+      narration,
+      [
+        { who: F.bossRole, text: 'Good job. Really good work.' },
+        { who: 'friend', text: 'Thanks, boss.' },
+        { who: 'player', text: mine },
+      ],
+      [{ ...YOU, pose: 'idle' }, bossOf(k), mateOf(k, 'talk')],
+      [
+        c('say', 'Say plainly, in front of everyone, that it was your work.', ok(`There is a short silence. Then ${F.boss} says thank you to you, and means it.`, { career: 2, wellbeing: 2, community: -1 })),
+        c('later', `Tell ${F.boss} alone at the end of the ${F.shift}.`, ok(`${cap(F.boss)} listens, nods, and gives you the better hours next week.`, { career: 2, money: cost(s, 50) })),
+        c('drop', 'Say nothing. It is not worth the trouble.', bad('Your coworker never mentions it. The next extra job is yours again.', { wellbeing: -3 }, 'It was worth saying.')),
+      ],
+    );
+  },
+
+  'daily-review': (s, k) => {
+    const F = FLOOR[k];
+    return floor(
+      k,
+      'Asking for more',
+      `You have been ${cashPaid(s) ? 'paid the same in the envelope' : 'on the same hourly rate'} since you started. You do more than you did then. ${cap(F.boss)} is in a good mood today.`,
+      [
+        { who: 'player', text: 'Can we talk about my pay? I do more now.' },
+        { who: F.bossRole, text: 'Everyone wants more. Business is not easy.' },
+        { who: 'friend', text: 'Ask on a good day. Today is a good day.' },
+      ],
+      [{ ...YOU, pose: 'talk' }, bossOf(k, 'idle'), mateOf(k, 'idle')],
+      [
+        c('ask', 'Ask, and name the things you do now that you did not do before.', ok('Ten minutes of complaints about costs, then a little more per hour.', { money: cost(s, 200), wellbeing: 3 }), {
+          roll: { base: 50, mods: [ties()] },
+          fail: bad('"Next year," you are told. You heard that last year.', { wellbeing: -3 }, 'Asking was hard enough. You did it.'),
+        }),
+        c('hours', 'Ask for more hours instead of more per hour.', ok(`You get two more ${F.shift === 'day' ? 'days' : 'shifts'} a month. More money, less time.`, { money: cost(s, 150), wellbeing: -2 })),
+        c('wait', 'Wait for a better moment.', ok('There is always a reason it is not the moment.', { wellbeing: -1 })),
+      ],
+    );
+  },
+
+  'daily-team-lunch': (s, k) => {
+    const F = FLOOR[k];
+    if (k === 'care') {
+      return floor(
+        k,
+        'Lunch with your client',
+        'Your client insists you sit and eat with her today. She cooked, slowly, all morning, and she has set two places at the table.',
+        [
+          { who: 'parent', text: 'Sit. I made too much, as always.' },
+          { who: 'player', text: 'I am supposed to be looking after you.' },
+          { who: 'parent', text: 'Then look after me by eating.' },
+        ],
+        [{ ...YOU, pose: 'eat' }, { role: 'parent', pose: 'laugh' }],
+        [
+          c('sit', 'Sit and eat with her.', ok('She tells you about her own first year in this country, long ago. Some of it is your story too.', { community: 5, wellbeing: 2 })),
+          c('cook', 'Offer to cook something from home next week.', ok('Next week you bring a dish from home. She eats two helpings and asks for the recipe.', { community: 5, money: -cost(s, 25) })),
+          c('call', 'Call home on your break instead.', ok('Your mother sounds happy to hear you. Your client wraps a plate for you to take home anyway.', { family: 3, community: 1 })),
+        ],
+      );
+    }
+    const V: Record<Exclude<SiteKind, 'care'>, string> = {
+      kitchen: 'Before the doors open, the crew eats together at the back. Someone cooked from home, someone else brought bread. There is an empty crate next to the oldest cook.',
+      warehouse: 'At the break, the crew eats together in the break room. Someone cooked from home, someone else brought bread. There is an empty chair next to the oldest worker.',
+      store: 'Before the doors open, the crew eats together in the back room. Someone cooked from home, someone else brought bread. There is an empty crate next to the oldest cashier.',
+      hotel: 'At lunch, the housekeepers eat together in the laundry room downstairs. Someone cooked from home, someone else brought bread. There is an empty stool next to the oldest housekeeper.',
+      construction: `At noon the crew eats on the tailgate of the foreman's truck. Someone cooked from home, someone else brought bread. There is room on a stack of lumber next to the oldest worker.`,
+      driver: 'Before the vans load, the drivers share coffee and breakfast at the depot. Someone cooked from home, someone else brought bread. There is an empty seat next to the oldest driver.',
+      cleaning: 'Before the night shift starts, the crew eats together in the basement. Someone cooked from home, someone else brought bread. There is an empty chair next to the oldest cleaner.',
+    };
+    return floor(
+      k,
+      'The staff meal',
+      V[k],
+      [
+        { who: 'friend', text: 'Sit, sit. Nobody eats standing up here.' },
+        { who: 'player', text: 'I was going to call home on my break.' },
+        { who: F.bossRole, text: 'Ten minutes. Then back to work.' },
+      ],
+      [{ ...YOU, pose: 'eat' }, mateOf(k, 'laugh'), bossOf(k, 'idle')],
+      [
+        c('sit', 'Sit and eat with them.', ok('The oldest worker tells a story about his first year here. You laugh in the right places, and some of it is your story too.', { community: 5, wellbeing: 2 })),
+        c('cook', 'Offer to cook something from home next week.', ok('The next week your dish is gone in four minutes. Now they call you by a nickname.', { community: 5, money: -cost(s, 25) })),
+        c('call', 'Call home on your break instead.', ok('Your mother sounds happy to hear you. They save you a plate anyway.', { family: 3, community: 1 })),
+      ],
+    );
+  },
+
+  'daily-cover': (s, k) => {
+    const F = FLOOR[k];
+    const job = k === 'driver' ? 'route' : k === 'care' ? 'visits' : 'shift';
+    return floor(
+      k,
+      k === 'driver' ? 'Covering a route' : k === 'care' ? 'Covering her visits' : 'Covering a shift',
+      `A coworker texts at seven in the morning. Her mother is in hospital. Can you take her ${job} today, on your one day off this week?`,
+      [
+        { who: 'friend', text: `I am so sorry. Can you take my ${job} today?` },
+        { who: 'player', text: 'Today is my day off. Is your mother all right?' },
+        { who: 'friend', text: 'I do not know yet. I will cover you next week, I promise.' },
+      ],
+      [{ ...YOU, pose: 'phone' }, coworker('phone')],
+      [
+        c('cover', `Take her ${job}.`, ok(`You lose your day off and gain a friend for life. ${extraPay(s, 'The pay is the same as any day.', 'The hours are on your pay stub.')}`, { money: cost(s, 100), community: 5, wellbeing: -3 })),
+        c('swap', `Take it if she takes your Saturday next week.`, ok(`She agrees immediately. Fair for both of you, and she keeps her word, even when ${F.boss} grumbles about the swap.`, { money: cost(s, 100), community: 3 })),
+        c('rest', 'Say no. You need the day.', ok('You sleep, cook and call home. She finds someone else, and she understands.', { wellbeing: 4, community: -1 })),
+      ],
+    );
+  },
+
+  'daily-outage': (_s, k) => {
+    const F = FLOOR[k];
+    interface Breakdown { t: string; n: string; spot: string; me: string; boss: string; move: [string, string]; fix: [string, string, string]; wait: [string, string] }
+    const cooler = (what: string): Breakdown => ({
+      t: 'The cold room stops',
+      n: `Mid-shift the big cooler at the back goes quiet. It is getting warmer inside by the minute, and everything in it is ${what}.`,
+      spot: 'The cooler is off. It is getting warm in there.',
+      me: `Call ${F.boss}. We need to move everything now.`,
+      boss: 'I am twenty minutes away. Save what you can.',
+      move: ['Organise the crew to move everything to the small fridges and ice.', `Twenty minutes of running. Almost nothing is lost. When ${F.boss} arrives, there is a long look, then a handshake.`],
+      fix: ['Try to restart the cooler yourself.', 'You find the switch that tripped. The hum comes back. You feel like a hero for an hour.', 'Nothing works, and you lost ten minutes trying. Some stock goes in the bin.'],
+      wait: [`Wait for ${F.boss}. It is not your cooler.`, 'By the time help arrives a lot of it has to be thrown out. Nobody says much, which says enough.'],
+    });
+    const V: Record<SiteKind, Breakdown> = {
+      kitchen: cooler(`today's food and tomorrow's`),
+      store: cooler('milk, meat and cheese for the whole week'),
+      warehouse: {
+        t: 'The belt stops', n: 'Mid-shift the main conveyor belt grinds to a stop with a hundred orders still on it. The trucks leave at six.',
+        spot: 'The belt is dead. Everything is stuck on it.', me: 'Call the shift lead. We can carry the orders by hand.', boss: 'I am twenty minutes away. Keep the orders moving.',
+        move: ['Organise the crew to carry the orders to the dock by hand.', 'Two hours of carrying. Every truck leaves on time. When the shift lead arrives, there is a long look, then a handshake.'],
+        fix: ['Try to restart the belt yourself.', 'You find the safety switch that tripped. The belt hums again. You feel like a hero for an hour.', 'Nothing works, and you lost ten minutes trying. Two trucks leave late.'],
+        wait: ['Wait for the shift lead. It is not your belt.', 'By the time help arrives, two trucks have left half empty.'],
+      },
+      hotel: {
+        t: 'The laundry stops', n: 'Mid-morning the big washers in the basement stop. There is no clean linen, and forty rooms need their beds made by three.',
+        spot: 'The machines are dead. There is nothing clean left.', me: 'Call the head housekeeper. We need linen from somewhere.', boss: 'I am twenty minutes away. Do what you can.',
+        move: ['Organise the floor to borrow linen from the sister hotel down the street.', 'Two trips with a cart down the street. Every room is ready by three. The head housekeeper just shakes your hand.'],
+        fix: ['Try to restart the washers yourself.', 'You find the breaker that tripped. The machines rumble again. You feel like a hero for an hour.', 'Nothing works, and you lost ten minutes trying. Some rooms open late.'],
+        wait: ['Wait for the head housekeeper. It is not your machine.', 'By the time help arrives, a line of guests is waiting at the desk.'],
+      },
+      construction: {
+        t: 'The storm', n: 'Mid-afternoon the sky goes black, and the roof your crew is working on is still half open. The foreman is at the supply yard.',
+        spot: 'That is a big storm coming. The roof is wide open.', me: 'Call the foreman. We need tarps up before the rain.', boss: 'I am twenty minutes away. Cover what you can, then get down.',
+        move: ['Get the crew to tarp the open roof, then everyone down before the rain.', 'Twenty minutes of wind and rope. The rain comes, the room below stays dry, and everyone is on the ground. The foreman shakes your hand.'],
+        fix: ['Try to close up the section yourself before the rain.', 'You get the last sheet on just as the first drops fall. You feel like a hero for an hour.', 'The rain beats you, and you climb down. Some new drywall below is soaked.'],
+        wait: ['Wait for the foreman to decide.', 'By the time the call comes, the rain has soaked the room below.'],
+      },
+      care: {
+        t: 'The power cut', n: `On a hot afternoon the power goes out at your client's home. No fan, no fridge, and she is getting flushed and tired.`,
+        spot: 'The whole street is out. Mine too.', me: 'I need to keep her cool. I am calling the coordinator.', boss: 'I am twenty minutes away. Keep her cool and drinking water.',
+        move: ['Move her to the coolest room, with cool cloths and water, and check on her often.', 'An hour of cool cloths and small sips. When the power comes back she is tired and fine. The coordinator writes your name in her notes.'],
+        fix: ['Try the fuse box first.', 'It was only her breaker. The fan spins again. You feel like a hero for an hour.', 'It is the whole street, and you lost ten minutes before cooling her down.'],
+        wait: ['Wait for the coordinator to get there.', 'She is flushed and dizzy by the time help comes. She is all right, and the coordinator is not happy.'],
+      },
+      driver: {
+        t: 'The van stops', n: 'Halfway through your route the van coughs and dies on a busy street, with forty parcels still in the back.',
+        spot: 'I am four streets away. I can take some of yours.', me: 'The van is dead. Forty stops left.', boss: 'A mechanic is an hour out. Do what you can.',
+        move: ['Meet your coworker and split the parcels between her van and your feet.', 'You carry the close stops on foot and she takes the rest. Every parcel goes out. The dispatcher shakes your hand the next morning.'],
+        fix: ['Try to restart the van yourself.', 'A loose cable. The engine turns over. You feel like a hero for an hour.', 'Nothing works, and you lose half an hour. Twenty parcels go back to the depot.'],
+        wait: ['Wait in the van for the mechanic.', 'The mechanic comes at dark. Every parcel goes back to the depot.'],
+      },
+      cleaning: {
+        t: 'The burst pipe', n: 'On your night round a pipe bursts in the ceiling of an office, and water is running onto the desks and computers.',
+        spot: 'Water is coming through on my floor too.', me: 'Call the supervisor. We need to save what we can.', boss: 'I am twenty minutes away. Save what you can.',
+        move: ['Organise the crew to move the computers and papers out of the water.', 'Twenty minutes of running. Almost nothing is lost. In the morning the office manager leaves a thank-you note on your cart.'],
+        fix: ['Find the shut-off valve yourself.', 'You find it behind a panel by the restrooms. The water stops. You feel like a hero for an hour.', 'You cannot find it, and ten minutes are lost. Two desks are soaked.'],
+        wait: ['Wait for the supervisor. It is not your building.', 'By the time help arrives, half the floor is soaked.'],
+      },
+    };
+    const b = V[k];
+    return floor(
+      k,
+      b.t,
+      b.n,
+      [
+        { who: 'friend', text: b.spot },
+        { who: 'player', text: b.me },
+        { who: F.bossRole, text: b.boss },
+      ],
+      [{ ...YOU, pose: yourPose(k, true) }, mateOf(k), bossOf(k, 'phone')],
+      [
+        c('move', b.move[0], ok(b.move[1], { career: 4, community: 3, wellbeing: -1 })),
+        c('fix', b.fix[0], ok(b.fix[1], { career: 3 }), {
+          roll: { base: 45 },
+          fail: bad(b.fix[2], { career: -1, wellbeing: -2 }, k === 'care' ? 'Keeping her cool came first.' : 'Saving the work came first.'),
+        }),
+        c('wait', b.wait[0], bad(b.wait[1], { career: -2 }, 'You could have done more.')),
+      ],
+    );
+  },
+
+  'daily-crunch': (s, k) => {
+    const F = FLOOR[k];
+    const V: Record<SiteKind, [string, string, string]> = {
+      kitchen: ['The inspection', 'The health inspection is due this week, and the head cook wants every shelf and corner deep cleaned on top of the dinner rush.', 'Inspection this week. Every shelf, every corner.'],
+      warehouse: ['The busy season', 'It is the busiest week of the year at the warehouse. The shift lead wants a full count of every box and shelf before Sunday, on top of the rush.', 'Inventory by Sunday. Every box, every shelf.'],
+      store: ['The busy season', 'It is the busiest week of the year at the store. The manager wants a full count of every shelf before Sunday, on top of the rush.', 'Inventory by Sunday. Every shelf, every case.'],
+      hotel: ['The full week', 'Every room is booked this week, and the head housekeeper wants the linen room counted and sorted before Sunday, on top of the rooms.', 'Full house all week. And the linen count by Sunday.'],
+      construction: ['The handover', 'The building is handed over on Monday. The foreman wants every item on the punch list done by Sunday, on top of the normal work.', 'Handover Monday. Every item on this list by Sunday.'],
+      care: ['Flu season', 'Half the aides are out sick. The coordinator needs every visit covered this week, on top of your own clients.', 'Half the team is sick. Every visit has to be covered.'],
+      driver: ['Peak season', 'It is the busiest week of the year. Every route is doubled, and the vans have to be loaded by six each morning.', 'Peak week. Double routes, every day.'],
+      cleaning: ['The deep clean', 'The building wants every carpet and window deep cleaned before Sunday, on top of the nightly rounds.', 'Every carpet, every window, by Sunday.'],
+    };
+    const [t, narration, ask] = V[k];
+    return floor(
+      k,
+      t,
+      narration,
+      [
+        { who: F.bossRole, text: ask },
+        { who: 'friend', text: 'And the normal work on top. Every year the same.' },
+        { who: 'player', text: 'If we split it up well, it goes faster.' },
+      ],
+      [{ ...YOU, pose: yourPose(k, true) }, bossOf(k), mateOf(k)],
+      [
+        c('night', 'Take the extra late hours.', ok(`Three long nights, all done. ${extraPay(s, 'A little extra in the envelope.', 'Extra hours on the pay stub.')}`, { money: cost(s, 150), wellbeing: -4 })),
+        c('system', 'Suggest splitting it in pairs during the slow hours.', ok(`It works. Everything is done by Saturday afternoon, and ${F.boss} pretends it was the plan all along.`, { career: 3, community: 2 })),
+        c('only', 'Do your normal hours and nothing more.', ok(`Others stay late. ${cap(F.boss)} remembers who did.`, { wellbeing: 2, career: -2 })),
+      ],
+    );
+  },
+};
 
 // ------------------------------------------------------------------ work days
 
@@ -132,25 +735,6 @@ const WORK_DAYS: ChallengeDef[] = [
           fail: bad('You build the wrong thing very well. Your manager is kind about it, and you start again.', { career: -1, wellbeing: -3 }, 'One question on day one would have saved a week.'),
         }),
         c('extra', 'Do it, then add something nobody asked for.', ok('The extra part is clever. Your manager asks you to take it out for now and keep it for later.', { career: 2, wellbeing: -1 })),
-      ],
-    }),
-    (s) => ({
-      title: 'Your first shift alone',
-      narration: `For two weeks someone stood next to you. Today the boss points at a station ${place(s) === 'work' ? 'on the floor' : `at ${place(s)}`} and says it is yours until close.`,
-      lines: [
-        { who: 'owner', text: 'You watched long enough. This station is yours today.' },
-        { who: 'player', text: 'All of it? Until close?' },
-        { who: 'friend', text: 'Shout if it gets busy. I am two steps away.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, boss(), coworker()],
-      choices: [
-        c('steady', 'Go slow and get every order right.', ok('You are slower than the others and nothing comes back. By evening the boss nods at you once.', { career: 2, wellbeing: 2 })),
-        c('fast', 'Go as fast as the others from the first hour.', ok('You keep up, mostly. Your hands shake a little at the end.', { career: 3, wellbeing: -2 }), {
-          roll: { base: 55, mods: [well()] },
-          fail: bad('You drop a full tray in the rush. Nobody yells, which is somehow worse.', { wellbeing: -4 }, 'Speed comes after the hands know the work.'),
-        }),
-        c('help', 'Call your coworker over the moment you are unsure.', ok('She shows you a trick for the heavy part. You owe her a coffee and you mean to pay it.', { community: 3, career: 1 })),
       ],
     }),
     (s) => s.flags['dw_daily-first-assignment'] === undefined,
@@ -177,22 +761,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('share', 'Take your coworker up on the offer.', ok('Split two ways it is a normal week. You put her name next to yours on the hand-off.', { career: 2, community: 3 })),
       ],
     }),
-    (s) => ({
-      title: 'The big order',
-      narration: `An order for two hundred comes in for six in the morning. At ${place(s)} that means everyone stays late tonight, or someone comes in very early.`,
-      lines: [
-        { who: 'owner', text: 'Two hundred, ready by six. Who stays tonight?' },
-        { who: 'friend', text: 'I have my kids tonight. I can come at four.' },
-        { who: 'player', text: 'I can stay. How late?' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, boss(), coworker('think')],
-      choices: [
-        c('stay', 'Stay late and get it done.', ok(`You leave at midnight with sore feet. ${cashPaid(s) ? 'There is a little extra in the envelope that week.' : 'The extra hours show on your next pay stub.'}`, { money: cost(s, 120), wellbeing: -3 })),
-        c('early', 'Come in at four with your coworker instead.', ok('The two of you have the whole place to yourselves and the radio on. It is the best morning of the month.', { money: cost(s, 100), community: 3, wellbeing: -1 })),
-        c('no', 'Say you cannot do either this time.', ok('The boss shrugs and calls someone else. Next time he asks the others first.', { wellbeing: 2, career: -2 })),
-      ],
-    }),
   ),
 
   day(
@@ -216,22 +784,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('swap', 'Ask to swap with someone and go next month.', ok('Your manager agrees, and asks you twice in the next month whether you are ready.', { wellbeing: 2, career: -2 })),
       ],
     }),
-    () => ({
-      title: 'Show the new way',
-      narration: `The boss wants the shelves and stations laid out a new way, your way, because yours is faster. Before the shift he wants you to show the whole crew.`,
-      lines: [
-        { who: 'owner', text: 'Your way is faster. Show them before we open.' },
-        { who: 'player', text: 'Me? Some of them have been here ten years.' },
-        { who: 'friend', text: 'Then show us something good. We are listening.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'present' }, boss('idle'), coworker()],
-      choices: [
-        c('show', 'Do it once slowly, with your hands, and let them try.', ok('An older worker nods and changes one small thing, and it is better. By noon it is the crew\'s way, not yours.', { community: 4, career: 3 })),
-        c('tell', 'Explain it quickly and get back to work.', ok('Half of them do it your way. The other half do it the old way, a little louder.', { career: 1, community: -1 })),
-        c('credit', 'Say it was the boss\'s idea, to keep the peace.', ok('The boss looks pleased and says nothing. The crew knows anyway.', { community: 2, career: -1 })),
-      ],
-    }),
   ),
 
   day(
@@ -252,22 +804,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('blame', 'Point out that the data you were given was messy.', bad('The data was messy. That was not the question, and everyone at the table knows it.', { career: -2, community: -2 }, 'True and useful are not the same thing.')),
       ],
     }),
-    (s) => ({
-      title: 'The wrong pallet',
-      narration: `A delivery comes back. The labels were right, and the boxes inside were somebody else's order. You packed it.`,
-      lines: [
-        { who: 'owner', text: 'This came back. Who packed it?' },
-        { who: 'player', text: 'I did. I am sorry. I can redo it now.' },
-        { who: 'friend', text: 'Those two codes look the same. It happens to all of us.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, boss(), coworker()],
-      choices: [
-        c('redo', 'Say it was you and redo it on your break.', ok('You miss your lunch and the order goes out right. The boss stops frowning at you by the afternoon.', { career: 2, wellbeing: -2 })),
-        c('fix', 'Redo it, and suggest marking the two look-alike codes in red.', ok('He grumbles about the cost of a red marker, then buys three. Nobody mixes them up again.', { career: 4, community: 2 })),
-        c('pay', `Offer to pay for the mistake out of ${payWord(s)}.`, bad(`He takes the offer. ${cashPaid(s) ? 'The envelope is lighter that week.' : 'It comes out of your pay.'} He never offers anyone else the same deal.`, { money: -cost(s, 150), wellbeing: -3 }, 'Mistakes at work are part of the cost of running a business.')),
-      ],
-    }),
   ),
 
   day(
@@ -286,25 +822,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('full', 'Do it properly: a checklist, lunch on day one, and the things nobody wrote down.', ok('By week three the new hire is asking you better questions than you asked. Your manager notices who taught them.', { community: 4, career: 3, wellbeing: -1 })),
         c('written', 'Say yes, and ask that it go into your goals in writing.', ok('Your manager adds a line to your goals. You do a good job, and now it is on paper.', { career: 4 })),
         c('decline', 'Say you are too busy right now.', ok('Someone else does it. The new hire still comes to you with questions, quietly.', { career: -1, wellbeing: 1 })),
-      ],
-    }),
-    (s) => ({
-      title: 'The new one is yours',
-      narration: `A new worker starts today, barely older than your cousin and very nervous. The boss puts him next to you and walks off.`,
-      lines: [
-        { who: 'owner', text: 'Show him everything. He starts on your station.' },
-        { who: 'stranger', text: 'I have never done this before. Is it hard?' },
-        { who: 'player', text: 'The first week is hard. Then your hands learn it.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'talk' }, boss('idle'), { role: 'stranger', pose: 'idle' }],
-      choices: [
-        c('teach', 'Teach him the safe way to lift and the fast way to work, in that order.', ok('He is slow all week and does not get hurt. On Friday he brings you a pastry from his mother.', { community: 5, wellbeing: 1 })),
-        c('pay', 'Ask the boss for a little extra for training him.', ok('He says no, then adds a little anyway at the end of the month.', { money: cost(s, 60), career: 1 }), {
-          roll: { base: 50, mods: [ties()] },
-          fail: ok('He says no, and the new one still needs teaching. You teach him.', { community: 2 }),
-        }),
-        c('own', 'Keep your head down and let him watch.', ok('He watches and copies everything, including your one bad habit.', { wellbeing: 1, community: -1 })),
       ],
     }),
   ),
@@ -330,25 +847,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('pass', 'Say your manager will call him back next week.', ok('He grumbles and hangs up. Your manager calls him from the airport, a little annoyed.', { career: -1, wellbeing: 1 })),
       ],
     }),
-    (s) => ({
-      title: 'The customer at the counter',
-      narration: `A customer at ${place(s) === 'work' ? 'the counter' : place(s)} wants to speak to someone in charge, and the someone in charge is out. He is getting louder, and he is looking at you.`,
-      lines: [
-        { who: 'stranger', text: 'This is the second time. I want to talk to someone in charge.' },
-        { who: 'player', text: 'He is out for an hour. Tell me what happened and I will try.' },
-        { who: 'friend', text: 'Careful. He did this last week too.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'talk' }, coworker()],
-      choices: [
-        c('listen', 'Let him finish, then fix the part you can fix.', ok('It was a small thing in the end. He leaves without a thank you, which counts as a win here.', { career: 2, wellbeing: 1 })),
-        c('call', 'Call the boss and hand him the phone.', ok('The boss sorts it in two minutes and tells you later to just give people a discount next time.', { wellbeing: 1 })),
-        c('back', 'Tell him you will not be shouted at.', ok('He goes quiet, surprised. Your coworker gives you a thumbs up from behind the shelves.', { wellbeing: 3, community: 1 }), {
-          roll: { base: 55, mods: [ties()] },
-          fail: bad('He complains to the boss, who sides with the customer and frowns at you for a week.', { wellbeing: -3, career: -1 }, 'You were right, and it still cost you.'),
-        }),
-      ],
-    }),
   ),
 
   day(
@@ -369,22 +867,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('no', 'Say no this time and explain why.', ok('Your manager nods and finds someone else. Nothing bad happens, which you did not expect.', { wellbeing: 3, career: -1 })),
       ],
     }),
-    (s) => ({
-      title: 'A double shift',
-      narration: `Someone did not show up. The boss asks whether you can stay and do the next shift too, right now, straight through.`,
-      lines: [
-        { who: 'owner', text: 'He did not come in. Can you do the next shift too?' },
-        { who: 'player', text: 'I have been here since six.' },
-        { who: 'friend', text: 'I can do half if you do half.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'idle' }, boss(), coworker('think')],
-      choices: [
-        c('double', 'Do the whole double.', ok(`Sixteen hours. ${cashPaid(s) ? 'The extra is in the envelope.' : 'The extra hours show on your pay stub.'} Your back reminds you for two days.`, { money: cost(s, 180), wellbeing: -6 })),
-        c('half', 'Split it with your coworker.', ok('Four extra hours each. You walk to the bus together, too tired to talk, which is its own kind of friendship.', { money: cost(s, 90), community: 3, wellbeing: -2 })),
-        c('no', 'Go home. You are done for today.', ok('The boss is short with you the next morning, then forgets about it.', { wellbeing: 3, career: -1 })),
-      ],
-    }),
   ),
 
   day(
@@ -403,25 +885,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('report', 'Send the note, with a photo, to your manager and the building office.', ok('The boxes are gone by Thursday. Nobody says who asked.', { community: 2, wellbeing: 1 })),
         c('move', 'Move them yourself after work.', ok('It takes an hour and your shirt is ruined. The exit is clear.', { wellbeing: -1, community: 2 })),
         c('leave', 'Leave it. It is not your job.', ok('The boxes stay. You notice them every day now.', { wellbeing: -1 })),
-      ],
-    }),
-    (s) => ({
-      title: 'The wet floor',
-      narration: `There is a leak near the back and the floor by the heavy shelves is wet again. You are asked to carry a stack across it, quickly.`,
-      lines: [
-        { who: 'owner', text: 'Move those across before the truck comes. Quickly.' },
-        { who: 'player', text: 'The floor is wet back there again.' },
-        { who: 'friend', text: 'Someone slipped there last week. Take the long way.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, boss(), coworker()],
-      choices: [
-        c('mop', 'Mop and put out a sign first, then carry.', ok('It takes five extra minutes. The boss taps his watch, and nobody falls.', { wellbeing: 2, community: 1 })),
-        c('long', 'Take the long way round with smaller loads.', ok('More trips and a sore back, but you stay on your feet.', { wellbeing: -1 })),
-        c('quick', 'Do it the quick way. The truck is coming.', ok('You make it across, twice, heart pounding.', { career: 1 }), {
-          roll: { base: 70 },
-          fail: bad(`Your foot goes out from under you. Nothing is broken, but you lose three days of work and ${cashPaid(s) ? 'three days of pay' : 'some pay'}.`, { money: -cost(s, 300), wellbeing: -8 }, 'Nobody should have asked you to hurry there.'),
-        }),
       ],
     }),
   ),
@@ -447,22 +910,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('let', 'Let it go. There will be other ideas.', bad('There are other ideas. He presents one of those too.', { career: -2, wellbeing: -2 }, 'Silence is easy to read as permission.')),
       ],
     }),
-    (s) => ({
-      title: 'Who did the work',
-      narration: `The boss praises the clean storeroom in front of everyone and thanks your coworker. You did it on Sunday, alone, unpaid.`,
-      lines: [
-        { who: 'owner', text: 'Look at that storeroom. Good job, really good.' },
-        { who: 'friend', text: 'Thanks, boss.' },
-        { who: 'player', text: 'I spent my Sunday on that.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'idle' }, boss(), coworker('talk')],
-      choices: [
-        c('say', 'Say plainly, in front of everyone, that you did it on Sunday.', ok('There is a short silence. Then the boss says thank you to you, and means it.', { career: 2, wellbeing: 2, community: -1 })),
-        c('later', 'Tell the boss alone at the end of the shift.', ok('He listens, nods, and gives you the better hours next week.', { career: 2, money: cost(s, 50) })),
-        c('drop', 'Say nothing. It is not worth the trouble.', bad('Your coworker never mentions it. The next Sunday job is yours again.', { wellbeing: -3 }, 'It was worth saying.')),
-      ],
-    }),
   ),
 
   day(
@@ -486,25 +933,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('ask', 'Ask what a five would look like, and write it down.', ok('The answer is vague, but now it is on paper and you can point to it in six months.', { career: 3 })),
       ],
     }),
-    (s) => ({
-      title: 'Asking for more',
-      narration: `You have been ${cashPaid(s) ? 'paid the same in the envelope' : 'on the same hourly rate'} since you started. You do more than you did then. The boss is in a good mood today.`,
-      lines: [
-        { who: 'player', text: 'Can we talk about my pay? I do more now.' },
-        { who: 'owner', text: 'Everyone wants more. Business is not easy.' },
-        { who: 'friend', text: 'Ask on a good day. Today is a good day.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'talk' }, boss('idle'), coworker()],
-      choices: [
-        c('ask', 'Ask, and name the things you do now that you did not do before.', ok('He complains for ten minutes, then adds a little.', { money: cost(s, 200), wellbeing: 3 }), {
-          roll: { base: 50, mods: [ties()] },
-          fail: bad('"Next year," he says. You heard that last year.', { wellbeing: -3 }, 'Asking was hard enough. You did it.'),
-        }),
-        c('hours', 'Ask for more hours instead of more per hour.', ok('He gives you two more shifts a month. More money, less time.', { money: cost(s, 150), wellbeing: -2 })),
-        c('wait', 'Wait for a better moment.', ok('There is always a reason it is not the moment.', { wellbeing: -1 })),
-      ],
-    }),
     (s) => s.year >= 1,
   ),
 
@@ -526,22 +954,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('desk', 'Stay at your desk and get ahead on work.', ok('You get ahead on work. On Monday they are laughing at a joke from Friday that you missed.', { career: 1, community: -2 })),
       ],
     }),
-    (s) => ({
-      title: 'The staff meal',
-      narration: `Before the doors open, the crew eats together at the back. Someone cooked from home, someone else brought bread. There is an empty crate next to the oldest worker.`,
-      lines: [
-        { who: 'friend', text: 'Sit, sit. Nobody eats standing up here.' },
-        { who: 'player', text: 'I was going to call home on my break.' },
-        { who: 'owner', text: 'Ten minutes. Then we open.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'eat' }, coworker('laugh'), boss('idle')],
-      choices: [
-        c('sit', 'Sit and eat with them.', ok('The oldest worker tells a story about his first year here. You laugh in the right places, and some of it is your story too.', { community: 5, wellbeing: 2 })),
-        c('cook', 'Offer to cook something from home next week.', ok('The next week your dish is gone in four minutes. Now they call you by a nickname.', { community: 5, money: -cost(s, 25) })),
-        c('call', 'Call home on your break instead.', ok('Your mother sounds happy to hear you. The crew saves you a plate anyway.', { family: 3, community: 1 })),
-      ],
-    }),
   ),
 
   day(
@@ -560,22 +972,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('cover', 'Take it, and read her notes twice tonight.', ok('You stumble once on a name and the client does not mind. Your coworker sends you a photo of her son, recovered, holding a thank-you drawing.', { community: 4, career: 3, wellbeing: -1 })),
         c('push', 'Suggest moving the meeting to next week.', ok('The client agrees easily. Your coworker is grateful, if a little disappointed.', { community: 1 })),
         c('no', 'Say you cannot. You have your own work.', ok('She finds someone else. She asks you for less after that.', { community: -2, wellbeing: 1 })),
-      ],
-    }),
-    (s) => ({
-      title: 'Covering a shift',
-      narration: `A coworker texts at seven in the morning. Her mother is in hospital. Can you take her shift today, your one day off this week?`,
-      lines: [
-        { who: 'friend', text: 'I am so sorry. Can you take my shift today?' },
-        { who: 'player', text: 'Today is my day off. Is your mother all right?' },
-        { who: 'friend', text: 'I do not know yet. I will cover you next week, I promise.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'phone' }, coworker('phone')],
-      choices: [
-        c('cover', 'Take the shift.', ok(`You lose your day off and gain a friend for life. ${cashPaid(s) ? 'The pay is the same as any day.' : 'The hours are on your pay stub.'}`, { money: cost(s, 100), community: 5, wellbeing: -3 })),
-        c('swap', 'Take it if she takes your Saturday next week.', ok('She agrees immediately. Fair for both of you, and she keeps her word.', { money: cost(s, 100), community: 3 })),
-        c('rest', 'Say no. You need the day.', ok('You sleep, cook and call home. She finds someone else, and she understands.', { wellbeing: 4, community: -1 })),
       ],
     }),
   ),
@@ -601,25 +997,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('wait', 'Stay out of the way and let the experts handle it.', ok('They handle it. You get through a pile of other work while you wait.', { career: 1 })),
       ],
     }),
-    () => ({
-      title: 'The cold room stops',
-      narration: `Mid-shift the big cooler at the back goes quiet. It is getting warmer inside by the minute, and everything in it is today's work and tomorrow's.`,
-      lines: [
-        { who: 'friend', text: 'The cooler is off. It is getting warm in there.' },
-        { who: 'player', text: 'Call the boss. We need to move everything now.' },
-        { who: 'owner', text: 'I am twenty minutes away. Save what you can.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, coworker('carry'), boss('phone')],
-      choices: [
-        c('move', 'Organise the crew to move everything to the small fridges and ice.', ok('Twenty minutes of running. Almost nothing is lost. When the boss arrives he just stands there, then shakes your hand.', { career: 4, community: 3, wellbeing: -1 })),
-        c('fix', 'Try to restart the cooler yourself.', ok('You find the switch that tripped. The hum comes back. You feel like a hero for an hour.', { career: 3 }), {
-          roll: { base: 45 },
-          fail: bad('Nothing works, and you lost ten minutes trying. Some stock goes in the bin.', { career: -1, wellbeing: -2 }, 'Saving the food came first.'),
-        }),
-        c('wait', 'Wait for the boss. It is his cooler.', bad('By the time he arrives a lot of it has to be thrown out. He does not say much, which says enough.', { career: -2 }, 'You could have done more.')),
-      ],
-    }),
   ),
 
   day(
@@ -638,22 +1015,6 @@ const WORK_DAYS: ChallengeDef[] = [
         c('focus', 'Ask for the top three and do those first.', ok('Your three are done on Thursday. You help others on Friday and leave on time.', { career: 4, wellbeing: 1 })),
         c('everything', 'Do everything anyone asks.', ok('You do everything. You also eat cereal for dinner three nights running.', { career: 3, wellbeing: -5 })),
         c('pace', 'Keep a steady pace and protect your evenings.', ok('Two small things slip into next week. Nobody notices but you.', { wellbeing: 3, career: -1 })),
-      ],
-    }),
-    (s) => ({
-      title: 'The busy season',
-      narration: `It is the busiest week of the year at ${place(s)}. The boss wants a full count of every box and shelf before Sunday, on top of the rush.`,
-      lines: [
-        { who: 'owner', text: 'Inventory by Sunday. Every box, every shelf.' },
-        { who: 'friend', text: 'And the rush on top. Every year the same.' },
-        { who: 'player', text: 'If we count at night it goes faster.' },
-      ],
-      stage: 'worksite',
-      cast: [{ ...YOU, pose: 'carry' }, boss(), coworker('carry')],
-      choices: [
-        c('night', 'Count at night when it is quiet, for the extra hours.', ok(`Three late nights, all counted. ${cashPaid(s) ? 'A little extra in the envelope.' : 'Extra hours on the pay stub.'}`, { money: cost(s, 150), wellbeing: -4 })),
-        c('system', 'Suggest counting by section in pairs during slow hours.', ok('It works. The count is done by Saturday afternoon and the boss pretends it was his idea.', { career: 3, community: 2 })),
-        c('only', 'Do your normal shifts and nothing more.', ok('Others stay late. The boss remembers who did.', { wellbeing: 2, career: -2 })),
       ],
     }),
   ),

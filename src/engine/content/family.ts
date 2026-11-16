@@ -16,11 +16,23 @@
 import { bad, c, cfr, def, legal, ok, social } from '../cx';
 import { priceFactor } from '../economy';
 import { mechanicsOf } from '../country';
+import { CASH_DEFAULT_KINDS, CASH_JOBS, isKind, offerFlags, pickOffers, pickOne } from './jobs';
+import type { SiteKind } from './jobs';
 import { monthsInStatus, monthsSinceArrival, statusOf } from '../routes';
 import type { RouteDef, StatusDef } from '../routes';
 import type { ChallengeDef, Effects, Fact, GameState, Outcome, StatusCode } from '../types';
 
 const YOU = { role: 'player' } as const;
+
+/** Weekend cash shifts a visitor hears about (b2-cash-work). */
+const B2_GIGS: Array<{ who: string; doing: string; kind: SiteKind }> = [
+  { who: 'The restaurant owner', doing: ' in the kitchen', kind: 'kitchen' },
+  { who: 'The shop owner', doing: ' on the till and the shelves', kind: 'store' },
+  { who: 'The woman with the cleaning business', doing: ' cleaning houses', kind: 'cleaning' },
+];
+/** Cash work someone waiting for an asylum work permit hears about (asy-before-permit). */
+const ASY_GIGS = [CASH_JOBS.kitchen, CASH_JOBS.cleaning, CASH_JOBS.construction];
+const CASH_KINDS = CASH_DEFAULT_KINDS;
 
 // ------------------------------------------------------------------ helpers
 const now = (s: GameState): number => monthsSinceArrival(s);
@@ -295,7 +307,7 @@ const FAM_ARRIVAL: ChallengeDef[] = [
       { who: 'officer', text: 'Your green card comes by mail. This stamp works until then.' },
     ],
     stage: 'airport',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'officer', pose: 'talk' }],
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'talk' }],
     inlineFact: FX_WAIT,
     choices: [
       c('ready', 'Hand over the packet and your passport. Answer plainly.', ok('A few questions, a stamp, a nod. "Welcome," the officer says, and means it. You are a permanent resident.', { legal: 6, wellbeing: 6 })),
@@ -320,27 +332,30 @@ const FAM_ARRIVAL: ChallengeDef[] = [
       ],
     };
   }),
-  def('fam-arrival-job', 'work', 0, () => ({
-    id: 'fam-arrival-job',
-    track: 'work',
-    title: 'First work',
-    body: 'A green card means you can work for anyone. It does not mean anyone will hire you into your old profession. Your cousin knows a warehouse that is hiring now; a community college offers evening certificates; your degree from home sits in a folder.',
-    stage: 'street',
-    cast: [{ ...YOU, pose: 'walk' }, { role: 'friend', pose: 'talk' }],
-    choices: [
-      c('warehouse', 'Take the warehouse job now.', ok('Ten-hour shifts and sore feet, but a real paycheck on the books, with taxes and a pay stub.', { career: 2, wellbeing: -2, flags: { salary: 2300, jobTitle: 'warehouse associate' } })),
-      c(
-        'field',
-        'Hold out for work in your field.',
-        ok('Two months of applications, then an offer at a lower level than home. It is a door in your field.', { career: 7, money: -600, flags: { salary: 2900, jobTitle: 'junior technician' } }),
-        {
-          roll: { base: 45, mods: [{ stat: 'career', center: 40, per: 0.3, label: 'experience' }] },
-          fail: bad('No one calls back. Your savings thin and you take the warehouse job after all.', { money: -900, wellbeing: -4, flags: { salary: 2300, jobTitle: 'warehouse associate' } }, 'The market did not see what you know.', 'Credentials from abroad are often discounted at first. Evaluations of foreign degrees and local certificates can help.'),
-        },
-      ),
-      c('both', 'Take a part-time job and start an evening certificate.', ok('Long days, tired nights. By spring the certificate is half done.', { career: 4, study: 3, wellbeing: -3, money: -300, flags: { salary: 1500, jobTitle: 'part-time cashier' } })),
-    ],
-  })),
+  def('fam-arrival-job', 'work', 0, (s) => {
+    const [a, b] = pickOffers(s, 'fam-arrival-job', 2);
+    return {
+      id: 'fam-arrival-job',
+      track: 'work',
+      title: 'First work',
+      body: `A green card means you can work for anyone. It does not mean anyone will hire you into your old profession. Your cousin knows ${a.where} that is hiring now, a neighbor swears by ${b.where}, a community college offers evening certificates, and your degree from home sits in a folder.`,
+      stage: 'street',
+      cast: [{ ...YOU, pose: 'walk' }, { role: 'friend', pose: 'talk' }],
+      choices: [
+        ...[a, b].map((o) => c(`job-${o.kind}`, o.label, ok(`${o.text} A real paycheck on the books, with taxes and a pay stub.`, { ...o.effects, flags: offerFlags(o) }))),
+        c(
+          'field',
+          'Hold out for work in your field.',
+          ok('Two months of applications, then an offer at a lower level than home. It is a door in your field.', { career: 7, money: -600, flags: { salary: 2900, jobTitle: 'junior technician', jobKind: 'office' } }),
+          {
+            roll: { base: 45, mods: [{ stat: 'career', center: 40, per: 0.3, label: 'experience' }] },
+            fail: bad(`No one calls back. Your savings thin and you take the ${a.title} job after all.`, { money: -900, wellbeing: -4, flags: offerFlags(a) }, 'The market did not see what you know.', 'Credentials from abroad are often discounted at first. Evaluations of foreign degrees and local certificates can help.'),
+          },
+        ),
+        c('both', 'Take a part-time job on a till and start an evening certificate.', ok('Long days, tired nights. By spring the certificate is half done.', { career: 4, study: 3, wellbeing: -3, money: -300, flags: { salary: 1500, jobTitle: 'part-time cashier', jobKind: 'store' } })),
+      ],
+    };
+  }),
 ];
 
 // ------------------------------------------------------------------ arrival: visitor
@@ -426,9 +441,9 @@ const EWI_ARRIVAL: ChallengeDef[] = [
     stage: 'street',
     cast: [{ ...YOU, pose: 'walk' }, { role: 'owner', pose: 'talk' }],
     choices: [
-      c('kitchen', 'Take the kitchen job.', ok('Steam, knives and a staff meal at the end of the shift. The cook teaches you his tricks.', { wellbeing: -2, community: 2, flags: { informalWork: true } })),
-      c('roofing', 'Take the roofing crew. It pays more.', ok('More money and more danger. Your hands blister, then harden.', { money: Math.round(150 * priceFactor(s.profile.arrivalYear)), wellbeing: -5, flags: { informalWork: true } }, 'Construction is the largest sector for work deaths among foreign-born Hispanic workers in BLS data, and wage theft is widely reported. Wage-and-hour laws protect workers regardless of status.')),
-      c('notebook', 'Take the cleaning job, and keep a notebook of every hour and payment.', ok('The notebook feels silly at first. Later it may matter.', { wellbeing: -2, legal: 2, flags: { informalWork: true, wageRecords: true } }, 'Keeping your own record of hours, dates and pay helps a workers\' center or labor agency recover unpaid wages.')),
+      c('kitchen', 'Take the kitchen job.', ok('Steam, knives and a staff meal at the end of the shift. The cook teaches you his tricks.', { wellbeing: -2, community: 2, flags: { informalWork: true, jobKind: 'kitchen' } })),
+      c('roofing', 'Take the roofing crew. It pays more.', ok('More money and more danger. Your hands blister, then harden.', { money: Math.round(150 * priceFactor(s.profile.arrivalYear)), wellbeing: -5, flags: { informalWork: true, jobKind: 'construction' } }, 'Construction is the largest sector for work deaths among foreign-born Hispanic workers in BLS data, and wage theft is widely reported. Wage-and-hour laws protect workers regardless of status.')),
+      c('notebook', 'Take the cleaning job, and keep a notebook of every hour and payment.', ok('The notebook feels silly at first. Later it may matter.', { wellbeing: -2, legal: 2, flags: { informalWork: true, wageRecords: true, jobKind: 'cleaning' } }, 'Keeping your own record of hours, dates and pay helps a workers\' center or labor agency recover unpaid wages.')),
     ],
   })),
   def('ewi-arrival-fear', 'status', 0, () => ({
@@ -533,19 +548,22 @@ const B2_CARDS: ChallengeDef[] = [
     }), { statuses: ['B2'], when: (s) => st(s) === 'B2' && now(s) >= n(s, 'b2Until') - 1 }),
   ),
 
-  def('b2-cash-work', 'work', 2, (s) => ({
+  def('b2-cash-work', 'work', 2, (s) => {
+    const gig = pickOne(s, 'b2-cash-work', B2_GIGS);
+    return {
     id: 'b2-cash-work',
     track: 'work',
     title: 'Just a few shifts',
-    body: 'The restaurant owner your uncle mentioned needs someone for weekend shifts. Cash, no forms. Your savings are going faster than you planned.',
+    body: `${gig.who} your uncle mentioned needs someone for weekend shifts${gig.doing}. Cash, no forms. Your savings are going faster than you planned.`,
     stage: 'cafe',
     cast: [{ ...YOU, pose: 'think' }, { role: 'owner', pose: 'talk' }],
     choices: [
       c('decline', 'Say no and cut your spending instead.', ok('Fewer outings, more home cooking. The money lasts.', { wellbeing: -1, money: 100 })),
       c('volunteer', 'Volunteer at the community center without pay.', ok('You help with a food pantry. No money, but people and purpose.', { community: 6, wellbeing: 3 }, 'Real volunteering for a charity, with no pay or in-kind compensation, is different from work. When in doubt, ask a legal clinic.')),
-      c('work', 'Take the shifts.', bad('The cash is welcome. Every time the door opens you look up.', { money: Math.round(500 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true } }, 'It helps now and may cost later.', 'A visitor who works without authorization fails to keep status (8 CFR 214.1(e)). It can lead to denial of extensions or a change of status. Only the immediate relatives of US citizens are excused from this bar when adjusting status (INA 245(c)(2)).')),
+      c('work', 'Take the shifts.', bad('The cash is welcome. Every time the door opens you look up.', { money: Math.round(500 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true, jobKind: gig.kind } }, 'It helps now and may cost later.', 'A visitor who works without authorization fails to keep status (8 CFR 214.1(e)). It can lead to denial of extensions or a change of status. Only the immediate relatives of US citizens are excused from this bar when adjusting status (INA 245(c)(2)).')),
     ],
-  }), { statuses: ['B2'], when: (s) => !has(s, 'unauthWork') }),
+  };
+  }, { statuses: ['B2'], when: (s) => !has(s, 'unauthWork') }),
 
   def('b2-school-offer', 'status', 1.6, (s) => ({
     id: 'b2-school-offer',
@@ -660,19 +678,22 @@ const ASY_CARDS: ChallengeDef[] = [
     ],
   }), { statuses: ['ASY_PENDING'], when: (s) => !has(s, 'asyFiled') }),
 
-  def('asy-before-permit', 'work', 2.5, (s) => ({
+  def('asy-before-permit', 'work', 2.5, (s) => {
+    const gig = pickOne(s, 'asy-before-permit', ASY_GIGS);
+    return {
     id: 'asy-before-permit',
     track: 'work',
     title: 'Months without a permit',
-    body: 'Your application is in, but a work permit is months away. The shelter has a time limit. A man at the bus stop says a car wash pays cash.',
+    body: `Your application is in, but a work permit is months away. The shelter has a time limit. A man at the bus stop says ${gig.where} pays cash.`,
     stage: 'street',
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'talk' }],
     choices: [
       c('aid', 'Ask the nonprofit about rent help and food programs.', ok('A small housing grant and a food bank card. It is enough, barely.', { money: Math.round(300 * priceFactor(calYear(s))), community: 3, wellbeing: 1 })),
       c('volunteer', 'Volunteer and take free English classes while you wait.', ok('Your English grows faster than your bank balance. People begin to know you.', { community: 5, career: 3, money: -100 })),
-      c('cash', 'Take the car wash job.', bad('Cash in your pocket. You hope no one asks.', { money: Math.round(600 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true } }, 'Rent is real. So is the risk.', 'Time with a bona fide asylum case pending generally does not count as unlawful presence, but that protection is lost for someone who works without authorization (INA 212(a)(9)(B)(iii)(II)).')),
+      c('cash', `Take the ${gig.short} job.`, bad('Cash in your pocket. You hope no one asks.', { money: Math.round(600 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true, jobKind: gig.kind } }, 'Rent is real. So is the risk.', 'Time with a bona fide asylum case pending generally does not count as unlawful presence, but that protection is lost for someone who works without authorization (INA 212(a)(9)(B)(iii)(II)).')),
     ],
-  }), { statuses: ['ASY_PENDING'], when: (s) => !has(s, 'ead') && !has(s, 'informalWork') }),
+  };
+  }, { statuses: ['ASY_PENDING'], when: (s) => !has(s, 'ead') && !has(s, 'informalWork') }),
 
   def('asy-ead', 'work', 0, (s) => ({
     id: 'asy-ead',
@@ -686,7 +707,7 @@ const ASY_CARDS: ChallengeDef[] = [
       c(
         'apply',
         'Apply right away.',
-        ok('A plastic card with your photo arrives. You can work, legally, for anyone. A hotel hires you the next week.', { money: -fee(s, 550), legal: 8, wellbeing: 8, career: 4, flags: { ead: true, informalWork: false, salary: 2200, jobTitle: 'hotel housekeeper' } }, 'Asylum applicants may request a work permit after 150 days and receive it no earlier than 180 days after filing (8 CFR 208.7(a)(1)). Fees for asylum-related permits were added by a 2025 law; the amount here is an estimate.'),
+        ok('A plastic card with your photo arrives. You can work, legally, for anyone. A hotel hires you the next week.', { money: -fee(s, 550), legal: 8, wellbeing: 8, career: 4, flags: { ead: true, informalWork: false, salary: 2200, jobTitle: 'hotel housekeeper', jobKind: 'hotel' } }, 'Asylum applicants may request a work permit after 150 days and receive it no earlier than 180 days after filing (8 CFR 208.7(a)(1)). Fees for asylum-related permits were added by a 2025 law; the amount here is an estimate.'),
         {
           roll: { base: 85, flagMods: [{ flag: 'legalHelp', delta: 8, label: 'legal help' }] },
           fail: bad('A notice: your case had an applicant-caused delay, so the clock is paused. More months to wait.', { money: -fee(s, 550), wellbeing: -6 }, 'The clock was not where you thought.', 'Delays requested or caused by the applicant, such as rescheduling an interview or missing fingerprints, stop the clock (8 CFR 208.7(a)(2)).'),
@@ -788,7 +809,7 @@ const ASY_CARDS: ChallengeDef[] = [
     };
   }, { statuses: ['ASY_PENDING'], when: (s) => has(s, 'asyReferred') && !has(s, 'asyDecided') && !has(s, 'asyDenied') }),
 
-  def('asy-after-denial', 'status', 5, () => ({
+  def('asy-after-denial', 'status', 5, (s) => ({
     id: 'asy-after-denial',
     track: 'status',
     title: 'After the denial',
@@ -806,7 +827,7 @@ const ASY_CARDS: ChallengeDef[] = [
         },
       ),
       c('home', 'Go home on your own terms.', goHome('You pack carefully. The fear has not gone, but neither has your will. Friends drive you to the airport.', { family: 6, wellbeing: -6 }, 'Leaving with a removal order, or after unlawful presence, triggers bars on returning (INA 212(a)(9)). Ask counsel how to leave in the way that keeps the most doors open, such as voluntary departure where available.')),
-      c('stay', 'Stay, without status.', bad('You move rooms, keep your head down and work for cash again.', { legal: -25, wellbeing: -10, flags: { status: 'NONE', statusLostReason: 'asylum-denied', removalOrder: true, informalWork: true, ead: false } }, 'The road narrows.', 'Living with a final removal order means arrest can lead directly to removal, and reentering after removal without permission is a federal crime (INA 276).')),
+      c('stay', 'Stay, without status.', bad('You move rooms, keep your head down and work for cash again.', { legal: -25, wellbeing: -10, flags: { status: 'NONE', statusLostReason: 'asylum-denied', removalOrder: true, informalWork: true, ead: false, jobKind: isKind(s.flags.jobKind) && s.flags.jobKind !== 'office' ? s.flags.jobKind : pickOne(s, 'asy-denied-cash', CASH_KINDS) } }, 'The road narrows.', 'Living with a final removal order means arrest can lead directly to removal, and reentering after removal without permission is a federal crime (INA 276).')),
     ],
   }), { statuses: ['ASY_PENDING'], when: (s) => has(s, 'asyDenied') && !has(s, 'asyDecided') }),
 
@@ -819,7 +840,7 @@ const ASY_CARDS: ChallengeDef[] = [
     cast: [{ ...YOU, pose: 'sit' }, { role: 'nurse', pose: 'talk' }],
     choices: [
       c('therapy', 'Start counseling at a clinic for survivors.', ok('Slowly, the nightmares come less often. You learn their names.', { wellbeing: 10, money: -60 })),
-      c('career', 'Throw yourself into a better job.', ok('A new job with benefits. Work feels like proof that you are allowed to live.', { career: 7, wellbeing: -2, flags: { salary: 2800, jobTitle: 'medical assistant' } })),
+      c('career', 'Throw yourself into a better job.', ok('A new job with benefits. Work feels like proof that you are allowed to live.', { career: 7, wellbeing: -2, flags: { salary: 2800, jobTitle: 'medical assistant', jobKind: 'care' } })),
       c('travel', 'Plan a trip back to see your family.', bad('Your representative goes pale on the phone.', { wellbeing: -3, legal: -2 }, 'The trip home would cost more than a ticket.', 'Asylees may travel abroad only with prior permission (INA 208(c)(1)(C)), and returning to the country you fled can call your claim of fear into question. Ask counsel before any trip.')),
     ],
   }), { statuses: ['ASYLEE'] }),
@@ -945,7 +966,7 @@ const MARRIAGE_CARDS: ChallengeDef[] = [
       title: 'The consulate',
       body: `With the waiver approved, you fly home for your immigrant visa interview. It is the first time you have left since you arrived. If the consular officer finds any problem the waiver does not cover, you could be stuck outside for years.`,
       stage: 'airport',
-      cast: [{ ...YOU, pose: 'carry' }, { role: 'spouse', pose: 'wave' }],
+      cast: [{ ...YOU, pose: 'idle' }, { role: 'spouse', pose: 'wave' }],
       inlineFact: FX_BARS,
       choices: [
         c(
@@ -998,8 +1019,8 @@ const AOS_CARDS: ChallengeDef[] = [
     cast: [{ ...YOU, pose: 'cheer' }, { role: 'teller', pose: 'talk' }],
     inlineFact: FX_AP,
     choices: [
-      c('job', 'Take a job on the books and open a bank account.', ok('A pay stub with your real name on it. You frame the first one, a little embarrassed.', { career: 6, wellbeing: 6, flags: { ead: true, informalWork: false, salary: 2600, jobTitle: 'office assistant' } })),
-      c('both', 'Take the job and also apply for advance parole, just in case.', ok('A second card arrives months later. You hope you never need it.', { career: 5, wellbeing: 4, money: -fee(s, 630), flags: { ead: true, informalWork: false, salary: 2600, jobTitle: 'office assistant', advanceParole: true } }, 'Advance parole is applied for on Form I-131; the fee here is an estimate.')),
+      c('job', 'Take a job on the books and open a bank account.', ok('A pay stub with your real name on it. You frame the first one, a little embarrassed.', { career: 6, wellbeing: 6, flags: { ead: true, informalWork: false, salary: 2600, jobTitle: 'office assistant', jobKind: 'office' } })),
+      c('both', 'Take the job and also apply for advance parole, just in case.', ok('A second card arrives months later. You hope you never need it.', { career: 5, wellbeing: 4, money: -fee(s, 630), flags: { ead: true, informalWork: false, salary: 2600, jobTitle: 'office assistant', jobKind: 'office', advanceParole: true } }, 'Advance parole is applied for on Form I-131; the fee here is an estimate.')),
       c('keep-cash', 'Keep your cash job. It pays more.', bad('The cash still comes. So does the old worry.', { wellbeing: -3 }, 'You had a door and did not walk through it.')),
     ],
   }), { statuses: ['AOS_PENDING'], when: (s) => !has(s, 'ead'), months: [2, 3, 4, 5, 6, 7, 8, 9] }),
@@ -1130,7 +1151,7 @@ const LPR_CARDS: ChallengeDef[] = [
     title: 'A long stay abroad',
     body: 'Your mother needs care after surgery, and your siblings ask if you can come home for most of a year. You have a green card. You also have a life, a job and a lease here.',
     stage: 'airport',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'parent', pose: 'wave' }],
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'parent', pose: 'wave' }],
     inlineFact: FX_LPR_TRIP,
     choices: [
       c('short', 'Go for two months, then rotate with your siblings.', ok('Two months of hospital corridors and home cooking. You come back tired and glad you went.', { family: 10, money: -fee(s, 1500), wellbeing: 2 })),

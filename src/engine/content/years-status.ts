@@ -114,7 +114,7 @@ const LPR_CARDS: ChallengeDef[] = [
     title: 'Counting days abroad',
     body: `Your visits home have been getting longer${yearsHere(s) >= 10 ? ', as the people there get older' : ''}. This year the family asks for five months, maybe seven. ${has(s, 'ys_travelLog') ? 'Your list of travel dates is already two pages long.' : 'You have heard that long absences matter for a green card and for citizenship.'}`,
     stage: 'airport',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'parent', pose: 'wave' }],
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'parent', pose: 'wave' }],
     choices: [
       c('five', 'Go for five months, and write down every departure and return date.', ok('Long enough to be useful, short enough to come back to a life that waited. The dates go in the notebook.', { family: 8, money: -cost(s, 1800), wellbeing: 2, legal: 2, flags: { ys_daysAt: stamp(s), ys_travelLog: true } }, 'Naturalization needs physical presence here for at least half of the required period (INA 316(a)), and the application asks for every trip. An absence under six months does not raise the presumption of a break.')),
       c('seven', 'Stay seven months. Keep your lease, your job on leave and your bills paid here.', ok('You come back to a dusty apartment and a patient employer. The officer asks why you were gone so long, and you have answers and papers.', { family: 11, money: -cost(s, 2600), career: -3, legal: -4, flags: { ys_daysAt: stamp(s) } }, 'An absence of more than six months but less than a year disrupts continuous residence for naturalization unless you show otherwise, for example that you kept your job, your home and your family here (8 CFR 316.5(c)(1)(i)). After more than 180 days away a permanent resident is treated as seeking admission (INA 101(a)(13)(C)(ii)).')),
@@ -310,7 +310,7 @@ const CIT_CARDS: ChallengeDef[] = [
         ? 'You fly home for the first time since the oath. At the airport you grew up near, the signs sort people into citizens and foreigners, and you are no longer sure which line is yours.'
         : `Home again, ${yearsHere(s)} years after you left. The shop on the corner has a new name, and the children call you by the word for an older relative. You are a guest in a place you can still walk blindfolded.`,
       stage: 'airport',
-      cast: [{ ...YOU, pose: 'carry' }, { role: 'officer', pose: 'idle' }],
+      cast: [{ ...YOU, pose: 'idle' }, { role: 'officer', pose: 'idle' }],
       choices: [
         c('ask', 'Check with the consulate before flying which passport to use and whether you need a visa.', ok('One email saves an hour at the desk. You arrive in the right line with the right papers.', { legal: 3, family: 6, money: -cost(s, 1650), flags: { ys_homeVisitAt: stamp(s) } }, `${HOME_LAW} On the US side, a citizen must leave and enter on a US passport (INA 215(b)).`)),
         c(
@@ -1035,7 +1035,7 @@ const NONE_CARDS: ChallengeDef[] = [
     title: 'A friend is detained',
     body: 'A friend you have worked beside for years did not come home on Tuesday. By evening his wife knows he is being held by immigration officers, and not yet where. She is at your door with their youngest on her hip.',
     stage: 'apartment-night',
-    cast: [{ ...YOU, pose: 'talk' }, { role: 'stranger', pose: 'carry' }],
+    cast: [{ ...YOU, pose: 'talk' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('clinic', 'Help her reach the legal clinic tonight and gather his papers.', ok('You make calls until someone answers. By morning a lawyer has his name and his file number.', { community: 7, legal: 2, wellbeing: -3, flags: { ys_detAt: stamp(s) } }, 'A person in removal proceedings may be represented by a lawyer of their choosing, at no expense to the government (INA 292). None is appointed, so families and nonprofits must find one, and early help matters.')),
       c('children', 'Take the children for the week and cover part of their rent.', ok('Three extra toothbrushes in the bathroom. The oldest does not ask questions, which is its own kind of question.', { money: -cost(s, 500), community: 8, family: 2, wellbeing: -2, flags: { ys_detAt: stamp(s) } })),

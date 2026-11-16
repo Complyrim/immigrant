@@ -163,7 +163,7 @@ export const CARDS: ChallengeDef[] = [
       ? 'You come home to the sound of running water. A pipe has burst behind the kitchen wall and the floor is ruined. This time there is no landlord to call.'
       : 'You come home to water coming through the ceiling. The neighbour upstairs left a tap running. Your bed, your shoes and a box of papers are soaked.',
     stage: 'apartment-night',
-    cast: [{ ...YOU, pose: 'carry' }],
+    cast: [{ ...YOU, pose: 'think' }],
     choices: [
       c('claim', has(s, 'yh_ownsHome') ? 'Call your home insurer and start a claim.' : 'Photograph everything and file a claim.', has(s, 'yh_ownsHome') || has(s, 'yh_rentersIns')
         ? ok('An adjuster walks through with a tablet. After the deductible, most of the damage is covered.', { money: -cost(s, has(s, 'yh_ownsHome') ? 1000 : 250), wellbeing: -2, flags: { yh_floodY: s.year } })

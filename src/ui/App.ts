@@ -36,7 +36,7 @@ import { ALL_CARDS, ROUTES, STATUS_MAP, routeReady } from '../engine/content/ind
 import { statusOf } from '../engine/routes';
 import { blurbOf } from '../engine/activities';
 import { setBoardLine } from '../world/Stage';
-import type { Country, StatusCode, StatusId } from '../engine/types';
+import type { Country, StageId, StatusCode, StatusId } from '../engine/types';
 import { buildStage } from '../world/Stage';
 
 const esc = (s: string): string =>
@@ -821,7 +821,7 @@ export class App {
     this.result = null;
     this.saveJourney();
     this.scene.setMonth(item.month < 0 ? 7 : (7 + item.month) % 12);
-    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile);
+    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, paintFor(ch.id, ch.stage, g.state));
     this.sound.setScene(ch.stage ?? 'campus');
     const showOdds = this.settings.showOdds;
     const choices = ch.choices
@@ -1237,6 +1237,16 @@ function actingFor(line: TalkLine, roles: Role[]): [string, Pose][] {
  * bubbles, and the rest of the narration closes it. A speaker who is not in tonight's cast (a sibling on
  * the call instead of a parent, say) hands their lines to whoever is.
  */
+/** Cards that happen in a place of their own: the food pantry, and each job's own workplace. */
+const CARD_PAINT: Record<string, string> = { volunteer: 'pantry' };
+const JOB_PAINT: Record<string, string> = { warehouse: 'worksite-warehouse', store: 'worksite-store', hotel: 'worksite-hotel', construction: 'worksite-construction' };
+function paintFor(id: string, stage: StageId | undefined, s: GameState): string | undefined {
+  if (CARD_PAINT[id]) return CARD_PAINT[id];
+  // A hands-on job is staged where that job happens: the warehouse floor, the shop till, the hotel room, the site.
+  if (stage === 'worksite') return JOB_PAINT[String(s.flags.jobKind ?? '')];
+  return undefined;
+}
+
 function interludeBeats(a: Activity, raw: string[], lines: string[], cast: CastSpec[], rng: () => number, sibling = false): TalkLine[] {
   const roles = cast.map((c) => c.role).filter((r) => r !== 'player');
   const about = (t: string): Role[] => {

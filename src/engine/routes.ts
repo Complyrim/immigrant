@@ -23,6 +23,9 @@
  * - `flags.salary`: monthly take-home pay in USD (2025 dollars; the engine scales by year).
  *   `flags.jobTitle`: short label such as 'software engineer'. Set both when a job starts and
  *   set salary to 0 when it ends.
+ * - `flags.jobKind`: where the job happens (kitchen, warehouse, store, hotel, construction, care,
+ *   driver, cleaning, office; see content/jobs.ts). Set it with every job start, cash work included,
+ *   and clear it ('') when the job ends.
  * - `flags.informalWork: true`: cash work without authorization (engine adds about $1,050).
  * - `flags.ead: true`: holds a work permit (asylum applicants, adjustment applicants).
  * - One-off costs go in `money` on the outcome (negative to pay). Filing fees should come from

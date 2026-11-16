@@ -4,6 +4,7 @@ import type { ChallengeDef, Country, StatusCode } from '../types';
 import type { RouteDef, StatusDef } from '../routes';
 import { statusOf } from '../routes';
 import { ADULT_FESTIVAL_TEXT } from './festivals-adult';
+import { CASH_JOBS, offerFlags, pickOffers, pickOne } from './jobs';
 
 const YOU = { role: 'player' } as const;
 
@@ -173,41 +174,50 @@ const WORK_WITH_EAD = ['AOS_PENDING', 'ASY_PENDING'];
  * When someone may work but has no job, finding one is the most pressing thing in their life.
  * Pay is take-home per month in 2025 dollars (designed estimates; the engine scales by year).
  */
-const FIND_WORK = def('find-work', 'work', 30, (s) => ({
-  id: 'find-work',
-  track: 'work',
-  title: 'Looking for work',
-  body: `You are allowed to work${s.flags.ead ? ' (your work permit came through)' : ''}, but nobody is paying you yet, and the money you came with is going fast. Every week of searching is a week of rent.`,
-  stage: 'careerfair',
-  cast: [{ ...YOU, pose: 'talk' }, { role: 'recruiter', pose: 'talk' }],
-  choices: [
-    c('steady', 'Take a steady job you can start now: a warehouse, a store, care work.', ok('The shifts are long and your feet ache, but a paycheck arrives every two weeks.', { career: 2, wellbeing: -1, flags: { salary: 2600, jobTitle: 'warehouse or retail work' } }, 'Taking the job you can get first is how many immigrants start. Pay here is a designed estimate of take-home pay for full-time hourly work.')),
-    c('field', 'Hold out for work closer to your field.', ok('An employer calls back, then calls again. You start in two weeks, doing work you trained for.', { career: 7, wellbeing: 4, flags: { salary: 4300, jobTitle: 'work in your field' } }), {
-      roll: { base: 30, mods: [mod('career', 40, 0.5, 'work experience'), mod('community', 40, 0.25, 'contacts')] },
-      fail: bad('Applications, a few interviews, then silence. You will try again soon.', { wellbeing: -3 }, 'Credentials from home are not always recognized at first.', 'Foreign degrees and licenses often need evaluation or local certification before employers accept them, so many newcomers start below their training level.'),
-    }),
-    c('course', 'Take a short course first: community college or a certificate.', ok('Evenings in a classroom again. The certificate will open better doors.', { money: -250, study: 6, career: 3 })),
-  ],
-}), {
+const FIND_WORK = def('find-work', 'work', 30, (s) => {
+  const [a, b] = pickOffers(s, 'find-work', 2);
+  return {
+    id: 'find-work',
+    track: 'work',
+    title: 'Looking for work',
+    body: `You are allowed to work${s.flags.ead ? ' (your work permit came through)' : ''}, but nobody is paying you yet, and the money you came with is going fast. Every week of searching is a week of rent. This week ${a.where} and ${b.where} both say they can start you on Monday.`,
+    stage: 'careerfair',
+    cast: [{ ...YOU, pose: 'talk' }, { role: 'recruiter', pose: 'talk' }],
+    choices: [
+      ...[a, b].map((o) => c(`job-${o.kind}`, o.label, ok(o.text, { ...o.effects, flags: offerFlags(o) }, 'Taking the job you can get first is how many immigrants start. Pay here is a designed estimate of take-home pay for full-time hourly work.'))),
+      c('field', 'Hold out for work closer to your field.', ok('An employer calls back, then calls again. You start in two weeks, doing work you trained for.', { career: 7, wellbeing: 4, flags: { salary: 4300, jobTitle: 'work in your field', jobKind: 'office' } }), {
+        roll: { base: 30, mods: [mod('career', 40, 0.5, 'work experience'), mod('community', 40, 0.25, 'contacts')] },
+        fail: bad('Applications, a few interviews, then silence. You will try again soon.', { wellbeing: -3 }, 'Credentials from home are not always recognized at first.', 'Foreign degrees and licenses often need evaluation or local certification before employers accept them, so many newcomers start below their training level.'),
+      }),
+      c('course', 'Take a short course first: community college or a certificate.', ok('Evenings in a classroom again. The certificate will open better doors.', { money: -250, study: 6, career: 3 })),
+    ],
+  };
+}, {
   statuses: [...WORK_ANY, ...WORK_WITH_EAD] as ChallengeDef['statuses'],
   repeatAfter: 2,
   when: (s) => !Number(s.flags.salary ?? 0) && (WORK_ANY.includes(String(s.flags.status)) || Boolean(s.flags.ead)),
 });
 
 /** Without status and without income, the question is how to live. */
-const FIND_CASH_WORK = def('find-cash-work', 'work', 30, () => ({
-  id: 'find-cash-work',
-  track: 'work',
-  title: 'No papers, no paycheck',
-  body: 'Rent is due and nobody will hire you on the books. A friend of a friend says a kitchen pays cash, and a crew outside the hardware store takes day workers.',
-  stage: 'street',
-  cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'talk' }],
-  choices: [
-    c('cash', 'Take the cash work.', ok('Long days, cash in an envelope, no questions. You can pay rent this month.', { wellbeing: -2, legal: -2, flags: { informalWork: true } }, 'Working without authorization is a violation of status rules and can count against you later. Pay is often low and wage theft is common, but basic wage laws still protect every worker.')),
-    c('help', 'Lean on community help for now: a food bank, a church, a cousin.', ok('A bag of groceries, a meal and a promise to ask around. It buys you a little time.', { money: 200, community: 3, wellbeing: 1 })),
-    c('home', 'Decide it is time to go home.', ok('You make the call you have been avoiding. Your mother cries, then starts planning your room.', { family: 10 }), { success: { text: 'You make the call you have been avoiding. Your mother cries, then starts planning your room.', effects: { family: 10 }, passed: true, ends: 'went-home' } }),
-  ],
-}), { statuses: ['NONE'], repeatAfter: 2, when: (s) => !s.flags.informalWork && !Number(s.flags.salary ?? 0) });
+const FIND_CASH_WORK = def('find-cash-work', 'work', 30, (s) => {
+  const one = pickOne(s, 'cash-a', [CASH_JOBS.kitchen, CASH_JOBS.store]);
+  const two = pickOne(s, 'cash-b', [CASH_JOBS.construction, CASH_JOBS.cleaning, CASH_JOBS.care]);
+  const lookback = 'Working without authorization is a violation of status rules and can count against you later. Pay is often low and wage theft is common, but basic wage laws still protect every worker.';
+  return {
+    id: 'find-cash-work',
+    track: 'work',
+    title: 'No papers, no paycheck',
+    body: `Rent is due and nobody will hire you on the books. A friend of a friend says ${one.where} pays cash. Someone at church mentions ${two.where}.`,
+    stage: 'street',
+    cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'talk' }],
+    choices: [
+      c(`cash-${one.kind}`, `Take the ${one.short} job.`, ok(`${one.text} Cash in an envelope, no questions. You can pay rent this month.`, { wellbeing: -2, legal: -2, flags: { informalWork: true, jobKind: one.kind } }, lookback)),
+      c(`cash-${two.kind}`, `Take the ${two.short} job.`, ok(`${two.text} Cash in an envelope, no questions. You can pay rent this month.`, { wellbeing: -2, legal: -2, flags: { informalWork: true, jobKind: two.kind } }, lookback)),
+      c('help', 'Lean on community help for now: a food bank, a church, a cousin.', ok('A bag of groceries, a meal and a promise to ask around. It buys you a little time.', { money: 200, community: 3, wellbeing: 1 })),
+      c('home', 'Decide it is time to go home.', ok('You make the call you have been avoiding. Your mother cries, then starts planning your room.', { family: 10 }), { success: { text: 'You make the call you have been avoiding. Your mother cries, then starts planning your room.', effects: { family: 10 }, passed: true, ends: 'went-home' } }),
+    ],
+  };
+}, { statuses: ['NONE'], repeatAfter: 2, when: (s) => !s.flags.informalWork && !Number(s.flags.salary ?? 0) });
 
 export const CARDS: ChallengeDef[] = [NEW_YEAR_GENERAL, FIND_WORK, FIND_CASH_WORK, ...festivalCards()];
 

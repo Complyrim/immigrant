@@ -1,6 +1,7 @@
 import { createSeededRandom } from '../utils/random';
 import { ALL_CARDS as CHALLENGES, ROUTE_MAP, ROUTES, STATUS_MAP } from './content/index';
 import { DAILY_WORK_IDS } from './content/daily';
+import { CASH_DEFAULT_KINDS as CASH_KINDS, JOB_OFFERS, isKind, pickOne } from './content/jobs';
 import { monthsSinceArrival, statusOf } from './routes';
 import { borrowedPerMonth, commuteInfo, monthlyBudget, START_MONEY } from './economy';
 import type {
@@ -782,7 +783,10 @@ export class Game {
         s.wellbeing -= 8;
         if (optionId === 'help') f.legalHelp = true;
         // Staying without status means finding cash work to live on (former students find it through their own cards).
-        if (optionId === 'stay' && !f.formerStudent) f.informalWork = true;
+        if (optionId === 'stay' && !f.formerStudent) {
+          f.informalWork = true;
+          if (!isKind(f.jobKind) || f.jobKind === 'office') f.jobKind = pickOne(this.state, 'pivot-stay', CASH_KINDS);
+        }
         this.rescheduleRest(optionId === 'help');
         break;
       case 'broke':
@@ -803,8 +807,10 @@ export class Game {
           s.wellbeing -= 8;
           s.community += 3;
         } else if (optionId === 'job') {
-          f.salary = 2400;
-          f.jobTitle = 'whatever is hiring';
+          const job = pickOne(this.state, 'broke-job', JOB_OFFERS.filter((o) => o.kind !== 'driver'));
+          f.salary = job.salary;
+          f.jobTitle = job.title;
+          f.jobKind = job.kind;
           this.addMoney(300, 'First week of pay', 'help');
           s.wellbeing -= 4;
         } else if (optionId === 'extra') {
@@ -818,6 +824,7 @@ export class Game {
         } else if (optionId === 'cash') {
           if (f.outOfStatus) f.informalWork = true;
           else f.unauthWork = true;
+          if (f.outOfStatus && !Number(f.salary ?? 0)) f.jobKind = pickOne(this.state, 'broke-cash', CASH_KINDS);
           this.addMoney(400, 'Cash work', 'help');
           s.wellbeing -= 3;
           s.legal -= f.outOfStatus ? 0 : 6;

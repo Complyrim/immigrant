@@ -544,7 +544,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-u-same-pay', track: 'work',
     title: 'The same pay as the first year',
     body: `You have worked for the same boss for ${Math.min(yearsHere(s), 10) >= 10 ? 'ten years or more' : `${yearsHere(s)} years`}. You open in the morning and you train the new people. The amount in the envelope has not changed since the first year, and everything it buys has.`,
-    stage: 'worksite', cast: [{ ...YOU, pose: 'carry' }, { role: 'owner', pose: 'idle' }],
+    stage: 'worksite', cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'idle' }],
     choices: [
       c('ask', 'Ask for more, and say plainly what you do for the place.', ok('He complains about costs for ten minutes, then adds a little to the envelope. It is the first raise you have had in this country.', { money: cost(s, 1200), wellbeing: 4, flags: mark(s, 'usame') }), {
         roll: { base: 45, mods: [ties()] },
@@ -598,7 +598,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-u-teach', track: 'work',
     title: 'Showing someone the work',
     body: `A young man joins the crew, a few weeks in the country and holding the tool wrong. The boss nods at you to show him. ${yearsHere(s) >= 12 ? 'You have taught a dozen like him. Some have gone on to their own crews, and some have gone home.' : 'You were him once, and someone showed you.'}`,
-    stage: 'worksite', cast: [{ ...YOU, pose: 'carry' }, { role: 'student', pose: 'idle' }],
+    stage: 'worksite', cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'idle' }],
     choices: [
       c('all', 'Teach him the trade and the rest: write down your hours, never work without the gear.', ok('He learns the trade from your hands. The other things he hears from you and will only understand later.', { community: 5, wellbeing: 3, flags: mark(s, 'uteach') })),
       c('trade', 'Teach him the work and leave the rest for him to find out.', ok('By the end of the month he is useful. He calls you teacher in his own language.', { community: 3, wellbeing: 1, flags: mark(s, 'uteach') })),
@@ -637,7 +637,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-u-old-age', track: 'work',
     title: 'No pension is coming',
     body: `A man from the old crew, past sixty, is still carrying loads because he cannot afford to stop. You have worked here ${yearsHere(s)} years. Nobody has put anything aside for you. If you have paid tax, it was with a number that earns no pension.`,
-    stage: 'street', cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'carry' }],
+    stage: 'street', cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('save', 'Start putting something aside every week, however small.', ok('It is a tin, then an account. It will not be enough, but it is something you did not have before.', { money: -cost(s, 300), wellbeing: 3, flags: mark(s, 'uold') }, 'An ITIN does not qualify a person for Social Security benefits (irs.gov, ITIN).')),
       c('home', `Put the savings into ${hasChild(s) ? 'something at home that could one day carry you' : 'a room and a plot at home'}.`, ok('Your family sends photographs of walls going up. It is a place to grow old, in a country you cannot visit and come back from.', { money: -cost(s, 1500), family: 5, wellbeing: 1, flags: mark(s, 'uold') }, 'An ITIN does not qualify a person for Social Security benefits (irs.gov, ITIN). After a year or more of unlawful presence, leaving the US triggers a ten-year bar on returning (INA 212(a)(9)(B)).')),

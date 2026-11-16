@@ -54,6 +54,13 @@ room backdrops. On 2026-11-15 the 8 city skylines were redrawn from those origin
 `apartment-night.jpg` and `rooftop.jpg` were redrawn from the originals with nano-banana-2 image editing
 (same layout, realistic finish, 2048 px) and their depth maps re-baked.
 
+## Workplaces, transport and other new scenes (2026-11-15)
+
+`backdrops/worksite-warehouse.jpg`, `worksite-store.jpg`, `worksite-hotel.jpg`, `worksite-construction.jpg`,
+`pantry.jpg`, `gym.jpg`, `commute-bike.jpg`, `commute-car.jpg`, `commute-rideshare.jpg` and
+`commute-transit.jpg` were generated for this game with Creatify (nano-banana-2) in a realistic style and
+their depth maps baked. Rights reserved like the other paintings.
+
 ## Depth for painted scenes (prototype, 2026-11-12)
 
 `backdrops/<id>-depth.png` are baked by `scripts/bake_depth.py` with Depth Anything V2 Small

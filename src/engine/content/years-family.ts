@@ -262,7 +262,7 @@ const RAW: ChallengeDef[] = [
       title: has(s, 'yf_visitedHome') ? 'Home, again' : 'Home, after all these years',
       body: `You could finally take a real trip home. ${has(s, 'yf_visitedHome') ? 'Each visit, the place has moved a little further from the one you carry.' : `It has been ${y} years.`} The street you grew up on has new buildings, the children are adults, and your own room has someone else's things in it.`,
       stage: 'airport',
-      cast: [{ ...YOU, pose: 'carry' }, { role: 'parent', pose: 'wave' }],
+      cast: [{ ...YOU, pose: 'idle' }, { role: 'parent', pose: 'wave' }],
       choices: [
         c('long', `Go for a month and see everyone (about $${cost(s, 3200)}).`, ok(`Thirty houses, thirty meals, the same ten questions. By week three you are thinking in your first language again. By week four you miss your own bed, and that surprises you.`, { family: 12, wellbeing: 6, money: -cost(s, 3200), flags: { yf_visitedHome: true } }, is(s, 'LPR') ? LB_LPR_TRIP : undefined)),
         c('short', `Go for ten days, just the closest family (about $${cost(s, 2000)}).`, ok(`Ten days is enough to be held and not enough to be bored. Some relatives are offended that you did not call on them. Your mother defends you.`, { family: 8, wellbeing: 5, money: -cost(s, 2000), flags: { yf_visitedHome: true } }, is(s, 'LPR') ? LB_LPR_TRIP : undefined)),
@@ -403,7 +403,7 @@ const RAW: ChallengeDef[] = [
       ? `The food pantry where you sometimes help is short of people who can speak to newcomers in their own language. You remember standing on the other side of a table like that.`
       : `A flyer at the library asks for volunteers: a food pantry, a youth sports league, a neighbourhood clean-up. None of it has anything to do with where you are from. That is part of the appeal.`,
     stage: 'park',
-    cast: [{ ...YOU, pose: 'carry' }, { role: 'stranger', pose: 'talk' }],
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'talk' }],
     choices: [
       c('pantry', 'Give two Saturdays a month to the food pantry.', ok(`You learn to pack a box in forty seconds. You also learn how many of your neighbours, born here, are one bad month from the line.`, { community: 6, wellbeing: 3 })),
       c('coach', 'Help coach the children\'s league.', ok(`Twelve eight-year-olds ignore everything you say. Their parents learn your name. For the first time you know people here who have nothing to do with work or with home.`, { community: 6, wellbeing: 5 })),
@@ -646,7 +646,7 @@ const RAW: ChallengeDef[] = [
       title: 'A child arrives',
       body: `After months of waiting, you and ${pWord(s)} bring a baby home from a hospital across town. The grandparents meet their grandchild on a phone screen, crying and giving instructions at the same time. There is nobody down the hall to hand the baby to. It is the two of you.`,
       stage: 'bedroom',
-      cast: [{ ...YOU, pose: 'carry' }, { role: pRole(s), pose: 'sit' }],
+      cast: [{ ...YOU, pose: 'talk' }, { role: pRole(s), pose: 'sit' }],
       choices: [
         c('friends', 'Say yes to every friend who offers food, laundry or an hour of holding.', ok(`A rota appears without you asking. People you met at work and on the bus become aunts and uncles. The child will grow up with a family you built by hand.`, { family: 10, community: 7, wellbeing: 3, money: -cost(s, 400), flags: born })),
         c('grandparent', `Bring a grandparent over to help for the first months, if a visa comes (about $${cost(s, 1900)}).`, ok(`The visa comes on the second try. For three months there is someone in the kitchen at dawn singing the songs you were raised on. When they leave, the apartment is too quiet.`, { family: 14, wellbeing: 5, money: -cost(s, 1900), flags: born })),
