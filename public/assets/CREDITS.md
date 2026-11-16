@@ -45,8 +45,8 @@ Mesh compression: Draco (decoder in `assets/draco`, Apache 2.0, Google).
 
 Files: `assets/backdrops/city-*.jpg` (8 cities) and `assets/backdrops/commute-*.jpg` (bike, transit, car,
 ride-share). Generated for this game with Creatify (nano-banana-2) on 2026-11-11, same style brief as the
-room backdrops. The 8 city skylines were regenerated on 2026-11-15 in a photographic style (same model,
-rooftop view at golden hour), and their depth maps re-baked.
+room backdrops. On 2026-11-15 the 8 city skylines were redrawn from those originals with nano-banana-2 image editing
+(same view and layout, realistic finish, 2048 px), and their depth maps re-baked.
 
 ## Depth for painted scenes (prototype, 2026-11-12)
 
