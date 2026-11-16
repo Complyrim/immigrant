@@ -21,6 +21,19 @@ export interface FigureLike {
   lookAt(target: THREE.Vector3 | null): void;
   update(dt: number, time: number): void;
   dispose(): void;
+  /** Hold hands and feet on these points every frame (riding a bike). MakeHuman figures only. */
+  setReach?(r: Reach | null): void;
+  /** A bone's world position, once the person has loaded. MakeHuman figures only. */
+  bonePos?(bone: string, out: THREE.Vector3): boolean;
+}
+
+export interface Reach {
+  hand_l?: THREE.Object3D;
+  hand_r?: THREE.Object3D;
+  foot_l?: THREE.Object3D;
+  foot_r?: THREE.Object3D;
+  /** Forward lean of the upper body, in radians. */
+  lean?: number;
 }
 
 /** Set to false to always use the procedural figures. */

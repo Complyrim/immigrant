@@ -4,6 +4,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { clone as cloneSkinned } from 'three/addons/utils/SkeletonUtils.js';
 import type { Pose, Role } from '../engine/types';
 import type { FigureLook } from './Figure';
+import type { Reach } from './stage-kit';
 import { GESTURES, SEATED_TALK, STANDING, attachAccessories, humanClips } from './HumanFigure';
 import peopleJson from '../data/people.json';
 
@@ -370,6 +371,7 @@ export class MhFigure {
   private blend = 0;
   private acc = 0;
   private clock = Math.random() * 10;
+  private reach: Reach | null = null;
   private target: THREE.Vector3 | null = null;
   private lookYaw = 0;
   private lookPitch = 0;
@@ -551,6 +553,98 @@ export class MhFigure {
     return clip;
   }
 
+  setReach(r: Reach | null): void {
+    this.reach = r;
+  }
+
+  bonePos(bone: string, out: THREE.Vector3): boolean {
+    const b = this.bones.get(bone);
+    if (!b) return false;
+    b.updateWorldMatrix(true, false);
+    b.getWorldPosition(out);
+    return true;
+  }
+
+  /** Turn a bone so a direction it carries in world space, `from`, points along `to` instead. */
+  private aimWorld(b: THREE.Object3D, from: THREE.Vector3, to: THREE.Vector3): void {
+    if (!b.parent || from.lengthSq() < 1e-10 || to.lengthSq() < 1e-10) return;
+    const turn = new THREE.Quaternion().setFromUnitVectors(from.clone().normalize(), to.clone().normalize());
+    const wq = b.getWorldQuaternion(new THREE.Quaternion());
+    const pq = b.parent.getWorldQuaternion(new THREE.Quaternion()).invert();
+    b.quaternion.copy(pq.multiply(turn.multiply(wq)));
+    b.updateWorldMatrix(false, true);
+  }
+
+  /**
+   * Two-bone reach: bend a limb (upper, lower, end) so its end lands on a world point, the middle joint
+   * bending toward `pole` (a world direction), as an elbow points back and out or a knee points forward.
+   */
+  private solveLimb(upper: string, lower: string, end: string, target: THREE.Vector3, pole: THREE.Vector3): void {
+    const a = this.bones.get(upper);
+    const bB = this.bones.get(lower);
+    const c = this.bones.get(end);
+    if (!a || !bB || !c) return;
+    const pa = a.getWorldPosition(new THREE.Vector3());
+    const pb = bB.getWorldPosition(new THREE.Vector3());
+    const pc = c.getWorldPosition(new THREE.Vector3());
+    const lab = pa.distanceTo(pb);
+    const lbc = pb.distanceTo(pc);
+    const toT = target.clone().sub(pa);
+    const d = Math.min(Math.max(toT.length(), Math.abs(lab - lbc) + 1e-3), (lab + lbc) * 0.999);
+    const dir = toT.normalize();
+    const x = (lab * lab - lbc * lbc + d * d) / (2 * d);
+    const h = Math.sqrt(Math.max(0, lab * lab - x * x));
+    const side = pole.clone().addScaledVector(dir, -pole.dot(dir));
+    if (side.lengthSq() < 1e-8) side.copy(pb).sub(pa).addScaledVector(dir, -pb.clone().sub(pa).dot(dir));
+    side.normalize();
+    const joint = pa.clone().addScaledVector(dir, x).addScaledVector(side, h);
+    this.aimWorld(a, pb.clone().sub(pa), joint.clone().sub(pa));
+    const pb2 = bB.getWorldPosition(new THREE.Vector3());
+    const pc2 = c.getWorldPosition(new THREE.Vector3());
+    const end2 = pa.clone().addScaledVector(dir, d);
+    this.aimWorld(bB, pc2.sub(pb2), end2.sub(pb2));
+  }
+
+  private applyReach(r: Reach): void {
+    this.group.updateMatrixWorld(true);
+    const q = this.group.getWorldQuaternion(new THREE.Quaternion());
+    if (r.lean) {
+      // Lean about the body's own side-to-side axis, in world space, so the rig's bone axes do not matter.
+      const axis = new THREE.Vector3(1, 0, 0).applyQuaternion(q);
+      const turnBy = (bone: string, ang: number): void => {
+        const b = this.bones.get(bone);
+        if (!b?.parent) return;
+        const turn = new THREE.Quaternion().setFromAxisAngle(axis, ang);
+        const wq = b.getWorldQuaternion(new THREE.Quaternion());
+        const pq = b.parent.getWorldQuaternion(new THREE.Quaternion()).invert();
+        b.quaternion.copy(pq.multiply(turn.multiply(wq)));
+        b.updateWorldMatrix(false, true);
+      };
+      turnBy('spine_02', r.lean * 0.55);
+      turnBy('spine_03', r.lean * 0.45);
+      // Keep the eyes on the road ahead.
+      turnBy('neck_01', -r.lean * 0.7);
+    }
+    const dirOf = (x: number, y: number, z: number): THREE.Vector3 => new THREE.Vector3(x, y, z).applyQuaternion(q);
+    const t = new THREE.Vector3();
+    for (const s of ['l', 'r'] as const) {
+      // Which way is out for this side: measured from the body, so it does not depend on the rig's handedness.
+      const sh = this.bones.get(`upperarm_${s}`);
+      const pel = this.bones.get('pelvis');
+      let out = 0;
+      if (sh && pel) {
+        const local = this.group.worldToLocal(sh.getWorldPosition(new THREE.Vector3()));
+        const pl = this.group.worldToLocal(pel.getWorldPosition(new THREE.Vector3()));
+        out = Math.sign(local.x - pl.x);
+      }
+      const hand = r[`hand_${s}`];
+      if (hand) this.solveLimb(`upperarm_${s}`, `lowerarm_${s}`, `hand_${s}`, hand.getWorldPosition(t), dirOf(out * 0.9, -0.35, -1));
+      const foot = r[`foot_${s}`];
+      if (foot) this.solveLimb(`thigh_${s}`, `calf_${s}`, `foot_${s}`, foot.getWorldPosition(t), dirOf(out * 0.15, 0.4, 1));
+    }
+    if (r.foot_l || r.foot_r) this.levelFeet();
+  }
+
   setSeated(b: boolean): void {
     if (this.seated === b) return;
     this.seated = b;
@@ -702,6 +796,7 @@ export class MhFigure {
     const gf = MhFigure.gestureFix[this.pose];
     if (gf) for (const [bn, x, y, z] of gf) this.rot(bn, x, y, z, this.blend);
     if (!this.seated && FLAT_FOOT.has(this.pose)) this.levelFeet();
+    if (this.reach) this.applyReach(this.reach);
     this.animateFace(dt);
     if (this.phoneProp) this.phoneProp.visible = this.pose === 'phone';
     if (this.boxProp) this.boxProp.visible = this.pose === 'carry';

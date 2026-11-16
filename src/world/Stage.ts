@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { buildBike } from './bike';
 import { beginCastScene, castSex, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
 import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, backdropStations, paintKey } from './backdrops';
@@ -1872,23 +1873,41 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         rider.group.userData.basePose = 'talk';
         rider.group.rotation.y = 0.55;
         rider.group.position.y = 0.5;
-        const frame = '#2f7f86';
-        const bk = new THREE.Group();
-        bk.position.set(rider.group.position.x - 0.06, 0, rider.group.position.z - 0.11);
+        const bike = buildBike('#2f7f86');
+        const bk = bike.group;
+        bk.position.set(rider.group.position.x, 0, rider.group.position.z);
         bk.rotation.y = -Math.PI / 2 + 0.55;
         at.add(bk);
-        for (const wx of [-0.5, 0.5]) {
-          b.ring(0.33, 0.04, '#1b1c1f', wx, 0.34, 0, 0, 0, bk);
-          b.cyl(0.05, 0.08, '#9aa0a8', wx, 0.34, 0, bk, 10).rotation.x = Math.PI / 2;
-        }
-        b.cyl(0.08, 0.03, '#9aa0a8', 0.0, 0.32, 0.03, bk, 14).rotation.x = Math.PI / 2;
-        b.box(1.0, 0.04, 0.04, frame, 0, 0.56, 0, 0, bk).rotation.z = -0.12;
-        b.box(0.04, 0.42, 0.04, frame, -0.12, 0.5, 0, 0, bk);
-        b.box(0.22, 0.04, 0.1, '#1b1c1f', -0.12, 0.72, 0, 0, bk);
-        b.box(0.04, 0.42, 0.04, '#1b1c1f', 0.46, 0.58, 0, 0, bk);
-        b.box(0.04, 0.04, 0.5, '#1b1c1f', 0.46, 0.8, 0, 0, bk);
+        // Once the person has loaded: size the frame to their legs, as a shop would, put them on the saddle,
+        // and hold their hands on the grips and their feet on the pedals.
+        let loaded = false;
+        let frames = 0;
+        void castSettled().then(() => { loaded = true; });
+        const p = (bone: string): THREE.Vector3 | null => {
+          const v = new THREE.Vector3();
+          return rider.bonePos?.(bone, v) ? v : null;
+        };
+        b.upd.push((dt) => {
+          bike.update(dt);
+          if (!loaded || frames > 3) return;
+          frames++;
+          const hipL = p('thigh_l');
+          const hipR = p('thigh_r');
+          const knee = p('calf_l');
+          const ankle = p('foot_l');
+          if (!hipL || !hipR || !knee || !ankle) return;
+          const ws = at.getWorldScale(new THREE.Vector3()).x || 1;
+          const leg = (hipL.distanceTo(knee) + knee.distanceTo(ankle)) / ws;
+          bk.scale.setScalar(Math.min(1.1, Math.max(0.8, (0.95 * leg - 0.09) / 0.817)));
+          bk.updateMatrixWorld(true);
+          const seat = bike.saddle.getWorldPosition(new THREE.Vector3());
+          seat.y += 0.085 * bk.scale.x * ws;
+          const hip = hipL.add(hipR).multiplyScalar(0.5);
+          rider.group.position.add(at.worldToLocal(seat).sub(at.worldToLocal(hip)));
+          rider.setReach?.({ hand_l: bike.hands.l, hand_r: bike.hands.r, foot_l: bike.feet.l, foot_r: bike.feet.r, lean: 0.38 });
+        });
         bk.traverse((o) => { o.castShadow = true; });
-        b.blob(rider.group.position.x, rider.group.position.z + 0.12, 0.5, 1.2);
+        b.blob(rider.group.position.x, rider.group.position.z, 0.45, 1.3, 1, 0.55);
       }
     }
     const lit = backdropLight(id);
