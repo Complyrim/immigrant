@@ -1382,8 +1382,20 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     // painting's floor is; background extras are left to the painting.
     // The player and the named people of the moment come first; passers-by fill what room is left.
     const rank = (f: { look: FigureLook }): number => (f.look.role === 'player' ? 0 : f.look.role && f.look.role !== 'student' && f.look.role !== 'stranger' ? 1 : 2);
+    // Only the people this scene is about: the coded room fills spare places with stand-ins (a friend at the
+    // table, a stranger at the counter), and those do not belong in a painted scene.
+    const wanted = new Map<string, number>();
+    for (const c of cast) wanted.set(c.role, (wanted.get(c.role) ?? 0) + 1);
     let main = b.figs
       .filter((f) => !f.lite)
+      .filter((f) => {
+        // Classmates and passers-by wear a crowd look with no role of their own.
+        const r = f.look.role ?? ((wanted.get('student') ?? 0) > 0 ? 'student' : 'stranger');
+        const left = wanted.get(r) ?? 0;
+        if (left <= 0 && r !== 'player') return false;
+        wanted.set(r, left - 1);
+        return true;
+      })
       .map((f, i) => ({ f, i }))
       .sort((p, q) => rank(p.f) - rank(q.f) || p.i - q.i)
       .slice(0, 4)
@@ -1552,49 +1564,71 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         // Scenes cut, explosions flash, quiet scenes glow: the light never sits still.
         const cut = Math.floor(t * 0.45);
         const level = 0.55 + 0.45 * Math.abs(Math.sin(cut * 12.9898) * 43758.5453 % 1);
-        glow.intensity = 3.4 * level * (0.9 + 0.1 * Math.sin(t * 23));
+        glow.intensity = 1.6 * level * (0.9 + 0.1 * Math.sin(t * 23));
         glow.color.copy(cool).lerp(warm, Math.abs(Math.sin(cut * 7.13)) > 0.7 ? 0.7 : 0.1);
       });
       watch = new THREE.Vector3(at.x - 0.08, 0.6, at.z);
     }
     if (variant === 'call' && remote) {
-      // The call window floats beside the player: the far-away room, daylight where here it is night.
-      const u = 0.53;
-      const v = 0.45;
-      const depth = d0 * 0.8;
-      const k = 0.544 / backdropPerson(id);
+      // A laptop on a low table in front of the player, the far-away room on its screen: daylight there,
+      // night here. The person on the call is shown head and shoulders, at the size a real screen shows them.
+      const me = main.find((f) => f.look.role === 'player') ?? null;
+      b.g.updateMatrixWorld(true);
+      const pp = new THREE.Vector3(0, 0, d0 * 0.2);
+      const ps = new THREE.Vector3(1, 1, 1);
+      if (me) {
+        me.group.getWorldPosition(pp);
+        me.group.getWorldScale(ps);
+        b.g.worldToLocal(pp);
+      }
+      const sz = ps.x;
+      const toward = pp.x <= 0 ? 1 : -1;
+      // On a laptop call nobody holds a phone to their ear: they talk to the screen.
+      if (me && me.pose === 'phone') me.setPose('talk');
+      const tx = pp.x + toward * 0.62 * sz;
+      const tz = pp.z + 0.42 * sz;
+      const topY = 0.5 * sz;
+      // The table: a small wooden side table with a dark top.
+      const wood = m('#5a3d28');
+      b.box(0.62 * sz, 0.035 * sz, 0.44 * sz, wood, tx, topY - 0.0175 * sz, tz);
+      for (const [lx, lz] of [[-0.27, -0.18], [0.27, -0.18], [-0.27, 0.18], [0.27, 0.18]]) b.box(0.035 * sz, topY - 0.035 * sz, 0.035 * sz, wood, tx + lx * sz, (topY - 0.035 * sz) / 2, tz + lz * sz);
+      b.blob(tx, tz + 0.04 * sz, 0.75 * sz, 0.55 * sz);
+      const w = 0.62;
+      const h = 0.42;
+      const k = 0.52 * sz;
+      const u0 = 1.34;
       const win = new THREE.Group();
-      const cx = ((u - 0.5) * depth * texA) / PAINT_F;
-      const cy = camH - ((v - vh) * depth) / PAINT_F;
-      win.position.set(cx, cy - 1.42 * k, d0 - depth);
+      const cx = tx;
+      const cy = topY + 0.025 * sz + (h * k) / 2;
+      const cz = tz - 0.12 * sz;
+      win.position.set(cx, cy - u0 * k, cz);
       win.scale.setScalar(k);
-      const w = 0.68;
-      const h = 0.86;
-      const room = b.canvasTex(256, 320, (g, tw, th) => {
+      // Keyboard half of the laptop, on the viewer's side of the screen.
+      b.box(w * k + 0.02 * sz, 0.018 * sz, 0.24 * sz, m('#2a2d33'), cx, topY + 0.009 * sz, cz + 0.13 * sz);
+      const room = b.canvasTex(320, 220, (g, tw, th) => {
         skyGrad(g, tw, th, [[0, '#f3e2c0'], [1, '#d9b98c']]);
-        g.fillStyle = '#bfe3ff'; g.fillRect(tw * 0.58, th * 0.08, tw * 0.34, th * 0.3);
-        g.fillStyle = '#fff7da'; g.fillRect(tw * 0.58, th * 0.08, tw * 0.34, th * 0.1);
-        g.strokeStyle = '#8a6a4a'; g.lineWidth = 6; g.strokeRect(tw * 0.58, th * 0.08, tw * 0.34, th * 0.3);
-        g.fillStyle = '#8a5a3a'; g.fillRect(tw * 0.06, th * 0.2, tw * 0.36, 8);
-        for (let i = 0; i < 5; i++) { g.fillStyle = ['#b85c38', '#3f7f5a', '#c99a3a', '#2f5d8a', '#a63d3d'][i]; g.fillRect(tw * 0.08 + i * 16, th * 0.2 - 30 - (i % 2) * 8, 12, 30 + (i % 2) * 8); }
-        g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillRect(0, th - 44, tw, 44);
-        g.fillStyle = '#ef4444'; g.beginPath(); g.arc(tw / 2, th - 22, 13, 0, 7); g.fill();
-        g.fillStyle = '#4ade80'; g.beginPath(); g.arc(22, 22, 8, 0, 7); g.fill();
+        g.fillStyle = '#bfe3ff'; g.fillRect(tw * 0.62, th * 0.1, tw * 0.3, th * 0.36);
+        g.fillStyle = '#fff7da'; g.fillRect(tw * 0.62, th * 0.1, tw * 0.3, th * 0.12);
+        g.strokeStyle = '#8a6a4a'; g.lineWidth = 6; g.strokeRect(tw * 0.62, th * 0.1, tw * 0.3, th * 0.36);
+        g.fillStyle = '#8a5a3a'; g.fillRect(tw * 0.05, th * 0.3, tw * 0.3, 7);
+        for (let i = 0; i < 5; i++) { g.fillStyle = ['#b85c38', '#3f7f5a', '#c99a3a', '#2f5d8a', '#a63d3d'][i]; g.fillRect(tw * 0.07 + i * 14, th * 0.3 - 26 - (i % 2) * 7, 10, 26 + (i % 2) * 7); }
+        g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillRect(0, th - 30, tw, 30);
+        g.fillStyle = '#ef4444'; g.beginPath(); g.arc(tw / 2, th - 15, 9, 0, 7); g.fill();
       });
-      b.panel(w, h, room, 0, 1.42, -0.3, 0, win);
+      b.panel(w, h, room, 0, u0, -0.3, 0, win);
       const rim = m('#14161c');
-      const t = 0.05;
-      b.box(w + 2 * t, t, 0.05, rim, 0, 1.42 + h / 2 + t / 2, -0.29, 0, win);
-      b.box(w + 2 * t, t, 0.05, rim, 0, 1.42 - h / 2 - t / 2, -0.29, 0, win);
-      b.box(t, h, 0.05, rim, -w / 2 - t / 2, 1.42, -0.29, 0, win);
-      b.box(t, h, 0.05, rim, w / 2 + t / 2, 1.42, -0.29, 0, win);
+      const t = 0.035;
+      b.box(w + 2 * t, t, 0.05, rim, 0, u0 + h / 2 + t / 2, -0.29, 0, win);
+      b.box(w + 2 * t, t, 0.05, rim, 0, u0 - h / 2 - t / 2, -0.29, 0, win);
+      b.box(t, h, 0.05, rim, -w / 2 - t / 2, u0, -0.29, 0, win);
+      b.box(t, h, 0.05, rim, w / 2 + t / 2, u0, -0.29, 0, win);
       win.traverse((o) => { o.castShadow = false; o.receiveShadow = false; });
       b.g.add(win);
       // Only the part of them inside the window shows.
       remote.group.userData.clip = [
         new THREE.Plane(new THREE.Vector3(1, 0, 0), -(cx - (w / 2) * k)),
         new THREE.Plane(new THREE.Vector3(-1, 0, 0), cx + (w / 2) * k),
-        new THREE.Plane(new THREE.Vector3(0, 1, 0), -(cy - (h / 2) * k + 0.05 * k)),
+        new THREE.Plane(new THREE.Vector3(0, 1, 0), -(cy - (h / 2) * k + 0.02 * k)),
         new THREE.Plane(new THREE.Vector3(0, -1, 0), cy + (h / 2) * k),
       ];
       remote.group.userData.noShadow = true;
@@ -1607,10 +1641,10 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       remote.group.position.set(0, 0, 0);
       remote.group.rotation.set(0, 0, 0);
       remote.group.scale.setScalar(1);
-      const day = new THREE.PointLight('#fff1d6', 2.2, 2.2 * k, 2);
+      const day = new THREE.PointLight('#fff1d6', 0.9, 1.6 * k, 2);
       day.position.set(0.2, 1.6, 0.9);
       win.add(day);
-      watch = new THREE.Vector3(cx, cy, d0 - depth);
+      watch = new THREE.Vector3(cx, cy, cz);
       focusFix = 0.44;
     }
     // The people left standing gather to one side of whoever is seated, turned toward them.
@@ -1630,7 +1664,12 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     const rowFree = used.length ? Math.max(0.1, Math.min(0.9, seatU + side * ((seatHalf + ((count - 1) * gap) / 2 + 0.3) / K + 0.02))) : 0.5;
     // In a narrow room (a kitchen aisle, a bus) the people standing stay in the aisle.
     const aisle = room ? Math.max(0, room - (count - 1) * gap) / (2 * K) : 0;
-    const rowU = room ? Math.max(0.5 - aisle, Math.min(0.5 + aisle, rowFree)) : rowFree;
+    let rowU = room ? Math.max(0.5 - aisle, Math.min(0.5 + aisle, rowFree)) : rowFree;
+    // Someone cooking keeps the stove: the others stand beside them, never in front of the pots.
+    if (cook && cookAt && !used.length) {
+      const away = cookAt.u < 0.5 ? 1 : -1;
+      rowU = Math.max(0.12, Math.min(0.88, cookAt.u + away * (0.22 + ((count - 1) * gap) / (2 * K))));
+    }
     const focusU = used.length ? (standers.length ? (seatU + rowU) / 2 : seatU) : 0.5;
     const row = new THREE.Group();
     b.g.add(row);
@@ -1642,12 +1681,15 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       // Nobody stands in front of the painting's foreground line (their feet would leave the window); the
       // second rank steps back instead.
       const nz = tight ? (i % 2 ? -0.75 : -0.1) : i % 2 ? -0.35 : 0;
-      const sitter = wantsSeat(f);
-      // Someone the coded room had seated, but who stands in this staging, gets up.
-      if (!sitter && f.group.userData.seated) {
+      // In a painted room nobody sits on a chair the painting does not have: anyone left without one of
+      // its seats stands and talks with the others instead of perching on built furniture.
+      const sitter = false;
+      if (wantsSeat(f) || f.group.userData.seated) {
         f.group.userData.seated = false;
         f.setSeated(false);
         f.group.position.y = 0;
+        if (f.pose === 'sit' || f.pose === 'eat') f.setPose('talk');
+        else if (f.pose === 'type') f.setPose('phone');
       }
       // A sleeper's bed lies across the frame. Everyone else turns toward the others: toward whoever is
       // seated if anyone is, otherwise toward the middle of the group.

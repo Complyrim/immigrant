@@ -48,6 +48,12 @@ ride-share). Generated for this game with Creatify (nano-banana-2) on 2026-11-11
 room backdrops. On 2026-11-15 the 8 city skylines were redrawn from those originals with nano-banana-2 image editing
 (same view and layout, realistic finish, 2048 px), and their depth maps re-baked.
 
+## Realistic redraws of evening scenes (2026-11-15)
+
+`backdrops/park.jpg`, `walk.jpg`, `club.jpg` (now with a bar counter), `kitchen.jpg`, `apartment.jpg`,
+`apartment-night.jpg` and `rooftop.jpg` were redrawn from the originals with nano-banana-2 image editing
+(same layout, realistic finish, 2048 px) and their depth maps re-baked.
+
 ## Depth for painted scenes (prototype, 2026-11-12)
 
 `backdrops/<id>-depth.png` are baked by `scripts/bake_depth.py` with Depth Anything V2 Small
