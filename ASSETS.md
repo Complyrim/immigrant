@@ -20,4 +20,4 @@ So the paintings are © ComplyRim, all rights reserved, and are included only so
 
 ## Voice lines
 
-The officer's lines on arrival day were generated with ElevenLabs for this game. They are © ComplyRim, included only so the game can run, and may not be reused elsewhere. The game works without them: each line stays on screen for reading time when its recording is missing.
+Every recorded line in `assets/voice/` was generated with ElevenLabs for this game (`scripts/gen_voices.mjs`). They are © ComplyRim, included only so the game can run, and may not be reused elsewhere, including as training data. The game works without them: each line stays on screen for reading time when its recording is missing.

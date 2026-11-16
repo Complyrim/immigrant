@@ -62,13 +62,16 @@ for (const file of walk(join(root, 'src/engine'))) {
     const text = Function(`return ${lit}`)();
     for (const slot of slotsFor(who)) {
       const name = `${slot}-${textHash(text)}`;
-      if (!jobs.has(name)) jobs.set(name, { name, slot, text, who });
+      if (!jobs.has(name)) jobs.set(name, { name, slot, text, who, file });
     }
   }
 }
 
 const all = [...jobs.values()];
-const missing = all.filter((j) => !existsSync(join(outDir, `${j.name}.mp3`)));
+// Most-heard first, so a run that stops on the credit limit has voiced what players hear most: evening
+// conversations (every night), then arrival day, then everything else.
+const rank = (j) => (j.file.includes('interlude-talk') ? 0 : j.file.endsWith('/challenges.ts') ? 1 : 2);
+const missing = all.filter((j) => !existsSync(join(outDir, `${j.name}.mp3`))).sort((a, b) => rank(a) - rank(b));
 const per = {};
 for (const j of missing) per[j.slot] = (per[j.slot] ?? 0) + j.text.length;
 const chars = missing.reduce((n, j) => n + j.text.length, 0);
