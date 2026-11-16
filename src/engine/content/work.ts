@@ -88,7 +88,11 @@ const lotteryOdds = (s: GameState): number => {
   return base + (s.flags.usMasters ? 6 : 0);
 };
 
-const isWorker = (s: GameState): boolean => ['H1B', 'O1'].includes(statusOf(s));
+/** Works in a lab: an O-1 researcher, a research title, or a student on the research track. */
+const inLab = (s: GameState): boolean =>
+  statusOf(s) === 'O1' || Boolean(s.flags.researchTrack) || /research|scientist|lab/i.test(String(s.flags.jobTitle || ''));
+/** A hands-on job (kitchen, store, warehouse...): flags.jobKind set and not office work. */
+const handsOn = (s: GameState): boolean => typeof s.flags.jobKind === 'string' && s.flags.jobKind !== '' && s.flags.jobKind !== 'office';
 
 /**
  * Flags for becoming an F-1 student again mid-journey (from H-1B, O-1 or practical training).
@@ -504,7 +508,7 @@ const exitChoices = (s: GameState, reason: string): Choice[] => {
     }));
   }
   if (evCount(s) >= 3) {
-    out.push(c('o1', 'Ask your employer to petition for an O-1 on your record.', ok('Your publications, your judging and your role at the lab carry it. You change status to O-1.', { legal: 15, wellbeing: 6, money: -cost(s, 4000), flags: { status: 'O1', o1ValidUntil: now(s) + 36 } }, 'O-1 needs at least three of eight kinds of evidence and a peer consultation (8 CFR 214.2(o)(3)(iii), (o)(5)). Lawyer fees are a designed estimate.'), {
+    out.push(c('o1', 'Ask your employer to petition for an O-1 on your record.', ok(`Your publications, your judging and your role ${inLab(s) ? 'at the lab' : 'at work'} carry it. You change status to O-1.`, { legal: 15, wellbeing: 6, money: -cost(s, 4000), flags: { status: 'O1', o1ValidUntil: now(s) + 36 } }, 'O-1 needs at least three of eight kinds of evidence and a peer consultation (8 CFR 214.2(o)(3)(iii), (o)(5)). Lawyer fees are a designed estimate.'), {
       roll: { base: 55, mods: [career()], flagMods: [{ flag: 'legalHelp', delta: 10, label: 'legal help' }] },
       fail: bad('The petition is denied. The evidence was close, but not there yet.', { money: -cost(s, 4000), wellbeing: -8, flags: { status: 'NONE', statusLostReason: reason, salary: 0, jobKind: '' } }, 'Close is a hard word.'),
     }));
@@ -1059,8 +1063,8 @@ const SP_CARDS: ChallengeDef[] = [
     id: 'work-sp-paper',
     track: 'work',
     title: 'A paper worth finishing',
-    body: `${isWorker(s) ? 'Your team' : 'Your lab'} has results that could become a paper in a good journal. It means evenings and weekends for two months.`,
-    stage: 'lab',
+    body: `${statusOf(s) === 'F1' || inLab(s) ? 'Your lab' : 'Your team'} has results that could become a paper in a good journal. It means evenings and weekends for two months.`,
+    stage: statusOf(s) === 'F1' || inLab(s) ? 'lab' : 'workplace',
     cast: [{ ...YOU, pose: 'type' }, { role: 'professor', pose: 'talk' }],
     choices: [
       c('write', 'Lead the writing.', ok('Accepted after one round of revisions. Your name is first.', { career: 6, wellbeing: -3, flags: { evPubs: true } }, 'Authorship of scholarly articles is one of the kinds of evidence for O-1 and EB-1A (8 CFR 214.2(o)(3)(iii)(B)(6); 204.5(h)(3)(vi)).'), {
@@ -1070,7 +1074,7 @@ const SP_CARDS: ChallengeDef[] = [
       c('help', 'Help, but let a colleague lead.', ok('Second author, and a friend for life.', { career: 2, community: 3 })),
       c('pass', 'Pass. You need your weekends.', ok('You hike, sleep and call home.', { wellbeing: 4 })),
     ],
-  }), { statuses: SP_STATUSES, when: (s) => spOpen(s) && !s.flags.evPubs }),
+  }), { statuses: SP_STATUSES, when: (s) => spOpen(s) && !s.flags.evPubs && !handsOn(s) }),
 
   def('work-sp-judging', 'work', 1.5, () => ({
     id: 'work-sp-judging',

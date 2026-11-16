@@ -631,7 +631,7 @@ export class SB {
       if (seated && (sl.seat === 'chair' || sl.seat === 'stool')) this.chair(x, z, ry, chairCol, sl.seat === 'chair');
       else if (seated && typeof sl.seat === 'number') y = sl.seat - SEAT_HEIGHT;
       if (pose === 'sit' && !seated) { seated = true; this.chair(x, z, ry, chairCol); }
-      const fig = this.person(look, x, z, ry, pose, { seated, y, lite: sl.lite && (!spec || generic(spec.role)), look: sl.look, scale: sl.scale });
+      const fig = this.person(look, x, z, ry, pose, { seated, y, lite: sl.lite && !spec, look: sl.look, scale: sl.scale });
       out.push({ role, fig, slot: sl });
     });
     return out;

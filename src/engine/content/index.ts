@@ -9,7 +9,7 @@ import * as yFamily from './years-family';
 import * as yWork from './years-work';
 import * as yStatus from './years-status';
 import * as daily from './daily';
-import { jobKindOf, stageForKind } from './jobs';
+import { sitePlace } from './jobs';
 
 /**
  * Every card, route and status in the game, with tags applied to the original student cards.
@@ -37,12 +37,12 @@ const tagged: ChallengeDef[] = BASE.filter((d) => !core.RETIRED_CARDS.has(d.id))
 const SCENE: Record<string, StageId> = {};
 const put = (stage: StageId, ids: string): void => ids.split(' ').forEach((id) => (SCENE[id] = stage));
 put('court', 'asy-court');
-put('uscis', 'asy-interview aos-biometrics aos-interview lpr-i751 lpr-natz-interview');
+put('uscis', 'asy-interview aos-biometrics aos-interview lpr-natz-interview');
 put('legal', 'asy-arrival-help ewi-asylum-deadline ewi-legal-screening asy-file asy-after-denial fam-file-petition fam-ewi-waiver oos-consult oos-notario work-sp-file work-h1b-six-year work-gc-file-aos');
 put('workplace', 'work-h1b-first-days work-h1b-start work-h1b-layoff work-h1b-perm work-h1b-i140');
 put('shelter', 'asy-arrival-shelter');
-put('worksite', 'ewi-arrival-work oos-cash-job b2-cash-work find-cash-work');
-/** Cards that happen at your cash job: the setting follows the kind of work (flags.jobKind). */
+put('street', 'ewi-arrival-work');
+/** Cards that happen at your cash job: the setting and painting follow the kind of work (as on the daily cards). */
 const AT_JOB = new Set(['oos-wage-theft', 'oos-boss-threat']);
 
 export const ALL_CARDS: ChallengeDef[] = [...tagged, ...core.CARDS, ...work.CARDS, ...family.CARDS, ...yHome.CARDS, ...yFamily.CARDS, ...yWork.CARDS, ...yStatus.CARDS, ...daily.CARDS].map((d) => {
@@ -53,7 +53,7 @@ export const ALL_CARDS: ChallengeDef[] = [...tagged, ...core.CARDS, ...work.CARD
     out = { ...out, build: (s) => ({ ...build(s), stage }) };
   } else if (AT_JOB.has(d.id)) {
     const build = out.build;
-    out = { ...out, build: (s) => ({ ...build(s), stage: stageForKind(jobKindOf(s)) }) };
+    out = { ...out, build: (s) => ({ ...build(s), ...sitePlace(s) }) };
   }
   return out;
 });

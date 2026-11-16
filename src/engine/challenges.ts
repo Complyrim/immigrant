@@ -576,11 +576,13 @@ const CORE: ChallengeDef[] = [
   }), { months: [1, 2, 3, 5, 6, 7, 9, 11] }),
 
   def('dating', 'life', 1.3, (s) => {
-    // Where you keep running into them depends on your days: a student's lab, a worker's coffee stop.
+    // Where you keep running into them depends on your days: a student's lab or class, a worker's coffee stop.
     const student = statusOf(s) === 'F1';
     const working = Number(s.flags.salary ?? 0) > 0;
     const where = student
-      ? 'In your lab and at every campus event, you keep running into someone with an easy laugh.'
+      ? s.flags.researchTrack
+        ? 'In your lab and at every campus event, you keep running into someone with an easy laugh.'
+        : 'In class and at every campus event, you keep running into someone with an easy laugh.'
       : working
         ? 'At the coffee shop near work, the same time every morning, you keep running into someone with an easy laugh.'
         : 'At the coffee shop on your corner, you keep running into someone with an easy laugh.';

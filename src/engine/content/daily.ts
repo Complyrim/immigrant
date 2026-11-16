@@ -5,8 +5,9 @@
  *   hands-on version for each kind of work in flags.jobKind (content/jobs.ts; the title is the fallback):
  *   a kitchen shift, a warehouse order, a store till, a hotel room turnover, a construction site, a care
  *   visit, a delivery route or a cleaning shift, including work without authorization. Kitchen, warehouse,
- *   store, hotel and construction use the 'worksite' stage (the engine picks the painting for jobKind),
- *   care uses 'clinic', delivery 'street' and cleaning 'workplace'. Office days are never shown to anyone
+ *   store, hotel and construction use the 'worksite' stage with that kind's painting pinned (placeForKind in
+ *   jobs.ts), care is a home visit (an apartment with the 'care-home' painting), delivery 'street' and
+ *   cleaning 'workplace'. Office days are never shown to anyone
  *   who cannot work lawfully, and nobody on F-1 or B-2 sees any of these.
  * - The Social Security office (status track, the first months of a new work-authorized status).
  * - The licence office and the road test (life track), then buying a first car.
@@ -19,7 +20,7 @@
  */
 import { bad, c, def, mod, money, ok, well } from '../cx';
 import type { CastSpec, ChallengeDef, Choice, GameState, Line, Outcome, Pose, Role, StageId, StatusCode } from '../types';
-import { CASH_DEFAULT_KINDS, jobKindOf, stageForKind } from './jobs';
+import { jobKindOf, placeForKind, siteKindOf } from './jobs';
 import type { SiteKind } from './jobs';
 import { YOU, band, cost, has, is, mayWork, noStatus, num, settled } from './yx';
 
@@ -40,10 +41,7 @@ const siteJob = (s: GameState): boolean => cashWork(s) || (lawfulJob(s) && jobKi
 const officeJob = (s: GameState): boolean => lawfulJob(s) && jobKindOf(s) === 'office';
 const cashPaid = (s: GameState): boolean => cashWork(s);
 /** The kind of hands-on work today. Cash work never happens at a desk, so an office kind falls back to a seeded one. */
-const siteKind = (s: GameState): SiteKind => {
-  const k = jobKindOf(s);
-  return k === 'office' ? CASH_DEFAULT_KINDS[s.seed % CASH_DEFAULT_KINDS.length] : k;
-};
+const siteKind = siteKindOf;
 
 /** Everyone who could be working. F-1 and B-2 are never here. */
 const WORKERS: StatusCode[] = ['OPT', 'STEM_OPT', 'H1B', 'O1', 'LPR', 'CITIZEN', 'ASYLEE', 'AOS_PENDING', 'ASY_PENDING', 'NONE'];
@@ -67,6 +65,8 @@ interface Scene {
   narration: string;
   lines: Line[];
   stage: StageId;
+  /** A painting the stage borrows (hands-on work: the one for its kind of work). */
+  paint?: string;
   cast: CastSpec[];
   choices: Choice[];
 }
@@ -96,7 +96,7 @@ const day = (
     (s) => {
       const sc = siteJob(s) ? SITE[id](s, siteKind(s)) : office(s);
       const choices = sc.choices.map((ch) => ({ ...ch, success: mark(s, ch.success), ...(ch.fail ? { fail: mark(s, ch.fail) } : {}) }));
-      return { id, track: 'work', title: sc.title, body: sc.narration, narration: sc.narration, lines: sc.lines, stage: sc.stage, cast: sc.cast, choices };
+      return { id, track: 'work', title: sc.title, body: sc.narration, narration: sc.narration, lines: sc.lines, stage: sc.stage, ...(sc.paint ? { paint: sc.paint } : {}), cast: sc.cast, choices };
     },
     {
       statuses: WORKERS,
@@ -148,12 +148,12 @@ const bossOf = (k: SiteKind, pose: Pose = 'talk'): CastSpec => ({ role: FLOOR[k]
 const mateOf = (k: SiteKind, pose?: Pose): CastSpec => coworker(pose ?? FLOOR[k].mate);
 const yourPose = (k: SiteKind, stock = false): Pose => (stock && (k === 'warehouse' || k === 'store') ? 'carry' : FLOOR[k].pose);
 
-/** A hands-on scene in the setting for its kind of work (the engine picks the painting for jobKind on 'worksite'). */
+/** A hands-on scene in the setting for its kind of work, with its painting pinned to the same kind as the words. */
 const floor = (k: SiteKind, title: string, narration: string, lines: Line[], cast: CastSpec[], choices: Choice[]): Scene => ({
   title,
   narration,
   lines,
-  stage: stageForKind(k),
+  ...placeForKind(k),
   cast,
   choices,
 });

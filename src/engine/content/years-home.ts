@@ -5,6 +5,7 @@
  */
 import { c, bad, def, money, ok } from '../cx';
 import type { ChallengeDef, GameState, StatusCode } from '../types';
+import { jobKindOf, placeForKind } from './jobs';
 import {
   YOU, band, cost, has, hasChild, hasJob, hasSpouse, is, mayWork, noStatus, num, secure, settled,
   sponsored, waiting, yearsHere,
@@ -460,7 +461,8 @@ export const CARDS: ChallengeDef[] = [
     body: yearsHere(s) >= 8
       ? `Open enrolment again. You have ticked the same box for years. ${hasChild(s) || hasSpouse(s) ? 'This year there is more than one person to cover.' : 'This year your knees and your eyes have opinions.'}`
       : 'An email from work: two weeks to choose a health plan. There are three options and a glossary of words like deductible, copay and network that nobody explained.',
-    stage: 'workplace',
+    // Read and chosen at home, whatever the job.
+    stage: 'apartment',
     cast: [{ ...YOU, pose: 'type' }],
     choices: [
       c('rich', `Take the higher premium and low deductible, about ${p(s, 1500)} more over the year.`, ok('It costs more every payday. When you need a doctor, you go without doing sums first.', { money: -cost(s, 1500), wellbeing: 4, flags: { yh_insured: true, yh_goodPlan: true, yh_planY: s.year } })),
@@ -646,7 +648,7 @@ export const CARDS: ChallengeDef[] = [
     track: 'life',
     title: 'An offer on a home',
     body: `The agent has shown you eleven places. The twelfth is small, with a tree outside the kitchen window. ${has(s, 'yh_buyerClass') ? 'You know what every line of the estimate means.' : 'The estimate has a great many lines.'} After ${yearsHere(s)} years here, you could own a piece of the ground.`,
-    stage: 'street',
+    stage: 'walk',
     cast: [{ ...YOU, pose: 'think' }, { role: 'advisor', pose: 'talk' }],
     choices: [
       c('buy', `Make the offer: about ${p(s, 22000)} down, plus closing costs.`, ok(
@@ -695,8 +697,9 @@ export const CARDS: ChallengeDef[] = [
     track: 'life',
     title: 'The form you skipped',
     body: `A younger colleague asks what you put into the retirement plan at work. You have never opened that form. The employer adds money if you do, and after ${yearsHere(s)} years you have left all of it on the table.`,
-    stage: 'workplace',
-    cast: [{ ...YOU, pose: 'type' }, { role: 'friend', pose: 'talk' }],
+    // A colleague asks: at the agency or depot office for jobs done alone (home care, driving).
+    ...(jobKindOf(s) === 'care' || jobKindOf(s) === 'driver' ? { stage: 'workplace' as const } : placeForKind(jobKindOf(s))),
+    cast: [{ ...YOU, pose: jobKindOf(s) === 'office' ? 'type' : 'idle' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('match', 'Enrol and put in enough to get the full employer match.', ok('Your pay drops a little. A second number starts growing where you do not have to look at it.', { money: -cost(s, 900), wellbeing: 4, career: 1, flags: { yh_retire: true, yh_retireY: s.year } })),
       c('small', 'Start with one percent. Something is better than nothing.', ok('You barely feel it. It is a beginning, and beginnings are your speciality.', { money: -cost(s, 250), wellbeing: 2, flags: { yh_retire: true, yh_retireY: s.year } })),

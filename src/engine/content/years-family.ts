@@ -282,7 +282,8 @@ const RAW: ChallengeDef[] = [
       body: y >= 10
         ? `A friend of many years tells you over dinner that they are going home for good. Their parents are old, and they are tired of being from somewhere else. You have been each other's family here since the early days.`
         : `The friend who showed you how everything works here is leaving the country. A job fell through, or the papers did, and they have decided not to fight it. Their room is already half in boxes.`,
-      stage: 'cafe',
+      // Over dinner out, or in their room among the boxes.
+      stage: y >= 10 ? 'cafe' : 'apartment',
       cast: [{ ...YOU, pose: 'sit' }, { role: 'friend', pose: 'talk' }],
       choices: [
         c('sendoff', `Organise a proper send-off (about $${cost(s, 120)}).`, ok(`Everyone they ever helped turns up. There are speeches nobody planned. Your friend leaves knowing what they were to people here.`, { community: 6, wellbeing: 3, money: -cost(s, 120) })),
@@ -355,7 +356,8 @@ const RAW: ChallengeDef[] = [
     body: has(s, 'yf_faithGroup')
       ? `The group you joined has become part of your week. Now they ask more of you: a turn cooking for sixty, a seat on a committee, a key to the building.`
       : `A neighbour invites you to the place where people from many countries meet each week. For some it is a house of worship, for others a hall with a kitchen and a notice board. There is food after, and people who ask your name and remember it.`,
-    stage: 'festival',
+    stage: 'cafe',
+    paint: 'community-hall',
     cast: [{ ...YOU, pose: 'talk' }, { role: 'friend', pose: 'laugh' }, { role: 'stranger', pose: 'talk' }],
     choices: has(s, 'yf_faithGroup')
       ? [
@@ -379,7 +381,8 @@ const RAW: ChallengeDef[] = [
       body: elder
         ? `You have served the community association for years. Now the younger members, many born here, want to run things their way: meetings in English, less ceremony, more politics. Some of the founders are hurt. Both sides look to you.`
         : `The community association for people from your part of the world is run by the same five tired volunteers. It holds the yearly festival, collects for funerals and welcomes newcomers. They ask you to join the board.`,
-      stage: 'conference',
+      stage: 'cafe',
+      paint: 'community-hall',
       cast: [{ ...YOU, pose: 'talk' }, { role: 'owner', pose: 'talk' }, { role: 'student', pose: 'sit' }],
       choices: elder
         ? [
@@ -402,7 +405,9 @@ const RAW: ChallengeDef[] = [
     body: yearsHere(s) >= 10
       ? `The food pantry where you sometimes help is short of people who can speak to newcomers in their own language. You remember standing on the other side of a table like that.`
       : `A flyer at the library asks for volunteers: a food pantry, a youth sports league, a neighbourhood clean-up. None of it has anything to do with where you are from. That is part of the appeal.`,
-    stage: 'park',
+    // At the food pantry itself, or reading the flyer at the library.
+    stage: yearsHere(s) >= 10 ? 'cafe' : 'library',
+    ...(yearsHere(s) >= 10 ? { paint: 'pantry' } : {}),
     cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'talk' }],
     choices: [
       c('pantry', 'Give two Saturdays a month to the food pantry.', ok(`You learn to pack a box in forty seconds. You also learn how many of your neighbours, born here, are one bad month from the line.`, { community: 6, wellbeing: 3 })),
@@ -421,7 +426,9 @@ const RAW: ChallengeDef[] = [
       body: y >= 10
         ? `In a shop queue, a man hears your accent and tells you to go back where you came from. You have lived on this street for ${y} years. An older neighbour behind you says, loudly, that you have been here longer than he has.`
         : `Someone has written something ugly on your mailbox. While you stand looking at it, the neighbour from across the hall comes out with a wet cloth and starts scrubbing, saying nothing at all.`,
-      stage: 'street',
+      // A queue in the grocery store, or the mailboxes on your own street.
+      stage: y >= 10 ? 'cafe' : 'street',
+      ...(y >= 10 ? { paint: 'worksite-store' } : {}),
       cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'talk' }, { role: 'friend', pose: 'talk' }],
       choices: [
         c('thank', 'Thank the neighbour, and ask them in for tea or coffee.', ok(`It turns out they have their own story of being the stranger once. You sit for two hours. The street feels different after.`, { community: 6, wellbeing: 4 })),
@@ -500,7 +507,9 @@ const RAW: ChallengeDef[] = [
     track: 'life',
     title: 'Asked to stand in for family',
     body: `A friend here is getting married, and their family cannot travel for it. ${yearsHere(s) >= 10 ? 'You have known each other most of your years here.' : 'You met in your early days here.'} They ask you to stand where a brother or sister would stand, sign as a witness and give the family speech. "You are the family I have here," they say.`,
-    stage: 'festival',
+    // The reception hall.
+    stage: 'cafe',
+    paint: 'community-hall',
     cast: [{ ...YOU, pose: 'cheer' }, { role: 'friend', pose: 'laugh' }],
     choices: [
       c('all', `Do all of it, properly (about $${cost(s, 250)} for clothes and a gift).`, ok(`You hold a phone up through the whole ceremony so their mother can see. In your speech you say what a brother or sister would say. Their mother thanks you by name.`, { community: 8, wellbeing: 5, money: -cost(s, 250) })),
@@ -694,7 +703,8 @@ const RAW: ChallengeDef[] = [
     track: 'life',
     title: 'The first day of school',
     body: `Your child starts school this week, with a bag too big for their back. The other parents seem to know the rules already: the forms, the lunch boxes, what to say at the gate. You went to school in another country, under another system. ${has(s, 'yf_homeLanguage') ? 'Your child speaks two languages and is about to find out which one counts here.' : ''} Your child's teacher gets their name slightly wrong.`,
-    stage: 'campus',
+    stage: 'classroom',
+    paint: 'school',
     cast: [{ ...YOU, pose: 'wave' }, { role: 'professor', pose: 'talk' }, { role: 'stranger', pose: 'talk' }],
     choices: [
       c('name', 'Teach the teacher the name, kindly, until it is right.', ok(`It takes three tries and a smile. By Friday the whole class says it correctly. Your child will not have to shrink their name to fit.`, { family: 6, wellbeing: 3, flags: { yf_schoolStarted: true } })),

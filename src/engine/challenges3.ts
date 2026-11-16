@@ -107,7 +107,8 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
       track: 'work',
       title: 'Cash work',
       body: `Rent comes due whether or not you have a record. ${one.where.charAt(0).toUpperCase() + one.where.slice(1)} and ${two.where} both say they can pay you in cash. Nobody asks for papers, and nobody promises they will keep paying.`,
-      stage: 'cafe',
+      // Two offers heard around the neighbourhood, before either job has started.
+      stage: 'street',
       cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
       choices: [
         c(one.short, `Take the ${one.short} job.`, ok(`${one.text} ${end[one.kind]}`, { wellbeing: -3, flags: { informalWork: true, jobKind: one.kind } })),
@@ -156,7 +157,8 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     track: 'status',
     title: 'Your passport is about to expire',
     body: 'Your passport expires in five months. Renewing it means visiting a consulate. Every office feels like a risk, even though a consulate is not an immigration agency.',
-    stage: 'street',
+    // The government office painting stands in for the consulate's waiting room.
+    stage: 'uscis',
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('renew', 'Renew it now.', ok('The queue is long and the clerk is kind. A new passport arrives in six weeks. You feel one fear fewer.', { money: -m(150, 2025), wellbeing: 4 })),
@@ -226,7 +228,8 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     track: 'life',
     title: 'A place to belong',
     body: 'A community center in your neighborhood hosts a weekly dinner. People from many places eat together, and no one asks for your papers. A neighbor tells you to just come.',
-    stage: 'festival',
+    stage: 'cafe',
+    paint: 'community-hall',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'wave' }, { role: 'student', pose: 'talk' }],
     choices: [
       c('go', 'Go and stay for the whole evening.', ok('There is rice, laughter and an old woman who insists on teaching you a card game. You leave with a full stomach and three phone numbers.', { community: 7, wellbeing: 6 })),
@@ -305,7 +308,8 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     track: 'life',
     title: 'An empty fridge',
     body: 'It is the third day of eating little. The fridge is empty and the pantry is bare. You stand in a grocery store holding a basket with nothing in it, and a loaf of bread is within reach.',
-    stage: 'street',
+    stage: 'cafe',
+    paint: 'worksite-store',
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('food-bank', 'Walk out and find a food bank.', ok('The food bank hands you a box without a single question. It is more than you expected.', { wellbeing: 3, community: 2 })),
@@ -328,19 +332,25 @@ export const OUT_OF_STATUS_CHALLENGES: ChallengeDef[] = [
     ],
   }), { when: () => false }),
 
-  def('unlicensed-drive', 'life', 0, () => ({
+  def('unlicensed-drive', 'life', 0, (s) => {
+    // Someone with no work yet is offered a week of it; the early start is the same.
+    const working = Number(s.flags.salary ?? 0) > 0 || Boolean(s.flags.informalWork);
+    return {
     id: 'unlicensed-drive',
     track: 'life',
     title: 'The long way to work',
-    body: 'Your shift starts at five. The bus does not run that early and a friend offers you his car for the week. You do not have a driver\'s license.',
+    body: working
+      ? 'Your shift starts at five. The bus does not run that early and a friend offers you his car for the week. You do not have a driver\'s license.'
+      : 'Someone across town has a week of work for you, starting at five each morning. The bus does not run that early and a friend offers you his car for the week. You do not have a driver\'s license.',
     stage: 'street',
     cast: [{ ...YOU, pose: 'think' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('bus', 'Take two buses and a long walk.', ok('You leave at three in the dark. The walk is long and you arrive on time.', { money: -m(25, 2025), wellbeing: -3 })),
-      c('carpool', 'Ask a coworker for a lift.', ok('He grumbles, then agrees. You pay for gas and a thank-you.', { money: -m(40, 2025), community: 2 })),
+      c('carpool', working ? 'Ask a coworker for a lift.' : 'Ask someone else on the job for a lift.', ok('He grumbles, then agrees. You pay for gas and a thank-you.', { money: -m(40, 2025), community: 2 })),
       c('drive', 'Drive the friend\'s car.', bad('The first morning goes smoothly. You grip the wheel, watching every mirror.', { wellbeing: -4, flags: { crime: 1 } }, 'You promise yourself it is only for the week.', 'Driving without a license is a criminal offense in many places, and any arrest brings your immigration situation to light. Serious or repeated offenses can lead to removal (INA 237(a)(2)).')),
     ],
-  }), { when: () => false }),
+  };
+  }, { when: () => false }),
 
   def('oos-itin-tax', 'work', 1, () => ({
     id: 'oos-itin-tax',

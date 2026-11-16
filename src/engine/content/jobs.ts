@@ -55,6 +55,44 @@ export const jobKindOf = (s: GameState): JobKind => {
 export const stageForKind = (k: JobKind): StageId =>
   k === 'care' ? 'clinic' : k === 'driver' ? 'street' : k === 'cleaning' || k === 'office' ? 'workplace' : 'worksite';
 
+/** A stage and, when it borrows one, the painting it is shown with (Challenge.paint). */
+export interface Place {
+  stage: StageId;
+  paint?: string;
+}
+
+/**
+ * Where a kind of work happens, with the painting pinned so it always matches the words chosen for that
+ * kind: the kitchen, warehouse, shop, hotel or site paintings on 'worksite', a client's living room for
+ * home care, the street for a delivery route, and an office floor for cleaning and desk work.
+ */
+export const placeForKind = (k: JobKind): Place => {
+  switch (k) {
+    case 'kitchen':
+      return { stage: 'worksite', paint: 'worksite' };
+    case 'warehouse':
+    case 'store':
+    case 'hotel':
+    case 'construction':
+      return { stage: 'worksite', paint: `worksite-${k}` };
+    case 'care':
+      return { stage: 'apartment', paint: 'care-home' };
+    case 'driver':
+      return { stage: 'street' };
+    default:
+      return { stage: 'workplace' };
+  }
+};
+
+/** The kind of hands-on work today. Cash work never happens at a desk, so an office kind falls back to a seeded one. */
+export const siteKindOf = (s: GameState): SiteKind => {
+  const k = jobKindOf(s);
+  return k === 'office' ? CASH_DEFAULT_KINDS[s.seed % CASH_DEFAULT_KINDS.length] : k;
+};
+
+/** Where today's hands-on work happens (cash work included), by the same kind the daily cards use. */
+export const sitePlace = (s: GameState): Place => placeForKind(siteKindOf(s));
+
 /** A hands-on job offer with its own trade-off. */
 export interface JobOffer {
   kind: SiteKind;

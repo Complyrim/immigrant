@@ -58,7 +58,7 @@ room backdrops. On 2026-11-15 the 8 city skylines were redrawn from those origin
 
 `backdrops/worksite-warehouse.jpg`, `worksite-store.jpg`, `worksite-hotel.jpg`, `worksite-construction.jpg`,
 `pantry.jpg`, `gym.jpg`, `commute-bike.jpg`, `commute-car.jpg`, `commute-rideshare.jpg` and
-`commute-transit.jpg` were generated for this game with Creatify (nano-banana-2) in a realistic style and
+`commute-transit.jpg`, `phone-store.jpg`, `care-home.jpg`, `community-hall.jpg` and `school.jpg` were generated for this game with Creatify (nano-banana-2) in a realistic style and
 their depth maps baked. Rights reserved like the other paintings.
 
 ## Depth for painted scenes (prototype, 2026-11-12)

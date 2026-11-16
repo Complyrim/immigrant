@@ -20,15 +20,16 @@ import { CASH_DEFAULT_KINDS, CASH_JOBS, isKind, offerFlags, pickOffers, pickOne 
 import type { SiteKind } from './jobs';
 import { monthsInStatus, monthsSinceArrival, statusOf } from '../routes';
 import type { RouteDef, StatusDef } from '../routes';
-import type { ChallengeDef, Effects, Fact, GameState, Outcome, StatusCode } from '../types';
+import type { ChallengeDef, Effects, Fact, GameState, Outcome, StageId, StatusCode } from '../types';
 
 const YOU = { role: 'player' } as const;
 
 /** Weekend cash shifts a visitor hears about (b2-cash-work). */
-const B2_GIGS: Array<{ who: string; doing: string; kind: SiteKind }> = [
-  { who: 'The restaurant owner', doing: ' in the kitchen', kind: 'kitchen' },
-  { who: 'The shop owner', doing: ' on the till and the shelves', kind: 'store' },
-  { who: 'The woman with the cleaning business', doing: ' cleaning houses', kind: 'cleaning' },
+const B2_GIGS: Array<{ who: string; doing: string; kind: SiteKind; stage: StageId; paint: string }> = [
+  { who: 'The restaurant owner', doing: ' in the kitchen', kind: 'kitchen', stage: 'worksite', paint: 'worksite' },
+  { who: 'The shop owner', doing: ' on the till and the shelves', kind: 'store', stage: 'cafe', paint: 'worksite-store' },
+  // Houses, not offices: a private living room.
+  { who: 'The woman with the cleaning business', doing: ' cleaning houses', kind: 'cleaning', stage: 'apartment', paint: 'care-home' },
 ];
 /** Cash work someone waiting for an asylum work permit hears about (asy-before-permit). */
 const ASY_GIGS = [CASH_JOBS.kitchen, CASH_JOBS.cleaning, CASH_JOBS.construction];
@@ -513,8 +514,8 @@ const B2_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'Asking for more time',
     body: `Your I-94 date is ${Math.max(1, n(s, 'b2Until') - now(s))} month${n(s, 'b2Until') - now(s) === 1 ? '' : 's'} away. Your aunt is unwell and the family would like you to stay longer. A visitor can ask USCIS for an extension on Form I-539, but it must be filed before the stay ends.`,
-    stage: 'intl-office',
-    cast: [{ ...YOU, pose: 'type' }, { role: 'dso', pose: 'talk' }],
+    stage: 'legal',
+    cast: [{ ...YOU, pose: 'type' }, { role: 'advisor', pose: 'talk' }],
     inlineFact: FX_B2,
     choices: [
       c(
@@ -555,7 +556,8 @@ const B2_CARDS: ChallengeDef[] = [
     track: 'work',
     title: 'Just a few shifts',
     body: `${gig.who} your uncle mentioned needs someone for weekend shifts${gig.doing}. Cash, no forms. Your savings are going faster than you planned.`,
-    stage: 'cafe',
+    stage: gig.stage,
+    paint: gig.paint,
     cast: [{ ...YOU, pose: 'think' }, { role: 'owner', pose: 'talk' }],
     choices: [
       c('decline', 'Say no and cut your spending instead.', ok('Fewer outings, more home cooking. The money lasts.', { wellbeing: -1, money: 100 })),
@@ -700,8 +702,8 @@ const ASY_CARDS: ChallengeDef[] = [
     track: 'work',
     title: 'The work permit',
     body: 'It has been more than five months since your complete application arrived. You can now ask for a work permit. USCIS has 30 days to decide, but cannot issue it until six months have passed since filing.',
-    stage: 'intl-office',
-    cast: [{ ...YOU, pose: 'idle' }, { role: 'dso', pose: 'talk' }],
+    stage: 'legal',
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'talk' }],
     inlineFact: FX_ASY_EAD,
     choices: [
       c(
@@ -850,7 +852,7 @@ const ASY_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'One year as an asylee',
     body: 'A year has passed since the grant. You can now apply for a green card. The form asks again about where you have been and whether you still fear return.',
-    stage: 'intl-office',
+    stage: 'legal',
     cast: [{ ...YOU, pose: 'type' }, { role: 'advisor', pose: 'talk' }],
     inlineFact: FX_209,
     choices: [
@@ -1015,8 +1017,8 @@ const AOS_CARDS: ChallengeDef[] = [
     track: 'work',
     title: 'A work permit and a travel paper',
     body: 'Your work permit card arrives, and with it the option of advance parole, a travel document that lets you leave and come back without abandoning your case. For the first time, you can take a job on the books.',
-    stage: 'bank',
-    cast: [{ ...YOU, pose: 'cheer' }, { role: 'teller', pose: 'talk' }],
+    stage: 'apartment',
+    cast: [{ ...YOU, pose: 'cheer' }],
     inlineFact: FX_AP,
     choices: [
       c('job', 'Take a job on the books and open a bank account.', ok('A pay stub with your real name on it. You frame the first one, a little embarrassed.', { career: 6, wellbeing: 6, flags: { ead: true, informalWork: false, salary: 2600, jobTitle: 'office assistant', jobKind: 'office' } })),
@@ -1210,7 +1212,7 @@ const LPR_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'Removing the conditions',
     body: 'Your two-year card expires in three months. You and your spouse must file together to show the marriage is real and continuing, with proof of the life you share.',
-    stage: 'intl-office',
+    stage: 'apartment',
     cast: [{ ...YOU, pose: 'type' }, { role: 'spouse', pose: 'talk' }],
     inlineFact: FX_216,
     choices: [

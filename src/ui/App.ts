@@ -3,6 +3,7 @@ import { INTERLUDE_TALK } from '../engine/interlude-talk';
 import { Sound } from '../audio/Sound';
 import { ACTIVITIES, pickActivities, pickScript } from '../engine/activities';
 import type { Activity } from '../engine/activities';
+import { jobKindOf } from '../engine/content/jobs';
 import { fill, homeCast, housemate, peopleFor, withLine } from '../engine/people';
 import { CITIES, getCity, getFact, srcNum, type CityData } from '../engine/data';
 import { commuteInfo, monthlyBudget, netMonthly, START_MONEY } from '../engine/economy';
@@ -821,7 +822,7 @@ export class App {
     this.result = null;
     this.saveJourney();
     this.scene.setMonth(item.month < 0 ? 7 : (7 + item.month) % 12);
-    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, paintFor(ch.id, ch.stage, g.state));
+    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, ch.paint ?? paintFor(ch.id, ch.stage, g.state));
     this.sound.setScene(ch.stage ?? 'campus');
     const showOdds = this.settings.showOdds;
     const choices = ch.choices
@@ -910,11 +911,11 @@ export class App {
     this.toEvening();
   }
 
-  /** Between one task and the next there is an evening to spend (unless switched off). */
+  /** A day holds several tasks (morning, midday, afternoon); the evening comes once the day's tasks are done. */
   private toEvening(): void {
     const g = this.game;
     if (!g) return;
-    if (this.settings.interlude === 'off' || g.state.index + 1 >= g.total) {
+    if (this.settings.interlude === 'off' || g.state.index + 1 >= g.total || (g.item && !g.item.last)) {
       void this.next();
       return;
     }
@@ -1238,12 +1239,12 @@ function actingFor(line: TalkLine, roles: Role[]): [string, Pose][] {
  * the call instead of a parent, say) hands their lines to whoever is.
  */
 /** Cards that happen in a place of their own: the food pantry, and each job's own workplace. */
-const CARD_PAINT: Record<string, string> = { volunteer: 'pantry' };
+const CARD_PAINT: Record<string, string> = { volunteer: 'pantry', 'phone-plan': 'phone-store' };
 const JOB_PAINT: Record<string, string> = { warehouse: 'worksite-warehouse', store: 'worksite-store', hotel: 'worksite-hotel', construction: 'worksite-construction' };
 function paintFor(id: string, stage: StageId | undefined, s: GameState): string | undefined {
   if (CARD_PAINT[id]) return CARD_PAINT[id];
   // A hands-on job is staged where that job happens: the warehouse floor, the shop till, the hotel room, the site.
-  if (stage === 'worksite') return JOB_PAINT[String(s.flags.jobKind ?? '')];
+  if (stage === 'worksite') return JOB_PAINT[jobKindOf(s)];
   return undefined;
 }
 

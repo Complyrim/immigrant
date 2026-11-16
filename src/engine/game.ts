@@ -3,6 +3,7 @@ import { ALL_CARDS as CHALLENGES, ROUTE_MAP, ROUTES, STATUS_MAP } from './conten
 import { DAILY_WORK_IDS } from './content/daily';
 import { CASH_DEFAULT_KINDS as CASH_KINDS, JOB_OFFERS, isKind, pickOne } from './content/jobs';
 import { monthsSinceArrival, statusOf } from './routes';
+import { mayWork } from './content/yx';
 import { borrowedPerMonth, commuteInfo, monthlyBudget, START_MONEY } from './economy';
 import type {
   Challenge,
@@ -57,7 +58,9 @@ export function monthLabel(profile: Profile, month: number): string {
 /** "Early March 2024", or the arrival-day label. */
 export function slotLabel(profile: Profile, item: ScheduleItem): string {
   if (item.month < 0) return monthLabel(profile, item.month);
-  return `${['Early', 'Mid', 'Late'][item.slot] ?? ''} ${monthLabel(profile, item.month)}`.trim();
+  // Each month is played as one full day: a morning, a midday and an afternoon task, then the evening.
+  const part = ['morning', 'midday', 'afternoon'][item.slot];
+  return part ? `${monthLabel(profile, item.month)}, ${part}` : monthLabel(profile, item.month);
 }
 
 const GENERIC_COMMENTS: Record<Track, string[]> = {
@@ -919,7 +922,10 @@ export class Game {
     const desperate = forced || s.money < 250 || Number(f.brokeCount ?? 0) > 0 || (Boolean(f.outOfStatus) && s.money < 700);
     const offers = Number(f.crimeOffers ?? 0);
     if (!desperate) return;
-    const ids = ['desperate-offer', 'hunger-shoplift', 'borrowed-papers', 'unlicensed-drive'];
+    // Borrowed papers tempt only someone who cannot work lawfully; the unlicensed drive only someone without a licence.
+    const ids = ['desperate-offer', 'hunger-shoplift', 'borrowed-papers', 'unlicensed-drive'].filter(
+      (x) => (x !== 'borrowed-papers' || !mayWork(this.state)) && (x !== 'unlicensed-drive' || !(f.license || f.yh_licence || f.ys_license)),
+    );
     let id = ids[Math.floor(this.rng() * ids.length)];
     if (forced) {
       // The player chose this at the crossroads: the offer comes now, whatever came before.

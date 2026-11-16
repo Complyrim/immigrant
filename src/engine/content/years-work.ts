@@ -12,6 +12,8 @@
  */
 import { bad, c, def, mod, ok, well } from '../cx';
 import type { ChallengeDef, Flags, GameState } from '../types';
+import { jobKindOf, placeForKind, siteKindOf, sitePlace } from './jobs';
+import type { Place } from './jobs';
 import { YOU, band, cost, has, hasChild, hasSpouse, is, mayWork, noStatus, num, secure, settled, sponsored, waiting, yearsHere } from './yx';
 
 const career = (label = 'career standing') => mod('career', 50, 0.3, label);
@@ -30,6 +32,23 @@ const mark = (s: GameState, k: string): Flags => ({ [`yw_${k}Y`]: s.year + 1 });
 const seen = (s: GameState, k: string): boolean => num(s, `yw_${k}Y`) > 0;
 const gap = (s: GameState, k: string, years: number): boolean => !seen(s, k) || s.year + 1 - num(s, `yw_${k}Y`) >= years;
 const raise = (s: GameState, n: number): Flags => ({ salary: num(s, 'salary') + n });
+
+/** A professional job at a desk (flags.jobKind 'office'), as opposed to a floor, a site, a route or a client's home. */
+const desk = (s: GameState): boolean => jobKindOf(s) === 'office';
+/**
+ * A moment with a manager, HR or colleagues around you. A home-care aide or a driver works alone, so for them
+ * it happens in the agency or depot office; everyone else is where their job happens, staged as the daily
+ * work cards stage it (content/jobs.ts placeForKind).
+ */
+const atWorkDesk = (s: GameState): Place => {
+  const k = jobKindOf(s);
+  return k === 'care' || k === 'driver' ? { stage: 'workplace' } : placeForKind(k);
+};
+/** Cash work done alongside a crew (not alone in a client's home or on a route): the crew stories fit it. */
+const crewWork = (s: GameState): boolean => {
+  const k = siteKindOf(s);
+  return k !== 'care' && k !== 'driver';
+};
 
 const L_ORIGIN =
   'Federal rules define national origin discrimination to include treating someone worse because of the linguistic characteristics of a national origin group, which covers an accent (29 CFR 1606.1). A charge must be filed within 180 days of the act, or 300 days where a state or local agency enforces a similar law (42 U.S.C. 2000e-5(e)(1)).';
@@ -54,7 +73,7 @@ export const CARDS: ChallengeDef[] = [
         { who: 'advisor', text: 'There is a box here for your own work. How would you describe your year?' },
         { who: 'player', text: 'Where should I start? There is a lot I could say.' },
       ],
-      stage: 'workplace', cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
+      ...atWorkDesk(s), cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }],
       choices: [
         c('list', 'Bring a written list of what you delivered, with numbers.', ok('Your manager copies two of your lines straight into the form. It feels like boasting, and it works.', { career: 5, wellbeing: 1, flags: mark(s, 'review') })),
         c('ask', 'Ask what the next level needs, and ask for it in writing.', ok('The answer is vaguer than you hoped, but now it is on paper. You can point to it next year.', { career: 3, legal: 1, flags: mark(s, 'review') })),
@@ -69,7 +88,7 @@ export const CARDS: ChallengeDef[] = [
       id: 'yw-raise', track: 'work',
       title: 'Asking for more',
       body: `Prices have climbed since your pay last moved. ${yearsHere(s) >= 8 ? 'You have trained half the people around you, and you suspect some of them earn more.' : 'You have looked up what others in your role are paid, and the gap is real.'}${tied ? ' Asking feels riskier when the same employer holds your paperwork.' : ''}`,
-      stage: 'workplace', cast: [{ ...YOU, pose: 'talk' }, { role: 'advisor', pose: 'sit' }],
+      ...atWorkDesk(s), cast: [{ ...YOU, pose: 'talk' }, { role: 'advisor', pose: 'sit' }],
       choices: [
         c('ask', 'Ask for a raise, with the market numbers in your hand.', ok('Your manager takes it upstairs. A month later your pay goes up.', { career: 3, wellbeing: 4, flags: { ...raise(s, 300), ...mark(s, 'raise') } }), {
           roll: { base: 55, mods: [career()] },
@@ -99,7 +118,7 @@ export const CARDS: ChallengeDef[] = [
         c('swallow', 'Let it go. You are grateful to have the job.', bad('You keep working beside the number. It does not get smaller.', { wellbeing: -5, flags: mark(s, 'gap') }, 'Gratitude and fair pay are separate things.')),
       ],
     };
-  }, { when: (s) => job(s) && band(s, 3) && gap(s, 'gap', 6) }),
+  }, { when: (s) => job(s) && desk(s) && band(s, 3) && gap(s, 'gap', 6) }),
 
   def('yw-new-manager', 'work', 1.5, (s) => {
     const tied = sponsored(s);
@@ -107,7 +126,7 @@ export const CARDS: ChallengeDef[] = [
       id: 'yw-new-manager', track: 'work',
       title: 'A new manager',
       body: `The person who hired you is leaving. Their replacement arrives from outside, knows nothing of what you have done, and has ${yearsHere(s) >= 10 ? 'half your years in the trade' : 'their own ideas about the team'}.${tied ? ' The company is your sponsor, not the manager who left, but that manager was the one who chased your paperwork.' : ''}`,
-      stage: 'workplace', cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'wave' }],
+      ...atWorkDesk(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'wave' }],
       choices: [
         c('meet', 'Book time in the first week and walk them through your work.', ok('Half an hour, three examples. By the end they are asking your opinion on the others.', { career: 4, flags: mark(s, 'boss') })),
         tied
@@ -122,7 +141,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-passed-over', track: 'work',
     title: 'The job goes to someone else',
     body: `The senior role you were told to wait for is announced in a team meeting. It has gone to a colleague with ${yearsHere(s) >= 10 ? 'a third of your experience' : 'less experience than you'}. Everyone claps, and you clap too.`,
-    stage: 'conference', cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'present' }, { role: 'friend', pose: 'cheer' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'present' }, { role: 'friend', pose: 'cheer' }],
     choices: [
       c('why', 'Ask for the reasons, and for what was missing, in writing.', ok('The reasons are thin: "presence", "polish". But you have them on paper, and a named goal for next time.', { career: 3, wellbeing: -1, flags: mark(s, 'passed') })),
       c('notes', 'Keep dated notes, and raise it with HR if you believe it is about where you are from.', ok('HR listens more carefully than you expected. Whatever happens next, there is a record that you spoke.', { legal: 3, wellbeing: -2, flags: mark(s, 'passed') }, L_ORIGIN)),
@@ -145,13 +164,13 @@ export const CARDS: ChallengeDef[] = [
         c('decline', 'Decline. You came here to do the work, not to manage it.', ok('Your manager is surprised, then respectful. You keep the part of the day you love.', { wellbeing: 4, career: -1, flags: { yw_leadOffer: true } })),
       ],
     };
-  }, { when: (s) => job(s) && band(s, 5) && !has(s, 'yw_leadOffer') && s.stats.career >= 45 }),
+  }, { when: (s) => job(s) && desk(s) && band(s, 5) && !has(s, 'yw_leadOffer') && s.stats.career >= 45 }),
 
   def('yw-accent', 'work', 1.3, (s) => ({
     id: 'yw-accent', track: 'work',
     title: 'Someone repeats your words',
-    body: `In a meeting you make a point, and a colleague says it back in an imitation of your accent. A few people laugh. ${seen(s, 'accent') ? 'It is not the first time, and you are more tired than hurt.' : `You have spoken this language at work for ${Math.max(1, yearsHere(s))} years.`}`,
-    stage: 'conference', cast: [{ ...YOU, pose: 'present' }, { role: 'friend', pose: 'laugh' }, { role: 'advisor', pose: 'sit' }],
+    body: `${desk(s) ? 'In a meeting' : 'At the start-of-shift huddle'} you make a point, and a colleague says it back in an imitation of your accent. A few people laugh. ${seen(s, 'accent') ? 'It is not the first time, and you are more tired than hurt.' : `You have spoken this language at work for ${Math.max(1, yearsHere(s))} years.`}`,
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'present' }, { role: 'friend', pose: 'laugh' }, { role: 'advisor', pose: 'sit' }],
     choices: [
       c('room', 'Say it in the room: "I will repeat my point. Please do not imitate me."', ok('A silence, then the meeting moves on to your point. Two colleagues message you afterwards to say thank you.', { wellbeing: 5, career: 1, community: 1, flags: mark(s, 'accent') })),
       c('private', 'Take the colleague aside afterwards and say how it landed.', ok('They are embarrassed and say they meant nothing by it. It does not happen again, at least not near you.', { community: 2, wellbeing: 2, flags: mark(s, 'accent') })),
@@ -163,8 +182,8 @@ export const CARDS: ChallengeDef[] = [
   def('yw-mentor', 'work', 1.5, (s) => ({
     id: 'yw-mentor', track: 'work',
     title: 'The new one asks for help',
-    body: `A junior colleague, six weeks into the job, hovers by your desk with a question they are afraid is stupid. ${yearsHere(s) >= 10 ? 'You remember being that new, and it was a long time ago.' : 'You remember being that new, and nobody stopping to explain.'}`,
-    stage: 'workplace', cast: [{ ...YOU, pose: 'type' }, { role: 'student', pose: 'idle' }],
+    body: `A junior colleague, six weeks into the job, hovers ${desk(s) ? 'by your desk' : 'beside you'} with a question they are afraid is stupid. ${yearsHere(s) >= 10 ? 'You remember being that new, and it was a long time ago.' : 'You remember being that new, and nobody stopping to explain.'}`,
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: desk(s) ? 'type' : 'idle' }, { role: 'student', pose: 'idle' }],
     choices: [
       c('weekly', 'Offer half an hour every week, for as long as they want it.', ok('The questions get better each week. Explaining your work out loud shows you how much of it you know.', { community: 4, wellbeing: 3, career: 2, flags: { ...mark(s, 'mentor'), yw_mentor: true } })),
       c('docs', 'Send your notes and say to ask if they get stuck.', ok('They find their way, more slowly. Your own deadlines are safe.', { career: 1, community: 1, flags: mark(s, 'mentor') })),
@@ -191,7 +210,7 @@ export const CARDS: ChallengeDef[] = [
             c('ignore', 'Tell yourself rumours are only rumours.', bad('You keep your desk. You also spend three months reading every calendar invite twice.', { wellbeing: -4, flags: mark(s, 'reorg') }, 'The worry came anyway, without the preparation.')),
           ],
     };
-  }, { when: (s) => job(s) && band(s, 2) && gap(s, 'reorg', 4), oddsPerYear: 0.45 }),
+  }, { when: (s) => job(s) && desk(s) && band(s, 2) && gap(s, 'reorg', 4), oddsPerYear: 0.45 }),
 
   def('yw-offer', 'work', 1.5, (s) => {
     const o1 = is(s, 'O1');
@@ -279,7 +298,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-injury', track: 'work',
     title: 'Something gives',
     body: 'You lift a box at work and something gives in your shoulder. By the afternoon you cannot raise your arm. A colleague says to report it, and another says reporting things gets you noticed.',
-    stage: 'workplace', cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'talk' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('report', 'Report it in writing the same day and see the doctor work sends you to.', ok('There is a form, a clinic and weeks of physiotherapy that you do not pay for. The shoulder comes back slowly.', { wellbeing: 3, legal: 1, flags: mark(s, 'injury') }, 'People hurt while working for a private company claim through their state workers\' compensation board (US Department of Labor). It is illegal for an employer to retaliate against a worker for a safety complaint, and a retaliation complaint must be made within 30 days (29 U.S.C. 660(c)).')),
       c('own', 'See your own doctor and keep work out of it.', ok('Your insurance covers part of it. Work never knows, and the bill is yours.', { money: -cost(s, 500), wellbeing: 1, flags: mark(s, 'injury') })),
@@ -359,7 +378,7 @@ export const CARDS: ChallengeDef[] = [
       c('small', 'Start with a small amount and raise it each year.', ok('It is a beginning, and you will hardly miss it.', { money: -cost(s, 300), wellbeing: 2, flags: { yw_retire: true } })),
       c('home', 'Skip it. Your plan for old age is a house at home.', ok(`You send the money ${hasSpouse(s) ? 'where you and your spouse agreed' : 'where you always have'}. It is a real plan. It is also your only one.`, { family: 3, flags: { yw_retire: false, yw_retireSeen: true } })),
     ],
-  }), { when: (s) => job(s) && band(s, 5) && !has(s, 'yw_retire') && !has(s, 'yw_retireSeen') }),
+  }), { when: (s) => job(s) && desk(s) && band(s, 5) && !has(s, 'yw_retire') && !has(s, 'yw_retireSeen') }),
 
   def('yw-forty-credits', 'work', 2, (s) => ({
     id: 'yw-forty-credits', track: 'work',
@@ -377,7 +396,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-senior', track: 'work',
     title: 'The one who remembers',
     body: `Someone asks why a thing is done the way it is, and the room turns to you. After ${yearsHere(s)} years you are the one who was there when it was decided. Nobody asks where you are from any more. They ask what you think.`,
-    stage: 'conference', cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'sit' }, { role: 'friend', pose: 'sit' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'sit' }, { role: 'friend', pose: 'sit' }],
     choices: [
       c('write', 'Write it all down, so the knowledge outlasts you.', ok('It takes a month of Friday afternoons. New people are handed your document on their first day.', { career: 4, community: 3, flags: mark(s, 'senior') })),
       c('lift', 'Use your standing to put a quiet newcomer on the important project.', ok('They are terrified, and then very good. Somebody did this for you once, or should have.', { community: 5, wellbeing: 3, flags: mark(s, 'senior') })),
@@ -389,7 +408,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-i9-documents', track: 'work',
     title: 'They ask for one specific card',
     body: `HR is updating its files. The email tells you to bring ${is(s, 'LPR') ? 'your green card' : 'your work permit card'}, and nothing else will do. You have other documents that prove the same thing, and you remember reading that the choice is yours.`,
-    stage: 'workplace', cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'type' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'type' }],
     choices: [
       c('choice', 'Bring acceptable documents of your own choosing, and say politely that you may.', ok('The HR officer checks, goes a little pink and thanks you. The next person from abroad will have it easier.', { legal: 3, community: 1, flags: mark(s, 'i9') }, 'For the Form I-9 an employer must let the worker choose which acceptable documents to show, and may not ask for a specific one such as a green card (USCIS, I-9 Central, employee rights). Asking for more or different documents with intent to discriminate is an unfair immigration-related employment practice (8 U.S.C. 1324b(a)(6)).')),
       c('comply', 'Bring exactly what they asked for. It is not worth a conversation.', ok('It takes two minutes. You notice how quickly you reached for the card.', { wellbeing: -1, flags: mark(s, 'i9') }, 'For the Form I-9 the worker chooses which acceptable documents to show (USCIS, I-9 Central, employee rights; 8 U.S.C. 1324b(a)(6)).')),
@@ -401,7 +420,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-name', track: 'work',
     title: 'How to say your name',
     body: `A colleague stumbles over ${s.profile.name ? `"${s.profile.name}"` : 'your name'} for the third time. They ask, kindly enough, whether there is something shorter they could call you.`,
-    stage: 'workplace', cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'talk' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('teach', 'Teach them. Say it slowly, twice, and wait while they try.', ok('They get it on the third try and look pleased with themselves. By Friday the whole team says it properly.', { wellbeing: 4, community: 2, flags: { yw_nameSeen: true } })),
       c('short', 'Offer a short form that you choose yourself.', ok('It is your name, cut to fit. Your family would smile at it.', { community: 2, flags: { yw_nameSeen: true } })),
@@ -413,7 +432,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-day-that-matters', track: 'work',
     title: 'A day that matters at home',
     body: `The biggest day of the year at home falls on an ordinary working ${seen(s, 'day') ? 'Thursday' : 'Tuesday'} here, with a deadline on top of it. Nobody at work knows the day exists.`,
-    stage: 'workplace', cast: [{ ...YOU, pose: 'think' }, { role: 'advisor', pose: 'type' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: 'think' }, { role: 'advisor', pose: 'type' }],
     choices: [
       c('off', 'Ask for the day off, well ahead, and say why.', ok(`Your manager says of course and asks what the day is about. ${hasChild(s) ? 'Your child gets a whole day of it, done properly.' : 'You spend it the way it should be spent.'}`, { family: 4, wellbeing: 4, flags: mark(s, 'day') })),
       c('share', 'Work the day, and bring something to share so the team learns what it is.', ok('People ask questions, some of them clumsy and all of them curious. Next year someone remembers the date before you do.', { community: 4, wellbeing: 1, flags: mark(s, 'day') })),
@@ -446,7 +465,7 @@ export const CARDS: ChallengeDef[] = [
       c('priorities', 'Ask your manager, in writing, which of the extra work comes first.', ok('The list comes back shorter than the pile. You do the top of it well.', { career: 3, wellbeing: 1, flags: mark(s, 'desks') })),
       c('absorb', 'Take it all on quietly. This is no time to be seen struggling.', bad('You do two jobs for one salary until spring. Nobody says thank you, because nobody knows.', { career: 2, wellbeing: -6, flags: mark(s, 'desks') }, 'Nobody could see the extra work, so nobody counted it.')),
     ],
-  }), { when: (s) => job(s) && band(s, 5) && gap(s, 'desks', 7), oddsPerYear: 0.35 }),
+  }), { when: (s) => job(s) && desk(s) && band(s, 5) && gap(s, 'desks', 7), oddsPerYear: 0.35 }),
 
   def('yw-asked-to-speak', 'work', 1.2, (s) => ({
     id: 'yw-asked-to-speak', track: 'work',
@@ -461,13 +480,13 @@ export const CARDS: ChallengeDef[] = [
       c('share', 'Present it together with a junior colleague.', ok('You take the hard questions and they take the demo. Both of you come off the stage taller.', { career: 3, community: 4, flags: mark(s, 'speak') })),
       c('decline', 'Suggest someone who enjoys a stage.', ok('They do it well and thank your team by name. You watch from the third row, relieved and a little wistful.', { wellbeing: 1, career: -1, flags: mark(s, 'speak') })),
     ],
-  }), { when: (s) => job(s) && band(s, 6) && gap(s, 'speak', 7), oddsPerYear: 0.4 }),
+  }), { when: (s) => job(s) && desk(s) && band(s, 6) && gap(s, 'speak', 7), oddsPerYear: 0.4 }),
 
   def('yw-new-tools', 'work', 1.5, (s) => ({
     id: 'yw-new-tools', track: 'work',
     title: 'The way you learned it is gone',
     body: `The tools you built your working life on are being retired. The replacement does in a minute what used to take you an afternoon, and the newest hires already think in it. You have started over before, and it was harder than this.`,
-    stage: 'workplace', cast: [{ ...YOU, pose: 'type' }, { role: 'student', pose: 'type' }],
+    ...atWorkDesk(s), cast: [{ ...YOU, pose: desk(s) ? 'type' : 'idle' }, { role: 'student', pose: desk(s) ? 'type' : 'idle' }],
     choices: [
       c('learn', `Take a course on your own time (about $${cost(s, 400)}, an estimate).`, ok('It is humbling for a month. Then your years of judgment meet the new speed, and you are hard to beat.', { money: -cost(s, 400), study: 4, career: 4, flags: mark(s, 'tools') })),
       c('swap', 'Ask a junior colleague to teach you, and teach them the trade in return.', ok('They show you the buttons and you show them why. Both of you get the better half of the deal.', { career: 3, community: 4, flags: mark(s, 'tools') })),
@@ -483,7 +502,7 @@ export const CARDS: ChallengeDef[] = [
       body: biz
         ? `The business has your name over the door and ${yearsHere(s)} years of your life in it. A customer asks, lightly, who will run it one day. You do not have an answer.`
         : `Your manager asks you to think about a successor. Nobody is pushing you out. It is that after ${yearsHere(s)} years too much lives only in your head.`,
-      stage: biz ? 'cafe' : 'workplace', cast: [{ ...YOU, pose: 'think' }, { role: 'student', pose: 'talk' }],
+      ...(biz ? { stage: 'cafe' as const } : atWorkDesk(s)), cast: [{ ...YOU, pose: 'think' }, { role: 'student', pose: 'talk' }],
       choices: [
         c('train', biz ? 'Start teaching your best worker the whole business, books included.' : 'Choose someone and teach them everything, including the parts that make you look good.', ok('It is strange to hear your own phrases in someone else\'s mouth. It is also a kind of permanence.', { community: 5, wellbeing: 3, career: 1, flags: mark(s, 'after') })),
         c('family', hasChild(s) ? 'Ask your child, now nearly grown, whether they have ever thought about it.' : 'Talk it through with family before deciding anything.', ok(hasChild(s) ? 'They have their own plans, and they tell you so gently. You worked so they could have plans of their own.' : 'The talk wanders into what you want from the next ten years. That was the real question.', { family: 5, wellbeing: 1, flags: mark(s, 'after') })),
@@ -499,7 +518,7 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-u-wages', track: 'work',
     title: 'Three weeks owed',
     body: `The job is finished and the man who hired the crew has stopped answering his phone. He owes each of you three weeks. ${seen(s, 'uwages') ? 'You have seen this before, and this time you wrote down your hours.' : 'One of the crew says there is nothing to be done, because none of you has papers.'}`,
-    stage: 'worksite', cast: [{ ...YOU, pose: 'phone' }, { role: 'friend', pose: 'think' }],
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'phone' }, { role: 'friend', pose: 'think' }],
     choices: [
       c('centre', 'Go to the worker centre with the whole crew and file a wage claim.', ok('The centre knows this contractor by name. A letter goes out, then a claim. Months later most of the money arrives.', { money: cost(s, 1100), community: 4, wellbeing: 3, flags: mark(s, 'uwages') }, L_WAGES), {
         roll: { base: 60, mods: [ties()], flagMods: [{ flag: 'yw_hoursBook', delta: 15, label: 'a record of your hours' }] },
@@ -508,13 +527,13 @@ export const CARDS: ChallengeDef[] = [
       c('record', 'Tonight, write down every day, hour and address while you still remember.', ok('Four pages in a school notebook, with dates, addresses and the number on his truck. Whatever you decide next, you have the facts.', { legal: 2, wellbeing: 1, flags: { ...mark(s, 'uwages'), yw_hoursBook: true } })),
       c('lose', 'Let it go. Chasing him is a risk you cannot weigh.', bad('You borrow for the rent. He hires a new crew across town.', { money: -cost(s, 500), wellbeing: -5, flags: mark(s, 'uwages') }, 'It was your money.', L_WAGES)),
     ],
-  }), { when: (s) => shadow(s) && band(s, 2) && gap(s, 'uwages', 5), oddsPerYear: 0.45 }),
+  }), { when: (s) => shadow(s) && crewWork(s) && band(s, 2) && gap(s, 'uwages', 5), oddsPerYear: 0.45 }),
 
   def('yw-u-unsafe', 'work', 1.5, (s) => ({
     id: 'yw-u-unsafe', track: 'work',
     title: 'The gear is on order',
     body: 'Today\'s task needs protective gear, and there is none. The boss says it is on order, as he said last month. Everyone looks at the ground and waits for someone else to speak.',
-    stage: 'worksite', cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }, { role: 'friend', pose: 'idle' }],
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }, { role: 'friend', pose: 'idle' }],
     choices: [
       c('refuse', 'Say you will do any other job today, but not this one without the gear.', ok('He swears, and gives you the sweeping. The next morning there is a box of gear by the door.', { wellbeing: 3, community: 2, flags: mark(s, 'unsafe') }), {
         roll: { base: 55, mods: [ties()] },
@@ -526,13 +545,13 @@ export const CARDS: ChallengeDef[] = [
         fail: bad('It goes wrong in a second. You spend the evening in an emergency room, and the week at home without pay.', { money: -cost(s, 900), wellbeing: -10, flags: { ...mark(s, 'unsafe'), yw_hurt: true } }, 'Nobody should have been asked to do it.', 'It is illegal to fire or punish a worker for a safety complaint, and a complaint can be confidential (osha.gov, Workers; 29 U.S.C. 660(c)).'),
       }),
     ],
-  }), { when: (s) => shadow(s) && band(s, 1) && gap(s, 'unsafe', 5), oddsPerYear: 0.5 }),
+  }), { when: (s) => shadow(s) && crewWork(s) && band(s, 1) && gap(s, 'unsafe', 5), oddsPerYear: 0.5 }),
 
   def('yw-u-overtime-threat', 'work', 1.3, (s) => ({
     id: 'yw-u-overtime-threat', track: 'work',
     title: 'He says he could make a call',
     body: 'You ask why sixty hours pays the same as forty. The boss does not raise his voice. He says a person in your position should think carefully about who he could call.',
-    stage: 'worksite', cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
     choices: [
       c('centre', 'Tell the worker centre exactly what he said, word for word.', ok('They have heard those words many times. They explain what the law calls them, and what your choices are. You walk out less alone.', { legal: 3, wellbeing: 3, community: 2, flags: mark(s, 'uthreat') }, 'Federal wage law makes it unlawful to fire or otherwise punish an employee for making a wage complaint (29 U.S.C. 215(a)(3)), and it requires one and a half times the regular rate for hours over forty in a week (29 U.S.C. 207(a)(1)). The Department of Labor enforces it without regard to whether a worker is documented (Fact Sheet 48).')),
       c('leave', 'Say nothing more, and move to another employer through people you trust.', ok('It takes a lean month. The new boss is no saint, but he has never said those words.', { money: -cost(s, 600), wellbeing: 2, flags: mark(s, 'uthreat') })),
@@ -543,8 +562,8 @@ export const CARDS: ChallengeDef[] = [
   def('yw-u-same-pay', 'work', 1.5, (s) => ({
     id: 'yw-u-same-pay', track: 'work',
     title: 'The same pay as the first year',
-    body: `You have worked for the same boss for ${Math.min(yearsHere(s), 10) >= 10 ? 'ten years or more' : `${yearsHere(s)} years`}. You open in the morning and you train the new people. The amount in the envelope has not changed since the first year, and everything it buys has.`,
-    stage: 'worksite', cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'idle' }],
+    body: `You have worked for the same boss for ${Math.min(yearsHere(s), 10) >= 10 ? 'ten years or more' : `${yearsHere(s)} years`}. ${crewWork(s) ? 'You open in the morning and you train the new people.' : 'You know every medicine and every bad night, and the family calls you first.'} The amount in the envelope has not changed since the first year, and everything it buys has.`,
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'idle' }],
     choices: [
       c('ask', 'Ask for more, and say plainly what you do for the place.', ok('He complains about costs for ten minutes, then adds a little to the envelope. It is the first raise you have had in this country.', { money: cost(s, 1200), wellbeing: 4, flags: mark(s, 'usame') }), {
         roll: { base: 45, mods: [ties()] },
@@ -598,19 +617,19 @@ export const CARDS: ChallengeDef[] = [
     id: 'yw-u-teach', track: 'work',
     title: 'Showing someone the work',
     body: `A young man joins the crew, a few weeks in the country and holding the tool wrong. The boss nods at you to show him. ${yearsHere(s) >= 12 ? 'You have taught a dozen like him. Some have gone on to their own crews, and some have gone home.' : 'You were him once, and someone showed you.'}`,
-    stage: 'worksite', cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'idle' }],
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'idle' }],
     choices: [
       c('all', 'Teach him the trade and the rest: write down your hours, never work without the gear.', ok('He learns the trade from your hands. The other things he hears from you and will only understand later.', { community: 5, wellbeing: 3, flags: mark(s, 'uteach') })),
       c('trade', 'Teach him the work and leave the rest for him to find out.', ok('By the end of the month he is useful. He calls you teacher in his own language.', { community: 3, wellbeing: 1, flags: mark(s, 'uteach') })),
       c('distance', 'Show him the minimum. New ones come and go.', bad('He picks it up from watching. When he leaves for another crew he does not say goodbye.', { community: -3, wellbeing: -1, flags: mark(s, 'uteach') }, 'Someone took the time with you once.')),
     ],
-  }), { when: (s) => shadow(s) && band(s, 6) && gap(s, 'uteach', 5) }),
+  }), { when: (s) => shadow(s) && crewWork(s) && band(s, 6) && gap(s, 'uteach', 5) }),
 
   def('yw-u-keys', 'work', 2, (s) => ({
     id: 'yw-u-keys', track: 'work',
     title: 'He hands you the keys',
     body: 'The boss wants you to run the crew: open up, assign the work, deal with customers. He offers a little more in the envelope. He offers no title and nothing on paper, and when something goes wrong it will be your face the customer remembers.',
-    stage: 'worksite', cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
+    ...sitePlace(s), cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
     choices: [
       c('accept', 'Take the keys.', ok('You are good at it. The crew works better for you than it ever did for him, and you are the last to leave every night.', { money: cost(s, 1500), community: 3, wellbeing: -4, flags: { yw_crewLead: true, yw_keysSeen: true } })),
       c('book', 'Take them if the pay is written each week in a book you both sign.', ok('He grumbles and signs. It is a thin book, and it is the first written record of your work in this country.', { money: cost(s, 1500), legal: 2, wellbeing: -2, flags: { yw_crewLead: true, yw_keysSeen: true, yw_hoursBook: true } }), {
@@ -619,7 +638,7 @@ export const CARDS: ChallengeDef[] = [
       }),
       c('decline', 'Thank him, and stay one of the crew.', ok('He gives the keys to another man. You go home when the shift ends, and that is worth something too.', { wellbeing: 2, flags: { yw_keysSeen: true } })),
     ],
-  }), { when: (s) => shadow(s) && band(s, 5) && !has(s, 'yw_keysSeen') }),
+  }), { when: (s) => shadow(s) && crewWork(s) && band(s, 5) && !has(s, 'yw_keysSeen') }),
 
   def('yw-u-hurt', 'work', 1.2, (s) => ({
     id: 'yw-u-hurt', track: 'work',

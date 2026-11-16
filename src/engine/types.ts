@@ -222,6 +222,8 @@ export interface Challenge {
   narration?: string;
   choices: Choice[];
   /** 3D setting for this card and the people in it. */
+  /** A painting of its own for this moment (an alternate one the stage borrows: 'pantry', 'phone-store', 'worksite-warehouse', 'care-home', 'community-hall', 'school'...). */
+  paint?: string;
   stage?: StageId;
   cast?: CastSpec[];
   /** Id of a fact card in india-f1.json. */

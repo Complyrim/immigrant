@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { beginCastScene, castSex, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
-import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, paintKey } from './backdrops';
+import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, backdropStations, paintKey } from './backdrops';
 import type { SeatSpot } from './backdrops';
 import { pbrMaterial } from './pbr';
 import type { CastSpec, Pose } from '../engine/types';
@@ -1544,7 +1544,25 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       cook.group.rotation.y = cookAt.ry;
       b.blob(at.x, at.z + 0.05, 1.0, 0.6);
     }
-    let focusFix: number | null = null;
+    // Anyone working out runs on one of the painting's treadmills, so running on the spot is what a treadmill does.
+    const stations = backdropStations(id);
+    const runners = stations.length ? main.filter((f) => f.pose === 'exercise' && !inGroup.has(f)).slice(0, stations.length) : [];
+    runners.forEach((f, i) => {
+      const st = stations[i];
+      const at = atDepth(st.u, st.vf);
+      f.group.position.set(at.x, st.y ?? 0.18, at.z);
+      f.group.rotation.y = st.ry;
+      f.group.userData.noShadow = true;
+      // On the belt: a steady stride, not floor exercises.
+      f.setPose('walk');
+      f.group.userData.basePose = 'walk';
+      pinned = true;
+    });
+    // The view centres on the machines, not the empty floor in front of them.
+    if (runners.length) {
+      bedFeet = Math.min(0.9, Math.max(...stations.slice(0, runners.length).map((st) => st.vf)) + 0.16);
+    }
+    let focusFix: number | null = runners.length ? stations.slice(0, runners.length).reduce((a, st) => a + st.u, 0) / runners.length - 0.12 : null;
     // Staff work behind the painted counter: only what shows above the counter top is drawn. The player
     // steps up to the window.
     const counter = backdropCounter(id);
@@ -1680,7 +1698,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       focusFix = 0.44;
     }
     // The people left standing gather to one side of whoever is seated, turned toward them.
-    const standers = main.filter((f) => !inGroup.has(f) && f !== cook && f !== clerk && f !== customer);
+    const standers = main.filter((f) => !inGroup.has(f) && f !== cook && f !== clerk && f !== customer && !runners.includes(f));
     const seatU = used.length ? used.reduce((a, g) => a + g.spot.u * g.who.length, 0) / inGroup.size : 0.5;
     const side = seatU < 0.5 ? 1 : -1;
     // Closer together when there are more people, so nobody is cut off by the frame.

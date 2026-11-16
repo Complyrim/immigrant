@@ -168,7 +168,8 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'A US phone plan',
     body: 'A salesperson offers a two-year contract with a free phone. A cheaper prepaid plan has no credit check and no contract.',
-    stage: 'street',
+    stage: 'cafe',
+    paint: 'phone-store',
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'talk' }],
     choices: [
       c('prepaid', 'Take the prepaid plan.', ok('Cheaper than you expected and no strings attached.', { money: 30, wellbeing: 1 })),
@@ -182,7 +183,9 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'The laptop dies',
     body: 'In the middle of a deadline week your laptop stops turning on. A repair shop quotes a price, and a new one costs far more.',
-    stage: 'library',
+    // At the repair counter, where the quote is given.
+    stage: 'cafe',
+    paint: 'phone-store',
     cast: [{ ...YOU, pose: 'think' }, { role: 'friend', pose: 'talk' }],
     choices: [
       c('repair', 'Pay for the repair.', ok('Back in two days. A relief.', { money: -m(180, s.profile.arrivalYear), wellbeing: 1 })),
@@ -336,7 +339,9 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'work',
     title: 'The grocery trap',
     body: 'Familiar brands cost double at the big store. An international grocery across town has your spices and dals, but the bus ride is long.',
-    stage: 'street',
+    // In the aisle of the big store, looking at the prices.
+    stage: 'cafe',
+    paint: 'worksite-store',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'stranger', pose: 'idle' }],
     choices: [
       c('trip', 'Make the trip once a month and stock up.', ok('Home feels closer for a week. You save money too.', { money: m(40, s.profile.arrivalYear), wellbeing: 3, family: 1 })),
@@ -351,7 +356,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'life',
     title: 'Cooking for friends',
     body: 'You decide to cook the dish your mother makes for guests. The kitchen is small, the stove is temperamental and you are missing two spices.',
-    stage: 'apartment',
+    stage: 'kitchen',
     cast: [{ ...YOU, pose: 'cook' }, { role: 'roommate', pose: 'talk' }, { role: 'friend', pose: 'cheer' }],
     choices: [
       c('invite-all', 'Invite everyone on the floor.', ok('It is chaos and delicious. Someone brings dessert and someone brings a guitar.', { community: 8, wellbeing: 6, money: -35 })),
@@ -462,11 +467,14 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     ],
   }), { months: [5, 6, 7, 9] }),
 
-  def('parents-visit', 'life', 1, () => ({
+  def('parents-visit', 'life', 1, (s) => ({
     id: 'parents-visit',
     track: 'life',
     title: 'Parents want to visit',
-    body: 'Your parents want to come for your graduation next year. They ask if the visa will be easy. You know interview appointments can be hard to get.',
+    // Only a student has a graduation coming; everyone else is asked for a visit to see the life they have made.
+    body: statusOf(s) === 'F1'
+      ? 'Your parents want to come for your graduation next year. They ask if the visa will be easy. You know interview appointments can be hard to get.'
+      : 'Your parents want to come next year and see the life you have made here. They ask if the visa will be easy. You know interview appointments can be hard to get.',
     stage: 'apartment-night',
     cast: [{ ...YOU, pose: 'phone' }, { role: 'parent', pose: 'talk' }],
     choices: [
@@ -495,7 +503,7 @@ export const MORE_CHALLENGES: ChallengeDef[] = [
     track: 'life',
     title: 'The free gym',
     body: 'Your student card gives you free gym access. You have never gone to a gym, and the first visit feels like entering a foreign country.',
-    stage: 'campus',
+    stage: 'gym',
     cast: [{ ...YOU, pose: 'idle' }, { role: 'friend', pose: 'wave' }],
     choices: [
       c('go', 'Go with a friend twice a week.', ok('A habit that clears your head and helps you sleep.', { wellbeing: 7, study: 1, community: 2 })),

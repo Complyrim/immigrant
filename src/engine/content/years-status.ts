@@ -20,7 +20,15 @@
  */
 import { bad, c, def, legal, ok } from '../cx';
 import type { ChallengeDef, GameState, StatusCode } from '../types';
+import { jobKindOf, placeForKind, sitePlace } from './jobs';
+import type { Place } from './jobs';
 import { YOU, age, band, cost, has, hasChild, hasJob, hasPartner, is, num, settled, yearsHere, yearsInStatus } from './yx';
+
+/** Where a lawful job happens; a talk with a supervisor for a home-care aide or a driver is at the agency or depot office. */
+const workDesk = (s: GameState): Place => {
+  const k = jobKindOf(s);
+  return k === 'care' || k === 'driver' ? { stage: 'workplace' } : placeForKind(k);
+};
 
 // ------------------------------------------------------------------ helpers
 /** A year stamp that is never 0, so a flag set in the first year still counts as set. */
@@ -199,9 +207,9 @@ const LPR_CARDS: ChallengeDef[] = [
   def('ys-lpr-old-case', 'status', 1.2, (s) => ({
     id: 'ys-lpr-old-case',
     track: 'status',
-    title: "A coworker's old case",
-    body: 'A man at work has had a green card for twenty years. Last month he was told that a conviction from his twenties could cost him his status, and now he has a date in immigration court. He always thought the card was forever.',
-    stage: 'workplace',
+    title: hasJob(s) ? "A coworker's old case" : "A neighbour's old case",
+    body: `${hasJob(s) ? 'A man at work' : 'A man in your building'} has had a green card for twenty years. Last month he was told that a conviction from his twenties could cost him his status, and now he has a date in immigration court. He always thought the card was forever.`,
+    ...(hasJob(s) ? workDesk(s) : { stage: 'street' as const }),
     cast: [{ ...YOU, pose: 'talk' }, { role: 'friend', pose: 'think' }],
     choices: [
       c('check', 'Book a consultation about your own record before your next filing or trip.', ok('The attorney goes through your history and finds nothing to worry about. You had not known how much you wanted to hear that.', { money: -cost(s, 150), legal: 5, wellbeing: 2, flags: { ys_oldCase: true } }, `A permanent resident can be placed in removal proceedings for certain convictions, including an aggravated felony at any time after admission and most drug offenses (INA 237(a)(2)). How an old offense is classified depends on the exact charge. ${ASSESS}`)),
@@ -543,8 +551,9 @@ const AOS_CARDS: ChallengeDef[] = [
     track: 'work',
     title: 'The card runs out in spring',
     body: 'Your green card case is still pending, and the work permit that came with it has an end date four months away. The payroll system at work has already sent an automatic reminder.',
-    stage: 'workplace',
-    cast: [{ ...YOU, pose: 'type' }, { role: 'advisor', pose: 'talk' }],
+    // The reminder is read at home, where the renewal form gets filled in.
+    stage: 'apartment',
+    cast: [{ ...YOU, pose: 'type' }],
     choices: [
       c('file', `File the renewal now (about $${cost(s, 260)}).`, ok('The receipt arrives in two weeks and the new card well before the old one ends.', { money: -cost(s, 260), legal: 4, flags: { ys_aosEadAt: stamp(s) } }, 'An applicant for adjustment may hold a work permit while the case is pending (8 CFR 274a.12(c)(9)). The card has an end date and must be renewed. The $260 fee with a pending green card case is from the USCIS fee schedule read in 2026 and may change.')),
       c('both', 'Renew it, and renew the travel document at the same time (the second fee is an estimate).', ok('Two receipts. You do not plan to travel, and you remember the year you could not.', { money: -cost(s, 890), legal: 5, flags: { ys_aosEadAt: stamp(s) } }, AP_RULE)),
@@ -645,8 +654,8 @@ const ASY_CARDS: ChallengeDef[] = [
       track: 'work',
       title: 'Renewing the permit',
       body: `Your asylum case is still open, and the work permit that lets you keep your job has an end date this year. ${hasJob(s) ? 'Your supervisor asks, gently, whether your papers are up to date.' : 'Without it, no employer can put you on the books.'}`,
-      stage: 'workplace',
-      cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
+      ...(hasJob(s) ? workDesk(s) : { stage: 'apartment' as const }),
+      cast: hasJob(s) ? [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }] : [{ ...YOU, pose: 'think' }],
       choices: [
         c('early', `File the renewal months ahead (fee is an estimate, about $${cost(s, 550)}).`, ok('The new card arrives with weeks to spare. You show it to your supervisor before being asked.', { money: -cost(s, 550), legal: 4, flags: { ys_asyEadAt: stamp(s) } }, rule)),
         c('clinic', "Give up a Saturday for the clinic's renewal day, where volunteers check the form.", ok('A law student finds a box you had ticked wrongly. The line was long and worth it.', { money: -cost(s, 550), legal: 6, community: 2, wellbeing: -1, flags: { ys_asyEadAt: stamp(s) } }, rule)),
@@ -897,7 +906,8 @@ const NONE_CARDS: ChallengeDef[] = [
     track: 'status',
     title: 'Know your rights night',
     body: `A community center is holding an evening on the rights that everyone in the US has, whatever their papers. ${seen(s, 'ys_rightsAt') ? 'You went years ago, and the room is fuller now.' : 'The flyer is in four languages.'} Going means sitting in a room full of people in your situation, which feels both safe and exposed.`,
-    stage: 'library',
+    stage: 'cafe',
+    paint: 'community-hall',
     cast: [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'present' }, { role: 'stranger', pose: 'sit' }],
     choices: [
       c('plan', 'Go, and afterwards make a family plan: who to call, where the papers are.', ok("One page, in a drawer everyone knows. A lawyer's number at the top. You hope never to need it.", { legal: 6, wellbeing: 2, community: 3, flags: { ys_rightsAt: stamp(s), ys_plan: true } }, RIGHTS)),
@@ -957,7 +967,9 @@ const NONE_CARDS: ChallengeDef[] = [
       track: 'life',
       title: 'The enrollment form',
       body: "Your child starts school in the fall. The enrollment packet asks for proof of age and proof of address, and has a line for a Social Security number: the child's, and yours.",
+      // The school's front office.
       stage: 'classroom',
+      paint: 'school',
       cast: [{ ...YOU, pose: 'idle' }, { role: 'advisor', pose: 'talk' }],
       choices: [
         c('enroll', 'Enroll with the birth certificate and a utility bill, and leave your own number blank.', ok('The clerk checks two documents, stamps the form and tells you which door the little ones use.', { family: 6, legal: 3, wellbeing: 2, flags: { ys_schoolForm: true } }, rule)),
@@ -1012,14 +1024,19 @@ const NONE_CARDS: ChallengeDef[] = [
   def('ys-none-policy-hope', 'life', 1.5, (s) => {
     const n = num(s, 'ys_hopeN');
     const mark = { ys_hopeAt: stamp(s), ys_hopeN: n + 1 };
+    // At work if there is work (cash work counts), otherwise at home; only some kinds of work have a break room with screens.
+    const working = hasJob(s);
+    const kind = jobKindOf(s);
+    const breakRoom = working && (kind === 'warehouse' || kind === 'store' || kind === 'hotel' || kind === 'cleaning');
+    const where = breakRoom ? 'Every screen in the break room shows' : working ? 'Every phone at work shows' : 'Every news channel shows';
     return {
       id: 'ys-none-policy-hope',
       track: 'life',
       title: n === 0 ? 'The bill on the news' : 'The bill on the news, again',
       body: n === 0
-        ? 'Every screen in the break room shows the same story: a proposal in Congress that could let people who have been here for years apply for papers. Your phone will not stop buzzing.'
-        : `It is on the news again: a new proposal, new names, the same promise. You have watched this ${n > 1 ? 'more than once' : 'once'} before. The coworkers who arrived recently are giddy.`,
-      stage: 'worksite',
+        ? `${where} the same story: a proposal in Congress that could let people who have been here for years apply for papers. Your phone will not stop buzzing.`
+        : `It is on the news again: a new proposal, new names, the same promise. You have watched this ${n > 1 ? 'more than once' : 'once'} before. ${working ? 'The coworkers' : 'The people you know'} who arrived recently are giddy.`,
+      ...(working ? sitePlace(s) : { stage: 'apartment' as const }),
       cast: [{ ...YOU, pose: 'phone' }, { role: 'friend', pose: 'cheer' }],
       choices: [
         c('folder', 'Hope carefully: gather proof of every year you have lived here, just in case.', ok('Weeks later the proposal stalls and the cameras move on. The folder stays on the shelf, a little thicker.', { legal: 4, wellbeing: 2, flags: { ...mark, ys_folder: true } }, 'A proposal changes nothing until it becomes law and an agency opens an application. Dated records of presence, work and taxes are what any attorney asks for first.')),
