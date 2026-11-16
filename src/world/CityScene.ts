@@ -33,6 +33,7 @@ export interface StageHandle {
   fit?(m: { half: number; back: number }): void;
   paintCam?: { h: number; d0: number; f: number; vh: number };
   relief?: number;
+  frameFeet?: number;
   anchor?(role: string): THREE.Vector3 | null;
   sexOf?(role: string): 'f' | 'm' | null;
   act?(role: string, pose: Pose | null): void;
@@ -641,7 +642,7 @@ export class CityScene {
       if (this.stage.backdrop) {
         // The painting sets the scale: the camera sits so people are the size the room's furniture implies,
         // with their feet on its foreground floor, whatever shape the view is.
-        const fr = fitBackdrop(this.stage.backdrop, this.camera.aspect, this.stage.person ?? 0.52, 0.9, this.stage.focusU ?? 0.5);
+        const fr = fitBackdrop(this.stage.backdrop, this.camera.aspect, this.stage.person ?? 0.52, this.stage.frameFeet ?? 0.9, this.stage.focusU ?? 0.5);
         const half = (fr.viewHeight * this.camera.aspect) / 2;
         // If the standing group is wider than the view, they stand a little further into the room.
         const back = Math.max(1, Math.min(1.3, (this.stage.span ?? 0) / Math.max(0.05, half)));

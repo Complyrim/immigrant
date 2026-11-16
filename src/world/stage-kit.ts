@@ -53,6 +53,8 @@ export interface StageResult {
   paintCam?: { h: number; d0: number; f: number; vh: number };
   /** The painting is raised into a depth relief: how far the camera may drift for parallax (0 to 1). */
   relief?: number;
+  /** Painted scenes: where the people's feet are, as a fraction down the painting, when it is not the usual foreground (someone asleep in a painted bed). */
+  frameFeet?: number;
   /** World position just above the head of the first visible person with this role (speech bubbles hang here). */
   anchor?(role: string): THREE.Vector3 | null;
   /** Whether the first visible person with this role is a woman ('f') or a man ('m'), so their recorded voice matches. */
@@ -70,7 +72,7 @@ export interface PaintFrame {
   back: number;
 }
 
-export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor' | 'sexOf' | 'act'>;
+export type Cfg = Omit<StageResult, 'group' | 'update' | 'dispose' | 'span' | 'ready' | 'person' | 'fit' | 'focusU' | 'paintCam' | 'dim' | 'relief' | 'anchor' | 'sexOf' | 'act' | 'frameFeet'>;
 export type Upd = (dt: number, t: number) => void;
 export type C = string | THREE.Material;
 

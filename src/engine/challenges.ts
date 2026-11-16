@@ -575,12 +575,21 @@ const CORE: ChallengeDef[] = [
     ],
   }), { months: [1, 2, 3, 5, 6, 7, 9, 11] }),
 
-  def('dating', 'life', 1.3, () => ({
+  def('dating', 'life', 1.3, (s) => {
+    // Where you keep running into them depends on your days: a student's lab, a worker's coffee stop.
+    const student = statusOf(s) === 'F1';
+    const working = Number(s.flags.salary ?? 0) > 0;
+    const where = student
+      ? 'In your lab and at every campus event, you keep running into someone with an easy laugh.'
+      : working
+        ? 'At the coffee shop near work, the same time every morning, you keep running into someone with an easy laugh.'
+        : 'At the coffee shop on your corner, you keep running into someone with an easy laugh.';
+    return {
     id: 'dating',
     track: 'life',
     title: 'Someone catches your eye',
-    body: 'In your lab or at an event you keep running into someone with an easy laugh. Dating in a new country means new norms and new nerves.',
-    stage: 'park',
+    body: `${where} Dating in a new country means new norms and new nerves.`,
+    stage: student ? 'campus' : 'cafe',
     cast: [{ ...YOU, pose: 'talk' }, { role: 'partner', pose: 'talk' }],
     choices: [
       c(
@@ -590,9 +599,12 @@ const CORE: ChallengeDef[] = [
         { roll: { base: 52, mods: [well('confidence'), social()] }, fail: bad('It is awkward. You laugh about it later with friends, but it stings.', { wellbeing: -3 }, 'Maybe next time.') },
       ),
       c('friends', 'Keep it friendly and go in a group.', ok('A pleasant evening and a slow-building friendship.', { community: 4, wellbeing: 2 })),
-      c('focus', 'Focus on your studies for now.', ok('A quiet sacrifice for your goals.', { study: 3, wellbeing: -1 })),
+      student
+        ? c('focus', 'Focus on your studies for now.', ok('A quiet sacrifice for your goals.', { study: 3, wellbeing: -1 }))
+        : c('focus', 'Focus on getting settled for now.', ok('A quiet sacrifice for your goals.', { career: 2, wellbeing: -1 })),
     ],
-  }), { when: (s) => s.profile.marital === 'single' }),
+    };
+  }, { when: (s) => s.profile.marital === 'single' }),
 
   def('spouse-f2', 'life', 1.5, () => ({
     id: 'spouse-f2',

@@ -1366,6 +1366,8 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
   let span = 0;
   let paintFit: StageResult['fit'];
   let paintFocus = 0.5;
+  /** Set when someone sleeps in the painting's bed: the view centres on the bed instead of the floor. */
+  let bedFeet: number | undefined;
   let paintDim = 1;
   let paintCam: StageResult['paintCam'];
   let relief: THREE.Mesh | null = null;
@@ -1495,7 +1497,12 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         }
         pinned = true;
         node.traverse((o) => { o.castShadow = false; });
+        // A little warm light from the bedside lamp, so the sleeper reads in a dark room.
+        const lamp = new THREE.PointLight('#ffd6a0', 1.4, 2.6 * g.size + 1.2, 2);
+        lamp.position.set(0.5 * g.size, 0.9 * g.size, 0.6 * g.size);
+        node.add(lamp);
         b.g.add(node);
+        bedFeet = Math.min(0.9, (spot.v ?? 0.6) + 0.14);
         continue;
       }
       who.forEach((f, i) => {
@@ -1920,6 +1927,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     ...cfg,
     ...(backdrop ? { backdrop, fog: null, span, person: backdropPerson(id), focusU: paintFocus, paintCam, dim: paintDim, relief: relief && !pinned ? 1 : 0 } : {}),
     ready: castSettled(),
+    frameFeet: bedFeet,
     anchor: (role) => {
       const f = b.figs.find((q) => q.look.role === role && q.group.visible);
       if (!f) return null;
