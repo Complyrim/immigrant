@@ -8,6 +8,7 @@ import * as yHome from './years-home';
 import * as yFamily from './years-family';
 import * as yWork from './years-work';
 import * as yStatus from './years-status';
+import * as daily from './daily';
 
 /**
  * Every card, route and status in the game, with tags applied to the original student cards.
@@ -41,7 +42,7 @@ put('workplace', 'work-h1b-first-days work-h1b-start work-h1b-layoff work-h1b-pe
 put('shelter', 'asy-arrival-shelter');
 put('worksite', 'ewi-arrival-work oos-cash-job oos-wage-theft oos-boss-threat b2-cash-work find-cash-work');
 
-export const ALL_CARDS: ChallengeDef[] = [...tagged, ...core.CARDS, ...work.CARDS, ...family.CARDS, ...yHome.CARDS, ...yFamily.CARDS, ...yWork.CARDS, ...yStatus.CARDS].map((d) => {
+export const ALL_CARDS: ChallengeDef[] = [...tagged, ...core.CARDS, ...work.CARDS, ...family.CARDS, ...yHome.CARDS, ...yFamily.CARDS, ...yWork.CARDS, ...yStatus.CARDS, ...daily.CARDS].map((d) => {
   let out = RARE[d.id] !== undefined && d.oddsPerYear === undefined ? { ...d, oddsPerYear: RARE[d.id] } : d;
   const stage = SCENE[d.id];
   if (stage) {

@@ -224,7 +224,12 @@ export class App {
       volume: () => this.settings.sfx,
       reduced: () => this.settings.reduceMotion,
       voices: () => (this.settings.voices === 'off' ? 'off' : 'on'),
-      sexOf: (role) => this.scene.sexOf(role),
+      sexOf: (role) => {
+        const seen = this.scene.sexOf(role);
+        if (seen || role !== 'player' || !this.game) return seen;
+        // Off screen, the player's voice follows the character they made.
+        return this.game.state.profile.sex === 'male' ? 'm' : 'f';
+      },
       speaking: (on) => this.sound.duck(on),
       nameOf: (role) => {
         if (!this.game) return null;
@@ -670,7 +675,8 @@ export class App {
         <div class="panel wide">
           <h2>${tripTo(statusOf(g.state)).question}</h2>
           <p class="hint">${esc(getCity(p.cityId).name)}. Your commute costs money every month and wears on your wellbeing, or helps it. Tap Preview to watch the trip.</p>
-          <div class="cards commute">${COMMUTES.map((m) => {
+          <p class="hint">Nobody arrives with a car. You can buy one later, once you have a driver's licence and the money.</p>
+          <div class="cards commute">${COMMUTES.filter((m) => m !== 'car' || g.state.flags.carBought || g.state.flags.yh_ownsCar).map((m) => {
             const info = commuteInfo(p, m);
             return `<div class="card${p.commute === m ? ' on' : ''}">
               <b>${COMMUTE_NAME[m]}</b>
@@ -701,6 +707,8 @@ export class App {
 
   private pickCommute(mode: CommuteMode): void {
     if (!this.game) return;
+    // A car comes later in the game (a licence, then buying one), never on arrival.
+    if (mode === 'car' && !this.game.state.flags.carBought && !this.game.state.flags.yh_ownsCar) mode = 'transit';
     this.game.state.profile.commute = mode;
     // Remember the choice, so the next journey starts with it highlighted instead of public transit.
     this.draft.commute = mode;
@@ -986,8 +994,9 @@ export class App {
     const cast = homeCast(script.cast ?? a.cast, g.state);
     this.siblingCall = (script.with ?? '').includes('{sibling}');
     const withText = script.with ?? withLine(cast, g.state);
-    this.scene.showStage(a.stage, cast, g.state.profile, undefined, a.variant);
-    this.sound.setScene(a.stage);
+    const stage = script.stage ?? a.stage;
+    this.scene.showStage(stage, cast, g.state.profile, undefined, a.variant);
+    this.sound.setScene(stage);
     // The evening plays as a scene: the narration goes in the dialogue box, the people talk in bubbles over
     // their heads, and everyone acts out each moment.
     const beats = interludeBeats(a, script.lines, lines, cast, rng, this.siblingCall);
@@ -1240,7 +1249,9 @@ function interludeBeats(a: Activity, raw: string[], lines: string[], cast: CastS
   };
   const narr = lines.map((text, i) => ({ who: 'narrator' as const, text, about: about(raw[i] ?? '') }));
   const options = INTERLUDE_TALK[sibling ? `${a.id}-sibling` : a.id] ?? INTERLUDE_TALK[a.id] ?? [];
-  const pick = options.length ? options[Math.floor(rng() * options.length)] : [];
+  // Alone tonight (nobody else in the scene): only conversations that are the player talking to themself.
+  const fits = roles.length ? options : options.filter((conv) => conv.every((l) => l.who === 'player'));
+  const pick = fits.length ? fits[Math.floor(rng() * fits.length)] : [];
   const talk: TalkLine[] = pick
     .map((l) => ({ ...l, who: l.who === 'player' || roles.includes(l.who) ? l.who : roles[0] }))
     .filter((l): l is { who: Role; text: string } => Boolean(l.who));

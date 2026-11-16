@@ -1,5 +1,6 @@
 import type { CastSpec, Effects, GameState, StageId } from './types';
 import { cultureOf } from './country';
+import { missingPeople } from './people';
 
 /**
  * Short life moments played between tasks. They are not decisions with right or
@@ -12,6 +13,8 @@ export interface Script {
   cast?: CastSpec[];
   /** Overrides the automatic "With ..." line. */
   with?: string;
+  /** Plays somewhere other than the activity's usual place. */
+  stage?: StageId;
 }
 
 export interface Activity {
@@ -30,6 +33,8 @@ export interface Activity {
   when?: (s: GameState) => boolean;
   /** What this really meant, revealed in the end-of-year review. */
   lookback?: string;
+  /** Only once the player has made friends here (a night out with friends, coffee with a friend). */
+  needsFriends?: boolean;
   /** Something that can happen at the end of the scene, such as meeting someone. */
   after?: (s: GameState, rng: () => number) => { text: string; effects?: Effects } | null;
 }
@@ -42,6 +47,58 @@ const affordable = (s: GameState): boolean => s.stats.money > -400;
 const hasPartner = (s: GameState): boolean => Boolean(s.flags.dating) || s.profile.marital !== 'single';
 
 export const ACTIVITIES: Activity[] = [
+  {
+    id: 'meet-people',
+    label: 'Go out and meet people',
+    blurb: 'You know almost nobody here yet. Find out where people gather.',
+    stage: 'park',
+    cast: [{ ...YOU, pose: 'talk' }, { role: 'student', pose: 'talk' }, { role: 'stranger', pose: 'laugh' }],
+    scripts: [
+      { stage: 'park', with: 'At a pickup football game in the park', lines: ["Every Saturday there is a pickup game on the big field, and anyone can join.", "You stand at the edge until someone short a player waves you over.", "Nobody asks where you are from until afterwards, sitting on the grass with water bottles.", "Two of them swap numbers with you and add you to the group chat for next week."] },
+      { stage: 'cafe', with: 'At a language exchange in a cafe', lines: ["A library flyer said language exchange, Tuesdays, everyone welcome.", "You sit at a table with name stickers: half an hour in English, half an hour in Spanish, then whatever comes.", "You teach a retired teacher three words of your language and she teaches you how to complain about the weather properly.", "On the way out she says the same table, same time next week, and means it."] },
+      { stage: 'festival', with: 'At a community gathering from home', lines: ["You found it online: people from your country meet once a month at a community hall.", "The smell of the food reaches you in the car park, and suddenly you are walking faster.", "An aunt who is not your aunt fills a plate for you and asks about your family by name.", "You leave with three phone numbers, a tub of leftovers and an invitation for next month."] },
+      { stage: 'rooftop', with: 'At your building potluck', lines: ["A note under the door says there is a potluck on the roof on Friday.", "You bring a dish from home and stand beside it, not sure how to start.", "Then someone goes back for seconds and asks what it is, and the evening opens up.", "A neighbour your age offers to show you the best grocery store tomorrow."] },
+      { stage: 'cafe', with: 'At a meetup for newcomers', lines: ["An app lists a meetup for people new to the city, in the back room of a cafe.", "Everyone wears the same slightly nervous smile, which helps.", "You find someone who arrived the same month as you, and you compare the first things that went wrong.", "You agree to try the free museum day together."] },
+      { stage: 'park', with: 'Volunteering at a park clean-up', lines: ["A volunteer group meets at the park gate with gloves and bags.", "Working side by side makes talking easy: there is always something to point at.", "By the end you know the names of four people and one very serious dog.", "They go for tacos afterwards and pull out a chair for you."] },
+    ],
+    effects: { community: 3, wellbeing: 2, flags: { friends: true } },
+    lookback: 'Friendships were the safety net you did not know you were building: the first people you call when something goes wrong.',
+    weight: 1.8,
+    tag: 'social',
+  },
+  {
+    id: 'evening-cousin',
+    label: 'An evening with your cousin',
+    blurb: 'Family who already know how things work here.',
+    stage: 'kitchen',
+    cast: [{ ...YOU, pose: 'cook' }, { role: 'roommate', pose: 'talk' }],
+    when: (s) => s.profile.housing === 'relatives',
+    scripts: [
+      { lines: ["{roommate} cooks the way your grandmother did, and you stand beside the stove like you are ten again.", "They tell you which shops sell the right spices and which ones only pretend to.", "Over dinner they draw you a map of the bus routes on the back of an envelope.", "You go to bed feeling looked after."] },
+      { lines: ["{roommate} takes you for a drive around the neighbourhood after dinner.", "This is the clinic, this is the cheap petrol, this is where not to park on Tuesdays.", "They tell you about their own first year here, and the parts nobody warned them about.", "You realise how much they have quietly saved you from."] },
+      { lines: ["The whole family is over for a birthday, and the flat is louder than your entire week has been.", "{roommate} introduces you to everyone as the newest one here.", "An uncle gives you advice about banks that you suspect is forty years old.", "You fall asleep to the sound of dishes and laughing in the next room."] },
+    ],
+    effects: { family: 2, wellbeing: 2 },
+    weight: 1.4,
+    tag: 'social',
+  },
+  {
+    id: 'evening-spouse',
+    label: 'An evening with your spouse',
+    blurb: 'The two of you, working out this new place together.',
+    stage: 'apartment-night',
+    cast: [{ ...YOU, pose: 'talk' }, { role: 'spouse', pose: 'talk' }],
+    when: (s) => s.profile.marital === 'married',
+    scripts: [
+      { lines: ["{partner} spreads the grocery receipts on the table and you work out the month together.", "It is tighter than you hoped. You find two things to cut and one small thing to keep.", "Then you put the receipts away and put on music from home.", "You dance badly in a kitchen that is beginning to feel like yours."] },
+      { lines: ["You walk the new neighbourhood after dinner, {partner} holding your arm against the cold.", "You point out the houses you would like one day and argue about the colours.", "A bakery is just closing and gives you the last loaf for free.", "You eat it at home, standing up, still in your coats."] },
+      { lines: ["{partner} has had a hard day and does not want to talk about it.", "So you cook, and they sit on the counter and watch, and slowly they start talking anyway.", "You do not fix anything. You listen.", "Later, they say this is the best part of moving here: you."] },
+    ],
+    effects: { family: 3, wellbeing: 2 },
+    weight: 1.3,
+    tag: 'romance',
+  },
+
   {
     id: 'sleep',
     label: 'Sleep in',
@@ -94,6 +151,7 @@ export const ACTIVITIES: Activity[] = [
   },
   {
     id: 'rooftop',
+    needsFriends: true,
     label: 'Hang out with friends',
     blurb: 'A rooftop, snacks and nowhere to be.',
     stage: 'rooftop',
@@ -119,6 +177,7 @@ export const ACTIVITIES: Activity[] = [
   },
   {
     id: 'club',
+    needsFriends: true,
     label: 'Go out dancing',
     blurb: 'Loud, sweaty and a little silly.',
     stage: 'club',
@@ -248,6 +307,7 @@ export const ACTIVITIES: Activity[] = [
   },
   {
     id: 'movie',
+    needsFriends: true,
     label: 'Movie night',
     blurb: 'Blankets, a laptop and a bad film.',
     stage: 'apartment-night',
@@ -273,6 +333,7 @@ export const ACTIVITIES: Activity[] = [
   },
   {
     id: 'coffee',
+    needsFriends: true,
     label: 'Coffee with a friend',
     blurb: 'An hour of real talk.',
     stage: 'cafe',
@@ -339,7 +400,7 @@ export const ACTIVITIES: Activity[] = [
       { lines: ["There is a cultural showcase tonight, and the hall is full an hour early.", "Dances, songs, a poem read in a language you have never heard, and all of it gets cheered.", "A group from your part of the world performs, and your throat goes tight in a good way.", "You clap until your palms hurt."] },
       { lines: ["The club fair covers the whole quad: chess, hiking, robots, a choir that is singing right now.", "You sign up for two things you will go to and one you will not.", "{friend} talks you into the hiking club by promising there is food at the top.", "Your inbox will be noisy for weeks, and you do not mind."] },
     ],
-    effects: { community: 3, wellbeing: 2 },
+    effects: { community: 3, wellbeing: 2, flags: { friends: true } },
     weight: 1.2,
     tag: 'fun',
     when: enrolled,
@@ -349,7 +410,7 @@ export const ACTIVITIES: Activity[] = [
     label: 'Sit with the neighbors',
     blurb: 'Stoop, tea and low voices.',
     stage: 'rooftop',
-    cast: [{ ...YOU, pose: 'talk' }, { role: 'friend', pose: 'talk' }],
+    cast: [{ ...YOU, pose: 'talk' }, { role: 'stranger', pose: 'talk' }],
     scripts: [
       { lines: [
       'The neighbors have a way of making you feel expected.',
@@ -364,7 +425,7 @@ export const ACTIVITIES: Activity[] = [
       { lines: ["An older neighbour is teaching the building's children a card game.", "You are dealt in, and lose to a nine-year-old.", "Between hands, people trade what they know: which clinic is kind, which office has an interpreter.", "You go upstairs with a short list of names and a longer sense of belonging."] },
       { lines: ["It is someone's birthday, and the cake is cut on the stoop so that everybody gets some.", "The song is sung in three languages, one after another.", "Nobody here asks what you do. They ask if you have eaten.", "You carry a paper plate up the stairs and feel looked after."] },
     ],
-    effects: { community: 3, wellbeing: 2 },
+    effects: { community: 3, wellbeing: 2, flags: { friends: true } },
     weight: 3,
     tag: 'social',
     when: (s) => Boolean(s.flags.outOfStatus),
@@ -552,9 +613,25 @@ export const ACTIVITIES: Activity[] = [
   },
 ];
 
+/** A script works only if everyone it names is someone the player actually knows by now. */
+function scriptOk(sc: Script, missing: Set<string>): boolean {
+  if (!missing.size) return true;
+  const text = `${sc.lines.join(' ')} ${sc.with ?? ''}`;
+  for (const m of missing) if (text.includes(`{${m}}`)) return false;
+  return true;
+}
+
+/** Whether this activity can be played now: its condition holds and at least one of its scripts fits. */
+export function available(a: Activity, state: GameState): boolean {
+  if (a.when && !a.when(state)) return false;
+  const missing = missingPeople(state);
+  if (a.needsFriends && missing.has('friend')) return false;
+  return a.scripts.some((sc) => scriptOk(sc, missing));
+}
+
 /** Pick up to three activities of different kinds that fit the player's situation. */
 export function pickActivities(state: GameState, rng: () => number, n = 3): Activity[] {
-  const pool = ACTIVITIES.filter((a) => !a.when || a.when(state));
+  const pool = ACTIVITIES.filter((a) => available(a, state));
   const chosen: Activity[] = [];
   const tags = new Set<string>();
   while (chosen.length < n && pool.length) {
@@ -587,7 +664,9 @@ export function pickScript(a: Activity, state: GameState, rng: () => number): Sc
   const usedKey = `lu_${a.id}`;
   const last = Number(state.flags[lastKey] ?? -1);
   let used = Number(state.flags[usedKey] ?? 0);
-  const all = a.scripts.map((_, i) => i);
+  const missing = missingPeople(state);
+  const fitting = a.scripts.map((sc, i) => (scriptOk(sc, missing) ? i : -1)).filter((i) => i >= 0);
+  const all = fitting.length ? fitting : a.scripts.map((_, i) => i);
   let options = all.filter((i) => !(used & (1 << i)) && i !== last);
   if (!options.length) {
     used = 0;

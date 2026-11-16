@@ -207,7 +207,7 @@ export interface Choice {
 export interface Line {
   who: Role;
   text: string;
-  /** Audio file under public/assets/voice/, without extension. Player lines are never voiced. */
+  /** Unused: recordings are found by voice and text (engine/voices.ts). */
   voice?: string;
 }
 

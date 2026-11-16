@@ -34,6 +34,9 @@ export const VOICES: Record<string, VoiceDef> = {
   'peer1-m': { id: 'bIHbv24MWmeRgasZH58o', name: 'Will' },
   'peer2-f': { id: 'FGY2WhTYpPnrIDTdsKH5', name: 'Laura' },
   'peer2-m': { id: 'iP95p4xoKVk53GoZ742B', name: 'Chris' },
+  // The player: a voice of their own, a woman's or a man's to match the character.
+  'you-f': { id: 'pFZP5JQG7iQjIQuC4Bku', name: 'Lily' },
+  'you-m': { id: 'N2lVS1w4EtoT3dr4eOWO', name: 'Callum' },
   // Anyone else in a job: a clear voice that matches the person.
   'other-f': { id: 'EXAVITQu4vr4xnSDxMaL', name: 'Sarah' },
   'other-m': { id: 'cjVigY5qzO86Huf0OWal', name: 'Eric' },
@@ -42,9 +45,10 @@ export const VOICES: Record<string, VoiceDef> = {
 const PEER1 = new Set(['friend', 'roommate']);
 const PEER2 = new Set(['student', 'partner', 'spouse', 'classmate', 'sibling']);
 
-/** The voice a person speaks with. Null for the player (whose lines are read, not heard) and narration. */
+/** The voice a person speaks with. Null for narration, which is read, not heard. */
 export function voiceSlot(role: string, sex: 'f' | 'm' | null): string | null {
-  if (role === 'player' || role === 'narrator') return null;
+  if (role === 'narrator') return null;
+  if (role === 'player') return `you-${sex ?? 'f'}`;
   if (VOICES[role]) return role;
   const s = sex ?? 'f';
   if (PEER1.has(role)) return `peer1-${s}`;
@@ -54,7 +58,8 @@ export function voiceSlot(role: string, sex: 'f' | 'm' | null): string | null {
 
 /** Roles whose voice depends on who is cast: lines they speak are recorded in both a woman's and a man's voice. */
 export function slotsFor(role: string): string[] {
-  if (role === 'player' || role === 'narrator') return [];
+  if (role === 'narrator') return [];
+  if (role === 'player') return ['you-f', 'you-m'];
   if (VOICES[role]) return [role];
   return [voiceSlot(role, 'f') as string, voiceSlot(role, 'm') as string];
 }

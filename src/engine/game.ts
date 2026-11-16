@@ -1,5 +1,6 @@
 import { createSeededRandom } from '../utils/random';
 import { ALL_CARDS as CHALLENGES, ROUTE_MAP, ROUTES, STATUS_MAP } from './content/index';
+import { DAILY_WORK_IDS } from './content/daily';
 import { monthsSinceArrival, statusOf } from './routes';
 import { borrowedPerMonth, commuteInfo, monthlyBudget, START_MONEY } from './economy';
 import type {
@@ -118,7 +119,8 @@ const FRESH_GAPS = [5, 4, 3, 2, 1];
  * return every year; a settled adult's year should not replay the last one, so a month with nothing
  * new to say stays quieter instead. Holidays come round more often than other events.
  */
-const minGap = (id: string, student: boolean): number => MIN_GAP[id] ?? (student ? 1 : 2);
+// Work days are every working year's routine, so they may come back the very next year.
+const minGap = (id: string, student: boolean): number => MIN_GAP[id] ?? (student || DAILY_WORK_IDS.includes(id) ? 1 : 2);
 /** Things that happen once in a long while: a ten-year card, a first winter, a sibling's exams. */
 const MIN_GAP: Record<string, number> = {
   'lpr-card-renewal': 9, 'lpr-voter-trap': 6, roommate: 5, 'sibling-exam': 7, 'winter-coat': 7, 'phone-plan': 5, dating: 4,
@@ -516,6 +518,9 @@ export class Game {
       const before = statusOf(this.state);
       Object.assign(this.state.flags, e.flags);
       if (e.flags.status && e.flags.status !== before) this.onStatusChange(before);
+      // A car bought on a card becomes the way to get around from now on.
+      if (e.flags.carBought || e.flags.yh_ownsCar) this.state.profile.commute = 'car';
+      if (e.flags.carSold && this.state.profile.commute === 'car') this.state.profile.commute = 'transit';
     }
   }
 

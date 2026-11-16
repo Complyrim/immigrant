@@ -9,7 +9,7 @@
  *
  * Lines are read straight from the source ({ who: '...', text: '...' } objects under src/engine). Lines with
  * a name filled in at play time ({roommate}, ${...}) cannot be recorded ahead and stay speech bubbles.
- * The player's own lines are never voiced. Clips that already exist are skipped, so it can be re-run.
+ * The player's own lines get a woman's and a man's take, to match the character. Clips that already exist are skipped, so it can be re-run.
  * The API key is read from the hub's credentials file and never written anywhere.
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSync } from 'node:fs';
@@ -31,7 +31,8 @@ for (const m of vsrc.matchAll(/'?([\w-]+)'?: \{ id: '(\w+)', name: '(\w+)' \}/g)
 const PEER1 = new Set(['friend', 'roommate']);
 const PEER2 = new Set(['student', 'partner', 'spouse', 'classmate', 'sibling']);
 const slotsFor = (role) => {
-  if (role === 'player' || role === 'narrator') return [];
+  if (role === 'narrator') return [];
+  if (role === 'player') return ['you-f', 'you-m'];
   if (VOICES[role]) return [role];
   const k = PEER1.has(role) ? 'peer1' : PEER2.has(role) ? 'peer2' : 'other';
   return [`${k}-f`, `${k}-m`];

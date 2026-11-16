@@ -117,12 +117,35 @@ export function housemate(state: GameState): { name: string; label: string; role
   return { name: p.roommate.name, label: 'your roommate', role: 'roommate' };
 }
 
-/** A scene's cast with the roommate swapped for whoever actually shares this player's home. */
+/**
+ * Whether the player has made friends here yet. Someone who has just arrived knows nobody: friends come from
+ * going out to meet people (flags.friends), or, by the fourth month, from the classmates, coworkers and
+ * neighbours they now see every day.
+ */
+export function hasFriends(state: GameState): boolean {
+  if (state.flags.friends || state.year > 0) return true;
+  const m = state.schedule[state.index]?.month ?? -1;
+  return m >= 3;
+}
+
+/** Placeholders for people the player does not have yet: no {friend} before any friends are made. */
+export function missingPeople(state: GameState): Set<string> {
+  const out = new Set<string>();
+  if (!hasFriends(state)) {
+    out.add('friend');
+    // Living alone, the visiting friend is the housemate: nobody visits yet.
+    if (housemate(state).role === 'friend') out.add('roommate');
+  }
+  return out;
+}
+
+/** A scene's cast with the roommate swapped for whoever actually shares this player's home, and nobody the player has not met yet. */
 export function homeCast(cast: CastSpec[], state: GameState): CastSpec[] {
+  const missing = missingPeople(state);
   const hm = housemate(state);
-  if (hm.role === 'roommate') return cast;
   const hasFriend = cast.some((c) => c.role === 'friend');
-  return cast.flatMap((c) => (c.role !== 'roommate' ? [c] : hasFriend ? [] : [{ ...c, role: hm.role }]));
+  const out = cast.flatMap((c) => (c.role !== 'roommate' || hm.role === 'roommate' ? [c] : hasFriend ? [] : [{ ...c, role: hm.role }]));
+  return missing.has('friend') ? out.filter((c) => c.role !== 'friend') : out;
 }
 
 /** Replace {roommate}, {friend}, {classmate}, {partner}, {sibling} with this game's names. */
