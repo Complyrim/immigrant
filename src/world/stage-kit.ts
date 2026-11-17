@@ -524,6 +524,8 @@ export class SB {
     f.group.userData.seated = Boolean(o.seated);
     f.setPose(pose);
     if (o.seated) f.setSeated(true);
+    // Someone eating holds a plate of food on their lap, so the pose never reads as chewing on nothing.
+    if (o.seated && pose === 'eat') this.meal(0, 0.7, 0.16, f.group).userData.meal = true;
     this.g.add(f.group);
     this.figs.push(f);
     if (o.look) {
@@ -691,6 +693,17 @@ export class SB {
     }
   }
 
+  /** A plate of food with a fork, for someone eating: rice, a stew and greens, so the meal reads at a glance. */
+  meal(x: number, y: number, z: number, parent: THREE.Object3D = this.g): THREE.Group {
+    const g = this.grp(x, y, z, 0, parent);
+    this.cyl(0.13, 0.012, '#f3efe6', 0, 0.006, 0, g, 24);
+    this.cyl(0.1, 0.004, '#e2ddd2', 0, 0.013, 0, g, 24);
+    this.sph(0.05, '#f6f1e2', -0.035, 0.03, 0.01, 1.1, 0.55, 1, g);
+    this.sph(0.045, '#9a4a22', 0.04, 0.026, -0.02, 1, 0.45, 1, g);
+    this.sph(0.03, '#4f8a3a', 0.03, 0.026, 0.05, 1.2, 0.5, 0.9, g);
+    this.box(0.012, 0.004, 0.16, '#c9ccd2', 0.15, 0.008, 0, 0, g);
+    return g;
+  }
   laptop(x: number, y: number, z: number, ry: number, tex: THREE.Texture | null, glow = false): void {
     const g = this.grp(x, y, z, ry);
     this.box(0.32, 0.016, 0.22, '#c9ccd2', 0, 0.008, 0, 0, g);

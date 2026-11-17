@@ -1250,6 +1250,8 @@ function paintFor(id: string, stage: StageId | undefined, s: GameState): string 
   if (CARD_PAINT[id]) return CARD_PAINT[id];
   // A hands-on job is staged where that job happens: the warehouse floor, the shop till, the hotel room, the site.
   if (stage === 'worksite') return JOB_PAINT[jobKindOf(s)];
+  // A bought house, or a child at home: the family kitchen instead of the first small rental one.
+  if (stage === 'kitchen' && (s.flags.yh_ownsHome || s.flags.yf_child)) return 'kitchen-family';
   return undefined;
 }
 

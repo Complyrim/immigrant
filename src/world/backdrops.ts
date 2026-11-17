@@ -21,7 +21,7 @@ export const CITY_PAINT_IDS = ['nyc', 'la', 'houston', 'bayarea', 'dallas', 'chi
 export const COMMUTE_PAINT_IDS = ['commute-bike', 'commute-transit', 'commute-car', 'commute-rideshare'];
 
 /** Alternate paintings a stage borrows for particular moments (the passport booth for the arrival inspection). */
-export const ALT_PAINT_IDS = ['airport-booth', 'pantry', 'phone-store', 'care-home', 'community-hall', 'school', 'worksite-warehouse', 'worksite-store', 'worksite-hotel', 'worksite-construction'];
+export const ALT_PAINT_IDS = ['airport-booth', 'kitchen-family', 'pantry', 'phone-store', 'care-home', 'community-hall', 'school', 'worksite-warehouse', 'worksite-store', 'worksite-hotel', 'worksite-construction'];
 /** Backdrops with a baked depth map (<id>-depth.png from scripts/bake_depth.py): these get a 3D relief. */
 export const DEPTH_IDS: string[] = [...BACKDROP_IDS, ...COMMUTE_PAINT_IDS, ...ALT_PAINT_IDS, ...CITY_PAINT_IDS.map((c) => `city-${c}`)];
 const depths = new Map<string, DepthGrid>();

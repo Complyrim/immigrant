@@ -127,7 +127,7 @@ const RAW: ChallengeDef[] = [
       title: 'The date comes round again',
       body: `It is ${since === 1 ? 'one year' : `${since} years`} since your parent died. ${since === 1 ? 'The first year of dates has ended: the first birthday without them, the first holiday.' : 'The sharp part has worn smooth, and some days that feels like a second loss.'} Nobody at work knows what today is.`,
       stage: 'kitchen',
-      cast: [{ ...YOU, pose: 'think' }],
+      cast: [{ ...YOU, pose: 'sit' }],
       choices: [
         c('cook', 'Cook the dish they made best, from memory, and get it slightly wrong.', ok(`Too much salt, and the smell is exactly right. You eat it standing at the stove, the way they did.`, { wellbeing: 4, family: 3 })),
         c('call', 'Call your sibling and trade stories for an hour.', ok(`You each remember a different person, and both of them were real. You laugh more than you expected.`, { family: 6, wellbeing: 3 })),
@@ -582,7 +582,7 @@ const RAW: ChallengeDef[] = [
     title: 'Two lives, one address',
     body: `${PWord(s)} has a real chance at something they have wanted for years: a course, a role, a start of their own. It would mean evenings and weekends for a long while, and more of the home falling to you. For years, your plans came first. They do not say that. They do not need to.`,
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'sit' }, { role: pRole(s), pose: 'talk' }],
+    cast: [{ ...YOU, pose: 'sit' }, { role: pRole(s), pose: 'sit' }],
     choices: [
       c('back', 'Back them fully, and take over the home for a year.', ok(`You learn where everything is kept. ${hasChild(s) ? 'You do the school run and the fevers.' : 'You do the cooking and the bills.'} They come home late, tired and lit up. You had forgotten that look.`, { family: 8, wellbeing: -2, career: -2 })),
       c('split', 'Sit down and split the week on paper, hour by hour.', ok(`It is unromantic and it works. Neither of you gets everything. Both of you get something.`, { family: 5, wellbeing: 2 })),
@@ -620,7 +620,7 @@ const RAW: ChallengeDef[] = [
         ? `Your anniversary falls on a weekday and you both nearly miss it. You have been through forms, moves, bad winters and long silences together. ${hasChild(s) ? 'These days you talk mostly about schedules.' : 'These days you can sit a whole evening without needing to talk.'}`
         : `Your anniversary is this week. Life here has been all logistics: papers, shifts, rent. You try to remember the last time the two of you did something for no reason.`,
       stage: 'kitchen',
-      cast: [{ ...YOU, pose: 'cook' }, { role: 'spouse', pose: 'sit' }],
+      cast: [{ ...YOU, pose: 'sit' }, { role: 'spouse', pose: 'sit' }],
       choices: [
         c('evening', `Plan a real evening out (about $${cost(s, 110)}).`, ok(`You both dress up and feel faintly silly. By the second course you are talking the way you did before any of this. The walk home is slow.`, { family: 7, wellbeing: 5, money: -cost(s, 110) })),
         c('letter', 'Write them a letter, by hand, in the language you first spoke together.', ok(`It takes three drafts. They read it twice and put it in the box where the important papers are kept.`, { family: 8, wellbeing: 3 })),
@@ -689,7 +689,7 @@ const RAW: ChallengeDef[] = [
       ? `Your child has started answering you in English, even when you speak your own language. At school it is English all day. A teacher says kindly that children sort it out. Your mother says the child sounds like a foreigner.`
       : `Your child is starting to talk, and you have to decide what they will hear at home. Your language, English, or both. ${hasPartner(s) ? `You and ${pWord(s)} do not fully agree.` : 'Everyone you ask has a firm opinion.'}`,
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'cook' }, ...(hasPartner(s) ? [{ role: pRole(s), pose: 'talk' as const }] : [])],
+    cast: [{ ...YOU, pose: 'sit' }, ...(hasPartner(s) ? [{ role: pRole(s), pose: 'sit' as const }] : [])],
     choices: [
       c('first', 'Your language at home, always. English will come from the world.', ok(`It takes patience, and some evenings it is a battle. But your child can talk to their grandparents without you in the middle.`, { family: 8, wellbeing: -1, flags: { yf_homeLanguage: true } })),
       c('both', 'Both, without rules: whatever comes out.', ok(`Your home invents its own mixed speech that nobody outside fully follows. Your child understands everything and answers mostly in English.`, { family: 4, wellbeing: 3 })),

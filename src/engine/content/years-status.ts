@@ -435,7 +435,7 @@ const WORKER_CARDS: ChallengeDef[] = [
         ? 'Your I-140 is approved, which means your spouse can now ask for a work permit of their own. They have been at home for a long time. They read the rule twice, as if it might change.'
         : `Your spouse came as your dependent and may not take a job. ${yearsHere(s) >= 5 ? 'It has been years now. ' : ''}Their degree and their patience are both gathering dust, and tonight they say so.`,
       stage: 'kitchen',
-      cast: [{ ...YOU, pose: 'sit' }, { role: 'spouse', pose: 'talk' }],
+      cast: [{ ...YOU, pose: 'sit' }, { role: 'spouse', pose: 'sit' }],
       choices: open
         ? [
             c('file', `File for the work permit now (fee is an estimate, about $${cost(s, 520)}).`, ok('Months later a card arrives with their photo on it. They hold it for a long time before putting it away.', { family: 9, wellbeing: 4, money: -cost(s, 520), flags: { ys_spouseAt: stamp(s), ys_spouseEad: true } }, rule)),

@@ -336,7 +336,7 @@ export const CARDS: ChallengeDef[] = [
       ? 'A colleague loses a job and is on a friend\'s sofa within six weeks. You do the sum for yourself. How long could you last with nothing coming in?'
       : 'Every month ends near zero. One surprise, a tooth or a ticket home, and you would be borrowing. People say to keep three months of rent aside. It sounds like advice for someone richer.',
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'think' }],
+    cast: [{ ...YOU, pose: 'sit' }],
     choices: [
       c('auto', 'Set up a small automatic transfer on every payday.', ok('You stop noticing it after two months. The balance grows quietly.', { money: cost(s, 500), wellbeing: 3, flags: { yh_fund: true, yh_fundY: s.year } })),
       c('home', 'Savings can wait. People at home need it more than a bank does.', ok('The money does real good where it lands. Your own cushion stays thin.', { money: -cost(s, 400), family: 5, wellbeing: -1, flags: { yh_fundY: s.year } })),
@@ -606,7 +606,7 @@ export const CARDS: ChallengeDef[] = [
     title: 'The heating bill',
     body: 'The utility bill for the coldest month is three times the usual one. You read the number twice. Nobody told you this was part of the price of the place.',
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'think' }],
+    cast: [{ ...YOU, pose: 'sit' }, ...(hasSpouse(s) ? [{ role: 'spouse' as const, pose: 'sit' as const }] : [])],
     choices: [
       c('plan', 'Call the utility and ask to spread the cost over the year.', ok('A budget plan evens it out to the same amount every month. Winter stops being a shock.', { money: -cost(s, 220), wellbeing: 2, flags: { yh_heatY: s.year } })),
       c('seal', `Seal the windows and buy heavy curtains, about ${p(s, 90)}.`, ok('A roll of plastic film and an afternoon. The draught stops, and the next bill is noticeably smaller.', { money: -cost(s, 240), wellbeing: 3, flags: { yh_heatY: s.year } })),
@@ -621,7 +621,7 @@ export const CARDS: ChallengeDef[] = [
     title: 'Rent receipts',
     body: `You add up what you have paid in rent since you arrived and wish you had not. ${hasSpouse(s) ? 'At dinner the two of you say the word "house" out loud for the first time.' : 'A colleague your age has just bought a small place.'} A down payment is a very large number.`,
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'think' }],
+    cast: hasSpouse(s) ? [{ ...YOU, pose: 'eat' }, { role: 'spouse', pose: 'eat' }] : [{ ...YOU, pose: 'sit' }],
     choices: [
       c('save', 'Open a separate account and move money into it every month.', ok('You name the account "Door". Watching it grow becomes a small private pleasure.', { money: cost(s, 600), wellbeing: 3, flags: { yh_saving: true } })),
       c('class', 'Take the free first-time buyer class at the community centre.', ok('Six evenings of closing costs, inspections and interest. You learn what lenders look at and what you would need to change.', { community: 2, career: 1, wellbeing: 1, flags: { yh_saving: true, yh_buyerClass: true } })),
@@ -683,7 +683,7 @@ export const CARDS: ChallengeDef[] = [
     title: 'The payment went up',
     body: 'Your mortgage rate is fixed, but the monthly payment has risen anyway. The letter explains: property tax and home insurance both went up, and the lender collects them with the loan.',
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'think' }],
+    cast: [{ ...YOU, pose: 'sit' }, ...(hasSpouse(s) ? [{ role: 'spouse' as const, pose: 'sit' as const }] : [])],
     choices: [
       c('shop', 'Spend a weekend getting insurance quotes from other companies.', ok('Five calls and a lot of hold music. One quote is much lower for the same cover.', { money: -cost(s, 400), wellbeing: 1, flags: { yh_escrowY: s.year } })),
       c('appeal', 'Look up how to question the tax assessment and file the form.', ok('You bring photos of the cracked driveway and three nearby sale prices. The assessment comes down a little.', { money: -cost(s, 600), legal: 1, community: 1, flags: { yh_escrowY: s.year } }, 'Property tax and the way to question an assessment are set locally. The county office explains the process and the dates.')),

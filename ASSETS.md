@@ -10,6 +10,7 @@ The code licence in [LICENSE](LICENSE) does **not** cover every file in `public/
 | `assets/draco/*` | Google Draco decoder | Apache 2.0 |
 | `assets/backdrops/*-depth.png` | Baked locally with Depth Anything V2 Small (Apache 2.0) from the paintings below | Same terms as the painting they belong to |
 | `assets/backdrops/*.jpg` (painted rooms, commute scenes, city skylines, passport booth) | Generated for this game with the Nano Banana 2 model through Creatify | **Not open licensed. See below.** |
+| `assets/backdrops/kitchen-family.jpg` | Repainted on this Mac with SDXL Turbo (image to image) from `kitchen.jpg` | Same terms as the painting it was made from. See below. |
 | `assets/voice/*.mp3` | ElevenLabs, generated for this game | **Not open licensed. See below.** |
 
 ## Painted backdrops

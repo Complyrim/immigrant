@@ -1506,9 +1506,12 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         bedFeet = Math.min(0.9, (spot.v ?? 0.6) + 0.14);
         continue;
       }
+      // Someone at the stove: a lone sitter takes the far chair, so they do not block the cook.
+      const farChair = across && who.length === 1 && main.some((m) => m.pose === 'cook');
       who.forEach((f, i) => {
-        const lx = across ? (i ? gap / 2 : -gap / 2) : (i - (who.length - 1) / 2) * gap;
-        const turn = across ? (i ? -Math.PI / 2 : Math.PI / 2) : -Math.sign(lx) * (spot.fan ?? 0);
+        const side = farChair ? 1 : i;
+        const lx = across ? (side ? gap / 2 : -gap / 2) : (i - (who.length - 1) / 2) * gap;
+        const turn = across ? (side ? -Math.PI / 2 : Math.PI / 2) : -Math.sign(lx) * (spot.fan ?? 0);
         node.add(f.group);
         f.group.position.set(lx, -SIT_H, 0);
         f.group.rotation.y = turn;
@@ -1517,10 +1520,16 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         f.group.userData.noShadow = !spot.prop;
         f.setSeated(true);
         // Someone typing has a laptop on their lap, turned with them, screen toward them.
+        // At a table the laptop or plate sits on the tabletop in front of them; elsewhere on their lap.
+        const atTable = spot.prop === 'table';
+        const top = SIT_H + 0.425;
+        const reach = atTable ? Math.max(0.3, gap / 2 - 0.2) : 0.14;
         if (f.pose === 'type') {
-          b.laptop(0, 0.71, 0.14, Math.PI, null, false);
+          b.laptop(0, atTable ? top : 0.71, reach, Math.PI, null, false);
           f.group.add(b.g.children[b.g.children.length - 1]);
         }
+        // Someone eating has a plate of food in front of them.
+        if (f.pose === 'eat' && !f.group.children.some((o) => o.userData.meal)) b.meal(0, atTable ? top : 0.7, atTable ? reach : 0.16, f.group).userData.meal = true;
       });
       const shade = b.blob(0, 0, (across ? gap : who.length * gap) + 0.5, 0.9);
       node.add(shade);
@@ -1737,10 +1746,12 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
       const sitter = false;
       if (wantsSeat(f) || f.group.userData.seated) {
         f.group.userData.seated = false;
-        f.setSeated(false);
-        f.group.position.y = 0;
+        // Change the pose first: re-applying 'sit', 'eat' or 'type' would seat them again, crouched on nothing.
         if (f.pose === 'sit' || f.pose === 'eat') f.setPose('talk');
         else if (f.pose === 'type') f.setPose('phone');
+        f.setSeated(false);
+        f.group.position.y = 0;
+        for (const o of f.group.children.filter((c) => c.userData.meal)) f.group.remove(o);
       }
       // A sleeper's bed lies across the frame. Everyone else turns toward the others: toward whoever is
       // seated if anyone is, otherwise toward the middle of the group.
