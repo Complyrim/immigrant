@@ -404,6 +404,7 @@ export class Game {
       statement,
       ending,
       pivot,
+      scene: outcome.scene ?? null,
     };
   }
 

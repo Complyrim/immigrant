@@ -41,7 +41,6 @@ put('uscis', 'asy-interview aos-biometrics aos-interview lpr-natz-interview');
 put('legal', 'asy-arrival-help ewi-asylum-deadline ewi-legal-screening asy-file asy-after-denial fam-file-petition fam-ewi-waiver oos-consult oos-notario work-sp-file work-h1b-six-year work-gc-file-aos');
 put('workplace', 'work-h1b-first-days work-h1b-start work-h1b-layoff work-h1b-perm work-h1b-i140');
 put('shelter', 'asy-arrival-shelter');
-put('street', 'ewi-arrival-work');
 /** Cards that happen at your cash job: the setting and painting follow the kind of work (as on the daily cards). */
 const AT_JOB = new Set(['oos-wage-theft', 'oos-boss-threat']);
 

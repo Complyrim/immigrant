@@ -13,8 +13,9 @@
  *   asyFiled, asyLate, asyWeak, asyEvidence, asyInterviewed, asyReferred, asyDenied, asyDecided,
  *   ewiNta, inAbsentia, removalOrder, voted, usPassport, petitionedFamily, petitionedSpouse.
  */
-import { bad, c, cfr, def, legal, ok, social } from '../cx';
+import { at, bad, c, cfr, def, legal, ok, social } from '../cx';
 import { priceFactor } from '../economy';
+import { getCity } from '../data';
 import { mechanicsOf } from '../country';
 import { CASH_DEFAULT_KINDS, CASH_JOBS, isKind, offerFlags, pickOffers, pickOne } from './jobs';
 import type { SiteKind } from './jobs';
@@ -236,7 +237,7 @@ export const ROUTES: RouteDef[] = [
   {
     id: 'EWI',
     name: 'Entered without inspection',
-    note: 'You arrived without being inspected at a port of entry. No status, no work permit, and few legal roads.',
+    note: 'You crossed a land border away from any port of entry, so no officer inspected you. No status, no work permit, and few legal roads.',
     startStatus: 'NONE',
     arrival: ['ewi-arrival-couch', 'ewi-arrival-work', 'ewi-arrival-fear'],
     startFlags: { ewi: true, statusLostReason: 'entered-without-inspection', informalWork: true },
@@ -421,11 +422,12 @@ const B2_ARRIVAL: ChallengeDef[] = [
 
 // ------------------------------------------------------------------ arrival: entered without inspection
 const EWI_ARRIVAL: ChallengeDef[] = [
-  def('ewi-arrival-couch', 'life', 0, () => ({
+  def('ewi-arrival-couch', 'life', 0, (s) => ({
     id: 'ewi-arrival-couch',
     track: 'life',
     title: 'A relative\'s couch',
-    body: 'You arrived a few days ago. Your body still aches and you sleep in pieces. A relative has given you a couch, a towel and a warning to keep the curtains closed. You have no papers that say you belong here, and you know it.',
+    body: `You crossed the border with ${s.profile.country === 'canada' ? 'Canada' : 'Mexico'} a few days ago, away from any port of entry, then rode buses for days to reach ${getCity(s.profile.cityId).name}. Your body still aches and you sleep in pieces.`
+      + ' A relative has given you a couch, a towel and a warning to keep the curtains closed. You have no papers that say you belong here, and you know it.',
     stage: 'apartment-night',
     cast: [{ ...YOU, pose: 'sleep' }, { role: 'friend', pose: 'talk' }],
     choices: [
@@ -438,13 +440,13 @@ const EWI_ARRIVAL: ChallengeDef[] = [
     id: 'ewi-arrival-work',
     track: 'work',
     title: 'Cash work',
-    body: 'Your relative takes you to people who pay cash for long days: a roofing crew, a restaurant kitchen, a cleaning service. Nobody asks for papers. Nobody writes anything down.',
-    stage: 'street',
-    cast: [{ ...YOU, pose: 'walk' }, { role: 'owner', pose: 'talk' }],
+    body: 'Your relative takes you to a small restaurant to meet the owner. She pays cash and does not ask for papers. She also knows a roofing crew and a cleaning service that need people for long days. Nobody writes anything down.',
+    stage: 'cafe',
+    cast: [{ ...YOU, pose: 'idle' }, { role: 'owner', pose: 'talk' }],
     choices: [
-      c('kitchen', 'Take the kitchen job.', ok('Steam, knives and a staff meal at the end of the shift. The cook teaches you his tricks.', { wellbeing: -2, community: 2, flags: { informalWork: true, jobKind: 'kitchen' } })),
-      c('roofing', 'Take the roofing crew. It pays more.', ok('More money and more danger. Your hands blister, then harden.', { money: Math.round(150 * priceFactor(s.profile.arrivalYear)), wellbeing: -5, flags: { informalWork: true, jobKind: 'construction' } }, 'Construction is the largest sector for work deaths among foreign-born Hispanic workers in BLS data, and wage theft is widely reported. Wage-and-hour laws protect workers regardless of status.')),
-      c('notebook', 'Take the cleaning job, and keep a notebook of every hour and payment.', ok('The notebook feels silly at first. Later it may matter.', { wellbeing: -2, legal: 2, flags: { informalWork: true, wageRecords: true, jobKind: 'cleaning' } }, 'Keeping your own record of hours, dates and pay helps a workers\' center or labor agency recover unpaid wages.')),
+      c('kitchen', 'Take the kitchen job.', at(ok('Steam, knives and a staff meal at the end of the shift. The cook teaches you his tricks.', { wellbeing: -2, community: 2, flags: { informalWork: true, jobKind: 'kitchen' } }), 'worksite', [{ ...YOU, pose: 'cook' }, { role: 'owner', pose: 'talk' }])),
+      c('roofing', 'Take the roofing crew. It pays more.', at(ok('More money and more danger. Your hands blister, then harden.', { money: Math.round(150 * priceFactor(s.profile.arrivalYear)), wellbeing: -5, flags: { informalWork: true, jobKind: 'construction' } }, 'Construction is the largest sector for work deaths among foreign-born Hispanic workers in BLS data, and wage theft is widely reported. Wage-and-hour laws protect workers regardless of status.'), 'worksite', [{ ...YOU, pose: 'carry' }, { role: 'stranger', pose: 'talk' }], 'worksite-construction')),
+      c('notebook', 'Take the cleaning job, and keep a notebook of every hour and payment.', at(ok('The notebook feels silly at first. Later it may matter.', { wellbeing: -2, legal: 2, flags: { informalWork: true, wageRecords: true, jobKind: 'cleaning' } }, 'Keeping your own record of hours, dates and pay helps a workers\' center or labor agency recover unpaid wages.'), 'worksite', [{ ...YOU, pose: 'carry' }], 'worksite-hotel')),
     ],
   })),
   def('ewi-arrival-fear', 'status', 0, () => ({
@@ -456,9 +458,9 @@ const EWI_ARRIVAL: ChallengeDef[] = [
     cast: [{ ...YOU, pose: 'think' }, { role: 'stranger', pose: 'talk' }],
     inlineFact: FX_ASY_DEADLINE,
     choices: [
-      c('clinic', 'Go to the free screening.', ok('A DOJ-accredited representative listens for an hour. She is honest: few doors are open, but some are, and some close with time.', { legal: 8, wellbeing: 3, flags: { legalHelp: true } }, `Someone who entered without inspection cannot get a green card from inside the US through family or work (INA 245(a)); 245(i) is closed to recent arrivals. Asylum must be asked for within a year of arrival. ${HELP}`)),
-      c('hide', 'Stay inside as much as you can.', bad('The days blur. You see the same four walls and the same worry.', { wellbeing: -6, community: -2 }, 'Fear makes the world smaller.')),
-      c('church', 'Go back to the church on Sunday and meet people.', ok('A meal after the service, a few names, someone who knows a doctor who does not charge much.', { community: 6, wellbeing: 3 })),
+      c('clinic', 'Go to the free screening.', at(ok('A DOJ-accredited representative listens for an hour. She is honest: few doors are open, but some are, and some close with time.', { legal: 8, wellbeing: 3, flags: { legalHelp: true } }, `Someone who entered without inspection cannot get a green card from inside the US through family or work (INA 245(a)); 245(i) is closed to recent arrivals. Asylum must be asked for within a year of arrival. ${HELP}`), 'legal', [{ ...YOU, pose: 'sit' }, { role: 'advisor', pose: 'talk' }])),
+      c('hide', 'Stay inside as much as you can.', at(bad('The days blur. You see the same four walls and the same worry.', { wellbeing: -6, community: -2 }, 'Fear makes the world smaller.'), 'apartment-night', [{ ...YOU, pose: 'think' }])),
+      c('church', 'Go back to the church on Sunday and meet people.', at(ok('A meal after the service, a few names, someone who knows a doctor who does not charge much.', { community: 6, wellbeing: 3 }), 'cafe', [{ ...YOU, pose: 'talk' }, { role: 'friend', pose: 'laugh' }, { role: 'stranger', pose: 'talk' }], 'community-hall')),
     ],
   })),
 ];

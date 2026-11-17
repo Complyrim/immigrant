@@ -496,7 +496,7 @@ export class App {
     } else if (this.step === 3) {
       const yrs: string[] = [];
       for (let y = 2015; y <= 2026; y++) yrs.push(`<option value="${y}"${y === d.arrivalYear ? ' selected' : ''}>${y}</option>`);
-      body = `<h2>Where do you land?</h2>
+      body = `<h2>${d.status === 'EWI' ? 'Where do you go after the border?' : 'Where do you land?'}</h2>
         <div class="field"><span>Arrival city</span>
           <div class="cards">${CITIES.map((c) => {
             const shared = srcNum(c.rentSharedRoom, 900);
@@ -859,6 +859,11 @@ export class App {
     const ch = g.challenge;
     const item = g.item;
     if (!ch || !item) return;
+    // The choice took the player somewhere: show the result there (the kitchen, the site, the church hall).
+    if (res.scene) {
+      this.scene.showStage(res.scene.stage, homeCast(res.scene.cast ?? ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, res.scene.paint);
+      this.sound.setScene(res.scene.stage);
+    }
     const budget = res.statement
       ? `<details class="budget" open><summary>Month statement: ${money(res.statement.opening)} to ${money(res.statement.closing)}</summary>${this.statementTable(res.statement, res.budget)}</details>`
       : '';

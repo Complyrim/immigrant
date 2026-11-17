@@ -1,4 +1,7 @@
-import type { ChallengeDef, Choice, Effects, Fact, Outcome } from './types';
+import type { CastSpec, ChallengeDef, Choice, Effects, Fact, Outcome, StageId } from './types';
+
+/** Play this outcome somewhere else: the place the choice takes the player (the new job, the church hall). */
+export const at = (o: Outcome, stage: StageId, cast?: CastSpec[], paint?: string): Outcome => ({ ...o, scene: { stage, cast, paint } });
 
 /** An outcome the player will likely read as fine. `lookback` is revealed in the year-end review. */
 export const ok = (text: string, effects: Effects = {}, lookback?: string): Outcome => ({

@@ -177,6 +177,15 @@ export interface Outcome {
   lookback?: string;
   /** Ends the journey by this route (for example choosing to go home). */
   ends?: 'went-home';
+  /** Where the result plays out, when the choice takes the player somewhere else (the job, the church hall). */
+  scene?: OutcomeScene;
+}
+
+export interface OutcomeScene {
+  stage: StageId;
+  /** An alternate painting for the stage (see Challenge.paint). */
+  paint?: string;
+  cast?: CastSpec[];
 }
 
 export interface PivotOption {
@@ -332,6 +341,8 @@ export interface ResultView {
   ending: Ending | null;
   /** When set, the UI shows a crossroads before moving on. */
   pivot: Pivot | null;
+  /** When set, the result is shown in this place instead of the card's own scene. */
+  scene: OutcomeScene | null;
 }
 
 export interface BudgetLine {
