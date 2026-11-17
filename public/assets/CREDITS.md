@@ -72,3 +72,7 @@ room and commute scene has one (32 maps), and each of the 8 city skylines (40 in
 `voice/arrival-officer-*.mp3`: the border officer's lines on arrival day, ElevenLabs eleven_v3, voice "Bill",
 generated with the project owner's ElevenLabs Startup Grant. Check the grant terms before release:
 they were confirmed for social channels, not for a game or an open-source repository.
+
+## Moving backdrops (public/assets/backdrops/loop/)
+
+city-nyc, cafe and park: 5-second locked-off clips generated with Higgsfield (Seedance 2.0) from the game's own paintings as the first frame, played forward then back so they loop. Higgsfield does not claim ownership of outputs or restrict their commercial use.

@@ -10,3 +10,9 @@ blob-report/
 .vite/
 *.local
 
+
+# Trailer working files (large; final cut lives in the Remotion project)
+trailer/clips/
+trailer/frames/
+trailer/loops/
+trailer/*.mp4

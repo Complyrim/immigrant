@@ -99,6 +99,45 @@ export function panCityPaint(t: THREE.Texture, viewAspect: number, time: number,
 let started = false;
 let enabled = true;
 
+/**
+ * Paintings that come alive: a short locked-off clip made from the painting itself (Higgsfield, from the
+ * painting as its first frame), played forward then back so it loops without a jump. Same framing as the
+ * painting, so the people and the depth relief stay where they were. The still painting shows until the
+ * clip can play, and stays if it never can.
+ */
+export const LOOP_IDS = ['city-nyc', 'cafe', 'park'];
+const reduceMotion = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loadLoop(id: string): void {
+  if (reduceMotion || typeof document === 'undefined') return;
+  const v = document.createElement('video');
+  v.muted = true;
+  v.loop = true;
+  v.playsInline = true;
+  v.preload = 'auto';
+  v.crossOrigin = 'anonymous';
+  v.setAttribute('muted', '');
+  v.setAttribute('playsinline', '');
+  v.src = `${base}/assets/backdrops/loop/${id}.mp4`;
+  v.addEventListener(
+    'canplaythrough',
+    () => {
+      // The rest of the code reads image.width / height for the picture's shape.
+      v.width = v.videoWidth;
+      v.height = v.videoHeight;
+      void v.play().then(
+        () => {
+          const t = new THREE.VideoTexture(v);
+          t.colorSpace = THREE.SRGBColorSpace;
+          t.matrixAutoUpdate = true;
+          loaded.set(id, t);
+        },
+        () => undefined,
+      );
+    },
+    { once: true },
+  );
+}
+
 /** Start loading every backdrop (call once at app start). Stages fall back to their coded room until loaded. */
 export function preloadBackdrops(): void {
   if (started) return;
@@ -108,9 +147,10 @@ export function preloadBackdrops(): void {
     loader.load(`${base}/assets/backdrops/${id}.jpg`, (t) => {
       t.colorSpace = THREE.SRGBColorSpace;
       t.matrixAutoUpdate = true;
-      loaded.set(id, t);
+      if (!loaded.has(id)) loaded.set(id, t);
     });
   }
+  for (const id of LOOP_IDS) loadLoop(id);
   const il = new THREE.ImageLoader();
   for (const id of DEPTH_IDS) {
     il.load(`${base}/assets/backdrops/${id}-depth.png`, (img) => depths.set(id, readDepth(img)));
