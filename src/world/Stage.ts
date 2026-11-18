@@ -1409,7 +1409,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     // On a call home the other person is far away: they appear in a call window, never in the room.
     let remote: FigureLike | null = null;
     if (variant === 'call') {
-      remote = main.find((f) => f.look.role !== 'player') ?? null;
+      remote = main.find((f) => f.look.role === 'parent') ?? main.find((f) => f.look.role !== 'player') ?? null;
       for (const f of main) if (f.look.role !== 'player' && f !== remote) f.group.visible = false;
       main = main.filter((f) => f.look.role === 'player');
     }

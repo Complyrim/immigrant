@@ -822,7 +822,7 @@ export class App {
     this.result = null;
     this.saveJourney();
     this.scene.setMonth(item.month < 0 ? 7 : (7 + item.month) % 12);
-    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, ch.paint ?? paintFor(ch.id, ch.stage, g.state));
+    this.scene.showStage(ch.stage ?? 'campus', homeCast(ch.cast ?? [{ role: 'player' }], g.state), g.state.profile, ch.paint ?? paintFor(ch.id, ch.stage, g.state), callFrom(ch.stage, ch.cast));
     this.sound.setScene(ch.stage ?? 'campus');
     const showOdds = this.settings.showOdds;
     const choices = ch.choices
@@ -1246,6 +1246,14 @@ function actingFor(line: TalkLine, roles: Role[]): [string, Pose][] {
 /** Cards that happen in a place of their own: the food pantry, and each job's own workplace. */
 const CARD_PAINT: Record<string, string> = { volunteer: 'pantry', 'phone-plan': 'phone-store' };
 const JOB_PAINT: Record<string, string> = { warehouse: 'worksite-warehouse', store: 'worksite-store', hotel: 'worksite-hotel', construction: 'worksite-construction' };
+/** At home on the phone with a parent: the parent is far away, so they appear on a call screen, not in the room. */
+const HOME_STAGES = new Set<StageId>(['apartment', 'apartment-night', 'bedroom', 'kitchen']);
+function callFrom(stage: StageId | undefined, cast: CastSpec[] | undefined): 'call' | undefined {
+  if (!stage || !HOME_STAGES.has(stage) || !cast) return undefined;
+  const onPhone = cast.some((c) => c.role === 'player' && c.pose === 'phone');
+  return onPhone && cast.some((c) => c.role === 'parent') ? 'call' : undefined;
+}
+
 function paintFor(id: string, stage: StageId | undefined, s: GameState): string | undefined {
   if (CARD_PAINT[id]) return CARD_PAINT[id];
   // A hands-on job is staged where that job happens: the warehouse floor, the shop till, the hotel room, the site.
