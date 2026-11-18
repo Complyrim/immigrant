@@ -26,12 +26,15 @@ import type { ChallengeDef, Effects, Fact, GameState, Outcome, StageId, StatusCo
 const YOU = { role: 'player' } as const;
 
 /** Weekend cash shifts a visitor hears about (b2-cash-work). */
-const B2_GIGS: Array<{ who: string; doing: string; kind: SiteKind; stage: StageId; paint: string }> = [
+const B2_GIGS: Array<{ who: string; doing: string; kind: SiteKind; stage: StageId; paint?: string; work?: { stage: StageId; paint: string } }> = [
   { who: 'The restaurant owner', doing: ' in the kitchen', kind: 'kitchen', stage: 'worksite', paint: 'worksite' },
   { who: 'The shop owner', doing: ' on the till and the shelves', kind: 'store', stage: 'cafe', paint: 'worksite-store' },
   // Houses, not offices: a private living room.
-  { who: 'The woman with the cleaning business', doing: ' cleaning houses', kind: 'cleaning', stage: 'apartment', paint: 'care-home' },
+  // The offer is made over coffee; the shifts themselves are cleaning rooms (the housekeeping-cart painting).
+  { who: 'The woman with the cleaning business', doing: ' cleaning houses', kind: 'cleaning', stage: 'cafe', work: { stage: 'worksite', paint: 'worksite-hotel' } },
 ];
+/** Taking a gig whose work happens somewhere else than the offer (the cleaning shifts are in a client's home). */
+const workAt = (gig: (typeof B2_GIGS)[number], o: Outcome): Outcome => (gig.work ? at(o, gig.work.stage, [{ role: 'player', pose: 'idle' }], gig.work.paint) : o);
 /** Cash work someone waiting for an asylum work permit hears about (asy-before-permit). */
 const ASY_GIGS = [CASH_JOBS.kitchen, CASH_JOBS.cleaning, CASH_JOBS.construction];
 const CASH_KINDS = CASH_DEFAULT_KINDS;
@@ -564,7 +567,7 @@ const B2_CARDS: ChallengeDef[] = [
     choices: [
       c('decline', 'Say no and cut your spending instead.', ok('Fewer outings, more home cooking. The money lasts.', { wellbeing: -1, money: 100 })),
       c('volunteer', 'Volunteer at the community center without pay.', ok('You help with a food pantry. No money, but people and purpose.', { community: 6, wellbeing: 3 }, 'Real volunteering for a charity, with no pay or in-kind compensation, is different from work. When in doubt, ask a legal clinic.')),
-      c('work', 'Take the shifts.', bad('The cash is welcome. Every time the door opens you look up.', { money: Math.round(500 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true, jobKind: gig.kind } }, 'It helps now and may cost later.', 'A visitor who works without authorization fails to keep status (8 CFR 214.1(e)). It can lead to denial of extensions or a change of status. Only the immediate relatives of US citizens are excused from this bar when adjusting status (INA 245(c)(2)).')),
+      c('work', 'Take the shifts.', workAt(gig, bad('The cash is welcome. Every time the door opens you look up.', { money: Math.round(500 * priceFactor(calYear(s))), wellbeing: -4, flags: { informalWork: true, unauthWork: true, jobKind: gig.kind } }, 'It helps now and may cost later.', 'A visitor who works without authorization fails to keep status (8 CFR 214.1(e)). It can lead to denial of extensions or a change of status. Only the immediate relatives of US citizens are excused from this bar when adjusting status (INA 245(c)(2)).'))),
     ],
   };
   }, { statuses: ['B2'], when: (s) => !has(s, 'unauthWork') }),
