@@ -60,6 +60,8 @@ interface Look {
 const g = (shadow: [number, number, number], highlight: [number, number, number], sat: number, contrast: number, exposure: number, vignette: number, bloom: number): Grade => ({ shadow, highlight, sat, contrast, exposure, vignette, bloom });
 const WARM_ROOM: Look = { grade: g([0.92, 0.97, 1.07], [1.07, 1.0, 0.9], 1.1, 1.09, 1.0, 0.36, 0.42), rim: { color: '#c4d4ff', intensity: 0.28 } };
 const OFFICE: Look = { grade: g([0.94, 0.99, 1.05], [1.03, 1.0, 0.96], 0.99, 1.06, 0.97, 0.3, 0.36), rim: { color: '#c4d4ff', intensity: 0.25 } };
+// The lab painting is full of glowing screens: at the office bloom they haze over anyone standing in front.
+const LAB: Look = { ...OFFICE, grade: { ...OFFICE.grade, bloom: 0.08 } };
 const CLEAN: Look = { grade: g([0.95, 1.0, 1.06], [1.0, 1.0, 0.98], 0.96, 1.05, 0.9, 0.28, 0.25), rim: { color: '#d0deff', intensity: 0.2 } };
 const GOLDEN: Look = { grade: g([0.94, 0.94, 1.1], [1.12, 1.0, 0.84], 1.14, 1.11, 1.0, 0.4, 0.5), rim: { color: '#ffb784', intensity: 0.5 } };
 const DAY: Look = { grade: g([0.95, 0.99, 1.06], [1.05, 1.01, 0.93], 1.1, 1.07, 0.97, 0.3, 0.38), rim: { color: '#dbe6ff', intensity: 0.25 } };
@@ -69,7 +71,7 @@ const AIRPORT: Look = { grade: g([0.9, 0.97, 1.1], [1.08, 1.0, 0.9], 1.02, 1.13,
 const CITY_LOOK: Look = { grade: NEUTRAL_GRADE, rim: { color: '#ffffff', intensity: 0 } };
 const STAGE_LOOK: Partial<Record<StageId, Look>> = {
   apartment: WARM_ROOM, kitchen: WARM_ROOM, cafe: WARM_ROOM, 'apartment-night': NIGHT, bedroom: NIGHT,
-  'intl-office': OFFICE, classroom: OFFICE, library: OFFICE, bank: OFFICE, lab: OFFICE, careerfair: OFFICE, conference: OFFICE, gym: OFFICE,
+  'intl-office': OFFICE, classroom: OFFICE, library: OFFICE, bank: OFFICE, lab: LAB, careerfair: OFFICE, conference: OFFICE, gym: OFFICE,
   clinic: CLEAN, airport: AIRPORT, club: CLUB,
   campus: DAY, park: DAY, street: DAY, festival: GOLDEN, rooftop: GOLDEN, walk: GOLDEN,
   court: CLEAN, uscis: CLEAN, legal: OFFICE, workplace: OFFICE, shelter: NIGHT, worksite: WARM_ROOM,

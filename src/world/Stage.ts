@@ -1227,6 +1227,8 @@ const OUTDOOR = new Set<StageId>(['festival', 'park', 'street', 'campus', 'rooft
 
 /** Height of the surface a seated person rests on, above their own origin. */
 const SIT_H = 0.34;
+/** How far the sitting clip puts the hips behind the feet (measured 0.30 m on the shared skeleton). */
+const SEAT_REACH = 0.3;
 const STOOL_H = 0.7;
 /** How far behind the standing row the seated groups are placed. */
 /** Focal length of the painted scenes' camera, in painting heights (about a 49 degree view). */
@@ -1514,6 +1516,13 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
         const turn = across ? (side ? -Math.PI / 2 : Math.PI / 2) : -Math.sign(lx) * (spot.fan ?? 0);
         node.add(f.group);
         f.group.position.set(lx, -SIT_H, 0);
+        // The sitting clip keeps the feet at the figure's origin and puts the hips a thigh's length behind
+        // them, so a figure stood at the seat's centre sat behind its own chair, the back through its body.
+        // On built chairs, benches and stools, slide the sitter forward so the hips land on the seat.
+        if (spot.prop && !across) {
+          f.group.position.x += Math.sin(turn) * SEAT_REACH;
+          f.group.position.z += Math.cos(turn) * SEAT_REACH;
+        }
         f.group.rotation.y = turn;
         f.group.userData.seated = true;
         // Someone on painted furniture cannot cast a shadow on it; someone on a built seat shadows the floor.
