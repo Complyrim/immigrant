@@ -259,7 +259,7 @@ export interface SeatSpot {
   /** A painted bed: only someone asleep goes here, lying on it. */
   bed?: boolean;
 }
-type SeatMeta = BackdropLight & { seats?: SeatSpot[]; lounge?: boolean; vh?: number; cookAt?: { u: number; vf: number; ry: number } };
+type SeatMeta = BackdropLight & { seats?: SeatSpot[]; lounge?: boolean; vh?: number; cookAt?: { u: number; vf: number; ry: number }; standSide?: 1 | -1 };
 /** A service counter in the painting: staff stand behind it (hidden below the counter top), the player in front. */
 export interface CounterSpot {
   roles: string[];
@@ -293,6 +293,10 @@ export function backdropHorizon(id: StageId): number {
 }
 export function backdropSeats(id: StageId): SeatSpot[] {
   return (META[keyOf(id)] as SeatMeta | undefined)?.seats ?? [];
+}
+/** Which side of a seated group has open floor for people standing (1 = right, -1 = left), when the painting says. */
+export function backdropStandSide(id: StageId): 1 | -1 | null {
+  return (META[keyOf(id)] as SeatMeta | undefined)?.standSide ?? null;
 }
 /** Scenes where people at rest sit down if there is room (a living room, a bus), not only those whose pose says so. */
 export function backdropLounge(id: StageId): boolean {

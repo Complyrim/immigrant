@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { buildBike } from './bike';
 import { beginCastScene, castSex, castSettled, setFigurePalette } from './MhFigure';
 import { makeRelief } from './relief';
-import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, backdropStations, paintKey } from './backdrops';
+import { backdropDepth, backdropCookSpot, backdropExtras, backdropCounter, backdropFor, backdropHorizon, backdropLight, backdropLounge, backdropMaxSpan, backdropPerson, backdropSeats, backdropStandSide, backdropStations, paintKey } from './backdrops';
 import type { SeatSpot } from './backdrops';
 import { pbrMaterial } from './pbr';
 import type { CastSpec, Pose } from '../engine/types';
@@ -1710,7 +1710,8 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     // The people left standing gather to one side of whoever is seated, turned toward them.
     const standers = main.filter((f) => !inGroup.has(f) && f !== cook && f !== clerk && f !== customer && !runners.includes(f));
     const seatU = used.length ? used.reduce((a, g) => a + g.spot.u * g.who.length, 0) / inGroup.size : 0.5;
-    const side = seatU < 0.5 ? 1 : -1;
+    // The painting may say where the open floor is (a desk on one side, a rug on the other).
+    const side = backdropStandSide(id) ?? (seatU < 0.5 ? 1 : -1);
     // Closer together when there are more people, so nobody is cut off by the frame.
     const count = standers.length;
     const open = count >= 4 ? 0.72 : count === 3 ? 0.95 : 1.2;
