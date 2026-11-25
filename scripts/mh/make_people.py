@@ -104,19 +104,24 @@ def is_skirt(name):
     return "skirt" in n and "dress" not in n
 
 
-def tuck_under(clearance=0.010):
+def tuck_under(clearance=0.010, fade=0.05):
     """Tuck a garment's hidden geometry back inside the garment worn over it.
 
-    Each garment is fitted to the body on its own, so on a fuller build a skirt waist can end up
-    two to four centimetres OUTSIDE the shirt that covers it, and the buried cloth shows through
-    the shirt as irregular blotches in the skirt's colour. For every skirt-and-top pair we take
-    the usual layering - the top hangs over the skirt - and move the skirt's stray vertices to
-    just inside the top, fading the move out at the top's own hem, where the skirt is meant to
-    show. A tucked shirt is left alone: it already belongs inside the waistband, and moving it
-    tears its hem. Only cloth that was always meant to be hidden moves, so nothing visible changes
-    and a build with no conflict is left exactly as it was. Must run before cull_covered, which
+    Each garment is fitted to the body on its own, and with the sweater and the crude tee the
+    skirt waist can end up two to four centimetres OUTSIDE the shirt that covers it, so the
+    buried cloth draws through the shirt as irregular blotches in the skirt's colour. It is not
+    only the heaviest builds: ph_f2 is slim and had the worst of it. For every skirt-and-top pair
+    we take the usual layering - the top hangs over the skirt - and move the skirt's stray
+    vertices to just inside the top, fading the move out towards the top's open edges, where the
+    skirt is meant to show. A tucked shirt is left alone: it already belongs inside the
+    waistband, and moving it tears its hem.
+
+    This shifts cloth that sits under another garment, so what it changes is normally not visible
+    - but it is not a no-op for a figure with no blotches: the keyhole tank wearers also move a
+    little, and their waistline comes out slightly narrower. Must run before cull_covered, which
     needs the garments in their final positions."""
     from mathutils.bvhtree import BVHTree
+    from mathutils.kdtree import KDTree
     cloths = [o for o in bpy.data.objects if o.type == "MESH" and o.name.startswith("cloth__")]
     if len(cloths) < 2:
         return 0
@@ -134,11 +139,15 @@ def tuck_under(clearance=0.010):
             for j in range(len(p)):
                 e = tuple(sorted((p[j], p[(j + 1) % len(p)])))
                 used.setdefault(e, []).append(i)
-        rim = set()
+        rimverts = set()
         for e, f in used.items():
             if len(f) == 1:
-                rim.update(f)
-        return BVHTree.FromPolygons(verts, polys), norms, rim
+                rimverts.update(e)
+        kd = KDTree(len(rimverts))
+        for i in rimverts:
+            kd.insert(verts[i], i)
+        kd.balance()
+        return BVHTree.FromPolygons(verts, polys), norms, (kd if rimverts else None)
 
     sh = {o.name: shell(o) for o in cloths}
     moved = 0
@@ -152,7 +161,7 @@ def tuck_under(clearance=0.010):
             if "tuck" in top.name.lower():
                 continue  # a tucked shirt already sits inside the waistband; moving it tears the hem
             inner, outer = skirt, top
-            tree, norms, rim = sh[outer.name]
+            tree, norms, rimkd = sh[outer.name]
             mw = inner.matrix_world
             inv = mw.inverted()
             fix = []
@@ -164,11 +173,12 @@ def tuck_under(clearance=0.010):
                 n = norms[idx]
                 if (o - loc).dot(n) <= -clearance:
                     continue
-                # Fade the move out as the skirt comes out from under the top's hem, so the change
-                # dies away instead of leaving a torn edge between moved and unmoved cloth.
+                # Fade the move out towards the top's open edges - hem, cuffs, neckline - so the
+                # change dies away instead of leaving a torn edge between moved and unmoved cloth.
                 w = 1.0
-                if idx in rim:
-                    w = min(max((o.z - loc.z + 0.015) / 0.030, 0.0), 1.0)
+                if rimkd is not None:
+                    _, _, dist = rimkd.find(loc)
+                    w = min(max((dist or 0.0) / fade, 0.0), 1.0)
                 if w <= 0.0:
                     continue
                 fix.append((v.index, inv @ (o + ((loc - n * clearance) - o) * w)))
@@ -342,6 +352,8 @@ def build(spec):
     add_expressions(base, spec)
     apply_masks(base)
     # Phone budgets: some community shoes and suits are modelled far denser than a game can afford.
+    # Applied here rather than left for the exporter, because tuck_under and cull_covered both read
+    # final vertex positions and collapsing triangles afterwards would undo the tuck.
     BUDGET = {"shoe": 2400, "cloth": 6000, "hair": 4500, "beard": 1500, "glasses": 1200, "hat": 1500}
     for ob in bpy.data.objects:
         if ob.type != "MESH" or "__" not in ob.name:
