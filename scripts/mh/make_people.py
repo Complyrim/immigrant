@@ -97,6 +97,88 @@ def apply_masks(ob):
     bm.to_mesh(ob.data)
     bm.free()
 
+def is_skirt(name):
+    """Skirts only. Trousers sit under a shirt the same way, but that pairing has not been looked
+    at, and a dress is not a bottom half at all."""
+    n = name.lower()
+    return "skirt" in n and "dress" not in n
+
+
+def tuck_under(clearance=0.010):
+    """Tuck a garment's hidden geometry back inside the garment worn over it.
+
+    Each garment is fitted to the body on its own, so on a fuller build a skirt waist can end up
+    two to four centimetres OUTSIDE the shirt that covers it, and the buried cloth shows through
+    the shirt as irregular blotches in the skirt's colour. For every skirt-and-top pair we take
+    the usual layering - the top hangs over the skirt - and move the skirt's stray vertices to
+    just inside the top, fading the move out at the top's own hem, where the skirt is meant to
+    show. A tucked shirt is left alone: it already belongs inside the waistband, and moving it
+    tears its hem. Only cloth that was always meant to be hidden moves, so nothing visible changes
+    and a build with no conflict is left exactly as it was. Must run before cull_covered, which
+    needs the garments in their final positions."""
+    from mathutils.bvhtree import BVHTree
+    cloths = [o for o in bpy.data.objects if o.type == "MESH" and o.name.startswith("cloth__")]
+    if len(cloths) < 2:
+        return 0
+
+    def shell(ob):
+        mw = ob.matrix_world
+        rot = mw.to_3x3()
+        verts = [mw @ v.co for v in ob.data.vertices]
+        polys = [list(p.vertices) for p in ob.data.polygons]
+        norms = [(rot @ p.normal).normalized() for p in ob.data.polygons]
+        # Faces along an open edge - a hem, cuff, neckline - are where the garment stops covering
+        # anything, so cloth near them is left where the asset put it.
+        used = {}
+        for i, p in enumerate(polys):
+            for j in range(len(p)):
+                e = tuple(sorted((p[j], p[(j + 1) % len(p)])))
+                used.setdefault(e, []).append(i)
+        rim = set()
+        for e, f in used.items():
+            if len(f) == 1:
+                rim.update(f)
+        return BVHTree.FromPolygons(verts, polys), norms, rim
+
+    sh = {o.name: shell(o) for o in cloths}
+    moved = 0
+    for i, a in enumerate(cloths):
+        for b in cloths[i + 1:]:
+            lower = [o for o in (a, b) if is_skirt(o.name)]
+            if len(lower) != 1:
+                continue  # no skirt, or two of them: no layering we can be sure of
+            skirt = lower[0]
+            top = b if skirt is a else a
+            if "tuck" in top.name.lower():
+                continue  # a tucked shirt already sits inside the waistband; moving it tears the hem
+            inner, outer = skirt, top
+            tree, norms, rim = sh[outer.name]
+            mw = inner.matrix_world
+            inv = mw.inverted()
+            fix = []
+            for v in inner.data.vertices:
+                o = mw @ v.co
+                loc, _, idx, _ = tree.find_nearest(o, 0.05)
+                if loc is None:
+                    continue
+                n = norms[idx]
+                if (o - loc).dot(n) <= -clearance:
+                    continue
+                # Fade the move out as the skirt comes out from under the top's hem, so the change
+                # dies away instead of leaving a torn edge between moved and unmoved cloth.
+                w = 1.0
+                if idx in rim:
+                    w = min(max((o.z - loc.z + 0.015) / 0.030, 0.0), 1.0)
+                if w <= 0.0:
+                    continue
+                fix.append((v.index, inv @ (o + ((loc - n * clearance) - o) * w)))
+            for idx, co in fix:
+                inner.data.vertices[idx].co = co
+            moved += len(fix)
+            if fix:
+                sh[inner.name] = shell(inner)
+    return moved
+
 def cull_covered(base, reach=0.035):
     """Remove skin that lies under clothes or shoes, so it can never poke through when the body moves.
     A vertex goes only if it and all its neighbours are covered, which leaves a rim of skin under every
@@ -259,7 +341,6 @@ def build(spec):
                     ob.modifiers.remove(m)
     add_expressions(base, spec)
     apply_masks(base)
-    culled = cull_covered(base)
     # Phone budgets: some community shoes and suits are modelled far denser than a game can afford.
     BUDGET = {"shoe": 2400, "cloth": 6000, "hair": 4500, "beard": 1500, "glasses": 1200, "hat": 1500}
     for ob in bpy.data.objects:
@@ -271,13 +352,17 @@ def build(spec):
             d = ob.modifiers.new("Budget", "DECIMATE")
             d.ratio = cap / tris
             d.use_collapse_triangulate = True
+            bpy.context.view_layer.objects.active = ob
+            bpy.ops.object.modifier_apply(modifier=d.name)
+    tucked = tuck_under()
+    culled = cull_covered(base)
     bpy.ops.object.select_all(action="SELECT")
     out = os.path.join(out_dir, spec["id"] + ".glb")
     bpy.ops.export_scene.gltf(filepath=out, export_format="GLB", use_selection=True, export_apply=True, export_animations=False,
                               export_image_format="WEBP", export_image_quality=76, export_morph=True, export_morph_normal=False, export_morph_tangent=False, export_try_sparse_sk=True, export_yup=True,
                               export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6,
                               export_draco_position_quantization=14, export_draco_normal_quantization=10, export_draco_texcoord_quantization=12)
-    print("BUILT", spec["id"], "%.2fMB" % (os.path.getsize(out) / 1e6), "face targets", nface, "skin hidden", culled, "meshes", [o.name for o in bpy.data.objects if o.type == "MESH"])
+    print("BUILT", spec["id"], "%.2fMB" % (os.path.getsize(out) / 1e6), "face targets", nface, "skin hidden", culled, "cloth tucked", tucked, "meshes", [o.name for o in bpy.data.objects if o.type == "MESH"])
 
 os.makedirs(out_dir, exist_ok=True)
 for spec in json.load(open(cast_file)):
