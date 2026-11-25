@@ -320,3 +320,10 @@ DSO in the same sheet is clearly better and stays live.
 - Lesson for the remaining ten: a clean bonecheck and a hole-free magenta pass do not mean the
   face survives the pipeline. Judge the close-up face next to the MakeHuman original before
   proposing a swap. The officer passed every mechanical gate and still lost to the original.
+
+**Face gate is now step 4 of the runbook** (operator, 11-24, after the officer revert). The face
+of the first build is compared to the MakeHuman face before any other check; a face that does not
+clearly beat the original ends that figure's run as `FACE FAIL`, with no ELBOW_MATCH build, no
+bonecheck retries, no magenta pass and no in-game strip. Full wording and the failure signs are in
+`US12-RUN.md` under "The face gate comes first". The four already-built figures held back on faces
+(owner, advisor, roommate_m, roommate_f) stay held; nothing is to be re-rigged to try to fix them.
