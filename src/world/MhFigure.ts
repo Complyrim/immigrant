@@ -32,7 +32,8 @@ interface PersonDef {
   /** A home country id, or 'us' for the people every journey meets. */
   group: string;
   sex: 'f' | 'm';
-  ageBand: 'young' | 'mid' | 'elder';
+  /** 'child' (about 4) and 'teen' (about 15) are the player's own child, see scripts/mh/gen_kids.py. */
+  ageBand: 'child' | 'teen' | 'young' | 'mid' | 'elder';
   roles: string[];
   hairTint?: string;
   skinTint?: string;
@@ -108,7 +109,8 @@ export function setCastContext(country: string, sex: 'f' | 'm'): void {
   void (async () => {
     for (const id of first) await loadPerson(id);
     // Then this country's own people and the general public; other countries' casts are never needed.
-    for (const p of PEOPLE) if (p.group === ctx.country || p.group === 'us') await loadPerson(p.id);
+    // The child comes later in life and only in some journeys, so their scenes fetch them when needed.
+    for (const p of PEOPLE) if ((p.group === ctx.country || p.group === 'us') && p.ageBand !== 'child' && p.ageBand !== 'teen') await loadPerson(p.id);
   })();
 }
 
@@ -141,7 +143,7 @@ const CC: Record<string, string> = {
   ecuador: 'ec', australia: 'au', 'new-zealand': 'nz', fiji: 'fj', tonga: 'to', samoa: 'ws',
 };
 
-function castId(role: Role): string {
+function castId(role: Role, age?: number): string {
   const cc = CC[ctx.country] ?? 'in';
   const s = ctx.sex;
   const o = s === 'f' ? 'm' : 'f';
@@ -157,6 +159,11 @@ function castId(role: Role): string {
       return `${cc}_mother`;
     case 'roommate':
       return `us_roommate_${s}`;
+    case 'child': {
+      // The player's own child, who shares their family's looks: a small child, or the same child as a teenager.
+      const id = `${cc}_${(age ?? 4) >= 10 ? 'teen' : 'kid'}`;
+      return BY_ID.has(id) ? id : `in_${(age ?? 4) >= 10 ? 'teen' : 'kid'}`;
+    }
     default: {
       const p = PEOPLE.find((q) => q.group === 'us' && q.roles.includes(role));
       return p ? p.id : 'us_stranger';
@@ -175,7 +182,7 @@ export function castFor(look: FigureLook, extra = false): string {
   const role = look.role;
   // Background extras never take a named part: the real officer, friend or parent is still to come.
   if (role && role !== 'student' && !extra) {
-    const id = castId(role);
+    const id = castId(role, look.age);
     if (!used.has(id)) {
       used.add(id);
       return id;
@@ -454,7 +461,8 @@ export class MhFigure {
       // Soft, anti-aliased edges on hair, brows and lashes instead of a hard cut-out.
       mat.alphaTest = cut ? 0.22 : 0;
       mat.alphaToCoverage = cut;
-      mat.side = cut || kind === 'cloth' ? THREE.DoubleSide : THREE.FrontSide;
+      // A TRELLIS body is skin and open cloth in one mesh (skirt hems, armholes), so it is drawn double-sided like cloth.
+      mat.side = cut || kind === 'cloth' || asset === 'trellis' ? THREE.DoubleSide : THREE.FrontSide;
       mat.metalness = 0;
       mat.roughness = kind === 'eyes' ? 0.06 : kind === 'shoe' ? 0.6 : kind === 'body' ? 0.7 : kind === 'hair' || kind === 'beard' ? 0.55 : 0.92;
       mat.normalMap = null;
@@ -484,9 +492,22 @@ export class MhFigure {
     }
     // Feet on the floor.
     const box = new THREE.Box3().setFromObject(root, true);
-    // Real people differ in height, but nobody towers: keep everyone between about 1.5 and 1.8 m.
+    // Real heights: MakeHuman's men come out about 15% taller than its women, twice the real gap, so a
+    // husband towered over his wife. Each adult is set around a realistic height for their sex and age
+    // (women 1.63 m, men 1.76 m, a little less for elders), keeping 40% of how much taller or shorter than
+    // the cast's middle they were built, so people still differ but nobody is a giant or a child beside them.
+    // Children keep a child's height: about 1.05 m at four, 1.45 to 1.6 m at thirteen or fourteen.
     const tall = box.max.y - box.min.y;
-    const fit = tall > 1.8 ? 1.8 / tall : tall < 1.5 ? 1.5 / tall : 1;
+    let target: number;
+    if (def?.ageBand === 'child') target = Math.min(1.1, Math.max(0.98, tall));
+    else if (def?.ageBand === 'teen') target = Math.min(1.6, Math.max(1.45, tall));
+    else {
+      const elder = def?.ageBand === 'elder';
+      const male = def ? def.sex === 'm' : true;
+      const [built, aim] = male ? (elder ? [1.76, 1.72] : [1.77, 1.76]) : elder ? [1.475, 1.58] : [1.535, 1.63];
+      target = Math.min(aim + 0.08, Math.max(aim - 0.08, aim + (tall - built) * 0.4));
+    }
+    const fit = target / tall;
     root.scale.multiplyScalar(fit);
     root.position.y = -box.min.y * fit;
     this.group.add(root);

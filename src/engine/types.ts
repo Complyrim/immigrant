@@ -134,7 +134,9 @@ export type Role =
   | 'stranger'
   | 'owner'
   | 'student'
-  | 'teller';
+  | 'teller'
+  /** The player's own child, born here. Give the CastSpec an `age` so they appear as a small child or a teenager. */
+  | 'child';
 
 export type Pose =
   | 'idle'
@@ -164,6 +166,8 @@ export interface CastSpec {
   pose?: Pose;
   /** Optional index into the stage's layout slots; defaults to the next free slot. */
   slot?: number;
+  /** For role 'child': their age in years. Under 10 they appear as a small child, from 10 as a teenager. */
+  age?: number;
 }
 
 export interface Outcome {

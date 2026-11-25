@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { pbrMaterial } from './pbr';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import type { CastSpec, Pose, Role } from '../engine/types';
-import { Figure, ROLE_LOOKS, crowdLook, stdMat, unitBox, unitSphere, unitCyl, SEAT_HEIGHT, blobGeo, blobShadowMaterial } from './Figure';
+import { Figure, ROLE_LOOKS, castLook, crowdLook, stdMat, unitBox, unitSphere, unitCyl, SEAT_HEIGHT, blobGeo, blobShadowMaterial } from './Figure';
 import type { FigureLook, MatOpts } from './Figure';
 import { HumanFigure, humansReady } from './HumanFigure';
 import { MhFigure, castReady } from './MhFigure';
@@ -520,6 +520,8 @@ export class SB {
     f.group.position.set(x, o.y ?? 0, z);
     f.group.rotation.y = ry;
     if (o.scale) f.group.scale.multiplyScalar(o.scale);
+    // Only the cast has children; the simpler stand-in figures are all adult-sized, so a child is left out.
+    if (look.role === 'child' && !(f instanceof MhFigure)) f.group.visible = false;
     if (o.seated) f.setSeated(true);
     f.group.userData.seated = Boolean(o.seated);
     f.setPose(pose);
@@ -621,7 +623,7 @@ export class SB {
       if (i >= 0) taken[i] = s;
       else {
         const sl = slots[n - 1];
-        const lk = s.role === 'player' ? player : ROLE_LOOKS[s.role];
+        const lk = s.role === 'player' ? player : castLook(s);
         const f = this.person(lk, sl.x + 0.9 * ++overflow, sl.z, ryTo(sl.x, sl.z, sl.fx, sl.fz), s.pose ?? 'idle');
         void f;
       }
@@ -634,7 +636,7 @@ export class SB {
       let look: FigureLook;
       if (role === 'player') look = player;
       else if (role === 'student' || (!spec && role === 'stranger')) look = crowdLook(k * 5 + 3);
-      else look = ROLE_LOOKS[role];
+      else look = spec ? castLook(spec) : ROLE_LOOKS[role];
       const pose = spec?.pose ?? sl.pose;
       const moving = pose === 'walk' || pose === 'carry' || pose === 'cheer' || pose === 'present' || pose === 'dance' || pose === 'exercise' || pose === 'sleep' || pose === 'cook' || pose === 'laugh';
       let seated = !moving && sl.seat !== undefined;

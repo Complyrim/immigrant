@@ -23,6 +23,8 @@ export interface FigureLook {
   outfit?: 'dress' | 'kurta' | 'coat' | 'skirt' | 'shorts';
   /** Who this is in the story; picks the person from the cast. */
   role?: Role;
+  /** For the player's child: their age in years, which picks a small child or a teenager from the cast. */
+  age?: number;
 }
 
 /* ------------------------------------------------------------------ caches */
@@ -1387,10 +1389,17 @@ export const ROLE_LOOKS: Record<Role, FigureLook> = {
   stranger: { skin: S.light, hair: '#4a3a2c', hairStyle: 'cap', top: '#4a5a42', bottom: '#2f343e', shoes: '#3a3a3a', height: 1.0, build: 'average', accessory: 'none', outer: 'jacket', fem: false },
   owner: { skin: S.tan, hair: '#2a1e18', hairStyle: 'bun', top: '#b8553a', bottom: '#2b2b30', shoes: '#2b2b30', height: 0.97, build: 'average', accessory: 'none', fem: true, outfit: 'dress' },
   student: { skin: S.brown, hair: '#1c1412', hairStyle: 'short', top: '#7a5cb0', bottom: '#3a4d6f', shoes: '#e8e8e8', height: 1.0, build: 'average', accessory: 'backpack' },
+  child: { skin: '#a9714a', hair: '#1a1210', hairStyle: 'short', top: '#e0a23f', bottom: '#2d4a73', shoes: '#f0f0f0', height: 0.9, build: 'slim', accessory: 'none' },
   teller: { skin: S.deep, hair: '#14100e', hairStyle: 'short', top: '#9cc4e4', bottom: '#2a2f3c', shoes: '#241f1c', height: 1.02, build: 'average', accessory: 'lanyard', uniform: 'suit', fem: false },
 };
 
 for (const [r, l] of Object.entries(ROLE_LOOKS)) l.role = r as Role;
+
+/** The look for someone in a scene's cast: the role's look, carrying a child's age so the right child is cast. */
+export function castLook(spec: { role: Role; age?: number }): FigureLook {
+  const l = ROLE_LOOKS[spec.role];
+  return spec.age === undefined ? l : { ...l, age: spec.age };
+}
 
 const SKINS = [S.fair, S.light, S.tan, S.brown, S.deep, S.dark, '#c28a5e', '#e0b48c'];
 const HAIRS = ['#1a1210', '#2a1b14', '#4a3226', '#6b4a2e', '#b0753a', '#8c8c90', '#101010'];

@@ -8,7 +8,7 @@
  * Legal sources are listed in research/years-family-notes.md.
  */
 import { bad, c, def, ok } from '../cx';
-import type { ChallengeDef, Choice, GameState, Role } from '../types';
+import type { CastSpec, ChallengeDef, Choice, GameState, Role } from '../types';
 import {
   YOU, age, band, cost, has, hasChild, hasPartner, hasSpouse, is, noStatus, num, secure, settled, yearsHere,
 } from './yx';
@@ -19,6 +19,8 @@ const pWord = (s: GameState): string => (hasSpouse(s) ? 'your spouse' : 'your pa
 const PWord = (s: GameState): string => (hasSpouse(s) ? 'Your spouse' : 'Your partner');
 /** Age of the child born here, in whole years (0 in the year of birth). */
 const childAge = (s: GameState): number => yearsHere(s) - num(s, 'yf_childYear', yearsHere(s));
+/** The child in a scene, at their real age: a small child under 10, a teenager from 10. */
+const kid = (s: GameState, pose: CastSpec['pose']): CastSpec => ({ role: 'child', pose, age: childAge(s) });
 /** A short trip home and back is an ordinary thing only for these two. */
 const canTravelFreely = (s: GameState): boolean => secure(s);
 
@@ -689,7 +691,9 @@ const RAW: ChallengeDef[] = [
       ? `Your child has started answering you in English, even when you speak your own language. At school it is English all day. A teacher says kindly that children sort it out. Your mother says the child sounds like a foreigner.`
       : `Your child is starting to talk, and you have to decide what they will hear at home. Your language, English, or both. ${hasPartner(s) ? `You and ${pWord(s)} do not fully agree.` : 'Everyone you ask has a firm opinion.'}`,
     stage: 'kitchen',
-    cast: [{ ...YOU, pose: 'sit' }, ...(hasPartner(s) ? [{ role: pRole(s), pose: 'sit' as const }] : [])],
+    // The parents talk it over at the table; the child, too small for a chair here, stands beside them
+    // (slot 3 is the coded kitchen's standing place, used when the painting is not).
+    cast: [{ ...YOU, pose: 'sit' }, ...(hasPartner(s) ? [{ role: pRole(s), pose: 'sit' as const }] : []), { ...kid(s, 'idle'), slot: 3 }],
     choices: [
       c('first', 'Your language at home, always. English will come from the world.', ok(`It takes patience, and some evenings it is a battle. But your child can talk to their grandparents without you in the middle.`, { family: 8, wellbeing: -1, flags: { yf_homeLanguage: true } })),
       c('both', 'Both, without rules: whatever comes out.', ok(`Your home invents its own mixed speech that nobody outside fully follows. Your child understands everything and answers mostly in English.`, { family: 4, wellbeing: 3 })),
@@ -761,7 +765,8 @@ const RAW: ChallengeDef[] = [
       title: '"Where are we from, really?"',
       body: `A school project asks for a family history. Your teenager, born here, puts down their pen. "People ask where I am from and I say here. Then they ask where I am really from. What do I tell them?" ${free ? '' : 'They have also started to ask why you never go back to visit.'}`,
       stage: 'kitchen',
-      cast: [{ ...YOU, pose: 'sit' }],
+      // Homework at the kitchen table: the teenager sits across from you.
+      cast: [{ ...YOU, pose: 'sit' }, kid(s, 'sit')],
       choices,
     };
   }, { when: (s) => settled(s) && hasChild(s) && childAge(s) >= 13 && childAge(s) <= 17, oddsPerYear: 0.45 }),

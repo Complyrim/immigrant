@@ -1431,6 +1431,7 @@ export function buildStage(id: StageId, cast: CastSpec[], player: FigureLook, pa
     const depthGrid = backdropDepth(id);
     if (depthGrid && variant !== 'call') {
       relief = makeRelief(backdrop, depthGrid, paintCam, texA);
+      relief.userData.paintRelief = true;
       b.g.add(relief);
     }
     // Who sits where. The painting's own seats come first (a sofa, a bench, bus seats), then furniture built

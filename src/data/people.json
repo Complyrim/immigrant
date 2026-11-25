@@ -6591,5 +6591,2319 @@
       }
     },
     "skinTint": "#cfa680"
+  },
+  {
+    "id": "in_kid",
+    "group": "india",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.45,
+      "caucasian": 0.4,
+      "african": 0.15
+    },
+    "skin": "cutoff3d_indian_female_skin",
+    "hair": "toigo_blunt_bob_with_bangs",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#e07a3f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb592"
+  },
+  {
+    "id": "in_teen",
+    "group": "india",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.45,
+      "caucasian": 0.4,
+      "african": 0.15
+    },
+    "skin": "cutoff3d_indian_female_skin",
+    "hair": "bob02",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#d6708a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb592"
+  },
+  {
+    "id": "mx_kid",
+    "group": "mexico",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.3,
+      "caucasian": 0.6,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short02",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb898"
+  },
+  {
+    "id": "mx_teen",
+    "group": "mexico",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.3,
+      "caucasian": 0.6,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short02",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#e0a23f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb898"
+  },
+  {
+    "id": "ng_kid",
+    "group": "nigeria",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_female",
+    "hair": "elvs_french_braid_variation",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#4a6fd6"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ng_teen",
+    "group": "nigeria",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_female",
+    "hair": "elvs_reverse_french_braid_bun",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#e07a3f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "gh_kid",
+    "group": "ghana",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_male",
+    "hair": "afro01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#d6708a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "gh_teen",
+    "group": "ghana",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_male",
+    "hair": "afro01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#4a6fd6"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ke_kid",
+    "group": "kenya",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_female",
+    "hair": "elvs_french_braid_variation",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2e7d9a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ke_teen",
+    "group": "kenya",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.03,
+      "caucasian": 0.07,
+      "african": 0.9
+    },
+    "skin": "young_african_female",
+    "hair": "elvs_french_braid_variation",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#2e7d9a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "et_kid",
+    "group": "ethiopia",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.08,
+      "caucasian": 0.27,
+      "african": 0.65
+    },
+    "skin": "young_african_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "et_teen",
+    "group": "ethiopia",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.08,
+      "caucasian": 0.27,
+      "african": 0.65
+    },
+    "skin": "young_african_male",
+    "hair": "afro01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#d6708a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "eg_kid",
+    "group": "egypt",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.2,
+      "caucasian": 0.6,
+      "african": 0.2
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "long01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#c9473e"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#f0d6bc"
+  },
+  {
+    "id": "eg_teen",
+    "group": "egypt",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.2,
+      "caucasian": 0.6,
+      "african": 0.2
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "ponytail01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2e7d9a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#f0d6bc"
+  },
+  {
+    "id": "cn_kid",
+    "group": "china",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.9,
+      "caucasian": 0.07,
+      "african": 0.03
+    },
+    "skin": "young_asian_male",
+    "hair": "short01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#2e7d9a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "cn_teen",
+    "group": "china",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.9,
+      "caucasian": 0.07,
+      "african": 0.03
+    },
+    "skin": "young_asian_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "kr_kid",
+    "group": "south-korea",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.9,
+      "caucasian": 0.07,
+      "african": 0.03
+    },
+    "skin": "young_asian_female",
+    "hair": "long01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#4a6fd6"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "kr_teen",
+    "group": "south-korea",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.9,
+      "caucasian": 0.07,
+      "african": 0.03
+    },
+    "skin": "young_asian_female",
+    "hair": "o4saken_long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#e0a23f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "vn_kid",
+    "group": "vietnam",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.7,
+      "caucasian": 0.15,
+      "african": 0.15
+    },
+    "skin": "young_asian_male",
+    "hair": "short01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#e07a3f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e4c6a6"
+  },
+  {
+    "id": "vn_teen",
+    "group": "vietnam",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.7,
+      "caucasian": 0.15,
+      "african": 0.15
+    },
+    "skin": "young_asian_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#17110e",
+    "tints": {},
+    "faceAmp": 0.35,
+    "skinTint": "#e4c6a6"
+  },
+  {
+    "id": "ph_kid",
+    "group": "philippines",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.7,
+      "caucasian": 0.15,
+      "african": 0.15
+    },
+    "skin": "young_asian_female",
+    "hair": "toigo_blunt_bob_with_bangs",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#c9473e"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c8a8"
+  },
+  {
+    "id": "ph_teen",
+    "group": "philippines",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.7,
+      "caucasian": 0.15,
+      "african": 0.15
+    },
+    "skin": "young_asian_female",
+    "hair": "o4saken_long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#7a5cb0"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c8a8"
+  },
+  {
+    "id": "uk_kid",
+    "group": "united-kingdom",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male",
+    "hair": "cortu_short_messy_hair",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#2e7d9a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "uk_teen",
+    "group": "united-kingdom",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {},
+    "faceAmp": 0.35
+  },
+  {
+    "id": "de_kid",
+    "group": "germany",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "toigo_light_skin_female_freckles",
+    "hair": "long01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#e0a23f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "de_teen",
+    "group": "germany",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "toigo_light_skin_female_freckles",
+    "hair": "long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#e0a23f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ua_kid",
+    "group": "ukraine",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#5a3d28",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#e0a23f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ua_teen",
+    "group": "ukraine",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#5a3d28",
+    "tints": {},
+    "faceAmp": 0.35
+  },
+  {
+    "id": "pl_kid",
+    "group": "poland",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "toigo_light_skin_female_freckles",
+    "hair": "braid01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#c9a25e",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#4a6fd6"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "pl_teen",
+    "group": "poland",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "toigo_light_skin_female_freckles",
+    "hair": "o4saken_long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#c9a25e",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#e07a3f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "it_kid",
+    "group": "italy",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.1,
+      "caucasian": 0.8,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short02",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#e0a23f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "it_teen",
+    "group": "italy",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.1,
+      "caucasian": 0.8,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#1a1412",
+    "tints": {},
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ca_kid",
+    "group": "canada",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_female",
+    "hair": "braid01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#3a2a20",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2f8a6a"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "ca_teen",
+    "group": "canada",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_female",
+    "hair": "ponytail01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#3a2a20",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#e0a23f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "gt_kid",
+    "group": "guatemala",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short02",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#e0a23f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#d2a888"
+  },
+  {
+    "id": "gt_teen",
+    "group": "guatemala",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short02",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {},
+    "faceAmp": 0.35,
+    "skinTint": "#d2a888"
+  },
+  {
+    "id": "sv_kid",
+    "group": "el-salvador",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "onlytheghosts_young_eurasian_female",
+    "hair": "long01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#d6708a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c3a3"
+  },
+  {
+    "id": "sv_teen",
+    "group": "el-salvador",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "onlytheghosts_young_eurasian_female",
+    "hair": "o4saken_long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#2f8a6a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c3a3"
+  },
+  {
+    "id": "do_kid",
+    "group": "dominican-republic",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.115,
+      "caucasian": 0.385,
+      "african": 0.5
+    },
+    "skin": "toigo_light_skin_male_bronze",
+    "hair": "short04",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#2f8a6a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#bf8f66"
+  },
+  {
+    "id": "do_teen",
+    "group": "dominican-republic",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.115,
+      "caucasian": 0.385,
+      "african": 0.5
+    },
+    "skin": "toigo_light_skin_male_bronze",
+    "hair": "afro01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#c9473e"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#bf8f66"
+  },
+  {
+    "id": "br_kid",
+    "group": "brazil",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.115,
+      "caucasian": 0.385,
+      "african": 0.5
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "braid01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_tiered_skirt",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#c9473e"
+      },
+      "toigo_tiered_skirt": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#bf8f66"
+  },
+  {
+    "id": "br_teen",
+    "group": "brazil",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.115,
+      "caucasian": 0.385,
+      "african": 0.5
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "braid01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#2e7d9a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#bf8f66"
+  },
+  {
+    "id": "co_kid",
+    "group": "colombia",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short02",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb898"
+  },
+  {
+    "id": "co_teen",
+    "group": "colombia",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short02",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {},
+    "faceAmp": 0.35,
+    "skinTint": "#dcb898"
+  },
+  {
+    "id": "ve_kid",
+    "group": "venezuela",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "callharvey3d_midtoned_female",
+    "hair": "toigo_blunt_bob_with_bangs",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#e07a3f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c3a3"
+  },
+  {
+    "id": "ve_teen",
+    "group": "venezuela",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.5,
+      "african": 0.1
+    },
+    "skin": "callharvey3d_midtoned_female",
+    "hair": "o4saken_long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#e0a23f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#e6c3a3"
+  },
+  {
+    "id": "pe_kid",
+    "group": "peru",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "toigo_light_skin_male_bronze",
+    "hair": "short01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#2e7d9a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#d2a888"
+  },
+  {
+    "id": "pe_teen",
+    "group": "peru",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "toigo_light_skin_male_bronze",
+    "hair": "cortu_short_messy_hair",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "male_casualsuit03",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {},
+    "faceAmp": 0.35,
+    "skinTint": "#d2a888"
+  },
+  {
+    "id": "ec_kid",
+    "group": "ecuador",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "long01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2f8a6a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb592"
+  },
+  {
+    "id": "ec_teen",
+    "group": "ecuador",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.5,
+      "caucasian": 0.4,
+      "african": 0.1
+    },
+    "skin": "toigo_light_skin_female_bronze",
+    "hair": "ponytail01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#4a6fd6"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#dcb592"
+  },
+  {
+    "id": "au_kid",
+    "group": "australia",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#c9473e"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "au_teen",
+    "group": "australia",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_male2",
+    "hair": "short02",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#2f8a6a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "nz_kid",
+    "group": "new-zealand",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_female",
+    "hair": "braid01",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "nz_teen",
+    "group": "new-zealand",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.05,
+      "caucasian": 0.9,
+      "african": 0.05
+    },
+    "skin": "young_caucasian_female",
+    "hair": "ponytail01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "toigo_wool_pants",
+      "shoes03"
+    ],
+    "hairTint": "#8a5a34",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2f8a6a"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "fj_kid",
+    "group": "fiji",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.2,
+      "caucasian": 0.15,
+      "african": 0.65
+    },
+    "skin": "young_african_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#e07a3f"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "fj_teen",
+    "group": "fiji",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.2,
+      "caucasian": 0.15,
+      "african": 0.65
+    },
+    "skin": "young_african_male",
+    "hair": "afro01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#7a5cb0"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35
+  },
+  {
+    "id": "to_kid",
+    "group": "tonga",
+    "sex": "f",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.25,
+      "african": 0.35
+    },
+    "skin": "onlytheghosts_young_eurasian_female",
+    "hair": "toigo_blunt_bob_with_bangs",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "toigo_basic_tucked_t-shirt",
+      "cortu_cargo_pants",
+      "toigo_ballet_flats"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_basic_tucked_t-shirt": {
+        "color": "#2e7d9a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#d6ae88"
+  },
+  {
+    "id": "to_teen",
+    "group": "tonga",
+    "sex": "f",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 0.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.25,
+      "african": 0.35
+    },
+    "skin": "onlytheghosts_young_eurasian_female",
+    "hair": "long01",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "toigo_fisherman_sweater",
+      "toigo_wool_pants",
+      "toigo_ankle_boots_female"
+    ],
+    "hairTint": "#15110f",
+    "tints": {
+      "toigo_fisherman_sweater": {
+        "color": "#e07a3f"
+      },
+      "toigo_wool_pants": {
+        "color": "#33384a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#d6ae88"
+  },
+  {
+    "id": "ws_kid",
+    "group": "samoa",
+    "sex": "m",
+    "ageBand": "child",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.056,
+    "weight": 0.5,
+    "muscle": 0.5,
+    "height": 0.5,
+    "cupsize": 0.5,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.25,
+      "african": 0.35
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short02",
+    "eyebrows": "eyebrow001",
+    "clothes": [
+      "namuhekam_male_polo_shirt",
+      "cortu_cargo_pants",
+      "shoes03"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "namuhekam_male_polo_shirt": {
+        "color": "#c9473e"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#cfa680"
+  },
+  {
+    "id": "ws_teen",
+    "group": "samoa",
+    "sex": "m",
+    "ageBand": "teen",
+    "roles": [
+      "child"
+    ],
+    "gender": 1.0,
+    "age": 0.243,
+    "weight": 0.38,
+    "muscle": 0.4,
+    "height": 0.5,
+    "cupsize": 0.15,
+    "proportions": 0.5,
+    "race": {
+      "asian": 0.4,
+      "caucasian": 0.25,
+      "african": 0.35
+    },
+    "skin": "young_caucasian_male",
+    "hair": "short04",
+    "eyebrows": "eyebrow002",
+    "clothes": [
+      "elvs_crude_t-shirt_male",
+      "cortu_cargo_pants",
+      "shoes02"
+    ],
+    "hairTint": "#17110e",
+    "tints": {
+      "elvs_crude_t-shirt_male": {
+        "color": "#2f8a6a"
+      },
+      "cortu_cargo_pants": {
+        "color": "#3a4a6a"
+      }
+    },
+    "faceAmp": 0.35,
+    "skinTint": "#cfa680"
   }
 ]

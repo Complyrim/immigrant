@@ -204,6 +204,25 @@ export class CityScene {
     this.reduced = on;
   }
 
+  /**
+   * Exposure for painted scenes. The paintings were generated one by one and some render several times
+   * brighter than others (a sunlit shop, a night shelter), so a card could glare and the next be too dark
+   * to read on a phone. Shortly after a painted scene appears, one tiny frame is sampled and the painting
+   * and every light on its people are scaled together, most of the way toward a common brightness: night
+   * stays darker than day, but nothing is black or blown out. The level is remembered per painting, so
+   * a scene seen before opens at its level straight away.
+   */
+  private exposure: {
+    key: string;
+    at: number;
+    samples: number;
+    goal: number;
+    level: number;
+    base: { bg: number; hemi: number; sun: number; env: number; lights: Array<[THREE.Light, number]>; reliefs: Array<[THREE.Color, number]> };
+  } | null = null;
+  private readonly exposureMemo = new Map<string, number>();
+  private exposureCanvas: CanvasRenderingContext2D | null = null;
+
   private paused = false;
   private pausedAt = 0;
   /** Scene time in seconds; it stands still while the game is paused. */
@@ -225,6 +244,7 @@ export class CityScene {
       this.clockT += dt;
       this.update(dt, this.clockT);
       this.post.render(dt);
+      this.autoExpose(t, dt);
       this.adaptQuality(dt);
       this.raf = requestAnimationFrame(tick);
     };
@@ -419,6 +439,7 @@ export class CityScene {
     this.applyLook(STAGE_LOOK[id] ?? OFFICE, stage.camera.position, stage.camera.target);
     // A painting already carries its own soft shadowing; skipping the extra pass saves a full redraw of everyone.
     if (stage.backdrop) this.post.setAO(false);
+    this.beginExposure(stage);
     this.applyLayout();
   }
 
@@ -514,8 +535,92 @@ export class CityScene {
     this.applyLayout();
   }
 
+  private beginExposure(stage: StageHandle): void {
+    this.exposure = null;
+    if (!stage.backdrop) return;
+    const lights: Array<[THREE.Light, number]> = [];
+    const reliefs: Array<[THREE.Color, number]> = [];
+    stage.group.traverse((o) => {
+      if ((o as THREE.Light).isLight) lights.push([o as THREE.Light, (o as THREE.Light).intensity]);
+      if (o.userData.paintRelief) {
+        const c = ((o as THREE.Mesh).material as THREE.MeshBasicMaterial).color;
+        reliefs.push([c, c.r]);
+      }
+    });
+    const key = `${stage.backdrop.uuid}|${stage.dim ?? 1}`;
+    const known = this.exposureMemo.get(key);
+    this.exposure = {
+      key,
+      at: performance.now() + 700,
+      samples: known === undefined ? 0 : 3,
+      goal: known ?? 1,
+      level: known ?? 1,
+      base: { bg: this.scene.backgroundIntensity, hemi: this.hemi.intensity, sun: this.sun.intensity, env: this.scene.environmentIntensity, lights, reliefs },
+    };
+    this.applyExposure();
+  }
+
+  private applyExposure(): void {
+    const e = this.exposure;
+    if (!e) return;
+    const k = e.level;
+    this.scene.backgroundIntensity = e.base.bg * k;
+    this.hemi.intensity = e.base.hemi * k;
+    this.sun.intensity = e.base.sun * k;
+    this.scene.environmentIntensity = e.base.env * k;
+    for (const [l, i] of e.base.lights) l.intensity = i * k;
+    for (const [c, v] of e.base.reliefs) c.setScalar(v * k);
+  }
+
+  /** Mean brightness (0 to 1) of the frame just drawn, from a 48 px copy of the canvas. */
+  private frameBrightness(): number | null {
+    try {
+      if (!this.exposureCanvas) {
+        const c = document.createElement('canvas');
+        c.width = c.height = 48;
+        this.exposureCanvas = c.getContext('2d', { willReadFrequently: true });
+      }
+      const x = this.exposureCanvas;
+      if (!x) return null;
+      x.drawImage(this.canvas, 0, 0, 48, 48);
+      const d = x.getImageData(0, 0, 48, 48).data;
+      let sum = 0;
+      for (let i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+      const m = sum / (255 * 48 * 48);
+      return m > 0.005 ? m : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private autoExpose(now: number, dt: number): void {
+    const e = this.exposure;
+    if (!e || !this.stage) return;
+    if (e.samples < 3 && now >= e.at && this.stage.group.visible) {
+      // Called right after the frame is drawn, while the canvas still holds it.
+      const m = this.frameBrightness();
+      if (m !== null) {
+        // Aim most of the way (60%, on a log scale) from where the painting sits toward 0.4, then nudge the
+        // level until the frame lands there. Light reaches the screen through a gamma-like curve, so the
+        // level moves about twice as far as the brightness needs to.
+        const seen = m / Math.pow(e.level, 0.45);
+        const aim = Math.pow(seen, 0.4) * Math.pow(0.4, 0.6);
+        e.goal = Math.min(2.2, Math.max(0.6, e.level * Math.min(1.6, Math.max(0.6, Math.pow(aim / m, 2.2)))));
+        e.samples++;
+        e.at = now + 350;
+        if (e.samples === 3) this.exposureMemo.set(e.key, e.goal);
+      }
+    }
+    if (Math.abs(e.goal - e.level) > 0.002) {
+      // Ease into the new level so the change reads as eyes adjusting, not a flicker.
+      e.level += (e.goal - e.level) * Math.min(1, dt * 5 || 0.15);
+      this.applyExposure();
+    }
+  }
+
   private clearStage(): void {
     this.riding = null;
+    this.exposure = null;
     if (!this.stage) return;
     this.scene.remove(this.stage.group);
     this.stage.dispose();
