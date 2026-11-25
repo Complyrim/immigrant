@@ -178,7 +178,7 @@
     "eyebrows": "eyebrow007",
     "clothes": [
       "joepal_crude_t-shirt_female",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#3b3432",
@@ -186,7 +186,7 @@
       "joepal_crude_t-shirt_female": {
         "color": "#9b2f3f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#d2b56a"
       }
     },
@@ -544,7 +544,7 @@
     "eyebrows": "eyebrow008",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#2a2625",
@@ -552,7 +552,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#1f6f8b"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#1f6f8b"
       }
     }
@@ -1448,7 +1448,7 @@
     "eyebrows": "eyebrow009",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#1a1310",
@@ -1456,7 +1456,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#2f7f8f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       }
     },
@@ -1857,12 +1857,12 @@
     "eyebrows": "eyebrow006",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#4a4442",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f52"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -2045,12 +2045,12 @@
     "eyebrows": "eyebrow007",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -2433,12 +2433,12 @@
     "eyebrows": "eyebrow005",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#2d4a73"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -2622,7 +2622,7 @@
     "eyebrows": "eyebrow005",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_mj_cloth_shoes"
     ],
     "hairTint": "#b9b2aa",
@@ -2630,7 +2630,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#2f6f7a"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       }
     }
@@ -2999,7 +2999,7 @@
     "eyebrows": "eyebrow010",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_mj_cloth_shoes"
     ],
     "hairTint": "#b9b2aa",
@@ -3007,7 +3007,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#3f7fa6"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#2d4a73"
       }
     },
@@ -3191,7 +3191,7 @@
     "eyebrows": "eyebrow012",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_mj_cloth_shoes"
     ],
     "hairTint": "#6a625e",
@@ -3199,7 +3199,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#d6485f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a3f36"
       }
     }
@@ -3227,7 +3227,7 @@
     "eyebrows": "eyebrow008",
     "clothes": [
       "toigo_keyhole_tank_top",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#8a5a34",
@@ -3235,7 +3235,7 @@
       "toigo_keyhole_tank_top": {
         "color": "#b0445a"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a3f36"
       }
     }
@@ -3371,7 +3371,7 @@
     "eyebrows": "eyebrow004",
     "clothes": [
       "toigo_fisherman_sweater",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
@@ -3379,7 +3379,7 @@
       "toigo_fisherman_sweater": {
         "color": "#4f8a5b"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f4c"
       }
     }
@@ -3407,7 +3407,7 @@
     "eyebrows": "eyebrow012",
     "clothes": [
       "toigo_keyhole_tank_top",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#3a2a20",
@@ -3415,7 +3415,7 @@
       "toigo_keyhole_tank_top": {
         "color": "#9b2f3f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f52"
       }
     }
@@ -3445,7 +3445,7 @@
     "eyebrows": "eyebrow005",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#8a5a34",
@@ -3453,7 +3453,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#b83f5e"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a5a78"
       }
     }
@@ -3556,7 +3556,7 @@
     "eyebrows": "eyebrow011",
     "clothes": [
       "toigo_fisherman_sweater",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#b9b2aa",
@@ -3564,7 +3564,7 @@
       "toigo_fisherman_sweater": {
         "color": "#2f6f7a"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       }
     }
@@ -3746,12 +3746,12 @@
     "eyebrows": "eyebrow004",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a5a78"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -3926,12 +3926,12 @@
     "eyebrows": "eyebrow010",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#4a4442",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f4c"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -3962,7 +3962,7 @@
     "eyebrows": "eyebrow002",
     "clothes": [
       "toigo_keyhole_tank_top",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#3a2a20",
@@ -3970,7 +3970,7 @@
       "toigo_keyhole_tank_top": {
         "color": "#6c7fa8"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a3f36"
       }
     }
@@ -4000,7 +4000,7 @@
     "eyebrows": "eyebrow001",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#1a1412",
@@ -4008,7 +4008,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#4f8a5b"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a5a78"
       }
     }
@@ -4111,7 +4111,7 @@
     "eyebrows": "eyebrow005",
     "clothes": [
       "toigo_fisherman_sweater",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#4a4442",
@@ -4119,7 +4119,7 @@
       "toigo_fisherman_sweater": {
         "color": "#3a5f9a"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       }
     }
@@ -4147,7 +4147,7 @@
     "eyebrows": "eyebrow001",
     "clothes": [
       "toigo_keyhole_tank_top",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#17110e",
@@ -4155,7 +4155,7 @@
       "toigo_keyhole_tank_top": {
         "color": "#6a7a3f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f52"
       }
     },
@@ -4478,7 +4478,7 @@
     "eyebrows": "eyebrow005",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_mj_cloth_shoes"
     ],
     "hairTint": "#4a4442",
@@ -4486,7 +4486,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#2f8f7d"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       }
     },
@@ -4671,12 +4671,12 @@
     "eyebrows": "eyebrow008",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#2d4a73"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -4851,7 +4851,7 @@
     "eyebrows": "eyebrow003",
     "clothes": [
       "toigo_fisherman_sweater",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
@@ -4859,7 +4859,7 @@
       "toigo_fisherman_sweater": {
         "color": "#2f8f7d"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f4c"
       }
     },
@@ -4927,7 +4927,7 @@
     "eyebrows": "eyebrow008",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#17110e",
@@ -4935,7 +4935,7 @@
       "toigo_basic_tucked_t-shirt": {
         "color": "#9b2f3f"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f52"
       }
     },
@@ -5041,12 +5041,12 @@
     "eyebrows": "eyebrow008",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a3f36"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -5236,7 +5236,7 @@
     "eyebrows": "eyebrow002",
     "clothes": [
       "toigo_fisherman_sweater",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#6a625e",
@@ -5244,7 +5244,7 @@
       "toigo_fisherman_sweater": {
         "color": "#3f7fa6"
       },
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#4a5a78"
       }
     },
@@ -5436,12 +5436,12 @@
     "eyebrows": "eyebrow007",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#b9b2aa",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#40464f"
       },
       "toigo_basic_tucked_t-shirt": {
@@ -5812,12 +5812,12 @@
     "eyebrows": "eyebrow009",
     "clothes": [
       "toigo_basic_tucked_t-shirt",
-      "toigo_long_full_skirt",
+      "toigo_tiered_skirt",
       "toigo_flats"
     ],
     "hairTint": "#b9b2aa",
     "tints": {
-      "toigo_long_full_skirt": {
+      "toigo_tiered_skirt": {
         "color": "#3a3f4c"
       },
       "toigo_basic_tucked_t-shirt": {
