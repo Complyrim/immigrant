@@ -104,6 +104,33 @@ def is_skirt(name):
     return "skirt" in n and "dress" not in n
 
 
+def _shell(ob):
+    """World-space collision data for a garment: its surface, its face normals, and the vertices
+    along its open edges. Faces along an open edge - a hem, cuff, neckline - are where the garment
+    stops covering anything, so cloth near them is left where the asset put it."""
+    from mathutils.bvhtree import BVHTree
+    from mathutils.kdtree import KDTree
+    mw = ob.matrix_world
+    rot = mw.to_3x3()
+    verts = [mw @ v.co for v in ob.data.vertices]
+    polys = [list(p.vertices) for p in ob.data.polygons]
+    norms = [(rot @ p.normal).normalized() for p in ob.data.polygons]
+    used = {}
+    for i, p in enumerate(polys):
+        for j in range(len(p)):
+            e = tuple(sorted((p[j], p[(j + 1) % len(p)])))
+            used.setdefault(e, []).append(i)
+    rimverts = set()
+    for e, f in used.items():
+        if len(f) == 1:
+            rimverts.update(e)
+    kd = KDTree(len(rimverts))
+    for i in rimverts:
+        kd.insert(verts[i], i)
+    kd.balance()
+    return BVHTree.FromPolygons(verts, polys), norms, (kd if rimverts else None)
+
+
 def tuck_under(clearance=0.010, fade=0.05):
     """Tuck a garment's hidden geometry back inside the garment worn over it.
 
@@ -126,28 +153,7 @@ def tuck_under(clearance=0.010, fade=0.05):
     if len(cloths) < 2:
         return 0
 
-    def shell(ob):
-        mw = ob.matrix_world
-        rot = mw.to_3x3()
-        verts = [mw @ v.co for v in ob.data.vertices]
-        polys = [list(p.vertices) for p in ob.data.polygons]
-        norms = [(rot @ p.normal).normalized() for p in ob.data.polygons]
-        # Faces along an open edge - a hem, cuff, neckline - are where the garment stops covering
-        # anything, so cloth near them is left where the asset put it.
-        used = {}
-        for i, p in enumerate(polys):
-            for j in range(len(p)):
-                e = tuple(sorted((p[j], p[(j + 1) % len(p)])))
-                used.setdefault(e, []).append(i)
-        rimverts = set()
-        for e, f in used.items():
-            if len(f) == 1:
-                rimverts.update(e)
-        kd = KDTree(len(rimverts))
-        for i in rimverts:
-            kd.insert(verts[i], i)
-        kd.balance()
-        return BVHTree.FromPolygons(verts, polys), norms, (kd if rimverts else None)
+    shell = _shell
 
     sh = {o.name: shell(o) for o in cloths}
     moved = 0
@@ -188,6 +194,85 @@ def tuck_under(clearance=0.010, fade=0.05):
             if fix:
                 sh[inner.name] = shell(inner)
     return moved
+
+def _frac_outside(inner, outer, sh, clearance):
+    """How much of `inner` sits outside `outer`, counting only vertices close enough to be covered."""
+    tree, norms, _ = sh[outer.name]
+    mw = inner.matrix_world
+    out = near = 0
+    for v in inner.data.vertices:
+        o = mw @ v.co
+        loc, _, idx, _ = tree.find_nearest(o, 0.05)
+        if loc is None:
+            continue
+        near += 1
+        if (o - loc).dot(norms[idx]) > -clearance:
+            out += 1
+    return (out / near if near else 0.0), near
+
+
+def tuck_lopsided(outer_min=0.85, gap_min=0.15, clearance=0.010, fade=0.05):
+    """Tuck a garment inside the one covering it, for pairs tuck_under does not name.
+
+    tuck_under only knows skirts. The same fault shows up elsewhere, worst on the eleven figures in
+    culturalibre_male_boots, where the boot shaft erupts through the trouser leg in patches that
+    read clearly at game distance. Rather than name every pairing, work out which garment is on top
+    by measuring: correct layering is lopsided, the covering garment sits outside nearly everywhere
+    it is close while the covered one hardly does.
+
+    The margin is what makes it safe. Measured across the cast, pairs that genuinely need tucking
+    separate cleanly from pairs that must be left alone: boots and shoes under trousers read gaps of
+    20 to 82 points, while a shirt under trousers or a sweater over a skirt reads 0 to 10. Nothing
+    lands between, so gap_min sits in an empty valley. Without it the rule picks a winner from noise
+    and inverts the sweater over the skirt, pulling the sweater inside the waistband.
+
+    outer_min does almost no work, since every pair that must be rejected reads 100 per cent in its
+    stronger direction; it is there to refuse a pair where neither garment really covers the other.
+    Runs after tuck_under so skirts keep their own handling, and before cull_covered, which needs
+    the garments in their final positions."""
+    obs = [o for o in bpy.data.objects
+           if o.type == "MESH" and (o.name.startswith("cloth__") or o.name.startswith("shoe__"))]
+    if len(obs) < 2:
+        return 0
+    sh = {o.name: _shell(o) for o in obs}
+    moved = 0
+    for i, a in enumerate(obs):
+        for b in obs[i + 1:]:
+            fa, na = _frac_outside(a, b, sh, clearance)
+            fb, nb = _frac_outside(b, a, sh, clearance)
+            if min(na, nb) == 0:
+                continue
+            outer, inner, fo, fi = (a, b, fa, fb) if fa >= fb else (b, a, fb, fa)
+            if fo < outer_min or (fo - fi) < gap_min:
+                continue
+            if "tuck" in outer.name.lower():
+                continue  # a tucked shirt already sits inside the waistband; moving it tears the hem
+            tree, norms, rimkd = sh[outer.name]
+            mw = inner.matrix_world
+            inv = mw.inverted()
+            fix = []
+            for v in inner.data.vertices:
+                o = mw @ v.co
+                loc, _, idx, _ = tree.find_nearest(o, 0.05)
+                if loc is None:
+                    continue
+                n = norms[idx]
+                if (o - loc).dot(n) <= -clearance:
+                    continue
+                w = 1.0
+                if rimkd is not None:
+                    _, _, dist = rimkd.find(loc)
+                    w = min(max((dist or 0.0) / fade, 0.0), 1.0)
+                if w <= 0.0:
+                    continue
+                fix.append((v.index, inv @ (o + ((loc - n * clearance) - o) * w)))
+            for idx, co in fix:
+                inner.data.vertices[idx].co = co
+            moved += len(fix)
+            if fix:
+                sh[inner.name] = _shell(inner)
+    return moved
+
 
 def cull_covered(base, reach=0.035):
     """Remove skin that lies under clothes or shoes, so it can never poke through when the body moves.
@@ -366,7 +451,7 @@ def build(spec):
             d.use_collapse_triangulate = True
             bpy.context.view_layer.objects.active = ob
             bpy.ops.object.modifier_apply(modifier=d.name)
-    tucked = tuck_under()
+    tucked = tuck_under() + tuck_lopsided()
     culled = cull_covered(base)
     bpy.ops.object.select_all(action="SELECT")
     out = os.path.join(out_dir, spec["id"] + ".glb")
